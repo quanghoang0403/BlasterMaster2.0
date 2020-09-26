@@ -1,0 +1,170 @@
+# Id	FilePath			R	G	B
+[TEXTURES]
+3	Resources/Weapons/Dagger.png	255	0	255
+
+22	Resources/Objects/Torch.png	255	0	255
+26	Resources/Objects/Gate.png	255	0	255
+
+41	Resources/Items/BigHeart.png	255	0	255
+47	Resources/Items/UpgradeMS.png	255	0	255
+50	Resources/Items/Dagger.png	255	0	255
+
+70	Resources/Effects/Fire.png	255	0	255
+71	Resources/Effects/Hit.png	255	0	255
+
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+# Dagger
+62	0	0	32	18	3
+
+# Torch
+108	0	0	32	64	22
+109	32	0	64	64	22
+
+# Gate
+119	0	0	48	96	26
+
+# Big Heart
+131	0	0	24	20	41
+
+# UpgradeMS
+136	0	0	32	32	47
+
+# ItemDagger
+140	0	0	32	18	50
+
+# FireEff
+160	0	0	42	44	70
+161	42	0	84	44	70
+162	84	0	126	44	70
+163	126	0	168	44	70
+
+# HitEff
+164	0	0	16	20	71
+165	16	0	32	20	71
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+# Dagger
+23	62	100
+
+# Torch
+78	108	120	109	120
+
+# Gate
+89	119	100
+
+# Big Heart
+101	131	100
+
+# UpgradeMS
+106	136	100
+
+# ItemDagger
+109	140	100
+
+# FireEff
+130	160	75	161	75	162	75	163	75
+
+# HitEff
+131	164	300	165	300
+
+#
+# id	ani1	ani2	ani3
+# id tuan theo define
+[ANIMATION_SETS]
+# Dagger
+3	23
+
+# Torch
+22	78
+
+# Gate
+26	89
+
+# BigHeart
+41	101
+
+# UpgradeMS
+47	106
+
+# ItemDagger
+50	109
+
+# FireEff
+70	130
+
+# HitEff
+71	131
+
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
+
+#Brick
+1	0	375	1	0	1
+1	32	375	1	0	1
+1	64	375	1	0	1
+1	96	375	1	0	1
+1	128	375	1	0	1
+1	160	375	1	0	1
+1	192	375	1	0	1
+1	224	375	1	0	1
+1	256	375	1	0	1
+1	288	375	1	1	1
+1	320	375	1	1	1
+1	352	375	1	1	1
+1	384	375	1	1	1
+1	416	375	1	1	1
+1	448	375	1	1	1
+1	480	375	1	1	1
+1	512	375	1	1	1
+1	544	375	1	2	1
+1	576	375	1	2	1
+1	608	375	1	2	1
+1	640	375	1	2	1
+1	672	375	1	2	1
+1	704	375	1	2	1
+1	736	375	1	2	1
+1	768	375	1	2	1
+1	800	375	1	3	1
+1	832	375	1	3	1
+1	864	375	1	3	1
+1	896	375	1	3	1
+1	928	375	1	3	1
+1	960	375	1	3	1
+1	992	375	1	3	1
+1	1024	375	1	3	1
+1	1056	375	1	4	1
+1	1088	375	1	4	1
+1	1120	375	1	4	1
+1	1152	375	1	4	1
+1	1184	375	1	4	1
+1	1216	375	1	4	1
+1	1248	375	1	4	1
+1	1280	375	1	4	1
+1	1312	375	1	4	1
+1	1344	375	1	5	1
+1	1376	375	1	5	1
+1	1408	375	1	5	1
+1	1440	375	1	5	1
+1	1472	375	1	5	1
+1	1504	375	1	5	1
+1	1536	375	1	5	1
+1	1568	375	1	5	1
+
+#Torch
+2	200	325	1	0	1
+2	450	325	2	1	1
+2	700	325	2	2	1
+2	950	325	1	3	1
+2	1200	325	3	4	1
+
+
+#Gate
+3	1400	310	2	100	365	1	1	5	1
+
+
+#idStage -- mapFilePath -- RowMap -- ColumnMap -- tilesetFilePath -- RowTileset -- ColumnTileset
+[TILEMAP]
+500	Resources/TileMap/TilesetStage1Text.txt	12	48	Resources/TileMap/TilesetStage1.png	4	17	1250

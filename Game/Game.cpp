@@ -188,7 +188,7 @@ void Game::ProcessKeyboard()
 	}
 }
 
-void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DXVECTOR3 origin, int alpha)
+void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
 	RECT r;
@@ -196,7 +196,7 @@ void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int t
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, &origin, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
 void Game::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)

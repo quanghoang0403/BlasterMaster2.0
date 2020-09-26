@@ -24,6 +24,12 @@ void CSprite::Draw(int direction, float x, float y, int alpha)
 	game->Draw(direction, x, y, texture, left, top, right, bottom, alpha);
 }
 
+void CSprite::OldDraw( float x, float y, int alpha)
+{
+	Game* game = Game::GetInstance();
+	game->OldDraw(x, y, texture, left, top, right, bottom, alpha);
+}
+
 
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
@@ -40,10 +46,6 @@ LPSPRITE CSprites::Get(int id)
 }
 
 
-
-/*
-	Clear all loaded textures
-*/
 void CSprites::Clear()
 {
 	for (auto x : sprites)

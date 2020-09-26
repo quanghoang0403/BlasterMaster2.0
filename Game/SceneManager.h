@@ -1,6 +1,5 @@
 #pragma once
-#include "TitleScene.h"
-
+#include "Scene.h"
 class SceneManager
 {
 	static SceneManager* __instance;

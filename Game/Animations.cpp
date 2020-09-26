@@ -12,6 +12,102 @@ void CAnimation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
+void CAnimation::OldRender( float x, float y, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+	}
+	frames[currentFrame]->GetSprite()->OldDraw(x, y, alpha);
+}
+
+void CAnimation::RenderGunFlip(float x, float y, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 4;
+		}
+	}
+
+	frames[currentFrame]->GetSprite()->OldDraw(x, y, alpha);
+}
+
+void CAnimation::RenderGunFlipTargetTop(float x, float y, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 4;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 4;
+		}
+	}
+
+	frames[currentFrame]->GetSprite()->OldDraw(x, y, alpha);
+}
+
+int CAnimation::GetFrameStopWalking()
+{
+	switch (currentFrame)
+	{
+	case SOPHIA_STOP_WALKING_SPRITE1_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE5_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE9_OF_LIST:
+		currentFrame = SOPHIA_STOP_WALKING_SPRITE2;
+		break;
+	case SOPHIA_STOP_WALKING_SPRITE2_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE6_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE10_OF_LIST:
+		currentFrame = SOPHIA_STOP_WALKING_SPRITE3;
+		break;
+	case SOPHIA_STOP_WALKING_SPRITE7_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE3_OF_LIST:
+	case SOPHIA_STOP_WALKING_SPRITE11_OF_LIST:
+		currentFrame = SOPHIA_STOP_WALKING_SPRITE4;
+		break;
+	default:
+		currentFrame = SOPHIA_STOP_WALKING_SPRITE1;
+		break;
+	}
+	return currentFrame;
+}
+
+void CAnimation::RenderFrame(int idFrame, float x, float y, int alpha)
+{
+	frames[idFrame]->GetSprite()->OldDraw(x, y, alpha);
+}
+
 void CAnimation::Render(int direction, float x, float y, int alpha)
 {
 	DWORD now = GetTickCount();
@@ -35,34 +131,8 @@ void CAnimation::Render(int direction, float x, float y, int alpha)
 	frames[currentFrame]->GetSprite()->Draw(direction, x, y, alpha);
 }
 
-void CAnimation::StartAnimation(int limitTime)
-{
-	int timerLimitTime = 0;
-	if (limitTime == -1)
-	{
-		for (int i = 0; i < frames.size(); i++)
-		{
-			timerLimitTime += frames[i]->GetTime();
-		}
-	}
-	else
-	{
-		timerLimitTime = limitTime;
-	}
 
-	animationTimer = new Timer(timerLimitTime);
-	animationTimer->Start();
-}
 
-bool CAnimation::IsRenderOver()
-{
-	bool b = animationTimer->IsTimeUp();
-	if (b)
-	{
-		animationTimer->Reset();
-	}
-	return b;
-}
 
 CAnimations* CAnimations::__instance = NULL;
 

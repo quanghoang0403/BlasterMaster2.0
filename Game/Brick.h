@@ -7,10 +7,7 @@
 class Brick : public Entity
 {
 public:
-	int brickType;
 
-	Brick(float posX, float posY, int brickType = 1);
-	~Brick();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

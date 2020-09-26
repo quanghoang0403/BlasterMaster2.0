@@ -25,32 +25,14 @@
     <Filter Include="Header Files\Framework">
       <UniqueIdentifier>{496b38b0-7661-49c3-ad29-317b094a382e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Effect">
-      <UniqueIdentifier>{e2c7bd3e-9c10-4a24-8e5e-7aeedc8fffc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Item">
-      <UniqueIdentifier>{82ac19fd-4d69-4855-aef4-d8c6f6f4c979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Weapon">
-      <UniqueIdentifier>{7ca2d45b-60bb-4eea-b748-c0887a22c441}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Framework\Render">
       <UniqueIdentifier>{fbff7130-a952-4b82-ad40-5fa6eb059ab4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\UI">
-      <UniqueIdentifier>{153ccbe5-bf92-4ca8-9ff1-fb71c44f2dae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Item\WeaponItem">
-      <UniqueIdentifier>{46ac5d4b-f9ef-42aa-965f-f6d25cc082f7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Object\Enemy">
       <UniqueIdentifier>{6d3d989e-924e-46e0-90ee-3047828e3fcf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Object\Obstacle">
       <UniqueIdentifier>{a755d5fd-5587-4d3c-8e61-784303fae2b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Object\HitableObstacle">
-      <UniqueIdentifier>{52c3f4d5-d017-4431-bd21-e100495b3088}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,179 +69,14 @@
     <ClInclude Include="define.h">
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="GameTime.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="BrickExplode.h">
-      <Filter>Header Files\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Fire.h">
-      <Filter>Header Files\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Hit.h">
-      <Filter>Header Files\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>Header Files\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Header Files\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBar.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Axe.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Bone.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Boomerang.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="MorningStar.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Dagger.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="StopWatch.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Pokeball.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="WaterPotion.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="BigHeart.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Drug.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallHeart.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="MoneyBags.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="CrystalBall.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Crown.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="YummiChickenLeg.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="UpgradeMorningStar.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemWaterPotion.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="Cross.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ExtraShot.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemBoomerang.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemAxe.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemDagger.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemStopWatch.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemPokeball.h">
-      <Filter>Header Files\Item\WeaponItem</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="BreakableBrick.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Bush.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingPlatform.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Stairs.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Candle.h">
-      <Filter>Header Files\Object\HitableObstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Torch.h">
-      <Filter>Header Files\Object\HitableObstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="DarkenBat.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Hunchman.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Knight.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Raven.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Skeleton.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="TheLastEverBat.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Bat.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files\Item</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardHandler.h">
       <Filter>Header Files\Framework</Filter>
@@ -302,176 +119,14 @@
     <ClCompile Include="define.cpp">
       <Filter>Header Files\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="GameTime.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="BrickExplode.cpp">
-      <Filter>Header Files\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Fire.cpp">
-      <Filter>Header Files\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>Header Files\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Header Files\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Hit.cpp">
-      <Filter>Header Files\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="IntroScene.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
-      <Filter>Header Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Header Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Header Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Axe.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Bone.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Boomerang.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Dagger.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="MorningStar.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Pokeball.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="StopWatch.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="WaterPotion.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Header Files\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="BigHeart.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Crown.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="CrystalBall.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Drug.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="MoneyBags.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="YummiChickenLeg.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="SmallHeart.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ExtraShot.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemAxe.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemBoomerang.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="Cross.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemDagger.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemPokeball.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemStopWatch.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemWaterPotion.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
-    </ClCompile>
-    <ClCompile Include="UpgradeMorningStar.cpp">
-      <Filter>Header Files\Item\WeaponItem</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Gate.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="BreakableBrick.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Bush.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Stairs.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingPlatform.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Torch.cpp">
-      <Filter>Header Files\Object\HitableObstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Candle.cpp">
-      <Filter>Header Files\Object\HitableObstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Bat.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="DarkenBat.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Hunchman.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Skeleton.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Raven.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="TheLastEverBat.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Header Files\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

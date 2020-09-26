@@ -4,14 +4,13 @@ Gate::Gate(float posX, float posY, int switchId, float simonPosX, float simonPos
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GATE));
 	tag = EntityType::GATE;
-	this->posX = posX;
-	this->posY = posY;
+	this->x = posX;
+	this->y = posY;
 	gateSwitchSceneId = switchId;
 	newSimonPosX = simonPosX;
 	newSimonPosY = simonPosY;
 	newSimonState = simonState;
 	isNeedResetCam = rsCam;
-	isStaticObj = true;
 }
 
 Gate::~Gate() {}
@@ -28,8 +27,8 @@ void Gate::Render()
 
 void Gate::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = posX;
-	t = posY;
-	r = posX + GATE_BBOX_WIDTH;
-	b = posY + GATE_BBOX_HEIGHT;
+	l = x;
+	t = y;
+	r = x + GATE_BBOX_WIDTH;
+	b = y + GATE_BBOX_HEIGHT;
 }

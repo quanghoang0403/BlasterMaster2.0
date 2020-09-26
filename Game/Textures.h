@@ -1,5 +1,7 @@
 #pragma once
 #include "Game.h"
+#include <unordered_map>
+#include <d3dx9.h>
 
 using namespace std;
 

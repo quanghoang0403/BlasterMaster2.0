@@ -86,10 +86,7 @@ void Render()
 
 	if (d3ddv->BeginScene())
 	{
-		if (playScene != NULL && !playScene->crossTimer->IsTimeUp() && rand() % 2 == 1)
-			d3ddv->ColorFill(bb, NULL, BGColorCrossing);
-		else
-			d3ddv->ColorFill(bb, NULL, BGColor);
+	d3ddv->ColorFill(bb, NULL, BGColor);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -157,6 +154,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//Test nhanh
 	SceneManager::GetInstance()->SetScene(new PlayScene());
 	//SceneManager::GetInstance()->SetScene(new TitleScene());
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	GameLoop();
 
 	return 0;

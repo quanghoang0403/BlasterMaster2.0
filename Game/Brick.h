@@ -1,8 +1,8 @@
 #pragma once
 #include "Entity.h"
 
-#define BRICK_BBOX_WIDTH  32
-#define BRICK_BBOX_HEIGHT 32
+#define BRICK_BBOX_WIDTH  16
+#define BRICK_BBOX_HEIGHT 16
 
 class Brick : public Entity
 {

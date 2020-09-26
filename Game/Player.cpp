@@ -345,9 +345,6 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	bottom = y + SOPHIA_JASON_BBOX_HEIGHT;
 }
 
-/*
-	Reset Mario status to the beginning state of a scene
-*/
 void Player::Reset()
 {
 	SetState(SOPHIA_STATE_IDLE);

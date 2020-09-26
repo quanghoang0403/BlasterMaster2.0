@@ -12,7 +12,6 @@
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
-
 #Brick
 1	10	150	22
 1	25	150	22
@@ -32,5 +31,5 @@
 1	235	150	22
 1	250	150	22
 1	265	150	22
-
-
+#Gate
+2	220	50	2	100	150	0

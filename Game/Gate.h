@@ -12,7 +12,7 @@ public:
 	float newSimonPosX, newSimonPosY;
 	int newSimonState;
 
-	Gate(float posX, float posY, int switchId, float simonPosX, float simonPosY, int simonState, bool rsCam);
+	Gate(float posX, float posY, int switchId, float playerPosX, float playerPosY, int playerState/*, bool rsCam*/);
 	~Gate();
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

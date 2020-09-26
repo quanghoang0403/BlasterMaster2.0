@@ -31,7 +31,6 @@ void CSprite::OldDraw( float x, float y, int alpha)
 }
 
 
-
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);

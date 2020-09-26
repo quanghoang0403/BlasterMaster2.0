@@ -30,10 +30,6 @@ protected:
 	int mapWidth, mapHeight;
 	int camMaxWidth;
 
-	int easterEgg_Stage2_1;	//bien dem khi pha gach stage 2-1
-	int easterEgg_Stage2_2;
-	int easterEgg_Stage3_2;
-
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
@@ -46,7 +42,7 @@ protected:
 
 	//Get stage objects' link and tilemap resources
 	void _ParseSection_SCENEFILEPATH(string line);
-	//void _ParseSection_TILEMAP(string line);
+
 
 public:
 	PlayScene();
@@ -58,12 +54,6 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
-
-
-
-	//bool PlayerCollideStairs();
-	//	bool PlayerCollideStairsEx();
 
 	friend class PlayScenceKeyHandler;
 };

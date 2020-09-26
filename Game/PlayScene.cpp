@@ -2,6 +2,7 @@
 #include "Textures.h"
 
 #define OBJECT_TYPE_BRICK	1
+#define OBJECT_TYPE_GATE	2
 
 PlayScene::PlayScene() : Scene()
 {
@@ -34,24 +35,11 @@ void PlayScene::ChooseMap(int whatMap)
 void PlayScene::Update(DWORD dt)
 {
 #pragma region Camera
-	/*float cx = player->GetPosX();
-
-	if (player->GetPosX() >= camMaxWidth)
-	{
-		cx -= SCREEN_WIDTH / 2 - (camMaxWidth - player->GetPosX());
-	}
-	else
-	{
-		if (player->GetPosX() < SCREEN_WIDTH / 2)
-			cx = 0;
-		else
-			cx -= SCREEN_WIDTH / 2;
-	}*/
 	float cx, cy;
 	player->GetPosition(cx, cy);
 	cx -= SCREEN_WIDTH / 2;
-	cy -= SCREEN_HEIGHT / 2; //lan can tai sao chia 2
-	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player //castlevania chua can
+	cy -= SCREEN_HEIGHT / 2; 
+	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
 #pragma endregion
 
 #pragma region Objects Updates
@@ -260,27 +248,6 @@ void PlayScene::_ParseSection_SCENEFILEPATH(string line)
 	//Hien tai chi lay mapWidth/Height cua list cuoi cung` :P co the dem vo tung file scene rieng de phan biet (hoac khong can, camera co chay toi duoc dau)
 }
 
-//void PlayScene::_ParseSection_TILEMAP(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 7) return;
-//
-//	//idStage
-//	//mapFilePath
-//	//Row of Map
-//	//Column of Map
-//	//tilesetFilePath
-//	//Row of Tileset
-//	//Column of Tileset
-//
-//	gameMap->LoadMap(atoi(tokens[0].c_str()),
-//		ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()),
-//		ToLPCWSTR(tokens[4]), atoi(tokens[5].c_str()), atoi(tokens[6].c_str()));
-//
-//	camMaxWidth = atoi(tokens[7].c_str());
-//}
-
 void PlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
@@ -298,16 +265,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	Entity* obj = NULL;
 	switch (object_type)
 	{
-	//case OBJECT_TYPE_CANDLE:
-	//{
-	//	int extras = atoi(tokens[3].c_str());
-
-	//	int gridCol = atoi(tokens[4].c_str());
-	//	int gridRow = atoi(tokens[5].c_str());
-	//	listObjectsToGrid.push_back(new Candle(x, y, extras));
-	//	gameGrid->AddToGrid(new Candle(x, y, extras), gridCol, gridRow);
-	//	break;
-	//}
 	case OBJECT_TYPE_BRICK:
 	{
 		obj = new Brick(); 
@@ -319,128 +276,17 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add brick !\n");
 		break;
 	}
-	//case OBJECT_TYPE_TORCH:
-	//{
-	//	int extras = atoi(tokens[3].c_str());
-
-	//	int gridCol = atoi(tokens[4].c_str());
-	//	int gridRow = atoi(tokens[5].c_str());
-	//	listObjectsToGrid.push_back(new Torch(x, y, extras));
-	//	gameGrid->AddToGrid(new Torch(x, y, extras), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_GATE:
-	//{
-	//	int extras1 = atoi(tokens[3].c_str());
-	//	float extras2 = atoi(tokens[4].c_str());
-	//	float extras3 = atoi(tokens[5].c_str());
-	//	int extras4 = atoi(tokens[6].c_str());
-	//	int extras5 = atoi(tokens[7].c_str());
-
-	//	int gridCol = atoi(tokens[8].c_str());
-	//	int gridRow = atoi(tokens[9].c_str());
-	//	listObjectsToGrid.push_back(new Gate(x, y, extras1, extras2, extras3, extras4, extras5));
-	//	gameGrid->AddToGrid(new Gate(x, y, extras1, extras2, extras3, extras4, extras5), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_STAIRS:
-	//{
-	//	int extras1 = atoi(tokens[3].c_str());
-	//	int isEx = atoi(tokens[4].c_str());
-	//	if (isEx == 0)
-	//		listStairs.push_back(new Stairs(x, y, extras1));
-	//	else
-	//		listStairsEx.push_back(new Stairs(x, y, extras1));
-	//	break;
-	//}
-	//case OBJECT_TYPE_DARKENBAT:
-	//{
-	//	//player tao truoc nen kh sao
-	//	int extras1 = atoi(tokens[3].c_str());
-
-	//	int gridCol = atoi(tokens[4].c_str());
-	//	int gridRow = atoi(tokens[5].c_str());
-	//	listObjectsToGrid.push_back(new DarkenBat(x, y, extras1, player));
-	//	gameGrid->AddToGrid(new DarkenBat(x, y, extras1, player), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_KNIGHT:
-	//{
-	//	int extras1 = atoi(tokens[3].c_str());
-	//	int extras2 = atoi(tokens[4].c_str());
-
-	//	int gridCol = atoi(tokens[5].c_str());
-	//	int gridRow = atoi(tokens[6].c_str());
-	//	listObjectsToGrid.push_back(new Knight(x, y, extras1, extras2));
-	//	gameGrid->AddToGrid(new Knight(x, y, extras1, extras2), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_BREAKABLEBRICK:
-	//{
-	//	int extras1 = atoi(tokens[3].c_str());
-
-	//	int gridCol = atoi(tokens[4].c_str());
-	//	int gridRow = atoi(tokens[5].c_str());
-	//	listObjectsToGrid.push_back(new BreakableBrick(x, y, extras1));
-	//	gameGrid->AddToGrid(new BreakableBrick(x, y, extras1), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_MOVING_PLATFORM:
-	//{
-	//	int gridCol = atoi(tokens[3].c_str());
-	//	int gridRow = atoi(tokens[4].c_str());
-	//	listObjectsToGrid.push_back(new MovingPlatform(x, y));
-	//	gameGrid->AddToGrid(new MovingPlatform(x, y), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_HUNCHMAN:
-	//{
-	//	int gridCol = atoi(tokens[3].c_str());
-	//	int gridRow = atoi(tokens[4].c_str());
-	//	//player tao truoc nen kh sao
-	//	listObjectsToGrid.push_back(new Hunchman(x, y, player));
-	//	gameGrid->AddToGrid(new Hunchman(x, y, player), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_RAVEN:
-	//{
-	//	//player tao truoc nen kh sao
-	//	int extras1 = atoi(tokens[3].c_str());
-	//	int extras2 = atoi(tokens[4].c_str());
-
-	//	int gridCol = atoi(tokens[5].c_str());
-	//	int gridRow = atoi(tokens[6].c_str());
-	//	listObjectsToGrid.push_back(new Raven(x, y, extras1, extras2, player));
-	//	gameGrid->AddToGrid(new Raven(x, y, extras1, extras2, player), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_SKELETON:
-	//{
-	//	int gridCol = atoi(tokens[3].c_str());
-	//	int gridRow = atoi(tokens[4].c_str());
-	//	//player tao truoc nen kh sao
-	//	listObjectsToGrid.push_back(new Skeleton(x, y, player));
-	//	gameGrid->AddToGrid(new Skeleton(x, y, player), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_BUSH:
-	//{
-	//	int gridCol = atoi(tokens[3].c_str());
-	//	int gridRow = atoi(tokens[4].c_str());
-	//	//player tao truoc nen kh sao
-	//	listObjectsToGrid.push_back(new Bush(x, y, player));
-	//	gameGrid->AddToGrid(new Bush(x, y, player), gridCol, gridRow);
-	//	break;
-	//}
-	//case OBJECT_TYPE_TLEBAT:
-	//{
-	//	int gridCol = atoi(tokens[3].c_str());
-	//	int gridRow = atoi(tokens[4].c_str());
-	//	//player tao truoc nen kh sao
-	//	listObjectsToGrid.push_back(new TheLastEverBat(x, y, player));
-	//	gameGrid->AddToGrid(new TheLastEverBat(x, y, player), gridCol, gridRow);
-	//	break;
-	//}
+	case OBJECT_TYPE_GATE:
+	{
+		int switchId = atoi(tokens[3].c_str());
+		float playerPosX = atoi(tokens[4].c_str());
+		float playerPosY = atoi(tokens[5].c_str());
+		int playerState = atoi(tokens[6].c_str());
+		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add gate !\n");
+		break;
+	}
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -568,7 +414,7 @@ void PlayScene::LoadSceneObjects()
 	}
 
 	f.close();
-
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 

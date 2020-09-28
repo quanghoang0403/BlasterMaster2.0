@@ -1,15 +1,15 @@
-//#include <Windows.h>
-//#include <d3d9.h>
-//#include <d3dx9.h>
-//#include <stdio.h>
-//#include <ctime>
-//
-//#include "Game.h"
-//#include "SceneManager.h"
-////Bat cai nay de test nhanh
-//#include "PlayScene.h"
-//
-//Game* game;
+#include <Windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <stdio.h>
+#include <ctime>
+
+#include "Game.h"
+#include "SceneManager.h"
+//Bat cai nay de test nhanh
+#include "PlayScene.h"
+
+Game* game;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

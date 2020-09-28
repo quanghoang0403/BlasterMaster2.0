@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Bullet.h"
 #include <map>
 
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
@@ -68,6 +69,10 @@ class Player : public Entity
 	bool isJumpHandle;
 	DWORD untouchable_start;
 
+	Bullet* mainBullet1;
+	Bullet* mainBullet2;
+	Bullet* mainBullet3;
+	Bullet* supBullet;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -94,6 +99,8 @@ public:
 	float GetDy() { return dy; }
 	float GetVy() { return vy; }
 	void Reset();
+
+	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

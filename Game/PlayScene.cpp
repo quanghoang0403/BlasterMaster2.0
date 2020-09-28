@@ -40,6 +40,7 @@ void PlayScene::Update(DWORD dt)
 	cx -= SCREEN_WIDTH / 2;
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
+
 #pragma endregion
 	PlayerGotGate();
 #pragma region Objects Updates
@@ -48,7 +49,7 @@ void PlayScene::Update(DWORD dt)
 		coObjects.push_back(listObjects[i]);
 	player->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Update(dt, &coObjects);	//Ignore Static Obstacle
+		listObjects[i]->Update(dt, &coObjects);	
 #pragma endregion
 }
 

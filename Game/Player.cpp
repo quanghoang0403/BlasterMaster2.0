@@ -55,16 +55,16 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma region Xử lý gun flip
 	if (isPressFlipGun == false)
 	{
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_1)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_2)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_3)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_4)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_1)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_2)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_3)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_4)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_RIGHT)->ResetFrame();
-		animationSet->at(SOPHIA_ANI_GUN_FLIP_LEFT)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_1)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_2)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_3)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_4)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_1)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_2)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_3)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_4)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_RIGHT)->ResetCurrentFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_LEFT)->ResetCurrentFrame();
 	}
 #pragma endregion
 

@@ -46,7 +46,7 @@ public:
 	int GetFrameStopWalking();
 	int GetFrame() { return currentFrame; }
 	void SetFrame(int current_Frame) { currentFrame = current_Frame; }
-	void ResetFrame() { currentFrame = -1; }
+	void ResetCurrentFrame() { currentFrame = -1; }
 	void Render(int direction, float x, float y, int alpha = 255);
 	void OldRender(float x, float y, int alpha = 255);
 	void RenderGunFlip(float x, float y, int alpha = 255);

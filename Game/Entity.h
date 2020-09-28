@@ -61,7 +61,7 @@ public:
 
 	DWORD dt;
 	EntityType tag;
-	LPANIMATION_SET animation_set;
+	LPANIMATION_SET animationSet;
 
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -72,10 +72,10 @@ public:
 	float GetPosY() { return y; }
 
 	int GetState() { return this->state; }
-
+	EntityType GetType() { return tag; }
 	void RenderBoundingBox();
 
-	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimationSet(LPANIMATION_SET ani_set) { animationSet = ani_set; }
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEENTITY coO);
 	void CalcPotentialCollisions(vector<LPGAMEENTITY>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
@@ -90,7 +90,7 @@ public:
 		float& rdy);
 
 	Entity();
-
+	virtual bool IsCollidingObject(Entity* Obj);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects = NULL);
 	virtual void Render() = 0;

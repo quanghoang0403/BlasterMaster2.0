@@ -81,6 +81,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	virtual void Render();
 
+	void SetDirection(int d) { direction = d; }
 	void SetState(int state);
 	void SetPressSpace() { isPressJump = 1; }
 	void SetPressUp(bool a) { isPressFlipGun = a; }

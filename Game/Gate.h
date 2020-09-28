@@ -9,10 +9,10 @@ class Gate : public Entity
 	int gateSwitchSceneId;	//Gate nay se dan~ den scene nao
 public:
 	bool isNeedResetCam;
-	float newSimonPosX, newSimonPosY;
-	int newSimonState;
+	float newPlayerPosX, newPlayerPosY;
+	int newPlayerState;
 
-	Gate(float posX, float posY, int switchId, float playerPosX, float playerPosY, int playerState/*, bool rsCam*/);
+	Gate(float posX, float posY, int switchId, float playerPosX, float playerPosY, int playerState, bool rsCam);
 	~Gate();
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

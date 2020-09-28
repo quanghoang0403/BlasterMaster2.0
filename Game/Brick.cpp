@@ -1,8 +1,12 @@
 #include "Brick.h"
+Brick::Brick()
+{
+	tag = EntityType::BRICK;
+}
 
 void Brick::Render()
 {
-	animation_set->at(0)->OldRender(x, y);
+	animationSet->at(0)->OldRender(x, y);
 	RenderBoundingBox();
 }
 

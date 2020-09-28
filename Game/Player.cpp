@@ -55,16 +55,16 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma region Xử lý gun flip
 	if (isPressFlipGun == false)
 	{
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_1)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_2)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_3)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_4)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_1)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_2)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_3)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_4)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_RIGHT)->ResetFrame();
-		animation_set->at(SOPHIA_ANI_GUN_FLIP_LEFT)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_1)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_2)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_3)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_RIGHT_4)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_1)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_2)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_3)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_4)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_RIGHT)->ResetFrame();
+		animationSet->at(SOPHIA_ANI_GUN_FLIP_LEFT)->ResetFrame();
 	}
 #pragma endregion
 
@@ -104,7 +104,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
 
-		// block every object first!
+		//block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
@@ -114,6 +114,30 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		{
 			isJumping = false;
 		}
+
+		/*for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (e->obj->GetType() == EntityType::BRICK)
+			{
+				x += min_tx * dx + nx * 0.4f;
+				y += min_ty * dy + ny * 0.4f;
+				if (e->ny != 0)
+				{
+
+					if (e->ny == -1)
+					{
+						vy = 0;
+						isJumping = false;
+					}
+				
+					if (e->nx != 0)
+					{
+						vx = 0;
+					}
+				}
+			}
+		}*/
 	}
 
 	// clean up collision events
@@ -149,7 +173,7 @@ void Player::Render()
 			if (direction > 0)
 			{
 				//idle theo walking
-				current_frame = animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrameStopWalking();
+				current_frame = animationSet->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrameStopWalking();
 				switch (current_frame)
 				{
 				case SOPHIA_STOP_WALKING_SPRITE2:
@@ -168,7 +192,7 @@ void Player::Render()
 			}
 			else
 			{
-				current_frame = animation_set->at(SOPHIA_ANI_JASON_WALKING_LEFT)->GetFrameStopWalking();
+				current_frame = animationSet->at(SOPHIA_ANI_JASON_WALKING_LEFT)->GetFrameStopWalking();
 				switch (current_frame)
 				{
 				case SOPHIA_STOP_WALKING_SPRITE2:
@@ -188,8 +212,8 @@ void Player::Render()
 
 			if (isGunFlipping == false)
 			{
-				animation_set->at(ani)->OldRender(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
-				if (animation_set->at(ani)->GetFrame() == 1)
+				animationSet->at(ani)->OldRender(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
+				if (animationSet->at(ani)->GetFrame() == 1)
 				{
 					//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrame());
 					isGunFlipping = true;
@@ -199,7 +223,7 @@ void Player::Render()
 			}
 			else
 			{
-				animation_set->at(ani)->RenderFrame(1, x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
+				animationSet->at(ani)->RenderFrame(1, x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
 				return;
 			}
 		}
@@ -210,8 +234,8 @@ void Player::Render()
 
 		if (isGunFlipping == false)
 		{
-			animation_set->at(ani)->RenderGunFlip(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
-			if (animation_set->at(ani)->GetFrame() > 3)
+			animationSet->at(ani)->RenderGunFlip(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
+			if (animationSet->at(ani)->GetFrame() > 3)
 			{
 				//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrame());
 				isGunFlipping = true;
@@ -220,7 +244,7 @@ void Player::Render()
 		}
 		else
 		{
-			animation_set->at(ani)->RenderGunFlipTargetTop(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
+			animationSet->at(ani)->RenderGunFlipTargetTop(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
 			return;
 		}
 	}
@@ -234,22 +258,22 @@ void Player::Render()
 				if (direction > 0)
 				{
 					ani = SOPHIA_ANI_JASON_WALKING_RIGHT;
-					current_frame = animation_set->at(ani)->GetFrameStopWalking();
+					current_frame = animationSet->at(ani)->GetFrameStopWalking();
 					//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrameStopWalking());
 				}
 				else
 				{
 					ani = SOPHIA_ANI_JASON_WALKING_LEFT;
-					current_frame = animation_set->at(ani)->GetFrameStopWalking();
+					current_frame = animationSet->at(ani)->GetFrameStopWalking();
 				}
-				animation_set->at(ani)->RenderFrame(current_frame, x, y, alpha);// ve frame idle
+				animationSet->at(ani)->RenderFrame(current_frame, x, y, alpha);// ve frame idle
 				isGunFlipping = false;
 				return;
 			}
 			else if (vx > 0)
 				ani = SOPHIA_ANI_JASON_WALKING_RIGHT;
 			else ani = SOPHIA_ANI_JASON_WALKING_LEFT;
-			animation_set->at(ani)->OldRender(x, y, alpha);
+			animationSet->at(ani)->OldRender(x, y, alpha);
 			isGunFlipping = false;
 		}
 		else
@@ -275,7 +299,7 @@ void Player::Render()
 				else ani = SOPHIA_ANI_JASON_JUMP_UP_WALKING_LEFT;
 			}
 			isGunFlipping = false;
-			animation_set->at(ani)->OldRender(x, y, alpha);
+			animationSet->at(ani)->OldRender(x, y, alpha);
 			return;
 		}
 	}

@@ -50,6 +50,8 @@ public:
 	void LoadBaseObjects();
 	void LoadBaseTextures();
 	void ChooseMap(int whatStage);
+	bool PlayerPassingStage(float DistanceXWant, int directionGo);
+	void PlayerGotGate();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();

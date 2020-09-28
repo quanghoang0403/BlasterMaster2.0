@@ -41,7 +41,7 @@ void PlayScene::Update(DWORD dt)
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
 #pragma endregion
-
+	PlayerGotGate();
 #pragma region Objects Updates
 	vector<LPGAMEENTITY> coObjects;
 	for (int i = 0; i < listObjects.size(); i++)
@@ -50,6 +50,72 @@ void PlayScene::Update(DWORD dt)
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Update(dt, &coObjects);	//Ignore Static Obstacle
 #pragma endregion
+}
+
+bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
+{
+	if (directionGo == 1)	//cua o ben phai
+	{
+		if (player->GetPosX() < DistanceXWant)
+		{
+			player->SetDirection(directionGo);
+			player->SetState(SOPHIA_STATE_IDLE);
+			return false;
+		}
+	}
+	else
+		if (directionGo == -1)	//cua o ben trai
+		{
+			if (player->GetPosX() > DistanceXWant)
+			{
+				player->SetDirection(directionGo);
+				player->SetState(SOPHIA_STATE_IDLE);
+				return false;
+			}
+		}
+	return true;
+}
+
+void PlayScene::PlayerGotGate()
+{
+	for (UINT i = 0; i < listObjects.size(); i++)
+	{
+		if (listObjects[i]->GetType() == EntityType::GATE)
+		{
+			if (player->IsCollidingObject(listObjects[i]))
+			{
+        		Gate* gate = dynamic_cast<Gate*>(listObjects[i]);
+				int tempMap = gate->GetIdScene() * STAGE_1;
+				float tempPosX = gate->newPlayerPosX;
+				float tempPosY = gate->newPlayerPosY;
+				int tempState = gate->newPlayerState;
+				bool tempNeed = gate->isNeedResetCam;
+				/*if (idStage == STAGE_1)
+				{
+					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 20.0f, 1))
+						return;
+				}
+				else if (idStage == STAGE_2_2 && tempMap == STAGE_3_1)
+				{
+					if (!PlayerPassingStage(listObjects[i]->GetPosX(), -1))
+						return;
+				}
+				else if (idStage == STAGE_3_2 && tempMap == STAGE_4)
+				{
+					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 10.0f, 1))
+						return;
+				}*/
+				Unload();
+				if(tempNeed)
+					gameCamera->SetCamPos(0, 0);
+				ChooseMap(tempMap);
+				player->SetPosition(tempPosX, tempPosY);
+				player->SetVx(0);
+				player->SetVy(0);
+				player->SetState(tempState);
+			}
+		}
+	}
 }
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
@@ -282,7 +348,8 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float playerPosX = atoi(tokens[4].c_str());
 		float playerPosY = atoi(tokens[5].c_str());
 		int playerState = atoi(tokens[6].c_str());
-		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState);
+		int isResetCamera = atoi(tokens[7].c_str());
+		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add gate !\n");
 		break;

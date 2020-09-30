@@ -1,10 +1,8 @@
 #include "Bullet.h"
 Bullet::Bullet()
 {
-	//SetState(CENTIPEDE_STATE_WALKING);
 	isDone = true;
 	damage = 1;
-	isDone = false;
 }
 
 Bullet::~Bullet()

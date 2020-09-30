@@ -20,6 +20,29 @@ void PlayScene::LoadBaseObjects()
 		player = new Player(17, 115);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
+	if (bullet1 == NULL)
+	{
+		bullet1 = new SmallJasonBullet();
+		listBullets.push_back(bullet1);
+		DebugOut(L"[INFO] Bullet1 CREATED! \n");
+	}
+	if (bullet2 == NULL)
+	{
+		bullet2 = new SmallJasonBullet();
+		listBullets.push_back(bullet2);
+		DebugOut(L"[INFO] Bullet2 CREATED! \n");
+	}
+	if (bullet3 == NULL)
+	{
+		bullet3 = new SmallJasonBullet();
+		listBullets.push_back(bullet3);
+		DebugOut(L"[INFO] Bullet3 CREATED! \n");
+	}
+	//if (supBullet == NULL)
+	//{
+	//	//bullet1 = new Bullet(0, 115);
+	//	DebugOut(L"[INFO] supBullet CREATED! \n");
+	//}
 	gameCamera = Camera::GetInstance();
 }
 
@@ -48,6 +71,8 @@ void PlayScene::Update(DWORD dt)
 	for (int i = 0; i < listObjects.size(); i++)
 		coObjects.push_back(listObjects[i]);
 	player->Update(dt, &coObjects);
+	for (int i = 0; i < listBullets.size(); i++)
+		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Update(dt, &coObjects);	
 #pragma endregion
@@ -121,19 +146,33 @@ void PlayScene::PlayerGotGate()
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-
 	Player* player = ((PlayScene*)scence)->player;
+	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
-	vector<LPGAMEENTITY> listObj = ((PlayScene*)scence)->listObjects;
-
+	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	switch (KeyCode)
 	{
+
 	case DIK_SPACE:
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
 	case DIK_A:
 		player->Reset();
+		break;
+	case DIK_Z:
+		DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+		float x, y;
+		int direction, isTargetTop;
+		player->GetInfoForBullet(direction, isTargetTop, x, y);
+		for (int i = 0; i < listBullets.size(); i++)
+		{
+			if (listBullets[i]->isDone == true)
+			{
+				listBullets[i]->Fire(direction, isTargetTop, x, y);
+				break;
+			}
+		}
 		break;
 	}
 }
@@ -160,8 +199,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
-
-
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		player->SetState(SOPHIA_STATE_WALKING_RIGHT);
 	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
@@ -500,5 +537,7 @@ void PlayScene::Render()
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	player->Render();
+	for (int i = 0; i < listBullets.size(); i++)
+		listBullets[i]->Render();
 }
 

@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Gate.h"
+#include "SmallJasonBullet.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -22,8 +24,13 @@ class PlayScene : public Scene
 {
 protected:
 	Player* player;
-	std::vector<LPGAMEENTITY> listObjects;
-	std::vector<LPCWSTR> listSceneFilePath;
+	Bullet* bullet1;
+	Bullet* bullet2;
+	Bullet* bullet3;
+	Bullet* supBullet;
+	vector<LPGAMEENTITY> listObjects;
+	vector<LPBULLET> listBullets;
+	vector<LPCWSTR> listSceneFilePath;
 	Camera* gameCamera;
 
 	int idStage;

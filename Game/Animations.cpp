@@ -127,7 +127,6 @@ void CAnimation::Render(int direction, float x, float y, int alpha)
 		}
 
 	}
-
 	frames[currentFrame]->GetSprite()->Draw(direction, x, y, alpha);
 }
 

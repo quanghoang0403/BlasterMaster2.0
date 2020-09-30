@@ -87,7 +87,7 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="SmallJason.h">
+    <ClInclude Include="SmallJasonBullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,7 +140,7 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="SmallJason.cpp">
+    <ClCompile Include="SmallJasonBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
   </ItemGroup>

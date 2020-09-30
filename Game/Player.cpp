@@ -97,7 +97,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		float rdx = 0;
 		float rdy = 0;
 
-		// TODO: This is a very ugly designed function!!!!
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
@@ -105,17 +104,17 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		//	x += nx*abs(rdx); 
 
 		//block every object first!
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		//x += min_tx * dx + nx * 0.4f;
+		//y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
-		if (ny < 0)
-		{
-			isJumping = false;
-		}
+		//if (nx != 0) vx = 0;
+		//if (ny != 0) vy = 0;
+		//if (ny < 0)
+		//{
+		//	isJumping = false;
+		//}
 
-		/*for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (e->obj->GetType() == EntityType::BRICK)
@@ -137,7 +136,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
-		}*/
+		}
 	}
 
 	// clean up collision events

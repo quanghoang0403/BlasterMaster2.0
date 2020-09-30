@@ -201,28 +201,26 @@ void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int t
 
 void Game::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 pos(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
+	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
 	RECT r;
 	r.left = left;
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	D3DXVECTOR3 origin((float)(right - left) / 2, (float)(bottom - top) / 2, 0);
 
 	D3DXMATRIX oldMatrix;
 	D3DXMATRIX newMatrix;
 
 	D3DXVECTOR2 scaling;
 	if (direction > 0)
-		scaling = D3DXVECTOR2(-1, 1);
-	else
 		scaling = D3DXVECTOR2(1, 1);
+	else
+		scaling = D3DXVECTOR2(-1, 1);
 
-	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(pos.x, pos.y), 0, &scaling, NULL, 0, NULL);
+	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x + (float)(right - left) / 2, p.y + (float)(bottom - top) / 2), 0, &scaling, NULL, 0, NULL);
 	spriteHandler->GetTransform(&oldMatrix);
 	spriteHandler->SetTransform(&newMatrix);
-
-	spriteHandler->Draw(texture, &r, &origin, &pos, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 
 	spriteHandler->SetTransform(&oldMatrix);
 }

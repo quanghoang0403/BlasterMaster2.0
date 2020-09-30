@@ -99,6 +99,7 @@ public:
 	float GetDy() { return dy; }
 	float GetVy() { return vy; }
 	void Reset();
+	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerPosX, float& playerPosY) { direct = direction; isTargetTop = isGunFlipping; playerPosX = x; playerPosY = y; }
 
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 

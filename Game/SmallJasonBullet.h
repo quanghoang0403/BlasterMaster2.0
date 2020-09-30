@@ -11,6 +11,7 @@
 #define SMALL_BULLET_JASON_BANG_ANI		2
 
 #define ANIMATION_SET_SMALL_JASON_BULLET		4
+#define SMALL_JASON_BULLET_DELAY				1260
 
 class SmallJasonBullet : public Bullet
 {

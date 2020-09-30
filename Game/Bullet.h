@@ -27,13 +27,11 @@ class Bullet : public Entity
 {
 public:
 	bool isDone;
-	/*bool isReceivedPos;
-	float timeDelayed, timeDelayMax;*/
-	float timeDelayed;
 	int damage;
 	int isTargetTop;
 	int alpha;
 	int isCollision;
+	float timeDelayed, timeDelayMax;
 
 public:
 	Bullet();

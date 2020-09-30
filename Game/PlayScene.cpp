@@ -17,7 +17,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(17, 115);
+		player = new Player(17, 25);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
 	if (bullet1 == NULL)
@@ -158,7 +158,10 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
 	case DIK_A:
-		player->Reset();
+		playScene->Unload();
+		playScene->ChooseMap(STAGE_1);
+		player->SetPosition(6, 60);
+		/*player->Reset();*/
 		break;
 	case DIK_Z:
 		DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -198,6 +201,7 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	Player* player = ((PlayScene*)scence)->player;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		player->SetState(SOPHIA_STATE_WALKING_RIGHT);
@@ -224,7 +228,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_Z))
 	{
-		//bullet->SetState(BULLET_JASON_STATE_FIRE);
 	}
 }
 

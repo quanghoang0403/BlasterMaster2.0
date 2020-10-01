@@ -22,27 +22,27 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (bullet1 == NULL)
 	{
-		bullet1 = new SmallJasonBullet();
+		bullet1 = new MainJasonBullet();
 		listBullets.push_back(bullet1);
 		DebugOut(L"[INFO] Bullet1 CREATED! \n");
 	}
 	if (bullet2 == NULL)
 	{
-		bullet2 = new SmallJasonBullet();
+		bullet2 = new MainJasonBullet();
 		listBullets.push_back(bullet2);
 		DebugOut(L"[INFO] Bullet2 CREATED! \n");
 	}
 	if (bullet3 == NULL)
 	{
-		bullet3 = new SmallJasonBullet();
+		bullet3 = new MainJasonBullet();
 		listBullets.push_back(bullet3);
 		DebugOut(L"[INFO] Bullet3 CREATED! \n");
 	}
-	//if (supBullet == NULL)
-	//{
-	//	//bullet1 = new Bullet(0, 115);
-	//	DebugOut(L"[INFO] supBullet CREATED! \n");
-	//}
+	if (supBullet == NULL)
+	{
+		supBullet = new ElectricBullet();
+		DebugOut(L"[INFO] supBullet CREATED! \n");
+	}
 	gameCamera = Camera::GetInstance();
 }
 
@@ -71,6 +71,7 @@ void PlayScene::Update(DWORD dt)
 	for (int i = 0; i < listObjects.size(); i++)
 		coObjects.push_back(listObjects[i]);
 	player->Update(dt, &coObjects);
+	supBullet->Update(dt, &coObjects);
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
@@ -146,11 +147,16 @@ void PlayScene::PlayerGotGate()
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
+	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
+	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
+	float x, y;
+	int direction, isTargetTop;
+	player->GetInfoForBullet(direction, isTargetTop, x, y);
 	switch (KeyCode)
 	{
 
@@ -164,10 +170,6 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		/*player->Reset();*/
 		break;
 	case DIK_Z:
-		DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-		float x, y;
-		int direction, isTargetTop;
-		player->GetInfoForBullet(direction, isTargetTop, x, y);
 		for (int i = 0; i < listBullets.size(); i++)
 		{
 			if (listBullets[i]->isDone == true)
@@ -176,6 +178,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				break;
 			}
 		}
+		break;
+	case DIK_X:
+		supBullet->Fire(direction, isTargetTop, x, y);
 		break;
 	}
 }
@@ -540,6 +545,7 @@ void PlayScene::Render()
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	player->Render();
+	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
 }

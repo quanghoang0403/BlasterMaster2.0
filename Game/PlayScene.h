@@ -12,7 +12,8 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Gate.h"
-#include "SmallJasonBullet.h"
+#include "MainJasonBullet.h"
+#include "ElectricBullet.h"
 
 
 #include <iostream>

@@ -28,14 +28,14 @@
     <Filter Include="Header Files\Framework\Render">
       <UniqueIdentifier>{fbff7130-a952-4b82-ad40-5fa6eb059ab4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Enemy">
-      <UniqueIdentifier>{6d3d989e-924e-46e0-90ee-3047828e3fcf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Object\Obstacle">
       <UniqueIdentifier>{a755d5fd-5587-4d3c-8e61-784303fae2b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Bullet">
       <UniqueIdentifier>{7cd8f235-241c-4b50-bec5-d0a7688014c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Enemy">
+      <UniqueIdentifier>{6d3d989e-924e-46e0-90ee-3047828e3fcf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +87,10 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="SmallJasonBullet.h">
+    <ClInclude Include="MainJasonBullet.h">
+      <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ElectricBullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,7 +143,10 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="SmallJasonBullet.cpp">
+    <ClCompile Include="MainJasonBullet.cpp">
+      <Filter>Header Files\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ElectricBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
   </ItemGroup>

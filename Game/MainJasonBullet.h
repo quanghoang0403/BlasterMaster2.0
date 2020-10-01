@@ -3,21 +3,30 @@
 #include <math.h>
 
 #define BULLET_SPEED					0.25f
+
 #define SMALL_BULLET_BBOX_WIDTH			8
 #define SMALL_BULLET_BBOX_HEIGHT		6
 
+#define BIG_BULLET_BBOX_WIDTH			22
+#define BIG_BULLET_BBOX_HEIGHT			6
+
+
 #define SMALL_BULLET_JASON_ANI_RIGHT	0
 #define SMALL_BULLET_JASON_ANI_TOP		1
-#define SMALL_BULLET_JASON_BANG_ANI		2
+
+#define BIG_BULLET_JASON_ANI_RIGHT		2
+#define BIG_BULLET_JASON_ANI_TOP		3
+
+#define SMALL_BULLET_JASON_BANG_ANI		4
 
 #define ANIMATION_SET_SMALL_JASON_BULLET		4
 #define SMALL_JASON_BULLET_DELAY				1260
 
-class SmallJasonBullet : public Bullet
+class MainJasonBullet : public Bullet
 {
 public:
-	SmallJasonBullet();
-	~SmallJasonBullet();
+	MainJasonBullet();
+	~MainJasonBullet();
 
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

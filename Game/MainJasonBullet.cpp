@@ -1,6 +1,6 @@
-﻿#include "SmallJasonBullet.h"
+﻿#include "MainJasonBullet.h"
 
-SmallJasonBullet::SmallJasonBullet()
+MainJasonBullet::MainJasonBullet()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_SMALL_JASON_BULLET));
 	x = 0;
@@ -12,9 +12,9 @@ SmallJasonBullet::SmallJasonBullet()
 	timeDelayMax = SMALL_JASON_BULLET_DELAY;
 }
 
-SmallJasonBullet::~SmallJasonBullet() {}
+MainJasonBullet::~MainJasonBullet() {}
 
-void SmallJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
+void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
 	if (isDone == true)
 	{
@@ -74,7 +74,7 @@ void SmallJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	}
 }
 
-void SmallJasonBullet::Render()
+void MainJasonBullet::Render()
 {
 	RenderBoundingBox();
 	int ani;
@@ -111,7 +111,7 @@ void SmallJasonBullet::Render()
 	}
 }
 
-void SmallJasonBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
+void MainJasonBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;

@@ -12,6 +12,9 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Gate.h"
+
+#include "Centipede.h"
+
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
 

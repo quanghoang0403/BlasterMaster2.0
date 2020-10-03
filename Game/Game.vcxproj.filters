@@ -72,9 +72,6 @@
     <ClInclude Include="define.h">
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
@@ -92,6 +89,12 @@
     </ClInclude>
     <ClInclude Include="ElectricBullet.h">
       <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Centipede.h">
+      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="ElectricBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Centipede.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

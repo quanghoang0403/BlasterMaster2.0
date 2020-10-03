@@ -1,8 +1,9 @@
 #include "PlayScene.h"
 #include "Textures.h"
 
-#define OBJECT_TYPE_BRICK	1
-#define OBJECT_TYPE_GATE	2
+#define OBJECT_TYPE_BRICK		1
+#define OBJECT_TYPE_GATE		2
+#define OBJECT_TYPE_CENTIPEDE	10
 
 PlayScene::PlayScene() : Scene()
 {
@@ -17,7 +18,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(17, 25);
+		player = new Player(0, 25);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
 	if (bullet1 == NULL)
@@ -58,9 +59,21 @@ void PlayScene::ChooseMap(int whatMap)
 void PlayScene::Update(DWORD dt)
 {
 #pragma region Camera
+
 	float cx, cy;
 	player->GetPosition(cx, cy);
-	cx -= SCREEN_WIDTH / 2;
+	if (player->GetPosX() + SCREEN_WIDTH / 2  >= mapWidth)
+	{
+		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->GetPosX());
+		cx -= mapWidth - SCREEN_WIDTH / 2;
+	}
+	else
+	{
+		if (player->GetPosX() < SCREEN_WIDTH / 2)
+			cx = 0;
+		else
+			cx -= SCREEN_WIDTH / 2;
+	}
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
 
@@ -159,7 +172,6 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
 	switch (KeyCode)
 	{
-
 	case DIK_SPACE:
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
@@ -400,6 +412,17 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add gate !\n");
 		break;
 	}
+	case OBJECT_TYPE_CENTIPEDE:
+	{
+		obj = new Centipede();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add centipede !\n");
+		break;
+	}
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -437,6 +460,9 @@ void PlayScene::LoadBaseTextures()
 		}
 		if (line == "[SCENE]") {
 			section = SCENE_SECTION_SCENEFILEPATH; continue;
+		}
+		if (line == "[MAPTEXTURES]") {
+			section = SCENE_SECTION_MAPTEXTURES; continue;
 		}
 
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
@@ -542,6 +568,8 @@ void PlayScene::Unload()
 void PlayScene::Render()
 {
 	//gameMap->Draw();
+	LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
+	Game::GetInstance()->OldDraw(0,0, maptextures,0,0,mapWidth, mapHeight);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	player->Render();

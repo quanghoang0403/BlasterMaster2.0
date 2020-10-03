@@ -1,12 +1,12 @@
 # Id	FilePath			R	G	B
 [TEXTURES]
-0	Resources/bbox.png	255	255	255
-1	Resources/item.png	255	255	255
-10	Resources/sophia_die.png	176	224	248
-20	Resources/misc.png	176	224	248
-30	Resources/jssophia.png	255	255	255
-40	Resources/enemies.png	255	255	255
-
+0	Resources/bbox.png	255	255	0
+1	Resources/item.png	255	255	0
+10	Resources/sophia_die.png	176	0	248
+20	Resources/misc.png	176	224	0
+30	Resources/jssophia.png	255	0	255
+40	Resources/Enemy/enemies.png	255	0	255
+11	Resources/Scene/area2_A.png	255	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 ##============ SOPHIA JASON =================
@@ -200,7 +200,7 @@
 
 [SCENE]
 #Stage1
-Resources/Scene/scene1.txt	1575	490
+Resources/Scene/scene1.txt	512	120
 #Stage2_1
 Resources/Scene/scene2_1.txt	525	490
 #Stage2_2
@@ -214,3 +214,5 @@ Resources/Scene/scene4.txt	1575	490
 #Test
 Resources/Scene/scene1.txt	1575	490
 Resources/Scene/scene3_1.txt	1575	490
+
+

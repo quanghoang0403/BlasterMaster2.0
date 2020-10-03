@@ -53,7 +53,7 @@ public:
 
 	float vx;
 	float vy;
-
+	int health;
 
 	int direction;
 

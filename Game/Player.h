@@ -7,8 +7,8 @@
 #define SOPHIA_WALKING_SPEED			0.1f 
 #define SOPHIA_WALKING_SPEED_BONUS		0.003f//0.007f
 
-#define SOPHIA_JUMP_SPEED_Y				0.23f
-#define SOPHIA_JUMP_SPEED_Y_BONUS		0.45f
+#define SOPHIA_JUMP_SPEED_Y				0.223f
+//#define SOPHIA_JUMP_SPEED_Y_BONUS		0.45f
 #define SOPHIA_JUMP_DEFLECT_SPEED		0.10f
 #define SOPHIA_GRAVITY					0.0004f
 #define SOPHIA_DIE_DEFLECT_SPEED		0.5f
@@ -58,7 +58,7 @@
 
 #define MARIO_UNTOUCHABLE_TIME 5000
 
-#define HIGHT_LEVER1 48
+#define HIGHT_LEVER1 43
 
 class Player : public Entity
 {

@@ -8,6 +8,8 @@ using namespace std;
 /*
 	Manage texture database
 */
+class CTextures;
+//typedef CTextures* LPTEXTURE;
 class CTextures
 {
 	static CTextures* __instance;

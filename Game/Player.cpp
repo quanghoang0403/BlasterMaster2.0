@@ -18,6 +18,7 @@ Player::Player(float x, float y) : Entity()
 	this->x = x;
 	this->y = y;
 	backup_JumpY = 0;
+	health = 7;
 }
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)

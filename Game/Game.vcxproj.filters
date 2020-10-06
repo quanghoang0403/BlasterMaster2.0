@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Object\Enemy">
       <UniqueIdentifier>{6d3d989e-924e-46e0-90ee-3047828e3fcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\HUD">
+      <UniqueIdentifier>{5f26b995-23e6-45a1-ae55-5c4da8a32692}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -96,6 +99,12 @@
     <ClInclude Include="Centipede.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>Header Files\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Header Files\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -154,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="Centipede.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Header Files\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Header Files\HUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

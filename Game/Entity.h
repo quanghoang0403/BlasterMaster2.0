@@ -72,6 +72,9 @@ public:
 	float GetPosY() { return y; }
 
 	int GetState() { return this->state; }
+	int GetHealth() { return health; }
+	void SetHealth(int value) { health = value; }
+	void AddHealth(int BonusHealth) { health += BonusHealth; }
 	EntityType GetType() { return tag; }
 	void RenderBoundingBox();
 

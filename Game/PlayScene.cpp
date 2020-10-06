@@ -21,6 +21,7 @@ void PlayScene::LoadBaseObjects()
 		player = new Player(0, 25);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
+	gameHUD = new HUD(player->GetHealth(), player->GetHealth());
 	if (bullet1 == NULL)
 	{
 		bullet1 = new MainJasonBullet();
@@ -576,5 +577,6 @@ void PlayScene::Render()
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
+	gameHUD->Render(player);
 }
 

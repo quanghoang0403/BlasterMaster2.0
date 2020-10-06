@@ -10,6 +10,7 @@
 #include "Camera.h"
 
 #include "Player.h"
+#include "HUD.h"
 #include "Brick.h"
 #include "Gate.h"
 
@@ -28,6 +29,7 @@ class PlayScene : public Scene
 {
 protected:
 	Player* player;
+	HUD* gameHUD;
 	Bullet* bullet1;
 	Bullet* bullet2;
 	Bullet* bullet3;

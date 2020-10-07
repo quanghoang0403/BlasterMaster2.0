@@ -55,15 +55,22 @@ public:
 	float vy;
 	int health;
 
+	int nx;
+
 	int direction;
 
 	int state;
+
+	int bbARGB;
 
 	DWORD dt;
 	EntityType tag;
 	LPANIMATION_SET animationSet;
 
 public:
+	
+	
+	
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
@@ -73,7 +80,12 @@ public:
 
 	int GetState() { return this->state; }
 	EntityType GetType() { return tag; }
+
+	RECT GetBBox();
 	void RenderBoundingBox();
+	void SetBBARGB(int x) { bbARGB = x; }
+	int GetBBARGB() { return bbARGB; }
+
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animationSet = ani_set; }
 
@@ -95,6 +107,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+	
 
 
 	~Entity();

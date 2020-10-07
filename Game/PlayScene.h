@@ -14,6 +14,8 @@
 #include "Gate.h"
 
 #include "Centipede.h"
+#include "Golem.h"
+#include "Gunner.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
@@ -21,6 +23,8 @@
 
 #include <iostream>
 #include <fstream>
+
+#include"Entity.h"
 
 using namespace std;
 

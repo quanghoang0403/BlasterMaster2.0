@@ -1,24 +1,22 @@
-﻿#include "Centipede.h"
-Centipede::Centipede()
-{
-	SetState(CENTIPEDE_STATE_WALKING);
-}
+﻿#include "Gunner.h"
 
-void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void Gunner::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = x + CENTIPEDE_BBOX_WIDTH;
-	bottom = y + CENTIPEDE_BBOX_HEIGHT;
+	right = x + GUNNER_BBOX_WIDTH;
+	bottom = y + GUNNER_BBOX_HEIGHT;
 }
 
-void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
+void Gunner::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	// Calculate dx, dy 
 	Entity::Update(dt);
 #pragma region Xử lý vy
 	// Simple fall down
-	vy += CENTIPEDE_GRAVITY * dt;
+	vy += GUNNER_GRAVITY * dt;
+
+
 #pragma endregion
 
 #pragma region Xử lý vx
@@ -30,6 +28,8 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x = 290; vx = -vx;
 	}
 #pragma endregion
+
+
 
 #pragma region Xử lý va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -43,8 +43,10 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			bricks.push_back(coObjects->at(i));
 
 
+
+
 	// turn off collision when die 
-	if (state != CENTIPEDE_STATE_DIE)
+	if (state != GUNNER_STATE_DIE)
 		CalcPotentialCollisions(&bricks, coEvents);
 
 
@@ -62,28 +64,27 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		float rdy = 0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
+		
 
 		x += min_tx * dx + nx * 0.1f;
 		y += min_ty * dy + ny * 0.1f;
-
+	
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-#pragma endregion
 }
 
-void Centipede::Render()
+void Gunner::Render()
 {
 	if (vx > 0)
 		direction = 1;
 	else
 		direction = -1;
 
-	int ani = CENTIPEDE_ANI_WALKING;
-	if (state == CENTIPEDE_STATE_DIE) {
-		ani = CENTIPEDE_ANI_DIE;
+	int ani = GUNNER_ANI_WALKING;
+	if (state == GUNNER_STATE_DIE) {
+		ani = GUNNER_ANI_DIE;
 	}
 	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
 	animationSet->at(ani)->Render(direction, x, y);
@@ -91,17 +92,22 @@ void Centipede::Render()
 	RenderBoundingBox();
 }
 
-void Centipede::SetState(int state)
+Gunner::Gunner()
+{
+	SetState(GUNNER_STATE_WALKING);
+}
+
+void Gunner::SetState(int state)
 {
 	Entity::SetState(state);
 	switch (state)
 	{
-	case CENTIPEDE_STATE_DIE:
-		y += CENTIPEDE_BBOX_HEIGHT - CENTIPEDE_BBOX_HEIGHT_DIE + 1;
+	case GUNNER_STATE_DIE:
+		y += GUNNER_BBOX_HEIGHT - GUNNER_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
 		vy = 0;
 		break;
-	case CENTIPEDE_STATE_WALKING:
-		vx = -CENTIPEDE_WALKING_SPEED;
+	case GUNNER_STATE_WALKING:
+		vx = -GUNNER_WALKING_SPEED;
 	}
 }

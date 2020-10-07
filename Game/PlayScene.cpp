@@ -4,6 +4,8 @@
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
 #define OBJECT_TYPE_CENTIPEDE	10
+#define OBJECT_TYPE_GOLEM		11
+#define OBJECT_TYPE_GUNNER		12
 
 PlayScene::PlayScene() : Scene()
 {
@@ -18,7 +20,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(0, 25);
+		player = new Player(0, 100);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
 	if (bullet1 == NULL)
@@ -216,6 +218,8 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	Player* player = ((PlayScene*)scence)->player;
+	
+
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
@@ -243,8 +247,20 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		player->SetPressUp(true);
 	}
 
-	if (Game::GetInstance()->IsKeyDown(DIK_Z))
+	if (Game::GetInstance()->IsKeyDown(DIK_F6))
 	{
+		for (int i = 0; i < listObjects.size(); i++)
+		{
+			if (listObjects[i]->GetBBARGB() == 0)
+				listObjects[i]->SetBBARGB(200);
+			else
+				listObjects[i]->SetBBARGB(0);
+		}
+
+		if (player->GetBBARGB() == 0)
+			player->SetBBARGB(200);
+		else
+			player->SetBBARGB(0);
 	}
 }
 
@@ -400,7 +416,29 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add brick !\n");
 		break;
 	}
-	case OBJECT_TYPE_GATE:
+	case OBJECT_TYPE_GOLEM:
+	{
+		obj = new Golem();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add Golem !\n");
+		break;
+	}
+	case OBJECT_TYPE_GUNNER:
+	{
+		obj = new Gunner();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add Gunner !\n");
+		break;
+	}
+	/*case OBJECT_TYPE_GATE:
 	{
 		int switchId = atoi(tokens[3].c_str());
 		float playerPosX = atoi(tokens[4].c_str());
@@ -411,7 +449,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add gate !\n");
 		break;
-	}
+	}*/
 	case OBJECT_TYPE_CENTIPEDE:
 	{
 		obj = new Centipede();
@@ -553,7 +591,7 @@ void PlayScene::LoadSceneObjects()
 	}
 
 	f.close();
-	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 0));
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 

@@ -13,6 +13,7 @@ Entity::Entity()
 	x = y = 0;
 	vx = vy = 0;
 	direction = 1;
+	bbARGB = 200;
 }
 
 void Entity::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
@@ -135,6 +136,20 @@ bool Entity::IsCollidingObject(Entity* Obj)
 	return isColliding;
 }
 
+
+
+RECT Entity::GetBBox()
+{
+	float left, top, right, bottom;
+	GetBoundingBox(left, top, right, bottom);
+	RECT Bbox;
+	Bbox.left = (long)left;
+	Bbox.top = (long)top;
+	Bbox.right = (long)right;
+	Bbox.bottom = (long)bottom;
+	return  Bbox;
+}
+
 void Entity::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
@@ -150,8 +165,10 @@ void Entity::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	Game::GetInstance()->OldDraw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	Game::GetInstance()->OldDraw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, bbARGB);
 }
+
+
 
 
 Entity::~Entity()

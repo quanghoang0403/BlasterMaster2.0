@@ -96,6 +96,15 @@
     <ClInclude Include="Centipede.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Gunner.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Domes.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -153,6 +162,15 @@
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Centipede.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Golem.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Gunner.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Domes.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>

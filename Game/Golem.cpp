@@ -45,7 +45,7 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		CalcPotentialCollisions(&bricks, coEvents);
 
 
-	DebugOut(L"%4.2f, %4.2f\n", dx, dy);
+	//DebugOut(L"%4.2f, %4.2f\n", dx, dy);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -62,13 +62,13 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 
-		//x += min_tx * dx + nx * 0.4f;
+		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
 
 		if (nx != 0)
 		{
-			//vx = 0;
+			Golem::nx = -Golem::nx;
 		}
 		if (ny != 0)
 		{
@@ -81,11 +81,13 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					RECT rect = static_cast<Brick*>(e->obj)->GetBBox();
 					if (x + GOLEM_BBOX_WIDTH > rect.right)
 					{
-						nx = -nx;
+						Golem::nx = -Golem::nx;
+						x += rect.right - (x + GOLEM_BBOX_WIDTH) - nx * 0.4f;
 					}
 					else if (x < rect.left)
 					{
-						nx = -nx;
+						Golem::nx = -Golem::nx;
+						x += rect.left - x + nx * 0.4f;
 					}
 					break;
 				}

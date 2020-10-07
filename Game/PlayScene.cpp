@@ -20,7 +20,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(0, 100);
+		player = new Player(35, 100);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
 	if (bullet1 == NULL)
@@ -407,10 +407,10 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 	case OBJECT_TYPE_BRICK:
 	{
-		obj = new Brick(); 
+		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
+		
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add brick !\n");

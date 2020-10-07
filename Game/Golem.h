@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "Brick.h"
 
-#define GOLEM_WALKING_SPEED 0.18f;
+#define GOLEM_WALKING_SPEED 0.018f;
 
 #define GOLEM_GRAVITY	0.002f
 

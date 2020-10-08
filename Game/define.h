@@ -58,6 +58,8 @@
 
 #define ANIMATION_SET_BBOX					0
 #define ANIMATION_SET_PLAYER				1
+#define ANIMATION_SET_PLAYERHP				11
+#define ANIMATION_SET_ITEM_POWERUP			12
 #define ANIMATION_SET_BRICK					20
 #define ANIMATION_SET_GATE					26
 
@@ -99,7 +101,7 @@ enum EntityType
 	BUSH = 27,
 
 	//Item Zone 40-70
-	SMALLHEART = 40,
+	POWERUP = 40,
 	BIGHEART = 41,
 	YUMMICHICKENLEG = 42,
 	MONEYBAGS = 43,
@@ -125,7 +127,7 @@ enum EntityType
 	ADDSCOREEFFECT = 73,
 
 	//Enemies Zone 80-100
-	BAT = 80,
+	CENTIPEDE = 80,
 	ZOMBIE = 81,
 	DARKENBAT = 82,
 	KNIGHT = 83,

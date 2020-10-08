@@ -80,6 +80,7 @@ class Player : public Entity
 	float backup_JumpY;
 	bool isPressJump;
 	bool isPressFlipGun;
+	
 
 public:
 	Player(float x = 0.0f, float y = 0.0f);
@@ -100,7 +101,7 @@ public:
 	float GetVy() { return vy; }
 	void Reset();
 	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerPosX, float& playerPosY) { direct = direction; isTargetTop = isGunFlipping; playerPosX = x; playerPosY = y; }
-
+	
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

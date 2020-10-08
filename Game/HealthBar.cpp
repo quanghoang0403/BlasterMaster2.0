@@ -28,22 +28,22 @@ void HealthBar::Render()
 {
 	if (currentOwnerHealth <= 0)
 		return;
-	/*else
+	else
 	{
 		for (int j = 0; j < currentOwnerHealth; j++)
 		{
 			if (isAllies)
 			{
-				health[j]->at(HEALTH_TYPE_PLAYER_HAVE)->Render(-1, posX, posY + j * HEALTH_SPACE_UNIT);
+				health[j]->at(HEALTH_TYPE_GUN_UNIT)->Render(1, posX, posY + 57 - j * HEALTH_SPACE_UNIT);
 			}
 			else
 			{
-				health[j]->at(HEALTH_TYPE_ENEMY_HAVE)->Render(-1, posX , posY + j * HEALTH_SPACE_UNIT);
+				health[j]->at(HEALTH_TYPE_PLAYER_UNIT)->Render(1, posX, posY + 57 - j * HEALTH_SPACE_UNIT);
 			}
 		}
-		for (int l = currentOwnerHealth; l < maxOwnerHealth; l++)
+	/*	for (int l = currentOwnerHealth; l < maxOwnerHealth; l++)
 		{
 			health[l]->at(HEALTH_TYPE_PLAYER_LOST)->Render(-1, posX, posY + l * HEALTH_SPACE_UNIT);
-		}
-	}*/
+		}*/
+	}
 }

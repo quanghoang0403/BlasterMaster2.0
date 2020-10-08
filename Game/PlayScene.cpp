@@ -4,6 +4,7 @@
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
 #define OBJECT_TYPE_CENTIPEDE	10
+#define HUD_Y				20
 
 PlayScene::PlayScene() : Scene()
 {
@@ -21,7 +22,7 @@ void PlayScene::LoadBaseObjects()
 		player = new Player(0, 25);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
-	gameHUD = new HUD(player->GetHealth(), player->GetHealth());
+	gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
 	if (bullet1 == NULL)
 	{
 		bullet1 = new MainJasonBullet();
@@ -77,8 +78,10 @@ void PlayScene::Update(DWORD dt)
 	}
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-
+	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move posX follow camera
 #pragma endregion
+	if (listItems.size() > 0)
+		PlayerCollideItem();
 	PlayerGotGate();
 #pragma region Objects Updates
 	vector<LPGAMEENTITY> coObjects;
@@ -90,7 +93,10 @@ void PlayScene::Update(DWORD dt)
 		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Update(dt, &coObjects);	
+	for (int i = 0; i < listItems.size(); i++)
+		listItems[i]->Update(dt, &listObjects);
 #pragma endregion
+
 }
 
 bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
@@ -154,6 +160,30 @@ void PlayScene::PlayerGotGate()
 				player->SetVx(0);
 				player->SetVy(0);
 				player->SetState(tempState);
+			}
+		}
+	}
+}
+
+void PlayScene::PlayerCollideItem()
+{
+	for (UINT i = 0; i < listItems.size(); i++)
+	{
+		if (!listItems[i]->GetIsDone())
+		{
+			if (player->IsCollidingObject(listItems[i]))
+			{
+				switch (listItems[i]->GetType())
+				{
+				case EntityType::POWERUP:
+				{
+					player->AddHealth(POWER_HP_RESTORE);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -573,6 +603,8 @@ void PlayScene::Render()
 	Game::GetInstance()->OldDraw(0,0, maptextures,0,0,mapWidth, mapHeight);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
+	for (int i = 0; i < listItems.size(); i++)
+		listItems[i]->Render();
 	player->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)

@@ -13,6 +13,7 @@
 #include "HUD.h"
 #include "Brick.h"
 #include "Gate.h"
+#include "PowerUp.h"
 
 #include "Centipede.h"
 
@@ -37,6 +38,7 @@ protected:
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPBULLET> listBullets;
 	vector<LPCWSTR> listSceneFilePath;
+	vector<LPGAMEITEM> listItems;
 	Camera* gameCamera;
 
 	int idStage;
@@ -65,6 +67,7 @@ public:
 	void ChooseMap(int whatStage);
 	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
+	void PlayerCollideItem();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();

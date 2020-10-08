@@ -4,7 +4,7 @@ HUD::HUD(int initPlayerHB, int initGunHealth)
 {
 	UIanimationSet = CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYERHP);
 
-	playerHB = new HealthBar(initPlayerHB, true);
+	playerHB = new HealthBar(initPlayerHB, false);
 	gunHB = new HealthBar(initGunHealth, true);
 }
 
@@ -15,16 +15,14 @@ void HUD::Update(float posX, float posY, int currentPlayerHealth, int currentGun
 	this->posX = posX;
 	this->posY = posY;
 
-	playerHB->Update(currentPlayerHealth, posX - 140, posY);
-	gunHB->Update(currentGunHealth, posX - 140, posY + 20);
+	gunHB->Update(currentGunHealth, posX + 2, posY + 7.8); // Hard code -> Dieu chinh khoang cach cac unit mau cua Gun #LKP
+	playerHB->Update(currentPlayerHealth, posX + 3, posY + 112.5); // Hard code -> Dieu chinh khoang cach cac unit mau cua Player #LKP
 }
 
 void HUD::Render(Player* playerInfo)
 {
-	UIanimationSet->at(0)->Render(-1, posX, posY);
-	UIanimationSet->at(2)->Render(-1, posX + 50, posY);//dong nay kh on roi`
-	// ? sao kh co get animation set v
-	/*this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYERHP));*/
-	playerHB->Render();
+	UIanimationSet->at(HEALTH_TYPE_GUN_NULL)->Render(1, posX, posY + ARTICULAR_GUNPOWER_HEALTHBAR_Y);
+	UIanimationSet->at(HEALTH_TYPE_PLAYER_NULL)->Render(1, posX, posY + ARTICULAR_PLAYER_HEALTHBAR_Y);
 	gunHB->Render();
+	playerHB->Render();
 }

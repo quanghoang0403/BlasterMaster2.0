@@ -40,6 +40,9 @@
     <Filter Include="Header Files\HUD">
       <UniqueIdentifier>{5f26b995-23e6-45a1-ae55-5c4da8a32692}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Item">
+      <UniqueIdentifier>{c61804d1-06b5-4ca0-ab27-4daa9f924814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h">
@@ -105,6 +108,15 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -169,6 +181,15 @@
     </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Header Files\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Header Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Header Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Header Files\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

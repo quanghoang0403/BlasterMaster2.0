@@ -1,6 +1,7 @@
 #include "Centipede.h"
 Centipede::Centipede()
 {
+	tag = EntityType::CENTIPEDE;
 	SetState(CENTIPEDE_STATE_WALKING);
 }
 

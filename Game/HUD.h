@@ -11,6 +11,9 @@ using namespace std;
 //#define MAX_TEXTLENGHT_MANA						2
 //#define MAX_TEXTLENGHT_LIVE						2
 
+#define ARTICULAR_GUNPOWER_HEALTHBAR_Y					5
+#define ARTICULAR_PLAYER_HEALTHBAR_Y				110
+
 class HUD 
 {
 	float posX, posY;
@@ -19,10 +22,9 @@ class HUD
 
 	HealthBar* playerHB;
 	HealthBar* gunHB;
-	LPSPRITE UIExtraShot;
-	LPANIMATION_SET playerSubWeaponAnimationSet;
+
 public:
-	HUD(int initPlayerHealth = 16, int initGunHealth = 16);
+	HUD(int initPlayerHealth = 8, int initGunHealth = 8);
 	~HUD();
 
 	void Update(float posX, float posY, int currentPlayerHealth, int currentGunHealth);

@@ -3,9 +3,8 @@
 HUD::HUD(int initPlayerHB, int initGunHealth)
 {
 	UIanimationSet = CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYERHP);
-
-	playerHB = new HealthBar(initPlayerHB, false);
 	gunHB = new HealthBar(initGunHealth, true);
+	playerHB = new HealthBar(initPlayerHB, false);
 }
 
 HUD::~HUD() {}

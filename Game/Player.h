@@ -15,6 +15,9 @@
 
 #define SOPHIA_JASON_HEIGHT_GUN_FLIP	15.5
 
+//define HealthBar
+#define MAX_HEALTH						8
+
 #define SOPHIA_STATE_IDLE				0
 #define SOPHIA_STATE_WALKING_RIGHT		100
 #define SOPHIA_STATE_WALKING_LEFT		200

@@ -117,6 +117,9 @@
     <ClInclude Include="PowerUp.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="GunUp.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp">
@@ -189,6 +192,9 @@
       <Filter>Header Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="PowerUp.cpp">
+      <Filter>Header Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GunUp.cpp">
       <Filter>Header Files\Item</Filter>
     </ClCompile>
   </ItemGroup>

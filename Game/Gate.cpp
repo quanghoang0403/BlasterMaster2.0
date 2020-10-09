@@ -2,7 +2,7 @@
 
 Gate::Gate(float posX, float posY, int switchId, float simonPosX, float simonPosY, int simonState, bool rsCam)
 {
-	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GATE));
+	//this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GATE));
 	tag = EntityType::GATE;
 	this->x = posX;
 	this->y = posY;

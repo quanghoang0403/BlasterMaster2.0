@@ -76,6 +76,7 @@ public:
 	int GetgunDam() { return gunDam; }
 	void SetgunDam(int value) { gunDam = value; }
 	void AddHealth(int BonusHealth) { health += BonusHealth; }
+	void AddgunDam(int BonusgunDam) { gunDam += BonusgunDam; }
 	EntityType GetType() { return tag; }
 	void RenderBoundingBox();
 

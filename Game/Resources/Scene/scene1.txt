@@ -4,7 +4,7 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #map
-1000	0	0	512	120	2	
+1000	0	0	512	120	11	
 ##==============ENEMY===================
 #con rết x3
 4001	168	411	186	421	40

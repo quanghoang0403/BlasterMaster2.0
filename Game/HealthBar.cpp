@@ -1,10 +1,10 @@
 #include "HealthBar.h"
 
-HealthBar::HealthBar(int maxHealth, bool isAllies)
+HealthBar::HealthBar(int maxHealth, bool isGun)
 {
 	currentOwnerHealth = maxHealth;
 	maxOwnerHealth = maxHealth;
-	this->isAllies = isAllies;
+	this->isGun= isGun;
 
 	for (int i = 0; i < currentOwnerHealth; i++)
 	{
@@ -32,7 +32,7 @@ void HealthBar::Render()
 	{
 		for (int j = 0; j < currentOwnerHealth; j++)
 		{
-			if (isAllies)
+			if (isGun)
 			{
 				health[j]->at(HEALTH_TYPE_GUN_UNIT)->Render(1, posX, posY + 57 - j * HEALTH_SPACE_UNIT);
 			}

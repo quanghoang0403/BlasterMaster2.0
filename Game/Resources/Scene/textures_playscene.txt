@@ -121,8 +121,13 @@
 50003	84	35	106	125	50
 50004	111	37	127	45	50
 
-##======ITEM_POWER==========
+
+
+##======ITEMS==========
+#POWERUP
 60001	87	237	103	253	1
+#GUNUP
+60002	66	237	82	253	1
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -195,11 +200,11 @@
 710	20020	100
 
 ###HealthBar
-#Gun BG
+#Gun null
 801	50001	100
 #Gun add
 802	50002	100
-#Player BG
+#Player null
 803	50003	100
 #Player add
 804	50004	100
@@ -207,7 +212,8 @@
 ###Item
 #Power
 901	60001	100
-
+#Power
+902	60002	100
 
 
 # id	ani1	ani2	ani3
@@ -227,6 +233,7 @@
 11	801	802	803	804
 #== ITEM POWER ==
 12	901
+13	902
 [SCENE]
 #Stage1
 Resources/Scene/scene1.txt	512	120

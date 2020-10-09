@@ -18,8 +18,8 @@ Player::Player(float x, float y) : Entity()
 	this->x = x;
 	this->y = y;
 	backup_JumpY = 0;
-	gunDam = 7;
-	health = 5;
+	gunDam = MAX_HEALTH;
+	health = MAX_HEALTH;
 
 }
 
@@ -143,7 +143,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			if (e->obj->GetType() == EntityType::CENTIPEDE)
 			{
 				health--;
-				//gunDam--;
+				gunDam=gunDam-2;
 			}
 		}
 	}

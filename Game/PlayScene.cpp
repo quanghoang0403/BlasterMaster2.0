@@ -22,7 +22,12 @@ void PlayScene::LoadBaseObjects()
 		player = new Player(0, 25);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
-	gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
+	if (gameHUD == NULL)
+	{
+		gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
+		DebugOut(L"[INFO] HUD CREATED! %d \n", player->GetHealth());
+	}
+	//gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
 	if (bullet1 == NULL)
 	{
 		bullet1 = new MainJasonBullet();
@@ -45,6 +50,18 @@ void PlayScene::LoadBaseObjects()
 	{
 		supBullet = new ElectricBullet();
 		DebugOut(L"[INFO] supBullet CREATED! \n");
+	}
+	if (powerUp == NULL)
+	{
+		powerUp = new PowerUp(100,150);
+		listItems.push_back(powerUp);
+		DebugOut(L"[INFO] powerUp CREATED! \n");
+	}
+	if (gunUp == NULL)
+	{
+		gunUp = new GunUp(200, 150);
+		listItems.push_back(gunUp);
+		DebugOut(L"[INFO] gunUp CREATED! \n");
 	}
 	gameCamera = Camera::GetInstance();
 }
@@ -177,7 +194,19 @@ void PlayScene::PlayerCollideItem()
 				{
 				case EntityType::POWERUP:
 				{
-					player->AddHealth(POWER_HP_RESTORE);
+					if (player->GetHealth() + POWER_HP_RESTORE <= MAX_HEALTH)
+						player->AddHealth(POWER_HP_RESTORE);
+					else
+						player->SetHealth(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				case EntityType::GUNUP:
+				{
+					if (player->GetgunDam() + GUN_HP_RESTORE <= MAX_HEALTH)
+						player->AddgunDam(GUN_HP_RESTORE);
+					else
+						player->SetgunDam(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
 					break;
 				}
@@ -210,6 +239,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
 		player->SetPosition(6, 60);
+		player->SetHealth(MAX_HEALTH);
 		/*player->Reset();*/
 		break;
 	case DIK_Z:
@@ -594,6 +624,26 @@ void PlayScene::Unload()
 		delete listObjects[i];
 	listObjects.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
+}
+
+Item* PlayScene::RandomItem(float posX, float posY)
+{
+
+	int bagrandom = rand() % 100;
+	int random = rand() % 100;
+	if (random <= 30)
+		return new PowerUp(posX, posY);
+	else if (30 < random && random <= 60)
+		return new PowerUp(posX, posY);
+	else if (60< random && random <= 100)
+		return new PowerUp(posX, posY);
+}
+
+Item* PlayScene::DropItem(EntityType createrType, float posX, float posY, int idCreater)
+{
+	if (createrType == EntityType::CENTIPEDE)
+		return new PowerUp(posX, posY);
+	return new PowerUp(posX, posY);
 }
 
 void PlayScene::Render()

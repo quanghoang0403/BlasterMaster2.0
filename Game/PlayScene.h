@@ -14,6 +14,7 @@
 #include "Brick.h"
 #include "Gate.h"
 #include "PowerUp.h"
+#include "GunUp.h"
 
 #include "Centipede.h"
 
@@ -35,6 +36,8 @@ protected:
 	Bullet* bullet2;
 	Bullet* bullet3;
 	Bullet* supBullet;
+	PowerUp* powerUp;
+	GunUp* gunUp;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPBULLET> listBullets;
 	vector<LPCWSTR> listSceneFilePath;
@@ -72,6 +75,9 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+
+	Item* RandomItem(float posX, float posY);
+	Item* DropItem(EntityType createrType, float posX, float posY, int idCreater = 0);
 
 	friend class PlayScenceKeyHandler;
 };

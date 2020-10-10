@@ -70,7 +70,7 @@ void Item::Render()
 	if (isDone || delayStart <= delayLimit)
 		return;
 
-	animationSet->at(0)->Render(-direction, posX, posY);
+	animationSet->at(0)->Render(direction, posX, posY);
 
 	RenderBoundingBox();
 }

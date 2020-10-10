@@ -133,6 +133,7 @@
     <ClInclude Include="ElectricBullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GunUp.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="ElectricBullet.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GunUp.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />

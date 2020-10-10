@@ -15,9 +15,9 @@ class HealthBar
 	float posX, posY;
 	int currentOwnerHealth, maxOwnerHealth;
 	std::vector<LPANIMATION_SET> health;
-	bool isAllies;
+	bool isGun;
 public:
-	HealthBar(int maxHealth, bool isAllies);
+	HealthBar(int maxHealth, bool isGun);
 	~HealthBar();
 
 	void Update(int currentHealth, float X, float Y);

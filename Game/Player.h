@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Bullet.h"
 #include <map>
+#include "Timer.h"
 
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
 #define SOPHIA_WALKING_SPEED			0.1f 
@@ -14,6 +15,9 @@
 #define SOPHIA_DIE_DEFLECT_SPEED		0.5f
 
 #define SOPHIA_JASON_HEIGHT_GUN_FLIP	15.5
+
+//define HealthBar
+#define MAX_HEALTH						8
 
 #define SOPHIA_STATE_IDLE				0
 #define SOPHIA_STATE_WALKING_RIGHT		100
@@ -56,7 +60,8 @@
 #define SOPHIA_JASON_BBOX_WIDTH		26
 #define SOPHIA_JASON_BBOX_HEIGHT	16.5
 
-#define MARIO_UNTOUCHABLE_TIME 5000
+//#define MARIO_UNTOUCHABLE_TIME 5000
+#define PLAYER_IMMORTAL_DURATION	3000
 
 #define HIGHT_LEVER1 43
 
@@ -67,8 +72,10 @@ class Player : public Entity
 	bool isJumping = false;
 	bool isGunFlipping = false;
 	bool isJumpHandle;
+	bool isImmortaling;	
 	DWORD untouchable_start;
 
+	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
 	Bullet* mainBullet1;
 	Bullet* mainBullet2;
 	Bullet* mainBullet3;
@@ -86,6 +93,11 @@ public:
 	Player(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	virtual void Render();
+
+	//Immortal
+	bool IsImmortaling() { return isImmortaling; }
+	void SetImmortaling(bool immo) { isImmortaling = immo; }
+	void StartImmortalingTimer() { immortalTimer->Start(); }
 
 	void SetDirection(int d) { direction = d; }
 	void SetState(int state);

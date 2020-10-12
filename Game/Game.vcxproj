@@ -130,13 +130,19 @@
     <ClInclude Include="Centipede.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Domes.h" />
     <ClInclude Include="ElectricBullet.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="GunUp.h" />
+
+    <ClInclude Include="Golem.h" />
+    <ClInclude Include="Gunner.h" />
+		<ClInclude Include="GunUp.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
+
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
@@ -157,13 +163,19 @@
     <ClCompile Include="Centipede.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="Domes.cpp" />
     <ClCompile Include="ElectricBullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="GunUp.cpp" />
+
+    <ClCompile Include="Golem.cpp" />
+    <ClCompile Include="Gunner.cpp" />
+		<ClCompile Include="GunUp.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
+
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />

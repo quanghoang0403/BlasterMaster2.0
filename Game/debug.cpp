@@ -60,3 +60,11 @@ LPCWSTR ToLPCWSTR(string st)
 	// delete wcstring   // << can I ? 
 	return w->c_str();
 }
+
+int GetRandomInt(int x, int y)
+{
+	random_device t;
+	mt19937 mt(t());
+	uniform_int_distribution<int> minh(x, y);
+	return minh(t);
+}

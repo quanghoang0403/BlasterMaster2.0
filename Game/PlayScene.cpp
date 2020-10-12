@@ -4,7 +4,13 @@
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
 #define OBJECT_TYPE_CENTIPEDE	10
+
+#define OBJECT_TYPE_GOLEM		11
+#define OBJECT_TYPE_GUNNER		12
+#define OBJECT_TYPE_DOMES		13
+
 #define HUD_Y				20
+
 
 PlayScene::PlayScene() : Scene()
 {
@@ -19,7 +25,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(0, 25);
+		player = new Player(35, 100);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
 	if (gameHUD == NULL)
@@ -220,7 +226,7 @@ void PlayScene::PlayerCollideItem()
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
@@ -232,6 +238,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
 	switch (KeyCode)
 	{
+	case DIK_ESCAPE:
+		DestroyWindow(Game::GetInstance()->GetWindowHandle());
 	case DIK_SPACE:
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
@@ -277,6 +285,8 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	Player* player = ((PlayScene*)scence)->player;
+	
+
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
@@ -304,8 +314,20 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		player->SetPressUp(true);
 	}
 
-	if (Game::GetInstance()->IsKeyDown(DIK_Z))
+	if (Game::GetInstance()->IsKeyDown(DIK_F6))
 	{
+		for (int i = 0; i < listObjects.size(); i++)
+		{
+			if (listObjects[i]->GetBBARGB() == 0)
+				listObjects[i]->SetBBARGB(200);
+			else
+				listObjects[i]->SetBBARGB(0);
+		}
+
+		if (player->GetBBARGB() == 0)
+			player->SetBBARGB(200);
+		else
+			player->SetBBARGB(0);
 	}
 }
 
@@ -452,36 +474,57 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 	case OBJECT_TYPE_BRICK:
 	{
-		obj = new Brick(); 
+		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
+		
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add brick !\n");
 		break;
 	}
-	case OBJECT_TYPE_GATE:
+	case OBJECT_TYPE_GOLEM:
 	{
-		int switchId = atoi(tokens[3].c_str());
-		float playerPosX = atoi(tokens[4].c_str());
-		float playerPosY = atoi(tokens[5].c_str());
-		int playerState = atoi(tokens[6].c_str());
-		int isResetCamera = atoi(tokens[7].c_str());
-		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
+		obj = new Golem(x,y,player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
-		DebugOut(L"[test] add gate !\n");
+		DebugOut(L"[test] add Golem !\n");
+		break;
+	}
+	case OBJECT_TYPE_GUNNER:
+	{
+		obj = new Gunner();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add Gunner !\n");
 		break;
 	}
 	case OBJECT_TYPE_CENTIPEDE:
 	{
-		obj = new Centipede();
+		obj = new Centipede(x,y,player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add centipede !\n");
+		break;
+	}
+	case OBJECT_TYPE_DOMES:
+	{
+		obj = new Domes(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add domes !\n");
 		break;
 	}
 	default:
@@ -614,7 +657,7 @@ void PlayScene::LoadSceneObjects()
 	}
 
 	f.close();
-	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 0));
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 

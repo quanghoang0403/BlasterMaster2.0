@@ -1,8 +1,4 @@
 #include "Brick.h"
-Brick::Brick()
-{
-	tag = EntityType::BRICK;
-}
 
 void Brick::Render()
 {
@@ -14,6 +10,13 @@ void Brick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + BRICK_BBOX_WIDTH;
-	b = y + BRICK_BBOX_HEIGHT;
+	r = x + frameW;
+	b = y + frameH;
+}
+
+Brick::Brick(float frameW, float frameH)
+{
+	tag = EntityType::BRICK;
+	this->frameH = frameH;
+	this->frameW = frameW;
 }

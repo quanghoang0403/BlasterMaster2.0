@@ -6,10 +6,12 @@
 
 class Brick : public Entity
 {
+	float frameW, frameH;
+
 public:
 
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	Brick();
+	Brick(float frameW, float frameH);
 	~Brick();
 };

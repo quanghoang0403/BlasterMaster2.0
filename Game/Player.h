@@ -67,6 +67,8 @@
 
 class Player : public Entity
 {
+	static Player* instance;
+
 	int level;
 	int untouchable;
 	bool isJumping = false;
@@ -84,6 +86,7 @@ class Player : public Entity
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
+
 	float backup_JumpY;
 	bool isPressJump;
 	bool isPressFlipGun;
@@ -91,6 +94,8 @@ class Player : public Entity
 
 public:
 	Player(float x = 0.0f, float y = 0.0f);
+	static Player* GetInstance();
+
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	virtual void Render();
 

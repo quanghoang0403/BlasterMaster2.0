@@ -47,15 +47,16 @@ public:
 
 	float x;
 	float y;
-
+	float vX, vY;
+	float posX, posY;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
-
 	float vx;
 	float vy;
 	int health;
 
 	int nx;
+	int gunDam; // gun damage
 
 	int direction;
 
@@ -77,8 +78,13 @@ public:
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	float GetPosX() { return x; }
 	float GetPosY() { return y; }
-
 	int GetState() { return this->state; }
+	int GetHealth() { return health; }
+	void SetHealth(int value) { health = value; }
+	int GetgunDam() { return gunDam; }
+	void SetgunDam(int value) { gunDam = value; }
+	void AddHealth(int BonusHealth) { health += BonusHealth; }
+	void AddgunDam(int BonusgunDam) { gunDam += BonusgunDam; }
 	EntityType GetType() { return tag; }
 
 	RECT GetBBox();

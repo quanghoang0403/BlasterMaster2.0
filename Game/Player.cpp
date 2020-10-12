@@ -28,6 +28,9 @@ Player* Player::GetInstance()
 	if (instance == NULL)
 		instance = new Player();
 	return instance;
+	gunDam = MAX_HEALTH;
+	health = MAX_HEALTH;
+	isImmortaling = false;
 }
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
@@ -67,10 +70,18 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 #pragma endregion
 
+#pragma region Timer
+
+	if (isImmortaling && immortalTimer->IsTimeUp())
+	{
+		isImmortaling = false;
+		immortalTimer->Reset();
+	}
+#pragma endregion
+
 #pragma region Xử lý va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	coEvents.clear();
 
 	// turn off collision when die 
@@ -78,11 +89,11 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	/*if (GetTickCount() - untouchable_start > PLAYER_IMMORTAL_DURATION)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
-	}
+	}*/
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -128,6 +139,15 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						vx = 0;
 					}
 				}
+			}
+			// VA CHAM CENTIPEDE
+			if (!isImmortaling)
+			if (e->obj->GetType() == EntityType::CENTIPEDE)
+			{
+				this->AddHealth(-1);
+				this->AddgunDam(-1);
+				immortalTimer->Start();
+				isImmortaling = true;	
 			}
 		}
 		

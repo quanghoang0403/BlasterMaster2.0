@@ -24,3 +24,4 @@ public:
 	//Luu y khi dung ham nay thi limittime bi thay doi vinh vien -> muon set ve nhu cu~ thi dung them ham nay o cho muon nhu cu~
 };
 
+

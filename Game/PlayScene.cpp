@@ -6,6 +6,7 @@
 #define OBJECT_TYPE_CENTIPEDE	10
 #define OBJECT_TYPE_GOLEM		11
 #define OBJECT_TYPE_GUNNER		12
+#define OBJECT_TYPE_DOMES		13
 
 PlayScene::PlayScene() : Scene()
 {
@@ -162,7 +163,7 @@ void PlayScene::PlayerGotGate()
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
@@ -174,6 +175,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
 	switch (KeyCode)
 	{
+	case DIK_ESCAPE:
+		DestroyWindow(Game::GetInstance()->GetWindowHandle());
 	case DIK_SPACE:
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
@@ -418,7 +421,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_GOLEM:
 	{
-		obj = new Golem();
+		obj = new Golem(x,y,player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
@@ -438,27 +441,26 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Gunner !\n");
 		break;
 	}
-	/*case OBJECT_TYPE_GATE:
-	{
-		int switchId = atoi(tokens[3].c_str());
-		float playerPosX = atoi(tokens[4].c_str());
-		float playerPosY = atoi(tokens[5].c_str());
-		int playerState = atoi(tokens[6].c_str());
-		int isResetCamera = atoi(tokens[7].c_str());
-		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
-		listObjects.push_back(obj);
-		DebugOut(L"[test] add gate !\n");
-		break;
-	}*/
 	case OBJECT_TYPE_CENTIPEDE:
 	{
-		obj = new Centipede();
+		obj = new Centipede(x,y,player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add centipede !\n");
+		break;
+	}
+	case OBJECT_TYPE_DOMES:
+	{
+		obj = new Domes(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add domes !\n");
 		break;
 	}
 	default:

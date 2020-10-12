@@ -123,8 +123,8 @@ bool Entity::IsCollidingObject(Entity* Obj)
 	Obj->GetBoundingBox(sl, st, sr, sb);
 
 	//Check AABB first
-	//LPSPRITE sprt = animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite();
-	//LPSPRITE coSprt = Obj->animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite();
+	/*LPSPRITE sprt = animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite();
+	LPSPRITE coSprt = Obj->animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite();*/
 	if (Game::GetInstance()->IsCollidingAABB(
 		ml, mt, mr, mb,
 		sl, st, sr, sb))

@@ -48,6 +48,7 @@ public:
 	void SetFrame(int current_Frame) { currentFrame = current_Frame; }
 	void ResetCurrentFrame() { currentFrame = -1; }
 	void Render(int direction, float x, float y, int alpha = 255);
+	void RenderTopBottom(int direction, float x, float y, int alpha = 255);
 	void OldRender(float x, float y, int alpha = 255);
 	void RenderGunFlip(float x, float y, int alpha = 255);
 	void RenderGunFlipTargetTop(float x, float y, int alpha = 255);

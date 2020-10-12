@@ -16,6 +16,7 @@
 #include "Centipede.h"
 #include "Golem.h"
 #include "Gunner.h"
+#include "Domes.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

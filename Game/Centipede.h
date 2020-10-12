@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "Enemy.h"
 
 #define CENTIPEDE_WALKING_SPEED 0.05f;
 #define CENTIPEDE_GRAVITY		0.002f
@@ -14,13 +14,22 @@
 #define CENTIPEDE_ANI_WALKING 0
 #define CENTIPEDE_ANI_DIE 1
 
-class Centipede : public Entity
+#define CENTIPEDE_SITEFOLLOW_PLAYER			80
+#define CENTIPEDE_SITEACTIVE_PLAYER			150
+
+#define CENTIPEDE_MAXHEALTH					1
+
+
+class Centipede : public Enemy
 {
+	bool isFollow;
+	LPGAMEENTITY target;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 
 public:
-	Centipede();
+	Centipede(float x, float y, LPGAMEENTITY t);
+	void FollowTarget(LPGAMEENTITY target);
 	virtual void SetState(int state);
 };

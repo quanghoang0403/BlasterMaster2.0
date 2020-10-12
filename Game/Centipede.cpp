@@ -1,8 +1,19 @@
 ﻿#include "Centipede.h"
-Centipede::Centipede()
+#include "Brick.h"
+Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 {
 	SetState(CENTIPEDE_STATE_WALKING);
+	tag = EntityType::CENTIPEDE;
+	this->x = x;
+	this->y = y;
+	nx = -1;
+	isFollow = 0;
+	this->target = t;
+	health = CENTIPEDE_MAXHEALTH;
+	isActive = false;
 }
+
+
 
 void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -14,24 +25,13 @@ void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	// Calculate dx, dy 
 	Entity::Update(dt);
-#pragma region Xử lý vy
-	// Simple fall down
+
+#pragma region Xử lý vy khi rơi
 	vy += CENTIPEDE_GRAVITY * dt;
 #pragma endregion
 
-#pragma region Xử lý vx
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
-	}
-
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
-	}
-#pragma endregion
-
-#pragma region Xử lý va chạm
+#pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	vector<LPGAMEENTITY> bricks;
@@ -42,14 +42,13 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		if (coObjects->at(i)->GetType() == EntityType::BRICK)
 			bricks.push_back(coObjects->at(i));
 
-
 	// turn off collision when die 
 	if (state != CENTIPEDE_STATE_DIE)
 		CalcPotentialCollisions(&bricks, coEvents);
+#pragma endregion
 
 
-
-	// No collision occured, proceed normally
+#pragma region Xử lý logic khi va chạm
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -60,18 +59,80 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		float min_tx, min_ty, nx = 0, ny;
 		float rdx = 0;
 		float rdy = 0;
-
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 
-		x += min_tx * dx + nx * 0.1f;
-		y += min_ty * dy + ny * 0.1f;
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
+		//Follow theo player
+		if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEFOLLOW_PLAYER)// Kiểm tra bán kính xung quanh Golem xem có player không
+		{
+			FollowTarget(target);
+		}
+		else // Đụng tường hay hết brick quay lại
+		{
+
+			if (nx != 0)
+			{
+				this->nx = -this->nx;
+			}
+			if (ny != 0)
+			{
+				vy = 0;
+				for (int i = 0; i < coEventsResult.size(); i++)
+				{
+					LPCOLLISIONEVENT e = coEventsResult.at(i);
+					if (e->ny != 0)
+					{
+						RECT rect = static_cast<Brick*>(e->obj)->GetBBox();
+						if (x + CENTIPEDE_BBOX_WIDTH > rect.right)
+						{
+							this->nx = -this->nx;
+							x += rect.right - (x + CENTIPEDE_BBOX_WIDTH) - nx * 0.4f;
+						}
+						else if (x < rect.left)
+						{
+							this->nx = -this->nx;
+							x += rect.left - x + nx * 0.4f;
+						}
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
+
+#pragma region Xử lý Active
+	if (!isActive)
+	{
+		vx = 0;
+	}
+	else
+	{
+		SetState(CENTIPEDE_STATE_WALKING);
+	}
+
+	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEACTIVE_PLAYER)
+	{
+		isActive = true;
+
+	}
+
+#pragma endregion
+}
+
+void Centipede::FollowTarget(LPGAMEENTITY target)
+{
+	if ((target->x - this->x) > 0)
+		this->nx = 1;
+	else
+		this->nx = -1;
+	vx = -CENTIPEDE_WALKING_SPEED;
 }
 
 void Centipede::Render()
@@ -102,6 +163,13 @@ void Centipede::SetState(int state)
 		vy = 0;
 		break;
 	case CENTIPEDE_STATE_WALKING:
-		vx = -CENTIPEDE_WALKING_SPEED;
+		if (nx > 0)
+		{
+			vx = CENTIPEDE_WALKING_SPEED;
+		}
+		else
+		{
+			vx = -CENTIPEDE_WALKING_SPEED;
+		}
 	}
 }

@@ -125,9 +125,9 @@ enum EntityType
 	ADDSCOREEFFECT = 73,
 
 	//Enemies Zone 80-100
-	BAT = 80,
-	ZOMBIE = 81,
-	DARKENBAT = 82,
+	GOLEM = 80,
+	CENTIPEDE = 81,
+	DOMES = 82,
 	KNIGHT = 83,
 	GHOST = 84,
 	RAVEN = 85,

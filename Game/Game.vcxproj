@@ -130,18 +130,30 @@
     <ClInclude Include="Centipede.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Domes.h" />
     <ClInclude Include="ElectricBullet.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+
+    <ClInclude Include="Golem.h" />
+    <ClInclude Include="Gunner.h" />
+		<ClInclude Include="GunUp.h" />
+    <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Item.h" />
+
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="MainJasonBullet.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
@@ -151,18 +163,30 @@
     <ClCompile Include="Centipede.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="Domes.cpp" />
     <ClCompile Include="ElectricBullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entity.cpp" />
+
+    <ClCompile Include="Golem.cpp" />
+    <ClCompile Include="Gunner.cpp" />
+		<ClCompile Include="GunUp.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Item.cpp" />
+
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="MainJasonBullet.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

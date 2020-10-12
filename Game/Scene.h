@@ -2,6 +2,7 @@
 #include <d3dx9.h>
 #include "KeyboardHandler.h"
 #include "define.h"
+#include "Entity.h"
 
 class Scene
 {

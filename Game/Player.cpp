@@ -19,38 +19,39 @@ Player::Player(float x, float y) : Entity()
 	this->y = y;
 	backup_JumpY = 0;
 	health = 7;
+	
+}
+Player* Player::instance = NULL;
+
+Player* Player::GetInstance()
+{
+	if (instance == NULL)
+		instance = new Player();
+	return instance;
+	gunDam = MAX_HEALTH;
+	health = MAX_HEALTH;
+	isImmortaling = false;
 }
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	
 	// Calculate dx, dy 
 	Entity::Update(dt);
 #pragma region Xử lý vy
 	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
 	//Check hightPlayer
-	if (isJumping && backup_JumpY - y >= HIGHT_LEVER1 && isJumpHandle == false) {
+	if (isJumping && backup_JumpY - y >= HIGHT_LEVER1 && isJumpHandle == false) 
+	{
 		if (!isPressJump)
 			vy = 0;
 		isJumpHandle = true;
 	}
 #pragma endregion
 
-#pragma region Xử lý vx
-	//if (direction > 0)
-	//{
-	//	if (vx - SOPHIA_WALKING_SPEED_BONUS > 0)
-	//		vx -= SOPHIA_WALKING_SPEED_BONUS;
-	//	else
-	//		vx = 0;
-	//}
-	//else
-	//{
-	//	if (vx + SOPHIA_WALKING_SPEED_BONUS < 0)
-	//		vx += SOPHIA_WALKING_SPEED_BONUS;
-	//	else
-	//		vx = 0;
-	//}
+
+	
 #pragma endregion
 
 #pragma region Xử lý gun flip
@@ -69,10 +70,18 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 #pragma endregion
 
+#pragma region Timer
+
+	if (isImmortaling && immortalTimer->IsTimeUp())
+	{
+		isImmortaling = false;
+		immortalTimer->Reset();
+	}
+#pragma endregion
+
 #pragma region Xử lý va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	coEvents.clear();
 
 	// turn off collision when die 
@@ -80,11 +89,11 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	/*if (GetTickCount() - untouchable_start > PLAYER_IMMORTAL_DURATION)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
-	}
+	}*/
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -100,28 +109,22 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
-
+	
 		//block every object first!
-		//x += min_tx * dx + nx * 0.4f;
-		//y += min_ty * dy + ny * 0.4f;
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
-		//if (nx != 0) vx = 0;
-		//if (ny != 0) vy = 0;
-		//if (ny < 0)
-		//{
-		//	isJumping = false;
-		//}
+	
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (e->obj->GetType() == EntityType::BRICK)
 			{
-				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.4f;
+				
+				/*DebugOut(L"\nmindx:  %d", min_tx);
+				DebugOut(L"\nmindy:  %d", min_ty);*/
+				
 				if (e->ny != 0)
 				{
 
@@ -137,13 +140,26 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
+			// VA CHAM CENTIPEDE
+			if (!isImmortaling)
+			if (e->obj->GetType() == EntityType::CENTIPEDE)
+			{
+				this->AddHealth(-1);
+				this->AddgunDam(-1);
+				immortalTimer->Start();
+				isImmortaling = true;	
+			}
 		}
+		
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
-
+	/*DebugOut(L"\nX:  %d", x);
+	DebugOut(L"\nDX:  %d", dx);
+	DebugOut(L"\nDT:  %d", dt);*/
+	
 }
 
 void Player::Render()
@@ -312,21 +328,7 @@ void Player::SetState(int state)
 
 	switch (state)
 	{
-		/*case SOPHIA_STATE_WALKING_RIGHT:
-			if (vx < SOPHIA_WALKING_SPEED)
-			{
-				vx = vx * 2 + SOPHIA_WALKING_SPEED_UNIT;
-				direction = 1;
-			}
-
-			break;
-		case SOPHIA_STATE_WALKING_LEFT:
-			if (vx > -SOPHIA_WALKING_SPEED)
-			{
-				vx = vx * 2 - SOPHIA_WALKING_SPEED_UNIT;
-				direction = -1;
-			}
-			break;*/
+		
 	case SOPHIA_STATE_WALKING_RIGHT:
 		vx = SOPHIA_WALKING_SPEED;
 		direction = 1;
@@ -354,9 +356,7 @@ void Player::SetState(int state)
 	case SOPHIA_STATE_DIE:
 		vy = -SOPHIA_DIE_DEFLECT_SPEED;
 		break;
-		/*case SOPHIA_STATE_GUN_UNFLIP:
-			isGunFlipping = false;
-			break;*/
+	
 	}
 }
 

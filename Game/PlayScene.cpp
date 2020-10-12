@@ -5,6 +5,13 @@
 #define OBJECT_TYPE_GATE		2
 #define OBJECT_TYPE_CENTIPEDE	10
 
+#define OBJECT_TYPE_GOLEM		11
+#define OBJECT_TYPE_GUNNER		12
+#define OBJECT_TYPE_DOMES		13
+
+#define HUD_Y				20
+
+
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
@@ -18,9 +25,15 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(0, 25);
+		player = new Player(35, 100);
 		DebugOut(L"[INFO] Simon CREATED! \n");
 	}
+	if (gameHUD == NULL)
+	{
+		gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
+		DebugOut(L"[INFO] HUD CREATED! %d \n", player->GetHealth());
+	}
+	//gameHUD = new HUD(player->GetHealth(), player->GetgunDam());
 	if (bullet1 == NULL)
 	{
 		bullet1 = new MainJasonBullet();
@@ -43,6 +56,18 @@ void PlayScene::LoadBaseObjects()
 	{
 		supBullet = new ElectricBullet();
 		DebugOut(L"[INFO] supBullet CREATED! \n");
+	}
+	if (powerUp == NULL)
+	{
+		powerUp = new PowerUp(100,150);
+		listItems.push_back(powerUp);
+		DebugOut(L"[INFO] powerUp CREATED! \n");
+	}
+	if (gunUp == NULL)
+	{
+		gunUp = new GunUp(200, 150);
+		listItems.push_back(gunUp);
+		DebugOut(L"[INFO] gunUp CREATED! \n");
 	}
 	gameCamera = Camera::GetInstance();
 }
@@ -76,8 +101,10 @@ void PlayScene::Update(DWORD dt)
 	}
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-
+	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move posX follow camera
 #pragma endregion
+	if (listItems.size() > 0)
+		PlayerCollideItem();
 	PlayerGotGate();
 #pragma region Objects Updates
 	vector<LPGAMEENTITY> coObjects;
@@ -89,7 +116,10 @@ void PlayScene::Update(DWORD dt)
 		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Update(dt, &coObjects);	
+	for (int i = 0; i < listItems.size(); i++)
+		listItems[i]->Update(dt, &listObjects);
 #pragma endregion
+
 }
 
 bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
@@ -158,9 +188,45 @@ void PlayScene::PlayerGotGate()
 	}
 }
 
+void PlayScene::PlayerCollideItem()
+{
+	for (UINT i = 0; i < listItems.size(); i++)
+	{
+		if (!listItems[i]->GetIsDone())
+		{
+			if (player->IsCollidingObject(listItems[i]))
+			{
+				switch (listItems[i]->GetType())
+				{
+				case EntityType::POWERUP:
+				{
+					if (player->GetHealth() + POWER_HP_RESTORE <= MAX_HEALTH)
+						player->AddHealth(POWER_HP_RESTORE);
+					else
+						player->SetHealth(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				case EntityType::GUNUP:
+				{
+					if (player->GetgunDam() + GUN_HP_RESTORE <= MAX_HEALTH)
+						player->AddgunDam(GUN_HP_RESTORE);
+					else
+						player->SetgunDam(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				default:
+					break;
+				}
+			}
+		}
+	}
+}
+
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
@@ -172,6 +238,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
 	switch (KeyCode)
 	{
+	case DIK_ESCAPE:
+		DestroyWindow(Game::GetInstance()->GetWindowHandle());
 	case DIK_SPACE:
 		player->SetState(SOPHIA_STATE_JUMP);
 		break;
@@ -179,6 +247,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
 		player->SetPosition(6, 60);
+		player->SetHealth(MAX_HEALTH);
 		/*player->Reset();*/
 		break;
 	case DIK_Z:
@@ -216,6 +285,8 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	Player* player = ((PlayScene*)scence)->player;
+	
+
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
@@ -243,8 +314,20 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		player->SetPressUp(true);
 	}
 
-	if (Game::GetInstance()->IsKeyDown(DIK_Z))
+	if (Game::GetInstance()->IsKeyDown(DIK_F6))
 	{
+		for (int i = 0; i < listObjects.size(); i++)
+		{
+			if (listObjects[i]->GetBBARGB() == 0)
+				listObjects[i]->SetBBARGB(200);
+			else
+				listObjects[i]->SetBBARGB(0);
+		}
+
+		if (player->GetBBARGB() == 0)
+			player->SetBBARGB(200);
+		else
+			player->SetBBARGB(0);
 	}
 }
 
@@ -391,36 +474,57 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 	case OBJECT_TYPE_BRICK:
 	{
-		obj = new Brick(); 
+		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
+		
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add brick !\n");
 		break;
 	}
-	case OBJECT_TYPE_GATE:
+	case OBJECT_TYPE_GOLEM:
 	{
-		int switchId = atoi(tokens[3].c_str());
-		float playerPosX = atoi(tokens[4].c_str());
-		float playerPosY = atoi(tokens[5].c_str());
-		int playerState = atoi(tokens[6].c_str());
-		int isResetCamera = atoi(tokens[7].c_str());
-		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
+		obj = new Golem(x,y,player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
-		DebugOut(L"[test] add gate !\n");
+		DebugOut(L"[test] add Golem !\n");
+		break;
+	}
+	case OBJECT_TYPE_GUNNER:
+	{
+		obj = new Gunner();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add Gunner !\n");
 		break;
 	}
 	case OBJECT_TYPE_CENTIPEDE:
 	{
-		obj = new Centipede();
+		obj = new Centipede(x,y,player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add centipede !\n");
+		break;
+	}
+	case OBJECT_TYPE_DOMES:
+	{
+		obj = new Domes(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add domes !\n");
 		break;
 	}
 	default:
@@ -553,7 +657,7 @@ void PlayScene::LoadSceneObjects()
 	}
 
 	f.close();
-	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 0));
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 
@@ -565,6 +669,26 @@ void PlayScene::Unload()
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
+Item* PlayScene::RandomItem(float posX, float posY)
+{
+
+	int bagrandom = rand() % 100;
+	int random = rand() % 100;
+	if (random <= 30)
+		return new PowerUp(posX, posY);
+	else if (30 < random && random <= 60)
+		return new PowerUp(posX, posY);
+	else if (60< random && random <= 100)
+		return new PowerUp(posX, posY);
+}
+
+Item* PlayScene::DropItem(EntityType createrType, float posX, float posY, int idCreater)
+{
+	if (createrType == EntityType::CENTIPEDE)
+		return new PowerUp(posX, posY);
+	return new PowerUp(posX, posY);
+}
+
 void PlayScene::Render()
 {
 	//gameMap->Draw();
@@ -572,9 +696,12 @@ void PlayScene::Render()
 	Game::GetInstance()->OldDraw(0,0, maptextures,0,0,mapWidth, mapHeight);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
+	for (int i = 0; i < listItems.size(); i++)
+		listItems[i]->Render();
 	player->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
+	gameHUD->Render(player);
 }
 

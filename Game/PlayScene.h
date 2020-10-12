@@ -10,10 +10,16 @@
 #include "Camera.h"
 
 #include "Player.h"
+#include "HUD.h"
 #include "Brick.h"
 #include "Gate.h"
+#include "PowerUp.h"
+#include "GunUp.h"
 
 #include "Centipede.h"
+#include "Golem.h"
+#include "Gunner.h"
+#include "Domes.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
@@ -22,19 +28,25 @@
 #include <iostream>
 #include <fstream>
 
+#include"Entity.h"
+
 using namespace std;
 
 class PlayScene : public Scene
 {
 protected:
 	Player* player;
+	HUD* gameHUD;
 	Bullet* bullet1;
 	Bullet* bullet2;
 	Bullet* bullet3;
 	Bullet* supBullet;
+	PowerUp* powerUp;
+	GunUp* gunUp;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPBULLET> listBullets;
 	vector<LPCWSTR> listSceneFilePath;
+	vector<LPGAMEITEM> listItems;
 	Camera* gameCamera;
 
 	int idStage;
@@ -63,10 +75,14 @@ public:
 	void ChooseMap(int whatStage);
 	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
+	void PlayerCollideItem();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+
+	Item* RandomItem(float posX, float posY);
+	Item* DropItem(EntityType createrType, float posX, float posY, int idCreater = 0);
 
 	friend class PlayScenceKeyHandler;
 };

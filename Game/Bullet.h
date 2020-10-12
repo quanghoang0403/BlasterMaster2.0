@@ -19,7 +19,8 @@ public:
 	int damage;
 	int isTargetTop;
 	int alpha;
-	int isCollision;
+	int isCollisionBrick;
+	int isCollisionEnemies;
 	float timeDelayed, timeDelayMax;
 
 public:
@@ -29,7 +30,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 
-	void Fire(int direct, int isGunFlip, float posX, float posY) { direction = direct; isTargetTop = isGunFlip; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollision = 0; }
+	void Fire(int direct, int isGunFlip, float posX, float posY) {direction = direct; isTargetTop = isGunFlip; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollisionBrick = 0; isCollisionEnemies = 0;}
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }
 	void SetIsDone(bool isdone) { isDone = isdone; }

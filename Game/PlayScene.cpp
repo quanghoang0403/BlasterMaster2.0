@@ -507,6 +507,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_CENTIPEDE:
 	{
+		//obj = new Centipede(x,y,player);
 		obj = new Centipede(x,y,player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);

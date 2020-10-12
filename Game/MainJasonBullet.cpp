@@ -6,7 +6,8 @@ MainJasonBullet::MainJasonBullet()
 	x = 0;
 	y = 0;
 	alpha = 0;
-	isCollision = 0;
+	isCollisionBrick = 0;
+	isCollisionEnemies = 0;
 	isDone = true;
 	timeDelayed = 0;
 	timeDelayMax = SMALL_JASON_BULLET_DELAY;
@@ -56,16 +57,21 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (e->obj->GetType() == EntityType::GATE)
+				if (e->obj->GetType() == EntityType::BRICK)
 				{
-					if (e->nx != 0)
-					{
-						isCollision = 1;
+						isCollisionBrick = 1;
 						x += min_tx * dx + nx * 0.4f;
 						y += min_ty * dy + ny * 0.4f;
 						vx = 0;
 						vy = 0;
-					}
+				}
+				if (e->obj->GetType() == EntityType::GOLEM)
+				{
+					isCollisionEnemies = 1;
+					x += min_tx * dx + nx * 0.4f;
+					y += min_ty * dy + ny * 0.4f;
+					vx = 0;
+					vy = 0;
 				}
 			}
 		}
@@ -85,7 +91,7 @@ void MainJasonBullet::Render()
 	}
 	else
 	{
-		if (isCollision == 0)
+		if (isCollisionBrick == 0 && isCollisionEnemies == 0)
 		{
 			if (isTargetTop == true)
 			{
@@ -98,7 +104,12 @@ void MainJasonBullet::Render()
 				animationSet->at(ani)->Render(direction, x, y, alpha);
 			}
 		}
-		else
+		else if (isCollisionEnemies == 1)
+		{
+			isDone = true;
+			timeDelayed = 0;;
+		}
+		else if (isCollisionBrick == 1)
 		{
 			ani = SMALL_BULLET_JASON_BANG_ANI;
 			animationSet->at(ani)->OldRender(x, y - DISTANCE_TO_BANG, alpha);

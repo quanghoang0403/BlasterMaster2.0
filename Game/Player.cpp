@@ -18,19 +18,17 @@ Player::Player(float x, float y) : Entity()
 	this->x = x;
 	this->y = y;
 	backup_JumpY = 0;
-	health = 7;
+	gunDam = MAX_HEALTH;
+	health = MAX_HEALTH;
+	isImmortaling = false;
 	
 }
 Player* Player::instance = NULL;
-
 Player* Player::GetInstance()
 {
 	if (instance == NULL)
 		instance = new Player();
 	return instance;
-	gunDam = MAX_HEALTH;
-	health = MAX_HEALTH;
-	isImmortaling = false;
 }
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
@@ -51,9 +49,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma endregion
 
 
-	
-#pragma endregion
-
 #pragma region Xử lý gun flip
 	if (isPressFlipGun == false)
 	{
@@ -71,7 +66,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma endregion
 
 #pragma region Timer
-
 	if (isImmortaling && immortalTimer->IsTimeUp())
 	{
 		isImmortaling = false;
@@ -109,29 +103,21 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-	
-		//block every object first!
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-
-	
-
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (e->obj->GetType() == EntityType::BRICK)
 			{
-				
-				/*DebugOut(L"\nmindx:  %d", min_tx);
-				DebugOut(L"\nmindy:  %d", min_ty);*/
-				
+				x += min_tx * dx + nx * 0.4f;
+				y += min_ty * dy + ny * 0.4f;	
 				if (e->ny != 0)
 				{
 
-					if (e->ny == -1)
+					if (e->ny != 0)
 					{
 						vy = 0;
-						isJumping = false;
+						if (ny < 0)
+							isJumping = false;
 					}
 				
 					if (e->nx != 0)
@@ -142,23 +128,21 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			}
 			// VA CHAM CENTIPEDE
 			if (!isImmortaling)
-			if (e->obj->GetType() == EntityType::CENTIPEDE)
 			{
-				this->AddHealth(-1);
-				this->AddgunDam(-1);
-				immortalTimer->Start();
-				isImmortaling = true;	
+				if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
+				{
+					this->AddHealth(-1);
+					this->AddgunDam(-1);
+					immortalTimer->Start();
+					isImmortaling = true;
+				}
 			}
 		}
 		
 	}
-
-	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
-	/*DebugOut(L"\nX:  %d", x);
-	DebugOut(L"\nDX:  %d", dx);
-	DebugOut(L"\nDT:  %d", dt);*/
+
 	
 }
 
@@ -264,7 +248,6 @@ void Player::Render()
 			return;
 		}
 	}
-
 	else
 	{
 		if (isJumping == false)
@@ -321,7 +304,6 @@ void Player::Render()
 	}
 
 }
-
 void Player::SetState(int state)
 {
 	Entity::SetState(state);
@@ -359,7 +341,6 @@ void Player::SetState(int state)
 	
 	}
 }
-
 
 void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {

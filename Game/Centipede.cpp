@@ -2,7 +2,6 @@
 #include "Brick.h"
 Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 {
-	tag = EntityType::CENTIPEDE;
 	SetState(CENTIPEDE_STATE_WALKING);
 	tag = EntityType::CENTIPEDE;
 	this->x = x;

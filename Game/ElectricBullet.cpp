@@ -6,7 +6,7 @@ ElectricBullet::ElectricBullet()
 	x = 0;
 	y = 0;
 	alpha = 0;
-	isCollision = 0;
+	isCollisionBrick = 0;
 	timeDelayed = 0;
 	timeDelayMax = ELECTRIC_DELAY;
 }

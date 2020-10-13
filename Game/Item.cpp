@@ -28,7 +28,7 @@ void Item::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 
 	Entity::Update(dt);
-	vy = ITEM_GRAVITY;
+	vY = ITEM_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -45,7 +45,7 @@ void Item::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 	if (coEvents.size() == 0)
 	{
-		y += dy;
+		posY += dy;
 	}
 	else
 	{
@@ -53,11 +53,11 @@ void Item::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		x += min_tx * dx + nx * 0.1f;
-		y += min_ty * dy + ny * 0.1f;
+		posX += min_tx * dx + nx * 0.1f;
+		posY += min_ty * dy + ny * 0.1f;
 
 		if (ny == -1)
-			vy = 0;
+			vY = 0;
 	}
 
 	for (UINT i = 0; i < coEvents.size(); i++)
@@ -70,8 +70,7 @@ void Item::Render()
 	if (isDone || delayStart <= delayLimit)
 		return;
 
-	animationSet->at(0)->Render(direction, x, y);
-
+	animationSet->at(0)->Render(direction, posX, posY);
 	RenderBoundingBox();
 }
 
@@ -79,9 +78,9 @@ void Item::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (!isDone)
 	{
-		left = x;
-		top = y;
-		right = x + animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite()->GetFrameWidth();
-		bottom = y + animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite()->GetFrameHeight();
+		left = posX;
+		top = posY;
+		right = posX + animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite()->GetFrameWidth();
+		bottom = posY + animationSet->at(0)->GetAnimationCurrentFrame(0)->GetSprite()->GetFrameHeight();
 	}
 }

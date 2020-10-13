@@ -106,7 +106,7 @@ public:
 
 	void SetDirection(int d) { direction = d; }
 	void SetState(int state);
-	void SetPressSpace() { isPressJump = 1; }
+	void SetPressSpace(bool isPress) { isPressJump = isPress; }
 	void SetPressUp(bool a) { isPressFlipGun = a; }
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }

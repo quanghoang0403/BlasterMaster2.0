@@ -279,6 +279,9 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 		player->SetPressUp(false);
 		player->SetState(SOPHIA_STATE_GUN_UNFLIP);
 		break;
+	case DIK_SPACE:
+		player->SetPressSpace(false);
+		break;
 	}
 }
 
@@ -292,6 +295,7 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
@@ -309,7 +313,7 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
-		player->SetPressSpace();
+		player->SetPressSpace(true);
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_UP))
@@ -325,6 +329,13 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 				listObjects[i]->SetBBARGB(200);
 			else
 				listObjects[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listItems.size(); i++)
+		{
+			if (listItems[i]->GetBBARGB() == 0)
+				listItems[i]->SetBBARGB(200);
+			else
+				listItems[i]->SetBBARGB(0);
 		}
 
 		if (player->GetBBARGB() == 0)
@@ -351,11 +362,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			supBullet->SetBBARGB(200);
 		else
 			supBullet->SetBBARGB(0);
-
-		
-		
-
-		
 	}
 }
 

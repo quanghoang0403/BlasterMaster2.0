@@ -44,7 +44,11 @@ struct CCollisionEvent
 class Entity
 {
 public:
-	float x, y;
+
+	float x;
+	float y;
+	float vX, vY;
+	float posX, posY;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
 	float vx;
@@ -65,12 +69,12 @@ public:
 	LPANIMATION_SET animationSet;
 
 public:
-	
-	
-	
+
+
+
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
+	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	float GetPosX() { return x; }
 	float GetPosY() { return y; }
@@ -109,7 +113,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
-	
+
 
 
 	~Entity();

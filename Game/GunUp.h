@@ -9,7 +9,7 @@
 class GunUp : public Item
 {
 public:
-	GunUp(float x, float y);
+	GunUp(float posX, float posY);
 	~GunUp();
 };
 

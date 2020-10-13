@@ -65,6 +65,9 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
+		
+
+
 		//Follow theo player
 		if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEFOLLOW_PLAYER)// Kiểm tra bán kính xung quanh Golem xem có player không
 		{
@@ -72,10 +75,10 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		}
 		else // Đụng tường hay hết brick quay lại
 		{
-
 			if (nx != 0)
 			{
 				this->nx = -this->nx;
+				//DebugOut(L"\nnx:  %d", nx);
 			}
 			if (ny != 0)
 			{
@@ -99,6 +102,7 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						break;
 					}
 				}
+				//DebugOut(L"\nny:  %d", ny);
 			}
 		}
 	}

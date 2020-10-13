@@ -13,7 +13,7 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
 
-	if (dgravity==1)
+	if (dgravity == 1)
 	{
 		vy -= DOMES_GRAVITY;
 		SetState(DOMES_STATE_WALKING_TOP_BOTTOM_RIGHT);
@@ -48,7 +48,6 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	// turn off collision when die 
 	if (state != DOMES_STATE_DIE)
 		CalcPotentialCollisions(&bricks, coEvents);
-
 #pragma endregion
 
 #pragma region Xử lý logic khi va chạm
@@ -68,35 +67,24 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0)
+		if (nx!=0)
 		{
-			if (dgravity == 1)
-			{
-				if (vx > 0)
-				{
-					dgravity == 2;
-					
-				}
-				else
-				{
-					dgravity == 4;
-				}
-			}
-			else if (dgravity == 3)
-			{
-				if (vx > 0)
-				{
-
-				}
-			}
-
+			//DebugOut(L"\nnx:  %d", nx);
 		}
+		if (ny!=0)
+		{
+			//DebugOut(L"\nny:  %d", ny);
+		}
+
+
+		
+		
+
 	}
 
+	//DebugOut(L"\nGravity:  %d", dgravity);
+
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-
-	
-
 }
 
 void Domes::Render()
@@ -130,11 +118,6 @@ void Domes::Render()
 		}
 	}
 	
-	
-
-
-	
-
 	RenderBoundingBox();
 }
 
@@ -146,11 +129,7 @@ Domes::Domes(float x, float y, LPGAMEENTITY t)
 	this->y = y;
 	this->dgravity = 1;
 	nx = -1;
-
-	
 	this->target = t;
-	
-	
 	health = DOMES_MAXHEALTH;
 	isActive = false;
 }

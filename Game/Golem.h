@@ -5,9 +5,9 @@
 #include "Timer.h"
 #include <ctime>
 
-#define GOLEM_WALKING_SPEED				0.018f;
+#define GOLEM_WALKING_SPEED				0.018f
 #define GOLEM_JUMP_SPEED_Y				0.35f
-#define GOLEM_GRAVITY					0.0019f
+#define GOLEM_GRAVITY					0.0015f
 
 #define GOLEM_BBOX_WIDTH				12
 #define GOLEM_BBOX_HEIGHT				21

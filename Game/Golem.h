@@ -49,7 +49,7 @@ class Golem: public Enemy
 public:
 	Golem(float x, float y, LPGAMEENTITY t);
 	void FollowTarget(LPGAMEENTITY target);
-
 	virtual void SetState(int state);
+	void SelfDestroy();
 };
 

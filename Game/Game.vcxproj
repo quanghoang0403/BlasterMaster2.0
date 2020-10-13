@@ -128,7 +128,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Centipede.h" />
-    <ClInclude Include="CentipedeNew.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Domes.h" />
@@ -160,7 +159,6 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Centipede.cpp" />
-    <ClCompile Include="CentipedeNew.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
     <ClCompile Include="Domes.cpp" />

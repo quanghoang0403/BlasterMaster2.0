@@ -24,7 +24,7 @@ int Golem::randomTimeJump()
 void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
-
+	//SelfDestroy();
 #pragma region Xử lý vy khi rơi
 	vy += GOLEM_GRAVITY * dt;
 #pragma endregion
@@ -124,6 +124,22 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 #pragma endregion
 }
+
+//void Golem::SelfDestroy()
+//{
+//	if (GetDistance(D3DXVECTOR2(this->posX, this->posY), D3DXVECTOR2(target->GetPosX(), target->GetPosY())) <= GOLEM_SITEFOLLOW_PLAYER)
+//	{
+//		Player* pl = dynamic_cast<Player*>(target);
+//		if (!pl->IsImmortaling())
+//		{
+//			pl->AddHealth(-1);
+//			pl->StartImmortalingTimer();
+//			pl->SetImmortaling(true);
+//		}
+//		//SetState(DARKBAT_STATE_DIE);
+//		return;
+//	}
+//}
 
 void Golem::FollowTarget(LPGAMEENTITY target)
 {

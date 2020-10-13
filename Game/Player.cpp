@@ -48,7 +48,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 #pragma endregion
 
-
 #pragma region Xử lý gun flip
 	if (isPressFlipGun == false)
 	{
@@ -126,8 +125,13 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
+
+			if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
+			{
+				SetInjured(1);
+			}
 			// VA CHAM CENTIPEDE
-			if (!isImmortaling)
+			/*if (!isImmortaling)
 			{
 				if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
 				{
@@ -136,14 +140,29 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					immortalTimer->Start();
 					isImmortaling = true;
 				}
-			}
+			}*/
 		}
 		
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
+}
 
-	
+void Player::SetInjured(int dame)
+{
+	if (isImmortaling)
+		return;
+	health -= dame;
+	/*if (HPSimon <= 0)
+	{
+		DeathSimon();
+		HPSimon = 0;
+	}*/
+
+	//else
+	StartUntouchable();
+	immortalTimer->Start();
+	isImmortaling = true;
 }
 
 void Player::Render()
@@ -157,7 +176,7 @@ void Player::Render()
 	int ani = -1;
 	int alpha = 255;
 	int current_frame; //luu frame khi dang di chuyen ma dung lai
-	if (untouchable) alpha = 128;
+	if (isImmortaling) alpha = 128;
 #pragma endregion
 
 	if (state == SOPHIA_STATE_DIE)

@@ -13,8 +13,6 @@ Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 	isActive = false;
 }
 
-
-
 void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -61,7 +59,6 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		float rdy = 0;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
@@ -72,7 +69,6 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		}
 		else // Đụng tường hay hết brick quay lại
 		{
-
 			if (nx != 0)
 			{
 				this->nx = -this->nx;
@@ -106,7 +102,7 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
-
+	/*SelfDestroy();*/
 #pragma region Xử lý Active
 	if (!isActive)
 	{
@@ -120,19 +116,35 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEACTIVE_PLAYER)
 	{
 		isActive = true;
-
 	}
 
 #pragma endregion
 }
 
+//void Centipede::SelfDestroy()
+//{
+//	if (GetDistance(D3DXVECTOR2(this->posX, this->posY), D3DXVECTOR2(target->GetPosX(), target->GetPosY())) <= CENTIPEDE_SITEFOLLOW_PLAYER)
+//	{
+//		Player* pl = dynamic_cast<Player*>(target);
+//		if (!pl->IsImmortaling())
+//		{
+//			pl->AddHealth(-1);
+//			pl->StartImmortalingTimer();
+//			pl->SetImmortaling(true);
+//		}
+//		//SetState(DARKBAT_STATE_DIE);
+//		return;
+//	}
+//}
+
+//co van de
 void Centipede::FollowTarget(LPGAMEENTITY target)
 {
 	if ((target->x - this->x) > 0)
 		this->nx = 1;
 	else
 		this->nx = -1;
-	vx = -CENTIPEDE_WALKING_SPEED;
+	//vx = -CENTIPEDE_WALKING_SPEED;
 }
 
 void Centipede::Render()
@@ -148,7 +160,6 @@ void Centipede::Render()
 	}
 	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
 	animationSet->at(ani)->Render(direction, x, y);
-
 	RenderBoundingBox();
 }
 

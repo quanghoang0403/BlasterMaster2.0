@@ -88,9 +88,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CentipedeNew.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -179,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="CentipedeNew.h">
-      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

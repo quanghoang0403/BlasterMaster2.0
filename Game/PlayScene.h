@@ -17,7 +17,6 @@
 #include "GunUp.h"
 
 #include "Centipede.h"
-#include "CentipedeNew.h"
 #include "Golem.h"
 #include "Gunner.h"
 #include "Domes.h"

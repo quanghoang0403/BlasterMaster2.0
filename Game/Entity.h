@@ -44,11 +44,7 @@ struct CCollisionEvent
 class Entity
 {
 public:
-
-	float x;
-	float y;
-	float vX, vY;
-	float posX, posY;
+	float x, y;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
 	float vx;

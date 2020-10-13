@@ -285,7 +285,10 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
 	Player* player = ((PlayScene*)scence)->player;
-	
+	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
+	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
+	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
+	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
 
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
@@ -328,6 +331,31 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			player->SetBBARGB(200);
 		else
 			player->SetBBARGB(0);
+
+		if (bullet1->GetBBARGB() == 0)
+			bullet1->SetBBARGB(200);
+		else
+			bullet1->SetBBARGB(0);
+
+		if (bullet2->GetBBARGB() == 0)
+			bullet2->SetBBARGB(200);
+		else
+			bullet2->SetBBARGB(0);
+
+		if (bullet3->GetBBARGB() == 0)
+			bullet3->SetBBARGB(200);
+		else
+			bullet3->SetBBARGB(0);
+
+		if (supBullet->GetBBARGB() == 0)
+			supBullet->SetBBARGB(200);
+		else
+			supBullet->SetBBARGB(0);
+
+		
+		
+
+		
 	}
 }
 

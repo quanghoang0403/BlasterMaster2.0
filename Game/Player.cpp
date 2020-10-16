@@ -153,6 +153,7 @@ void Player::SetInjured(int dame)
 	if (isImmortaling)
 		return;
 	health -= dame;
+	gunDam -= dame;
 	/*if (HPSimon <= 0)
 	{
 		DeathSimon();

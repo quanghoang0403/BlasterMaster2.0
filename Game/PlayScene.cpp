@@ -87,21 +87,21 @@ void PlayScene::Update(DWORD dt)
 
 	float cx, cy;
 	player->GetPosition(cx, cy);
-	if (player->GetPosX() + SCREEN_WIDTH / 2  >= mapWidth)
+	if (player->Getx() + SCREEN_WIDTH / 2  >= mapWidth)
 	{
-		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->GetPosX());
+		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
 		cx -= mapWidth - SCREEN_WIDTH / 2;
 	}
 	else
 	{
-		if (player->GetPosX() < SCREEN_WIDTH / 2)
+		if (player->Getx() < SCREEN_WIDTH / 2)
 			cx = 0;
 		else
 			cx -= SCREEN_WIDTH / 2;
 	}
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move posX follow camera
+	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
 #pragma endregion
 	if (listItems.size() > 0)
 		PlayerCollideItem();
@@ -126,7 +126,7 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 {
 	if (directionGo == 1)	//cua o ben phai
 	{
-		if (player->GetPosX() < DistanceXWant)
+		if (player->Getx() < DistanceXWant)
 		{
 			player->SetDirection(directionGo);
 			player->SetState(SOPHIA_STATE_IDLE);
@@ -136,7 +136,7 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 	else
 		if (directionGo == -1)	//cua o ben trai
 		{
-			if (player->GetPosX() > DistanceXWant)
+			if (player->Getx() > DistanceXWant)
 			{
 				player->SetDirection(directionGo);
 				player->SetState(SOPHIA_STATE_IDLE);
@@ -156,32 +156,32 @@ void PlayScene::PlayerGotGate()
 			{
         		Gate* gate = dynamic_cast<Gate*>(listObjects[i]);
 				int tempMap = gate->GetIdScene() * STAGE_1;
-				float tempPosX = gate->newPlayerPosX;
-				float tempPosY = gate->newPlayerPosY;
+				float tempx = gate->newPlayerx;
+				float tempy = gate->newPlayery;
 				int tempState = gate->newPlayerState;
 				bool tempNeed = gate->isNeedResetCam;
 				/*if (idStage == STAGE_1)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 20.0f, 1))
+					if (!PlayerPassingStage(listObjects[i]->Getx() + 20.0f, 1))
 						return;
 				}
 				else if (idStage == STAGE_2_2 && tempMap == STAGE_3_1)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX(), -1))
+					if (!PlayerPassingStage(listObjects[i]->Getx(), -1))
 						return;
 				}
 				else if (idStage == STAGE_3_2 && tempMap == STAGE_4)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 10.0f, 1))
+					if (!PlayerPassingStage(listObjects[i]->Getx() + 10.0f, 1))
 						return;
 				}*/
 				Unload();
 				if(tempNeed)
 					gameCamera->SetCamPos(0, 0);
 				ChooseMap(tempMap);
-				player->SetPosition(tempPosX, tempPosY);
-				player->SetVx(0);
-				player->SetVy(0);
+				player->SetPosition(tempx, tempy);
+				player->Setvx(0);
+				player->Setvy(0);
 				player->SetState(tempState);
 			}
 		}
@@ -704,24 +704,24 @@ void PlayScene::Unload()
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
-Item* PlayScene::RandomItem(float posX, float posY)
+Item* PlayScene::RandomItem(float x, float y)
 {
 
 	int bagrandom = rand() % 100;
 	int random = rand() % 100;
 	if (random <= 30)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 	else if (30 < random && random <= 60)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 	else if (60< random && random <= 100)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 }
 
-Item* PlayScene::DropItem(EntityType createrType, float posX, float posY, int idCreater)
+Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreater)
 {
 	if (createrType == EntityType::CENTIPEDE)
-		return new PowerUp(posX, posY);
-	return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
+	return new PowerUp(x, y);
 }
 
 void PlayScene::Render()

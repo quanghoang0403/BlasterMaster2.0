@@ -190,7 +190,7 @@ void Game::ProcessKeyboard()
 
 void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
+	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamx()), floor(y - Camera::GetInstance()->GetCamy()), 0);
 	RECT r;
 	r.left = left;
 	r.top = top;
@@ -201,7 +201,7 @@ void Game::OldDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int t
 
 void Game::MapDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
+	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamx()), floor(y - Camera::GetInstance()->GetCamy()), 0);
 	RECT r;
 	r.left = left;
 	r.top = top;
@@ -224,7 +224,7 @@ void Game::MapDraw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int t
 
 void Game::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
+	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamx()), floor(y - Camera::GetInstance()->GetCamy()), 0);
 	RECT r;
 	r.left = left;
 	r.top = top;
@@ -250,7 +250,7 @@ void Game::Draw(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int
 
 void Game::DrawTopBottom(int direction, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamPosX()), floor(y - Camera::GetInstance()->GetCamPosY()), 0);
+	D3DXVECTOR3 p(floor(x - Camera::GetInstance()->GetCamx()), floor(y - Camera::GetInstance()->GetCamy()), 0);
 	RECT r;
 	r.left = left;
 	r.top = top;

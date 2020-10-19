@@ -112,12 +112,12 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_JASON_BBOX_WIDTH / 2; y = this->y + SOPHIA_JASON_BBOX_HEIGHT / 2; }
 	bool isGunFlippingg() { return isGunFlipping; }
-	void SetVx(float Vx) { vx = Vx; }
-	void SetVy(float Vy) { vy = Vy; }
+	void Setvx(float vx) { vx = vx; }
+	void Setvy(float vy) { vy = vy; }
 	float GetDy() { return dy; }
-	float GetVy() { return vy; }
+	float Getvy() { return vy; }
 	void Reset();
-	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerPosX, float& playerPosY) { direct = direction; isTargetTop = isGunFlipping; playerPosX = x; playerPosY = y; }
+	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerx, float& playery) { direct = direction; isTargetTop = isGunFlipping; playerx = x; playery = y; }
 	
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 	void SetInjured(int dame);

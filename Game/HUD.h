@@ -16,7 +16,7 @@ using namespace std;
 
 class HUD 
 {
-	float posX, posY;
+	float x, y;
 
 	LPANIMATION_SET UIanimationSet;
 
@@ -27,7 +27,7 @@ public:
 	HUD(int initPlayerHealth = 8, int initGunHealth = 8);
 	~HUD();
 
-	void Update(float posX, float posY, int currentPlayerHealth, int currentGunHealth);
+	void Update(float x, float y, int currentPlayerHealth, int currentGunHealth);
 	void Render(Player* playerInfo);
 };
 

@@ -1,12 +1,12 @@
 #include "PowerUp.h"
 
-PowerUp::PowerUp(float posX, float posY)
+PowerUp::PowerUp(float x, float y)
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_ITEM_POWERUP));
 	tag = EntityType::POWERUP;
 
-	this->posX = posX;
-	this->posY = posY;
+	this->x = x;
+	this->y = y;
 
 	displayTimer = new Timer(POWERUP_DISPLAY_DURATION);
 	displayTimer->Start();

@@ -127,7 +127,7 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 //void Golem::SelfDestroy()
 //{
-//	if (GetDistance(D3DXVECTOR2(this->posX, this->posY), D3DXVECTOR2(target->GetPosX(), target->GetPosY())) <= GOLEM_SITEFOLLOW_PLAYER)
+//	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->Getx(), target->Gety())) <= GOLEM_SITEFOLLOW_PLAYER)
 //	{
 //		Player* pl = dynamic_cast<Player*>(target);
 //		if (!pl->IsImmortaling())

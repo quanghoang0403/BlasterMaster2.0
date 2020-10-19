@@ -9,7 +9,7 @@
 class PowerUp : public Item
 {
 public:
-	PowerUp(float posX, float posY);
+	PowerUp(float x, float y);
 	~PowerUp();
 };
 

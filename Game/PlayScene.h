@@ -81,8 +81,8 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	Item* RandomItem(float posX, float posY);
-	Item* DropItem(EntityType createrType, float posX, float posY, int idCreater = 0);
+	Item* RandomItem(float x, float y);
+	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 
 	friend class PlayScenceKeyHandler;
 };

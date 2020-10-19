@@ -47,8 +47,8 @@ public:
 
 	float x;
 	float y;
-	float vX, vY;
-	float posX, posY;
+	//float vx, vy;
+	//float x, y;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
 	float vx;
@@ -76,8 +76,8 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
-	float GetPosX() { return x; }
-	float GetPosY() { return y; }
+	float Getx() { return x; }
+	float Gety() { return y; }
 	int GetState() { return this->state; }
 	int GetHealth() { return health; }
 	void SetHealth(int value) { health = value; }

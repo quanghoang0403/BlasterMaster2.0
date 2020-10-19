@@ -10,7 +10,7 @@ Camera* Camera::GetInstance()
 
 Camera::Camera()
 {
-	camPosX = camPosY = 0;
+	camx = camy = 0;
 }
 
 Camera::~Camera() {}

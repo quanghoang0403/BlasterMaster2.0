@@ -1,28 +1,26 @@
 ﻿#include "Golem.h"
 #include "Player.h"
 #include <math.h>
-void Golem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+Golem::Golem(float x, float y, LPGAMEENTITY t)
 {
-	left = x;
-	top = y;
-	right = x + GOLEM_BBOX_WIDTH;
-	bottom = y + GOLEM_BBOX_HEIGHT;
-}
+	SetState(GOLEM_STATE_WALKING);
+	enemyType = GOLEM;
+	this->x = x;
+	this->y = y;
 
-int Golem::randomTimeJump()
-{
-	srand(time(NULL));
-	int res;
-	for (int i = 0; i < 5; ++i) {
-		res = rand() % (GOLEM_TIME_FOLLOW_PLAYER_MAX - 500 + 1) + 500;
-	}
-	return res;
-	
+	nx = -1;
+	isFollow = 0;
+	this->target = t;
+	afterFollow = 1;
+	firstFollow = 1;
+	health = GOLEM_MAXHEALTH;
+	isActive = false;
 }
-
 
 void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (isDeath)
+		return;
 	Entity::Update(dt);
 	//SelfDestroy();
 #pragma region Xử lý vy khi rơi
@@ -115,11 +113,9 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	{
 		SetState(GOLEM_STATE_WALKING);
 	}
-	
 	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= GOLEM_SITEACTIVE_PLAYER)
 	{
 		isActive = true;
-		
 	}
 
 #pragma endregion
@@ -140,6 +136,35 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 //		return;
 //	}
 //}
+
+void Golem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (isDeath == true)
+	{
+		left = 0;
+		top = 0;
+		right = 0;
+		bottom = 0;
+	}
+	else
+	{
+		left = x;
+		top = y;
+		right = x + GOLEM_BBOX_WIDTH;
+		bottom = y + GOLEM_BBOX_HEIGHT;
+	}
+}
+
+int Golem::randomTimeJump()
+{
+	srand(time(NULL));
+	int res;
+	for (int i = 0; i < 5; ++i) {
+		res = rand() % (GOLEM_TIME_FOLLOW_PLAYER_MAX - 500 + 1) + 500;
+	}
+	return res;
+}
+
 
 void Golem::FollowTarget(LPGAMEENTITY target)
 {
@@ -196,40 +221,28 @@ void Golem::FollowTarget(LPGAMEENTITY target)
 
 void Golem::Render()
 {
-	if (vx > 0)
-		direction = 1;
-	else
-		direction = -1;
-
-	int ani = GOLEM_ANI_WALKING;
-	if (state == GOLEM_STATE_DIE) {
+	if (isDeath)
+		return;
+	int ani;
+	if (health <= 0)
+	{
 		ani = GOLEM_ANI_DIE;
+		animationSet->at(ani)->Render(direction, x, y);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(GOLEM_STATE_DIE);
 	}
-	
-	animationSet->at(ani)->Render(direction, x, y);
-
+	else
+	{
+		if (vx > 0)
+			direction = 1;
+		else
+			direction = -1;
+		ani = GOLEM_ANI_WALKING;
+		animationSet->at(ani)->Render(direction, x, y);
+	}
 	RenderBoundingBox();
 }
-
-
-Golem::Golem(float x, float y, LPGAMEENTITY t)
-{
-	SetState(GOLEM_STATE_WALKING);
-	tag = EntityType::GOLEM;
-	this->x = x;
-	this->y = y;
-	
-	nx = -1;
-	isFollow = 0;
-	this->target = t;
-	afterFollow = 1;
-	firstFollow = 1;
-	health = GOLEM_MAXHEALTH;
-	isActive = false;
-	
-}
-
-
 
 void Golem::SetState(int state)
 {
@@ -237,9 +250,10 @@ void Golem::SetState(int state)
 	switch (state)
 	{
 	case GOLEM_STATE_DIE:
-		y += GOLEM_BBOX_HEIGHT - GOLEM_BBOX_HEIGHT_DIE + 1;
+	/*	y += GOLEM_BBOX_HEIGHT - GOLEM_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
-		vy = 0;
+		vy = 0;*/
+		isDeath = true;
 		break;
 	case GOLEM_STATE_WALKING:
 		if (nx>0)
@@ -250,6 +264,5 @@ void Golem::SetState(int state)
 		{
 			vx = -GOLEM_WALKING_SPEED;
 		}
-		
 	}
 }

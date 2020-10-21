@@ -719,7 +719,7 @@ Item* PlayScene::RandomItem(float x, float y)
 
 Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreater)
 {
-	if (createrType == EntityType::CENTIPEDE)
+	if (createrType == ENEMY)
 		return new PowerUp(x, y);
 	return new PowerUp(x, y);
 }

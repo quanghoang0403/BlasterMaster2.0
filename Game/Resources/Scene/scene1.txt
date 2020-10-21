@@ -7,8 +7,8 @@
 [SPRITES]
 #map
 
-1000	0	0	512	120	2	
-1000	0	0	512	120	11	
+1000	0	0	512	120	2
+1000	0	0	512	120	11
 
 ##==============ENEMY===================
 
@@ -58,18 +58,12 @@
 # =============== ENEMIES==============
 #Walk centipede
 400	4001	100	4002	100
-#die
-401	90000	100
 
 #Walk Golem
 500	5000	250	5001	250
-#die
-501	90000	100
 
 #Walk Gunner
 600	6000	250	6001	250
-#die
-601	90000	100
 
 #DOMES
 #walk top right
@@ -80,14 +74,9 @@
 702	7004	100	7005	100
 #walk right bottom
 703	7006	100	7007	100
-#die
-704	90000	100
-
 
 #ENEMY DIE
-9000	90000	100	90001	100	90002	100
-
-
+9000	90000	50	90001	50	90002	50	90002	50
 
 # id	ani1	ani2	ani3
 # id tuan theo define
@@ -96,20 +85,17 @@
 30	100
 #=== ENEMIES =====
 # CENTIPENDE
-10	400	401
+10	400	9000
 # GOLEM
-11	500	501
+11	500	9000
 # GUNNER
-12	600	601
+12	600	9000
 #DOMES
-13	700	701	702	703	704
+13	700	701	702	703	9000
 	
-
-
-
 [OBJECTS]
 # type	x	y	extra_settings per object type	width	height
-# type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
+# type
 #Brick
 1	0	157	22	320	16
 ##

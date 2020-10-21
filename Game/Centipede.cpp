@@ -3,7 +3,7 @@
 Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 {
 	SetState(CENTIPEDE_STATE_WALKING);
-	tag = EntityType::CENTIPEDE;
+	enemyType= CENTIPEDE;
 	this->x = x;
 	this->y = y;
 	nx = -1;

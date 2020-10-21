@@ -6,7 +6,7 @@
 20	Resources/misc.png	176	224	0
 30	Resources/jssophia.png	255	0	255
 40	Resources/Enemy/enemies.png	255	0	255
-11	Resources/Scene/area2_A.png	255	0	255
+11	Resources/Scene/area_1.jpg	255	0	255
 50	Resources/HealthBar.png	255	255	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
@@ -193,7 +193,7 @@
 #big bullet jason top
 703	20004	100
 #bang
-704	20005	100	20006	100	20007	100
+704	20005	50	20006	50	20007	50	20007	50
 #electric bullet jason
 705	20008	100	20009	100	20010	100	20011	100
 #small sophia bullet

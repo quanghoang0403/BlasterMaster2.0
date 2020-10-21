@@ -125,22 +125,8 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
-
-			if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
-			{
+			if (e->obj->GetType() == EntityType::ENEMY)
 				SetInjured(1);
-			}
-			// VA CHAM CENTIPEDE
-			/*if (!isImmortaling)
-			{
-				if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
-				{
-					this->AddHealth(-1);
-					this->AddgunDam(-1);
-					immortalTimer->Start();
-					isImmortaling = true;
-				}
-			}*/
 		}
 		
 	}
@@ -324,6 +310,7 @@ void Player::Render()
 	}
 
 }
+
 void Player::SetState(int state)
 {
 	Entity::SetState(state);

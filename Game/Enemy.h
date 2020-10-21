@@ -3,14 +3,16 @@
 class Enemy: public Entity
 {
 protected:
-	int HP;
+	//int HP;
 	bool isDamaged;
 	int DamageofEnemy;
 	bool isActive;
 	bool isArmor;
 	bool isBoss;
-	int health;
+	bool isDeath;
+	//int health;
 	LPGAMEENTITY target;
+	EnemyType enemyType;
 
 public:
 	Enemy();
@@ -20,6 +22,7 @@ public:
 	virtual float GetDistance(D3DXVECTOR2 pos, D3DXVECTOR2 target);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* objects = NULL) = 0;
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) = 0;
+
 
 };
 

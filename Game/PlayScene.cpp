@@ -3,8 +3,8 @@
 
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
-#define OBJECT_TYPE_CENTIPEDE	10
 
+#define OBJECT_TYPE_CENTIPEDE	10
 #define OBJECT_TYPE_GOLEM		11
 #define OBJECT_TYPE_GUNNER		12
 #define OBJECT_TYPE_DOMES		13
@@ -22,6 +22,7 @@ PlayScene::PlayScene() : Scene()
 void PlayScene::LoadBaseObjects()
 {
 	texturesFilePath = ToLPCWSTR("Resources/Scene/textures_playscene.txt");
+	//texturesFilePath = ToLPCWSTR("Resources/Scene/base.txt");
 	LoadBaseTextures();
 	if (player == NULL)
 	{

@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "Bullet.h"
 #include <map>
 #include "Timer.h"
 
@@ -78,10 +77,6 @@ class Player : public Entity
 	DWORD untouchable_start;
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
-	Bullet* mainBullet1;
-	Bullet* mainBullet2;
-	Bullet* mainBullet3;
-	Bullet* supBullet;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;

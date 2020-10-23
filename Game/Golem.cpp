@@ -19,7 +19,7 @@ Golem::Golem(float x, float y, LPGAMEENTITY t)
 
 void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	if (isDeath)
+	if (health <= 0)
 		return;
 	Entity::Update(dt);
 	//SelfDestroy();
@@ -121,32 +121,9 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma endregion
 }
 
-//void Golem::SelfDestroy()
-//{
-//	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->Getx(), target->Gety())) <= GOLEM_SITEFOLLOW_PLAYER)
-//	{
-//		Player* pl = dynamic_cast<Player*>(target);
-//		if (!pl->IsImmortaling())
-//		{
-//			pl->AddHealth(-1);
-//			pl->StartImmortalingTimer();
-//			pl->SetImmortaling(true);
-//		}
-//		//SetState(DARKBAT_STATE_DIE);
-//		return;
-//	}
-//}
-
 void Golem::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (isDeath == true)
-	{
-		left = 0;
-		top = 0;
-		right = 0;
-		bottom = 0;
-	}
-	else
+	if (isDeath == false)
 	{
 		left = x;
 		top = y;
@@ -250,9 +227,9 @@ void Golem::SetState(int state)
 	switch (state)
 	{
 	case GOLEM_STATE_DIE:
-	/*	y += GOLEM_BBOX_HEIGHT - GOLEM_BBOX_HEIGHT_DIE + 1;
+		//y += GOLEM_BBOX_HEIGHT - GOLEM_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
-		vy = 0;*/
+		vy = 0;
 		isDeath = true;
 		break;
 	case GOLEM_STATE_WALKING:

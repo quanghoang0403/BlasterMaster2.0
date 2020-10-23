@@ -10,8 +10,8 @@
 #define GOLEM_GRAVITY					0.0019f
 
 #define GOLEM_BBOX_WIDTH				12
-#define GOLEM_BBOX_HEIGHT				21
-#define GOLEM_BBOX_HEIGHT_DIE			9
+#define GOLEM_BBOX_HEIGHT				23
+//#define GOLEM_BBOX_HEIGHT_DIE			9
 
 #define GOLEM_STATE_WALKING				100
 #define GOLEM_STATE_DIE					200

@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "Game.h"
 
-#include "Gate.h"
-
 Player::Player(float x, float y) : Entity()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYER));
@@ -140,13 +138,7 @@ void Player::SetInjured(int dame)
 		return;
 	health -= dame;
 	gunDam -= dame;
-	/*if (HPSimon <= 0)
-	{
-		DeathSimon();
-		HPSimon = 0;
-	}*/
 
-	//else
 	StartUntouchable();
 	immortalTimer->Start();
 	isImmortaling = true;

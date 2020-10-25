@@ -3,7 +3,7 @@
 #include <map>
 #include "Timer.h"
 
-#define SOPHIA_WALKING_SPEED			0.1f 
+#define SOPHIA_BIG_WALKING_SPEED			0.1f 
 
 
 //define HealthBar
@@ -12,9 +12,9 @@
 #define SOPHIA_BIG_STATE_IDLE				0
 #define SOPHIA_BIG_STATE_WALKING_RIGHT		100
 #define SOPHIA_BIG_STATE_WALKING_LEFT		200
-#define SOPHIA_BIG_STATE_DIE				300
-
-
+#define SOPHIA_BIG_STATE_WALKING_TOP		300
+#define SOPHIA_BIG_STATE_WALKING_BOT		400
+#define SOPHIA_BIG_STATE_DIE				500
 
 #define SOPHIA_ANI_BIG_IDLE_RIGHT				0
 #define SOPHIA_ANI_BIG_IDLE_LEFT				1
@@ -37,7 +37,7 @@
 class PlayerV2 : public Entity
 {
 	static PlayerV2* instance;
-
+	int directionY;
 	int level;
 	int untouchable;
 	bool isImmortaling;
@@ -45,7 +45,7 @@ class PlayerV2 : public Entity
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
 
-	float start_x;	
+	float start_x;
 	float start_y;
 
 public:

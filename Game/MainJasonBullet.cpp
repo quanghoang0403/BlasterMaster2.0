@@ -114,7 +114,7 @@ void MainJasonBullet::Render()
 		else if (isCollisionBrick == 1)
 		{
 			ani = SMALL_BULLET_JASON_BANG_ANI;
-			animationSet->at(ani)->OldRender(x, y - DISTANCE_TO_BANG, alpha);
+			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)
 			{
 				isDone = true;

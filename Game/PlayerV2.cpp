@@ -120,7 +120,33 @@ void PlayerV2::Render()
 	if (state == SOPHIA_BIG_STATE_DIE)
 	{
 		ani = SOPHIA_ANI_BIG_DIE;
-		/*animation_set->at(ani)->RenderFrame(8,x, y, alpha);*/
+	}
+	else
+	{
+		if (vx == 0 && vy == 0)
+		{
+			if (direction > 0)
+				ani = SOPHIA_ANI_BIG_IDLE_RIGHT;
+			else if (direction < 0)
+				ani = SOPHIA_ANI_BIG_IDLE_LEFT;
+			else if (directionY > 0)
+				ani = SOPHIA_ANI_BIG_IDLE_BOT;
+			else if (directionY < 0)
+				ani = SOPHIA_ANI_BIG_IDLE_TOP;
+		}
+		else
+		{
+			if (vx > 0)
+				ani = SOPHIA_ANI_BIG_WALKING_RIGHT;
+			else if (vx < 0)
+				ani = SOPHIA_ANI_BIG_WALKING_LEFT;
+			else if (vy > 0)
+				ani = SOPHIA_ANI_BIG_WALKING_BOT;
+			else if (vy < 0)
+				ani = SOPHIA_ANI_BIG_WALKING_TOP;
+		}
+		animationSet->at(ani)->OldRender(x, y, alpha);
+		RenderBoundingBox();
 	}
 }
 
@@ -130,13 +156,28 @@ void PlayerV2::SetState(int state)
 
 	switch (state)
 	{
-
+	case SOPHIA_BIG_STATE_IDLE:
+		vx = 0;
+		vy = 0;
+		break;
 	case SOPHIA_BIG_STATE_WALKING_RIGHT:
+		vx = SOPHIA_BIG_WALKING_SPEED;
+		break;
+	case SOPHIA_BIG_STATE_WALKING_LEFT:
+		vx = -SOPHIA_BIG_WALKING_SPEED;
+		break;
+	case SOPHIA_BIG_STATE_WALKING_TOP:
+		vy = -SOPHIA_BIG_WALKING_SPEED;
+		break;
+	case SOPHIA_BIG_STATE_WALKING_BOT:
+		vy = SOPHIA_BIG_WALKING_SPEED;
+		break;
 	case SOPHIA_BIG_STATE_DIE:
+		vx = 0;
+		vy = 0;
 		break;
 	}
 }
-
 void PlayerV2::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;

@@ -332,7 +332,16 @@ void Player::SetState(int state)
 		break;
 	case SOPHIA_STATE_IDLE:
 		isPressJump = false;
-		vx = 0;
+		if (vx > 0) {
+			vx -= SOPHIA_WALKING_ACC * dt;
+			if (vx < 0)
+				vx = 0;
+		}
+		else if (vx < 0) {
+			vx += SOPHIA_WALKING_ACC * dt;
+			if (vx > 0)
+				vx = 0;
+		}
 		break;
 	case SOPHIA_STATE_DIE:
 		vy = -SOPHIA_DIE_DEFLECT_SPEED;

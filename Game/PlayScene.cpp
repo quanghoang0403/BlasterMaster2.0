@@ -230,9 +230,12 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
+	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
+	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
 	int direction, isTargetTop;
@@ -263,6 +266,47 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_X:
 		supBullet->Fire(direction, isTargetTop, x, y);
+		break;
+	case DIK_F6:
+		for (int i = 0; i < listObjects.size(); i++)
+		{
+			if (listObjects[i]->GetBBARGB() == 0)
+				listObjects[i]->SetBBARGB(200);
+			else
+				listObjects[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listItems.size(); i++)
+		{
+			if (listItems[i]->GetBBARGB() == 0)
+				listItems[i]->SetBBARGB(200);
+			else
+				listItems[i]->SetBBARGB(0);
+		}
+
+		if (player->GetBBARGB() == 0)
+			player->SetBBARGB(200);
+		else
+			player->SetBBARGB(0);
+
+		if (bullet1->GetBBARGB() == 0)
+			bullet1->SetBBARGB(200);
+		else
+			bullet1->SetBBARGB(0);
+
+		if (bullet2->GetBBARGB() == 0)
+			bullet2->SetBBARGB(200);
+		else
+			bullet2->SetBBARGB(0);
+
+		if (bullet3->GetBBARGB() == 0)
+			bullet3->SetBBARGB(200);
+		else
+			bullet3->SetBBARGB(0);
+
+		if (supBullet->GetBBARGB() == 0)
+			supBullet->SetBBARGB(200);
+		else
+			supBullet->SetBBARGB(0);
 		break;
 	}
 }
@@ -324,45 +368,7 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_F6))
 	{
-		for (int i = 0; i < listObjects.size(); i++)
-		{
-			if (listObjects[i]->GetBBARGB() == 0)
-				listObjects[i]->SetBBARGB(200);
-			else
-				listObjects[i]->SetBBARGB(0);
-		}
-		for (int i = 0; i < listItems.size(); i++)
-		{
-			if (listItems[i]->GetBBARGB() == 0)
-				listItems[i]->SetBBARGB(200);
-			else
-				listItems[i]->SetBBARGB(0);
-		}
-
-		if (player->GetBBARGB() == 0)
-			player->SetBBARGB(200);
-		else
-			player->SetBBARGB(0);
-
-		if (bullet1->GetBBARGB() == 0)
-			bullet1->SetBBARGB(200);
-		else
-			bullet1->SetBBARGB(0);
-
-		if (bullet2->GetBBARGB() == 0)
-			bullet2->SetBBARGB(200);
-		else
-			bullet2->SetBBARGB(0);
-
-		if (bullet3->GetBBARGB() == 0)
-			bullet3->SetBBARGB(200);
-		else
-			bullet3->SetBBARGB(0);
-
-		if (supBullet->GetBBARGB() == 0)
-			supBullet->SetBBARGB(200);
-		else
-			supBullet->SetBBARGB(0);
+		
 	}
 }
 
@@ -511,11 +517,23 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		
-		obj->SetAnimationSet(ani_set);
+		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add brick !\n");
+		break;
+	}
+	case OBJECT_TYPE_GATE:
+	{
+		int switchId = atoi(tokens[3].c_str());
+		float playerPosX = atoi(tokens[4].c_str());
+		float playerPosY = atoi(tokens[5].c_str());
+		int playerState = atoi(tokens[6].c_str());
+		int isResetCamera = atoi(tokens[7].c_str());
+		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add gate !\n");
 		break;
 	}
 	case OBJECT_TYPE_GOLEM:
@@ -702,6 +720,9 @@ void PlayScene::Unload()
 	for (int i = 0; i < listObjects.size(); i++)
 		delete listObjects[i];
 	listObjects.clear();
+	for (int i = 0; i < listItems.size(); i++)
+		delete listItems[i];
+	listItems.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 

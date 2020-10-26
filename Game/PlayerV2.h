@@ -3,9 +3,8 @@
 #include <map>
 #include "Timer.h"
 
+#define ANIMATION_SET_BIG_SOPHIA			2
 #define SOPHIA_BIG_WALKING_SPEED			0.1f 
-
-
 //define HealthBar
 #define MAX_HEALTH						8
 

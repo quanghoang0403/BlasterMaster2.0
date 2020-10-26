@@ -60,6 +60,9 @@
 #define SOPHIA_JASON_BBOX_WIDTH		26
 #define SOPHIA_JASON_BBOX_HEIGHT	16.5
 
+#define DURATION_X_TO_DIE	14
+#define DURATION_Y_TO_DIE	30
+
 //#define MARIO_UNTOUCHABLE_TIME 5000
 #define PLAYER_IMMORTAL_DURATION	1000
 
@@ -68,13 +71,15 @@
 class Player : public Entity
 {
 	static Player* instance;
-
+	int alpha;
 	int level;
 	int untouchable;
 	bool isJumping = false;
 	bool isGunFlipping = false;
 	bool isJumpHandle;
 	bool isImmortaling;	
+	bool isDeath;
+	bool isDoneDeath;
 	DWORD untouchable_start;
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
@@ -92,7 +97,7 @@ public:
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 
-	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL, vector<LPGAMEENTITY>* coEnemies = NULL);
 	virtual void Render();
 
 	//Immortal
@@ -104,7 +109,6 @@ public:
 	void SetState(int state);
 	void SetPressSpace(bool isPress) { isPressJump = isPress; }
 	void SetPressUp(bool a) { isPressFlipGun = a; }
-	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_JASON_BBOX_WIDTH / 2; y = this->y + SOPHIA_JASON_BBOX_HEIGHT / 2; }
 	bool isGunFlippingg() { return isGunFlipping; }

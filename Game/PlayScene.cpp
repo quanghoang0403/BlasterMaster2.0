@@ -15,6 +15,7 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
+	isMiniSophia = false;
 	LoadBaseObjects();
 	ChooseMap(STAGE_1);
 }
@@ -26,8 +27,18 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(35, 100);
-		DebugOut(L"[INFO] Simon CREATED! \n");
+		player = new Player(135, 100);
+		DebugOut(L"[INFO] player CREATED! \n");
+	}
+	if (playerV2 == NULL)
+	{
+		playerV2 = new PlayerV2(165, 100);
+		DebugOut(L"[INFO] playerv2 CREATED! \n");
+	}
+	if (sophia == NULL)
+	{
+		sophia = new MiniSophia(105, 100);
+		DebugOut(L"[INFO] sophia CREATED! \n");
 	}
 	if (gameHUD == NULL)
 	{
@@ -107,18 +118,25 @@ void PlayScene::Update(DWORD dt)
 	if (listItems.size() > 0)
 		PlayerCollideItem();
 	PlayerGotGate();
+	PlayerTouchEnemy();
 #pragma region Objects Updates
 	vector<LPGAMEENTITY> coObjects;
 	for (int i = 0; i < listObjects.size(); i++)
 		coObjects.push_back(listObjects[i]);
-	player->Update(dt, &coObjects);
-	supBullet->Update(dt, &coObjects);
+	for (int i = 0; i < listEnemies.size(); i++)
+		coObjects.push_back(listEnemies[i]);
+	player->Update(dt, &listObjects);
+	playerV2->Update(dt, &listObjects);
+	sophia->Update(dt, &listObjects);
+	supBullet->Update(dt, &listObjects);
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Update(dt, &coObjects);	
+		listObjects[i]->Update(dt, &listObjects);
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Update(dt, &listObjects);
+	for (int i = 0; i < listEnemies.size(); i++)
+		listEnemies[i]->Update(dt, &listObjects);
 #pragma endregion
 
 }
@@ -189,6 +207,27 @@ void PlayScene::PlayerGotGate()
 	}
 }
 
+void PlayScene::PlayerGotCar()
+{
+	if (sophia->IsCollidingObject(player))
+	{
+		isMiniSophia = false;
+	}
+
+}
+
+
+void PlayScene::PlayerTouchEnemy()
+{
+	for (UINT i = 0; i < listEnemies.size(); i++)
+	{
+		if (player->IsCollidingObject(listEnemies[i]))
+		{
+			player->SetInjured(1);
+		}
+	}
+}
+
 void PlayScene::PlayerCollideItem()
 {
 	for (UINT i = 0; i < listItems.size(); i++)
@@ -228,13 +267,17 @@ void PlayScene::PlayerCollideItem()
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
 	Player* player = ((PlayScene*)scence)->player;
+	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
+	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
 	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPGAMEENTITY> listEnemies = ((PlayScene*)scence)->listEnemies;
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
@@ -267,6 +310,11 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_X:
 		supBullet->Fire(direction, isTargetTop, x, y);
 		break;
+	case DIK_U:
+		if (isMiniSophia)
+			playScene->PlayerGotCar();
+		else playScene->SetIsMiniSophia(true);
+		break;
 	case DIK_F6:
 		for (int i = 0; i < listObjects.size(); i++)
 		{
@@ -282,11 +330,28 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			else
 				listItems[i]->SetBBARGB(0);
 		}
+		for (int i = 0; i < listEnemies.size(); i++)
+		{
+			if (listEnemies[i]->GetBBARGB() == 0)
+				listEnemies[i]->SetBBARGB(200);
+			else
+				listEnemies[i]->SetBBARGB(0);
+		}
 
 		if (player->GetBBARGB() == 0)
 			player->SetBBARGB(200);
 		else
 			player->SetBBARGB(0);
+
+		if (playerV2->GetBBARGB() == 0)
+			playerV2->SetBBARGB(200);
+		else
+			playerV2->SetBBARGB(0);
+
+		if (sophia->GetBBARGB() == 0)
+			sophia->SetBBARGB(200);
+		else
+			sophia->SetBBARGB(0);
 
 		if (bullet1->GetBBARGB() == 0)
 			bullet1->SetBBARGB(200);
@@ -364,11 +429,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
 		player->SetPressUp(true);
-	}
-
-	if (Game::GetInstance()->IsKeyDown(DIK_F6))
-	{
-		
 	}
 }
 
@@ -543,7 +603,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Golem !\n");
 		break;
 	}
@@ -554,7 +614,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Gunner !\n");
 		break;
 	}
@@ -566,7 +626,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add centipede !\n");
 		break;
 	}
@@ -577,12 +637,12 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add domes !\n");
 		break;
 	}
 	default:
-		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
+		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
 	}
 }
@@ -723,6 +783,9 @@ void PlayScene::Unload()
 	for (int i = 0; i < listItems.size(); i++)
 		delete listItems[i];
 	listItems.clear();
+	for (int i = 0; i < listEnemies.size(); i++)
+		delete listEnemies[i];
+	listEnemies.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
@@ -755,10 +818,19 @@ void PlayScene::Render()
 		listObjects[i]->Render();
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Render();
-	player->Render();
+
+	if (isPlayerV2)
+		playerV2->Render();
+	else
+		player->Render();
+
+	if (isMiniSophia)
+		sophia->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
+	for (int i = 0; i < listEnemies.size(); i++)
+		listEnemies[i]->Render();
 	gameHUD->Render(player);
 }
 

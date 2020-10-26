@@ -9,7 +9,7 @@
 
 PlayerV2::PlayerV2(float x, float y) : Entity()
 {
-	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYER));
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BIG_SOPHIA));
 	untouchable = 0;
 	SetState(SOPHIA_BIG_STATE_IDLE);
 

@@ -10,6 +10,8 @@
 #include "Camera.h"
 
 #include "Player.h"
+#include "PlayerV2.h"
+#include "MiniSophia.h"
 #include "HUD.h"
 #include "Brick.h"
 #include "Gate.h"
@@ -34,8 +36,13 @@ using namespace std;
 
 class PlayScene : public Scene
 {
+public:
+	void SetIsMiniSophia(bool isMini) { isMiniSophia = isMini; }
+	//bool isMiniSophia
 protected:
 	Player* player;
+	PlayerV2* playerV2;
+	MiniSophia* sophia;
 	HUD* gameHUD;
 	Bullet* bullet1;
 	Bullet* bullet2;
@@ -44,6 +51,7 @@ protected:
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listObjects;
+	vector<LPGAMEENTITY> listEnemies;
 	vector<LPBULLET> listBullets;
 	vector<LPCWSTR> listSceneFilePath;
 	vector<LPGAMEITEM> listItems;
@@ -52,7 +60,8 @@ protected:
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;
-
+	bool isPlayerV2;
+	bool isMiniSophia;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
@@ -75,6 +84,8 @@ public:
 	void ChooseMap(int whatStage);
 	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
+	void PlayerGotCar();
+	void PlayerTouchEnemy();
 	void PlayerCollideItem();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);

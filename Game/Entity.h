@@ -47,7 +47,9 @@ public:
 
 	float x;
 	float y;
-	float vX, vY;
+	float vY;
+	float vX;
+
 	float posX, posY;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
@@ -56,6 +58,7 @@ public:
 	int health;
 
 	int nx;
+	int ny;
 	int gunDam; // gun damage
 
 	int direction;

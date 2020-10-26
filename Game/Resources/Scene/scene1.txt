@@ -111,11 +111,11 @@
 # type	x	y	extra_settings per object type	width	height
 # type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
 #Brick
-1	0	157	22	320	16
+1	0	159	22	320	16
 ##
-1	385	157	22	128	16
+1	385	159	22	128	16
 ##
-1	570	157	22 	128	16
+1	570	159	22	128	16
 ##Brick tuong cho Domes
 #part1
 1	15	13	22	512	16
@@ -145,4 +145,4 @@
 #Gunner
 #12	100	100	12	
 #Domes
-13	28	125	13
+13	150	125	13

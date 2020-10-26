@@ -58,7 +58,7 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
+		float min_tx, min_ty, nx=0, ny;
 		float rdx = 0;
 		float rdy = 0;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
@@ -67,22 +67,95 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx!=0)
-		{
-			//DebugOut(L"\nnx:  %d", nx);
-		}
-		if (ny!=0)
-		{
-			//DebugOut(L"\nny:  %d", ny);
-		}
-
-
 		
-		
+		DebugOut(L"\nnx:  %f", nx);
+		DebugOut(L"\nny:  %f", ny);
+		if (this->dgravity == 3)
+		{
+			
+			if (nx!=0)
+			{
+				if (vx < 0 && nx == 1)
+					this->dgravity = 4;
 
+				else
+					this->dgravity = 2;
+			}
+		}
+		else if (this->dgravity == 4)
+		{
+			if (ny == -1)
+			{
+				SetState(DOMES_STATE_WALKING_LEFT_RIGHT_TOP);
+				//vx = 0;
+			}
+			if (ny == 1)
+			{
+				if (ny == 1 && this->vx < 0)
+					this->dgravity = 1;
+				else
+					this->dgravity = 3;
+			}
+		}
+		else if (this->dgravity == 1)
+		{
+			
+			if (nx!=0)
+			{
+				if (this->vx > 0 && nx == -1)
+				{					
+					this->dgravity = 2;
+					
+				}
+												
+			}
+			else if (nx==0)
+			{
+				for (int i = 0; i < coEventsResult.size(); i++)
+				{
+					LPCOLLISIONEVENT e = coEventsResult.at(i);
+					if (dynamic_cast<Brick*>(e->obj))
+					{
+						Brick* brick = dynamic_cast<Brick*>(e->obj);
+
+						if (x + 0.4f > (brick->frameW + brick->x))
+						{
+							this->dgravity = 4;
+						}
+					}
+				}
+			}
+			
+		}
+		else if (this->dgravity == 2)
+		{
+			if (vy>0)
+			{
+				for (int i = 0; i < coEventsResult.size(); i++)
+				{
+					LPCOLLISIONEVENT e = coEventsResult.at(i);
+					if (dynamic_cast<Brick*>(e->obj)) 
+					{
+						Brick* brick = dynamic_cast<Brick*>(e->obj);
+												
+						if (y >= (brick->frameH+brick->y))
+						{
+							this->dgravity = 1;
+							
+						}
+					}
+				}
+			}
+			
+		}
+
+		//DebugOut(L"\ndgravity:  %d", this->dgravity);
+
+		//DebugOut(L"\nvx:  %f", this->vx);
+		//DebugOut(L"\nvy:  %f", this->vy);
+		//DebugOut(L"\nvy:  %d", vy);
+		
 	}
-
-	//DebugOut(L"\nGravity:  %d", dgravity);
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -127,7 +200,7 @@ Domes::Domes(float x, float y, LPGAMEENTITY t)
 	tag = EntityType::DOMES;
 	this->x = x;
 	this->y = y;
-	this->dgravity = 1;
+	this->dgravity = 4;
 	nx = -1;
 	this->target = t;
 	health = DOMES_MAXHEALTH;

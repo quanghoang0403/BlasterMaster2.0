@@ -77,10 +77,11 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			if (nx != 0)
 			{
 				this->nx = -this->nx;
-				DebugOut(L"\nnx:  %d", nx);
+				
 			}
 			if (ny != 0)
 			{
+				
 				vy = 0;
 				for (int i = 0; i < coEventsResult.size(); i++)
 				{
@@ -101,7 +102,6 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						break;
 					}
 				}
-				DebugOut(L"\nny:  %d", ny);
 			}
 			
 		}

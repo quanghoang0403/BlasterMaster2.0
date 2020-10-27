@@ -32,7 +32,7 @@ MiniSophia* MiniSophia::GetInstance()
 
 void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
-
+	//DebugOut(L"xxxxx %d", isCrawl);
 	// Calculate dx, dy 
 	Entity::Update(dt);
 #pragma region Xử lý vy
@@ -155,8 +155,7 @@ void MiniSophia::Render()
 		else
 		{
 			if (vx == 0)
-				//ani = SOPHIA_ANI_MINI_IDLE_RIGHT;
-				ani = 4;
+				ani = SOPHIA_ANI_MINI_IDLE_RIGHT;
 			else
 				ani = SOPHIA_ANI_MINI_WALKING_RIGHT;
 		}
@@ -171,34 +170,38 @@ void MiniSophia::SetState(int state)
 	switch (state)
 	{
 	case SOPHIA_MINI_STATE_WALKING_RIGHT:
-		vx = SOPHIA_MINI_WALKING_SPEED;
+		if (isCrawl)
+			vx = SOPHIA_MINI_CRAWLING_SPEED;
+		else
+			vx = SOPHIA_MINI_WALKING_SPEED;
 		direction = 1;
 		break;
 	case SOPHIA_MINI_STATE_WALKING_LEFT:
-		vx = -SOPHIA_MINI_WALKING_SPEED;
+		if (isCrawl)
+			vx = -SOPHIA_MINI_CRAWLING_SPEED;
+		else
+			vx = -SOPHIA_MINI_WALKING_SPEED;
 		direction = -1;
 		break;
-	case SOHPIA_MINI_STATE_CRAWL:
+	case SOPHIA_MINI_STATE_CRAWL:
 		if (!isJumping)
-			isCrawl = true;
-		break;
-	case SOPHIA_MINI_STATE_CRAWLING_RIGHT:
-		if (isCrawl)
 		{
-			vx = SOPHIA_MINI_CRAWLING_SPEED;
-			direction = 1;
-		}
-		break;
-	case SOPHIA_MINI_STATE_CRAWLING_LEFT:
-		if (isCrawl)
-		{
-			vx = -SOPHIA_MINI_CRAWLING_SPEED;
-			direction = -1;
+			if (isCrawl)
+			{
+				y -= (SOPHIA_MINI_BBOX_HEIGHT - SOPHIA_MINI_CRAWL_BBOX_HEIGHT);
+				vx = 0;
+				isCrawl = false;
+			}
+			else
+				isCrawl = true;
 		}
 		break;
 	case SOPHIA_MINI_STATE_JUMP:
 		isPressJump = true;
-		if (isJumping == true)
+		if (isCrawl)
+			return;
+
+		if (isJumping)
 			return;
 		else
 		{
@@ -209,25 +212,42 @@ void MiniSophia::SetState(int state)
 		break;
 	case SOPHIA_MINI_STATE_IDLE:
 		isPressJump = false;
-		isCrawl = false;
-		if (vx > 0) {
-			vx -= SOPHIA_MINI_WALKING_ACC * dt;
-			if (vx < 0)
-				vx = 0;
+		//isCrawl = false;
+		if (!isCrawl)
+		{
+			if (vx > 0) {
+				vx -= SOPHIA_MINI_WALKING_ACC * dt;
+				if (vx < 0)
+					vx = 0;
+			}
+			else if (vx < 0) {
+				vx += SOPHIA_MINI_WALKING_ACC * dt;
+				if (vx > 0)
+					vx = 0;
+			}
 		}
-		else if (vx < 0) {
-			vx += SOPHIA_MINI_WALKING_ACC * dt;
-			if (vx > 0)
-				vx = 0;
-		}
+		break;
+	case SOPHIA_MINI_STATE_CRAWL_STOP:
+		if (isCrawl)
+			vx = 0;
 		break;
 	case SOPHIA_MINI_STATE_DIE:
 	case SOPHIA_MINI_STATE_IN:
-		alpha = 0;
+		//alpha = 0;
 	case SOPHIA_MINI_STATE_OUT:
-		alpha = 255;
+		//alpha = 255;
+		if (direction > 0) {
+			vx -= 3 * SOPHIA_MINI_WALKING_ACC * dt;
+			if (vx < 0)
+				vx = 0;
+		}
+		else if (direction < 0) {
+			vx += 3 * SOPHIA_MINI_WALKING_ACC * dt;
+			if (vx > 0)
+				vx = 0;
+		}
+		vy = -SOPHIA_MINI_JUMP_SPEED_Y/2;
 		break;
-
 	}
 }
 

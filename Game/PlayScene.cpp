@@ -9,6 +9,7 @@
 #define OBJECT_TYPE_GUNNER		12
 #define OBJECT_TYPE_DOMES		13
 
+#define DX_GET_OUT_CAR		7
 #define HUD_Y				20
 
 
@@ -98,20 +99,42 @@ void PlayScene::Update(DWORD dt)
 #pragma region Camera
 
 	float cx, cy;
-	player->GetPosition(cx, cy);
-	if (player->Getx() + SCREEN_WIDTH / 2  >= mapWidth)
+	if (isMiniSophia == false && isPlayerV2 == false)
 	{
-		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
-		cx -= mapWidth - SCREEN_WIDTH / 2;
-	}
-	else
-	{
-		if (player->Getx() < SCREEN_WIDTH / 2)
-			cx = 0;
+		player->GetPosition(cx, cy);
+		if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+		{
+			//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
+			cx -= mapWidth - SCREEN_WIDTH / 2;
+		}
 		else
-			cx -= SCREEN_WIDTH / 2;
+		{
+			if (player->Getx() < SCREEN_WIDTH / 2)
+				cx = 0;
+			else
+				cx -= SCREEN_WIDTH / 2;
+		}
+		cy -= SCREEN_HEIGHT / 2;
 	}
-	cy -= SCREEN_HEIGHT / 2; 
+	if (isMiniSophia)
+	{
+		sophia->GetPosition(cx, cy);
+		if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+		{
+			//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
+			cx -= mapWidth - SCREEN_WIDTH / 2;
+		}
+		else
+		{
+			if (sophia->Getx() < SCREEN_WIDTH / 2)
+				cx = 0;
+			else
+				cx -= SCREEN_WIDTH / 2;
+		}
+		if (cx > DX_GET_OUT_CAR)
+			cx -= DX_GET_OUT_CAR;
+		cy -= SCREEN_HEIGHT / 2;
+	}
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
 	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
 #pragma endregion
@@ -213,9 +236,7 @@ void PlayScene::PlayerGotCar()
 	{
 		isMiniSophia = false;
 	}
-
 }
-
 
 void PlayScene::PlayerTouchEnemy()
 {
@@ -268,6 +289,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
+	bool isPlayerV2 = ((PlayScene*)scence)->isPlayerV2;
 	Player* player = ((PlayScene*)scence)->player;
 	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
 	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
@@ -287,8 +309,14 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	{
 	case DIK_ESCAPE:
 		DestroyWindow(Game::GetInstance()->GetWindowHandle());
+	case DIK_DOWN:
+		sophia->SetState(SOPHIA_MINI_STATE_CRAWL);
+		break;
 	case DIK_SPACE:
-		player->SetState(SOPHIA_STATE_JUMP);
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetState(SOPHIA_STATE_JUMP);
+		if (isMiniSophia)
+			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
 		playScene->Unload();
@@ -298,14 +326,18 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		/*player->Reset();*/
 		break;
 	case DIK_Z:
-		for (int i = 0; i < listBullets.size(); i++)
+		if (isMiniSophia == false && isPlayerV2 == false)
 		{
-			if (listBullets[i]->isDone == true)
+			for (int i = 0; i < listBullets.size(); i++)
 			{
-				listBullets[i]->Fire(direction, isTargetTop, x, y);
-				break;
+				if (listBullets[i]->isDone == true)
+				{
+					listBullets[i]->Fire(direction, isTargetTop, x, y);
+					break;
+				}
 			}
 		}
+		//if (isMiniSophia)
 		break;
 	case DIK_X:
 		supBullet->Fire(direction, isTargetTop, x, y);
@@ -313,7 +345,14 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_U:
 		if (isMiniSophia)
 			playScene->PlayerGotCar();
-		else playScene->SetIsMiniSophia(true);
+		else
+		{
+			playScene->SetIsMiniSophia(true);
+			player->SetState(SOPHIA_STATE_OUT);
+			sophia->direction = direction;
+			sophia->SetPosition(x + DX_GET_OUT_CAR, y);
+			sophia->SetState(SOPHIA_MINI_STATE_OUT);
+		}
 		break;
 	case DIK_F6:
 		for (int i = 0; i < listObjects.size(); i++)
@@ -373,6 +412,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else
 			supBullet->SetBBARGB(0);
 		break;
+
 	}
 }
 
@@ -397,7 +437,11 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
+	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
+	bool isPlayerV2 = ((PlayScene*)scence)->isPlayerV2;
 	Player* player = ((PlayScene*)scence)->player;
+	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
+	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
 	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
 	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
@@ -408,28 +452,53 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
+
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-		player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+	{
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+		if (isMiniSophia)
+			sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
+	}
 	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 	{
-		player->SetState(SOPHIA_STATE_WALKING_LEFT);
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetState(SOPHIA_STATE_WALKING_LEFT);
+		if (isMiniSophia)
+			sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
 	}
-	/*else if (game->IsKeyDown(DIK_SPACE))
-	{
-		player->SetPressSpace();
-	}*/
 	else
-		player->SetState(SOPHIA_STATE_IDLE);
+	{
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetState(SOPHIA_STATE_IDLE);
+		if (isMiniSophia)
+		{
+			if (sophia->GetIsCrawl() == false)
+			{
+				sophia->SetState(SOPHIA_MINI_STATE_IDLE);
+				DebugOut(L"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			}
+			else
+			{
+				sophia->SetState(SOPHIA_MINI_STATE_CRAWL_STOP);
+				DebugOut(L"idle %d , ", sophia->isCrawl);
+			}
+		}
+	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
-		player->SetPressSpace(true);
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetPressSpace(true);
+		/*if (isMiniSophia)
+			sophia->SetState(SOPHIA_MINI_STATE_JUMP);*/
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
-		player->SetPressUp(true);
-	}
+		if (isMiniSophia == false && isPlayerV2 == false)
+			player->SetPressUp(true);
+	}	
 }
 
 void PlayScene::_ParseSection_TEXTURES(string line)

@@ -6,7 +6,7 @@
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
 #define SOPHIA_WALKING_SPEED			0.1f 
 #define SOPHIA_WALKING_SPEED_BONUS		0.003f//0.007f
-#define SOPHIA_WALKING_ACC				0.00015f
+#define SOPHIA_WALKING_ACC				0.00035f
 
 #define SOPHIA_JUMP_SPEED_Y				0.223f
 //#define SOPHIA_JUMP_SPEED_Y_BONUS		0.45f
@@ -25,6 +25,7 @@
 #define SOPHIA_STATE_JUMP				300
 #define SOPHIA_STATE_DIE				400
 #define SOPHIA_STATE_GUN_UNFLIP			500
+#define SOPHIA_STATE_OUT				600
 
 
 #define SOPHIA_ANI_JASON_IDLE_RIGHT					0
@@ -56,6 +57,7 @@
 #define SOPHIA_ANI_GUN_FLIP_IDLE_LEFT_4				21
 
 #define SOPHIA_JASON_ANI_DIE						22
+#define SOPHIA_JASON_ANI_GET_OUT					23
 
 #define SOPHIA_JASON_BBOX_WIDTH		26
 #define SOPHIA_JASON_BBOX_HEIGHT	16.5
@@ -91,7 +93,7 @@ class Player : public Entity
 	float backup_JumpY;
 	bool isPressJump;
 	bool isPressFlipGun;
-	
+	bool isOpening;
 
 public:
 	Player(float x = 0.0f, float y = 0.0f);

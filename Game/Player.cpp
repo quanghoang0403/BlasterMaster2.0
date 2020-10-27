@@ -178,6 +178,15 @@ void Player::Render()
 			isDoneDeath = true;
 		}
 	}
+	else if (isOpening)
+	{
+		ani = SOPHIA_JASON_ANI_GET_OUT;
+		animationSet->at(ani)->Render(direction, x, y - 8, alpha);
+		if (animationSet->at(ani)->GetFrame() >= 1)
+		{
+			isOpening = false;
+		}
+	}
 	else if (isPressFlipGun == true)
 	{
 		if (vx == 0)
@@ -355,6 +364,10 @@ void Player::SetState(int state)
 			if (vx > 0)
 				vx = 0;
 		}
+		break;
+	case SOPHIA_STATE_OUT:
+		vx = 0;
+		isOpening = true;
 		break;
 	}
 }

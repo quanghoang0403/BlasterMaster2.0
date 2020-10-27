@@ -6,9 +6,9 @@
 #define ANIMATION_SET_MINI_SOPHIA	3
 
 #define SOPHIA_GRAVITY						0.0004f
-#define SOPHIA_MINI_WALKING_SPEED			0.7f 
+#define SOPHIA_MINI_WALKING_SPEED			0.07f 
 #define SOPHIA_MINI_WALKING_ACC				0.00015f
-#define SOPHIA_MINI_CRAWLING_SPEED			0.3f 
+#define SOPHIA_MINI_CRAWLING_SPEED			0.03f 
 #define SOPHIA_MINI_JUMP_SPEED_Y			0.15f
 
 #define SOPHIA_ANI_MINI_IDLE_RIGHT				0
@@ -27,7 +27,8 @@
 #define SOPHIA_MINI_STATE_DIE				600
 #define SOPHIA_MINI_STATE_IN				700
 #define SOPHIA_MINI_STATE_OUT				800
-#define SOHPIA_MINI_STATE_CRAWL					900
+#define SOPHIA_MINI_STATE_CRAWL				900
+#define SOPHIA_MINI_STATE_CRAWL_STOP		1000
 
 #define MAX_HEALTH						8
 
@@ -43,6 +44,8 @@
 
 class MiniSophia : public Entity
 {
+public:
+
 	static MiniSophia* instance;
 
 	int level;
@@ -51,7 +54,6 @@ class MiniSophia : public Entity
 	bool isGunFlipping = false;
 	bool isJumpHandle;
 	bool isImmortaling;
-	bool isCrawl;
 	int alpha;
 	DWORD untouchable_start;
 
@@ -64,7 +66,7 @@ class MiniSophia : public Entity
 	float backup_JumpY;
 	bool isPressJump;
 	bool isPressFlipGun;
-
+	bool isCrawl;
 
 public:
 	MiniSophia(float x = 0.0f, float y = 0.0f);
@@ -83,6 +85,8 @@ public:
 	void SetPressSpace(bool isPress) { isPressJump = isPress; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_MINI_BBOX_WIDTH / 2; y = this->y + SOPHIA_MINI_BBOX_HEIGHT / 2; }
+	bool GetIsCrawl() { return isCrawl; }
+	void SetIsCrawl(bool crawl) { isCrawl = crawl; }
 	void Setvx(float vx) { vx = vx; }
 	void Setvy(float vy) { vy = vy; }
 	float GetDy() { return dy; }

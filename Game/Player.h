@@ -1,12 +1,12 @@
 #pragma once
 #include "Entity.h"
-#include "Bullet.h"
 #include <map>
 #include "Timer.h"
 
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
 #define SOPHIA_WALKING_SPEED			0.1f 
 #define SOPHIA_WALKING_SPEED_BONUS		0.003f//0.007f
+#define SOPHIA_WALKING_ACC				0.00015f
 
 #define SOPHIA_JUMP_SPEED_Y				0.223f
 //#define SOPHIA_JUMP_SPEED_Y_BONUS		0.45f
@@ -60,6 +60,9 @@
 #define SOPHIA_JASON_BBOX_WIDTH		26
 #define SOPHIA_JASON_BBOX_HEIGHT	16.5
 
+#define DURATION_X_TO_DIE	14
+#define DURATION_Y_TO_DIE	30
+
 //#define MARIO_UNTOUCHABLE_TIME 5000
 #define PLAYER_IMMORTAL_DURATION	1000
 
@@ -68,20 +71,18 @@
 class Player : public Entity
 {
 	static Player* instance;
-
+	int alpha;
 	int level;
 	int untouchable;
 	bool isJumping = false;
 	bool isGunFlipping = false;
 	bool isJumpHandle;
 	bool isImmortaling;	
+	bool isDeath;
+	bool isDoneDeath;
 	DWORD untouchable_start;
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
-	Bullet* mainBullet1;
-	Bullet* mainBullet2;
-	Bullet* mainBullet3;
-	Bullet* supBullet;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -96,7 +97,7 @@ public:
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 
-	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL, vector<LPGAMEENTITY>* coEnemies = NULL);
 	virtual void Render();
 
 	//Immortal
@@ -106,20 +107,19 @@ public:
 
 	void SetDirection(int d) { direction = d; }
 	void SetState(int state);
-	void SetPressSpace() { isPressJump = 1; }
+	void SetPressSpace(bool isPress) { isPressJump = isPress; }
 	void SetPressUp(bool a) { isPressFlipGun = a; }
-	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_JASON_BBOX_WIDTH / 2; y = this->y + SOPHIA_JASON_BBOX_HEIGHT / 2; }
 	bool isGunFlippingg() { return isGunFlipping; }
-	void SetVx(float Vx) { vx = Vx; }
-	void SetVy(float Vy) { vy = Vy; }
+	void Setvx(float vx) { vx = vx; }
+	void Setvy(float vy) { vy = vy; }
 	float GetDy() { return dy; }
-	float GetVy() { return vy; }
+	float Getvy() { return vy; }
 	void Reset();
-	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerPosX, float& playerPosY) { direct = direction; isTargetTop = isGunFlipping; playerPosX = x; playerPosY = y; }
+	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerx, float& playery) { direct = direction; isTargetTop = isGunFlipping; playerx = x; playery = y; }
 	
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
-
+	void SetInjured(int dame);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

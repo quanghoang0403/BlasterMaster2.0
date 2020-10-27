@@ -88,6 +88,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerV2.cpp">
+      <Filter>Header Files\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniSophia.cpp">
+      <Filter>Header Files\Object\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -176,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerV2.h">
+      <Filter>Header Files\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSophia.h">
+      <Filter>Header Files\Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

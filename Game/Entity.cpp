@@ -60,7 +60,6 @@ LPCOLLISIONEVENT Entity::SweptAABBEx(LPGAMEENTITY coO)
 
 /*
 	Calculate potential collisions with the list of colliable objects
-
 	coObjects: the list of colliable objects
 	coEvents: list of potential collisions
 */

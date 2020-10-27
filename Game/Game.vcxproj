@@ -142,7 +142,9 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
+    <ClInclude Include="MiniSophia.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerV2.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="PowerUp.h" />
@@ -173,7 +175,9 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MiniSophia.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerV2.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="PowerUp.cpp" />

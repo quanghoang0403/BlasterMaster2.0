@@ -197,7 +197,7 @@ void Domes::Render()
 Domes::Domes(float x, float y, LPGAMEENTITY t)
 {
 	SetState(DOMES_STATE_WALKING_TOP_BOTTOM_RIGHT);
-	tag = EntityType::DOMES;
+	enemyType = DOMES;
 	this->x = x;
 	this->y = y;
 	this->dgravity = 4;

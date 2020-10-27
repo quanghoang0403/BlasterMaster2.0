@@ -3,13 +3,57 @@
 0	Resources/bbox.png	255	255	0
 1	Resources/item.png	255	255	0
 10	Resources/sophia_die.png	176	0	248
-20	Resources/misc.png	176	224	0
+20	Resources/sophia.png	255	0	255
 30	Resources/jssophia.png	255	0	255
 40	Resources/Enemy/enemies.png	255	0	255
-11	Resources/Scene/area2_A.png	255	0	255
+11	Resources/Scene/area_1.jpg	255	0	255
 50	Resources/HealthBar.png	255	255	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
+##============ BIG  SOPHIA ===================
+##right
+#idle
+1	137	74	161	106	20
+2	167	74	191	106	20
+3	195	74	219	106	20
+#left
+#idle
+4	103	74	127	106	20
+5	73	74	97	106	20
+6	45	74	69	106	20
+#top
+7	108	39	128	71	20
+#idle
+8	82	39	102	71	20
+9	56	39	76	71	20
+#bot
+10	133	39	153	71	20
+#idle
+11	158	39	178	71	20
+12	182	39	202	71	20
+#die
+13	79	105	103	134	20
+14	107	105	130	134	20
+15	134	105	158	134	20
+16	162	105	186	134	20
+##============ SMALL SOPHIA ==================
+#idle right
+20	136	0	146	17	20
+#walk right
+#jump
+21	149	0	159	17	20
+22	175	0	185	17	20
+23	162	0	172	17	20
+
+#crawl
+24	202	7	218	17	20
+25	218	7	234	17	20
+#die
+26	136	20	150	36	20
+27	190	22	206	36	20
+28	172	20	186	36	20
+29	153	22	169	36	20
+30	208	22	224	36	20
 ##============ SOPHIA JASON =================
 # idle right
 10001	146	5	172	23	30
@@ -100,30 +144,12 @@
 20011	6	174	17	190	1
 #small sophia bullet
 20020	135	180	139	184	1
-##============SOPHIA_SMAL===============
-#idle
-#30001
-#walk
-#30002
-#30003
-#30004
-#crawl
-#climb
-#die
-# Brick
-40001	300	117	316	133	20
-40002	318	117	334	133	20
-40003	336	117	352	133	20
-40004	355	117	370	133	20
 ##=========HEATH_BAR========
 50001	30	35	50	127	50
 50002	55	37	71	45	50
 50003	84	35	106	125	50
 50004	111	37	127	45	50
-
-
-
-##======ITEMS==========
+##=============ITEMS==========
 #POWERUP
 60001	87	237	103	253	1
 #GUNUP
@@ -131,6 +157,39 @@
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
+##BIG SOPHIA========================
+#idle right
+1	1	100
+#idle left
+2	4	100
+#idle top
+3	8	100
+#idle bot
+4	11	100
+#walk right
+5	1	100	2	100	3	100
+#walk left
+6	4	100	5	100	6	100
+#walk top
+7	7	100	8	100	9	100
+#walk bot
+8	10	100	11	100	12	100
+#die
+9	1	100	4	100	8	100	11	100	1	100	4	100	8	100	11	100	1	100	4	100	8	100	11	100	13	200	14	200	15	200	16	200
+##SMALL SOPHIA==================
+#idle right
+10	20	100
+#walk right
+11	21	100	22	100	23	100
+#idle crawl right
+12	24	100
+#crawl right
+13	24	200	25	200
+#die
+14	26	70	27	70	28	70	29	70	26	70	27	70	28	70	29	70	26	70	27	70	28	70	29	70	26	300	30	300
+#jump right
+15	21	100
+##JASON=========================
 #idle right
 400	10001	100
 #idle left
@@ -179,10 +238,7 @@
 #idle gun flip idle  left 4
 468	11304	120	11308	999999999
 #die
-599	11998	100	11999	100
-
-#Brick
-602	40001	1000	40001	100	40002	100	40003	100	40004	100
+599	11998	100	11999	100	11999	100
 #==============BULLET=================
 #small bullet jason right
 700	20001	100
@@ -193,13 +249,12 @@
 #big bullet jason top
 703	20004	100
 #bang
-704	20005	100	20006	100	20007	100
+704	20005	50	20006	50	20007	50	20007	50
 #electric bullet jason
 705	20008	100	20009	100	20010	100	20011	100
 #small sophia bullet
 710	20020	100
-
-###HealthBar
+###============HealthBar==================
 #Gun null
 801	50001	100
 #Gun add
@@ -215,16 +270,16 @@
 #Power
 902	60002	100
 
-
 # id	ani1	ani2	ani3
 # id tuan theo define
 [ANIMATION_SETS]
 # SOPHIA JASON
 1	400	401	500	501	410	411	420	421	412	413	422	423	430	431	461	462	463	464	465	466	467	468	599
-# QUESTION BRICK 
-22	802
+#BIG SOPHIA
+2	1	2	3	4	5	6	7	8	9
+#SMALL SOPHIA
+3	10	11	12	13	14	15
 #=== BULLET ======
-#JASON
 #small +big bullet
 4	700	701	702	703	704
 5	705	

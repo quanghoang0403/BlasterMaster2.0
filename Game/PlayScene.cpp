@@ -3,8 +3,8 @@
 
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
-#define OBJECT_TYPE_CENTIPEDE	10
 
+#define OBJECT_TYPE_CENTIPEDE	10
 #define OBJECT_TYPE_GOLEM		11
 #define OBJECT_TYPE_GUNNER		12
 #define OBJECT_TYPE_DOMES		13
@@ -15,6 +15,7 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
+	isMiniSophia = false;
 	LoadBaseObjects();
 	ChooseMap(STAGE_1);
 }
@@ -22,11 +23,22 @@ PlayScene::PlayScene() : Scene()
 void PlayScene::LoadBaseObjects()
 {
 	texturesFilePath = ToLPCWSTR("Resources/Scene/textures_playscene.txt");
+	//texturesFilePath = ToLPCWSTR("Resources/Scene/base.txt");
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(35, 100);
-		DebugOut(L"[INFO] Simon CREATED! \n");
+		player = new Player(135, 100);
+		DebugOut(L"[INFO] player CREATED! \n");
+	}
+	if (playerV2 == NULL)
+	{
+		playerV2 = new PlayerV2(165, 100);
+		DebugOut(L"[INFO] playerv2 CREATED! \n");
+	}
+	if (sophia == NULL)
+	{
+		sophia = new MiniSophia(105, 100);
+		DebugOut(L"[INFO] sophia CREATED! \n");
 	}
 	if (gameHUD == NULL)
 	{
@@ -87,37 +99,44 @@ void PlayScene::Update(DWORD dt)
 
 	float cx, cy;
 	player->GetPosition(cx, cy);
-	if (player->GetPosX() + SCREEN_WIDTH / 2  >= mapWidth)
+	if (player->Getx() + SCREEN_WIDTH / 2  >= mapWidth)
 	{
-		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->GetPosX());
+		//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
 		cx -= mapWidth - SCREEN_WIDTH / 2;
 	}
 	else
 	{
-		if (player->GetPosX() < SCREEN_WIDTH / 2)
+		if (player->Getx() < SCREEN_WIDTH / 2)
 			cx = 0;
 		else
 			cx -= SCREEN_WIDTH / 2;
 	}
 	cy -= SCREEN_HEIGHT / 2; 
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move posX follow camera
+	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
 #pragma endregion
 	if (listItems.size() > 0)
 		PlayerCollideItem();
 	PlayerGotGate();
+	PlayerTouchEnemy();
 #pragma region Objects Updates
 	vector<LPGAMEENTITY> coObjects;
 	for (int i = 0; i < listObjects.size(); i++)
 		coObjects.push_back(listObjects[i]);
-	player->Update(dt, &coObjects);
-	supBullet->Update(dt, &coObjects);
+	for (int i = 0; i < listEnemies.size(); i++)
+		coObjects.push_back(listEnemies[i]);
+	player->Update(dt, &listObjects);
+	playerV2->Update(dt, &listObjects);
+	sophia->Update(dt, &listObjects);
+	supBullet->Update(dt, &listObjects);
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Update(dt, &coObjects);	
+		listObjects[i]->Update(dt, &listObjects);
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Update(dt, &listObjects);
+	for (int i = 0; i < listEnemies.size(); i++)
+		listEnemies[i]->Update(dt, &listObjects);
 #pragma endregion
 
 }
@@ -126,7 +145,7 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 {
 	if (directionGo == 1)	//cua o ben phai
 	{
-		if (player->GetPosX() < DistanceXWant)
+		if (player->Getx() < DistanceXWant)
 		{
 			player->SetDirection(directionGo);
 			player->SetState(SOPHIA_STATE_IDLE);
@@ -136,7 +155,7 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 	else
 		if (directionGo == -1)	//cua o ben trai
 		{
-			if (player->GetPosX() > DistanceXWant)
+			if (player->Getx() > DistanceXWant)
 			{
 				player->SetDirection(directionGo);
 				player->SetState(SOPHIA_STATE_IDLE);
@@ -156,34 +175,55 @@ void PlayScene::PlayerGotGate()
 			{
         		Gate* gate = dynamic_cast<Gate*>(listObjects[i]);
 				int tempMap = gate->GetIdScene() * STAGE_1;
-				float tempPosX = gate->newPlayerPosX;
-				float tempPosY = gate->newPlayerPosY;
+				float tempx = gate->newPlayerx;
+				float tempy = gate->newPlayery;
 				int tempState = gate->newPlayerState;
 				bool tempNeed = gate->isNeedResetCam;
 				/*if (idStage == STAGE_1)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 20.0f, 1))
+					if (!PlayerPassingStage(listObjects[i]->Getx() + 20.0f, 1))
 						return;
 				}
 				else if (idStage == STAGE_2_2 && tempMap == STAGE_3_1)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX(), -1))
+					if (!PlayerPassingStage(listObjects[i]->Getx(), -1))
 						return;
 				}
 				else if (idStage == STAGE_3_2 && tempMap == STAGE_4)
 				{
-					if (!PlayerPassingStage(listObjects[i]->GetPosX() + 10.0f, 1))
+					if (!PlayerPassingStage(listObjects[i]->Getx() + 10.0f, 1))
 						return;
 				}*/
 				Unload();
 				if(tempNeed)
 					gameCamera->SetCamPos(0, 0);
 				ChooseMap(tempMap);
-				player->SetPosition(tempPosX, tempPosY);
-				player->SetVx(0);
-				player->SetVy(0);
+				player->SetPosition(tempx, tempy);
+				player->Setvx(0);
+				player->Setvy(0);
 				player->SetState(tempState);
 			}
+		}
+	}
+}
+
+void PlayScene::PlayerGotCar()
+{
+	if (sophia->IsCollidingObject(player))
+	{
+		isMiniSophia = false;
+	}
+
+}
+
+
+void PlayScene::PlayerTouchEnemy()
+{
+	for (UINT i = 0; i < listEnemies.size(); i++)
+	{
+		if (player->IsCollidingObject(listEnemies[i]))
+		{
+			player->SetInjured(1);
 		}
 	}
 }
@@ -227,11 +267,18 @@ void PlayScene::PlayerCollideItem()
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
 	Player* player = ((PlayScene*)scence)->player;
+	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
+	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
 	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
+	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
+	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPGAMEENTITY> listEnemies = ((PlayScene*)scence)->listEnemies;
+	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
 	int direction, isTargetTop;
@@ -263,62 +310,12 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_X:
 		supBullet->Fire(direction, isTargetTop, x, y);
 		break;
-	}
-}
-
-void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
-{
-	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-	Player* player = ((PlayScene*)scence)->player;
-	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
-	vector<LPGAMEENTITY> listObj = ((PlayScene*)scence)->listObjects;
-	switch (KeyCode)
-	{
-	case DIK_UP:
-		//player->SetState(SOPHIA_STATE_GUN_UNFLIP);
-		player->SetPressUp(false);
-		player->SetState(SOPHIA_STATE_GUN_UNFLIP);
+	case DIK_U:
+		if (isMiniSophia)
+			playScene->PlayerGotCar();
+		else playScene->SetIsMiniSophia(true);
 		break;
-	}
-}
-
-void PlayScenceKeyHandler::KeyState(BYTE* states)
-{
-	Player* player = ((PlayScene*)scence)->player;
-	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
-	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
-	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
-	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
-
-	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
-	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
-	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
-	if (player->GetState() == SOPHIA_STATE_DIE) return;
-	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-		player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-	{
-		player->SetState(SOPHIA_STATE_WALKING_LEFT);
-	}
-	/*else if (game->IsKeyDown(DIK_SPACE))
-	{
-		player->SetPressSpace();
-	}*/
-	else
-		player->SetState(SOPHIA_STATE_IDLE);
-
-	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
-	{
-		player->SetPressSpace();
-	}
-
-	if (Game::GetInstance()->IsKeyDown(DIK_UP))
-	{
-		player->SetPressUp(true);
-	}
-
-	if (Game::GetInstance()->IsKeyDown(DIK_F6))
-	{
+	case DIK_F6:
 		for (int i = 0; i < listObjects.size(); i++)
 		{
 			if (listObjects[i]->GetBBARGB() == 0)
@@ -326,11 +323,35 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			else
 				listObjects[i]->SetBBARGB(0);
 		}
+		for (int i = 0; i < listItems.size(); i++)
+		{
+			if (listItems[i]->GetBBARGB() == 0)
+				listItems[i]->SetBBARGB(200);
+			else
+				listItems[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listEnemies.size(); i++)
+		{
+			if (listEnemies[i]->GetBBARGB() == 0)
+				listEnemies[i]->SetBBARGB(200);
+			else
+				listEnemies[i]->SetBBARGB(0);
+		}
 
 		if (player->GetBBARGB() == 0)
 			player->SetBBARGB(200);
 		else
 			player->SetBBARGB(0);
+
+		if (playerV2->GetBBARGB() == 0)
+			playerV2->SetBBARGB(200);
+		else
+			playerV2->SetBBARGB(0);
+
+		if (sophia->GetBBARGB() == 0)
+			sophia->SetBBARGB(200);
+		else
+			sophia->SetBBARGB(0);
 
 		if (bullet1->GetBBARGB() == 0)
 			bullet1->SetBBARGB(200);
@@ -351,6 +372,63 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			supBullet->SetBBARGB(200);
 		else
 			supBullet->SetBBARGB(0);
+		break;
+	}
+}
+
+void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
+{
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	Player* player = ((PlayScene*)scence)->player;
+	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
+	vector<LPGAMEENTITY> listObj = ((PlayScene*)scence)->listObjects;
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		//player->SetState(SOPHIA_STATE_GUN_UNFLIP);
+		player->SetPressUp(false);
+		player->SetState(SOPHIA_STATE_GUN_UNFLIP);
+		break;
+	case DIK_SPACE:
+		player->SetPressSpace(false);
+		break;
+	}
+}
+
+void PlayScenceKeyHandler::KeyState(BYTE* states)
+{
+	Player* player = ((PlayScene*)scence)->player;
+	Bullet* bullet1 = ((PlayScene*)scence)->bullet1;
+	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
+	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
+	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
+
+	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
+	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
+	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
+	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
+	if (player->GetState() == SOPHIA_STATE_DIE) return;
+	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+		player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+	{
+		player->SetState(SOPHIA_STATE_WALKING_LEFT);
+	}
+	/*else if (game->IsKeyDown(DIK_SPACE))
+	{
+		player->SetPressSpace();
+	}*/
+	else
+		player->SetState(SOPHIA_STATE_IDLE);
+
+	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
+	{
+		player->SetPressSpace(true);
+	}
+
+	if (Game::GetInstance()->IsKeyDown(DIK_UP))
+	{
+		player->SetPressUp(true);
 	}
 }
 
@@ -499,11 +577,23 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		
-		obj->SetAnimationSet(ani_set);
+		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add brick !\n");
+		break;
+	}
+	case OBJECT_TYPE_GATE:
+	{
+		int switchId = atoi(tokens[3].c_str());
+		float playerPosX = atoi(tokens[4].c_str());
+		float playerPosY = atoi(tokens[5].c_str());
+		int playerState = atoi(tokens[6].c_str());
+		int isResetCamera = atoi(tokens[7].c_str());
+		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add gate !\n");
 		break;
 	}
 	case OBJECT_TYPE_GOLEM:
@@ -513,7 +603,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Golem !\n");
 		break;
 	}
@@ -524,7 +614,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Gunner !\n");
 		break;
 	}
@@ -536,7 +626,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add centipede !\n");
 		break;
 	}
@@ -547,12 +637,12 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
+		listEnemies.push_back(obj);
 		DebugOut(L"[test] add domes !\n");
 		break;
 	}
 	default:
-		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
+		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
 	}
 }
@@ -690,27 +780,33 @@ void PlayScene::Unload()
 	for (int i = 0; i < listObjects.size(); i++)
 		delete listObjects[i];
 	listObjects.clear();
+	for (int i = 0; i < listItems.size(); i++)
+		delete listItems[i];
+	listItems.clear();
+	for (int i = 0; i < listEnemies.size(); i++)
+		delete listEnemies[i];
+	listEnemies.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
-Item* PlayScene::RandomItem(float posX, float posY)
+Item* PlayScene::RandomItem(float x, float y)
 {
 
 	int bagrandom = rand() % 100;
 	int random = rand() % 100;
 	if (random <= 30)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 	else if (30 < random && random <= 60)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 	else if (60< random && random <= 100)
-		return new PowerUp(posX, posY);
+		return new PowerUp(x, y);
 }
 
-Item* PlayScene::DropItem(EntityType createrType, float posX, float posY, int idCreater)
+Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreater)
 {
-	if (createrType == EntityType::CENTIPEDE)
-		return new PowerUp(posX, posY);
-	return new PowerUp(posX, posY);
+	if (createrType == ENEMY)
+		return new PowerUp(x, y);
+	return new PowerUp(x, y);
 }
 
 void PlayScene::Render()
@@ -722,10 +818,19 @@ void PlayScene::Render()
 		listObjects[i]->Render();
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Render();
-	player->Render();
+
+	if (isPlayerV2)
+		playerV2->Render();
+	else
+		player->Render();
+
+	if (isMiniSophia)
+		sophia->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
+	for (int i = 0; i < listEnemies.size(); i++)
+		listEnemies[i]->Render();
 	gameHUD->Render(player);
 }
 

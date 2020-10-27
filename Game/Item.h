@@ -27,4 +27,3 @@ public:
 	bool GetIsDone() { return isDone; }
 	void SetIsDone(bool isdone) { isDone = isdone; }
 };
-

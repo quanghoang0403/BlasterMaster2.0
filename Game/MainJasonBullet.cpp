@@ -9,6 +9,7 @@ MainJasonBullet::MainJasonBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
+	damage = 1;
 	timeDelayed = 0;
 	timeDelayMax = SMALL_JASON_BULLET_DELAY;
 }
@@ -65,8 +66,9 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						vx = 0;
 						vy = 0;
 				}
-				if (e->obj->GetType() == EntityType::GOLEM)
+				if (e->obj->GetType() == EntityType::ENEMY)
 				{
+					e->obj->AddHealth(-damage);
 					isCollisionEnemies = 1;
 					x += min_tx * dx + nx * 0.4f;
 					y += min_ty * dy + ny * 0.4f;
@@ -112,8 +114,8 @@ void MainJasonBullet::Render()
 		else if (isCollisionBrick == 1)
 		{
 			ani = SMALL_BULLET_JASON_BANG_ANI;
-			animationSet->at(ani)->OldRender(x, y - DISTANCE_TO_BANG, alpha);
-			if (animationSet->at(ani)->GetFrame() == 2)
+			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
+			if (animationSet->at(ani)->GetFrame() == 3)
 			{
 				isDone = true;
 				timeDelayed = 0;

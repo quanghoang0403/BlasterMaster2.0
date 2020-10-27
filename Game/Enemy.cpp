@@ -2,6 +2,7 @@
 
 Enemy::Enemy()
 {
+	tag = ENEMY;
 }
 
 Enemy::~Enemy()

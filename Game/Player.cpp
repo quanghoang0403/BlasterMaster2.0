@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "Game.h"
 
-#include "Gate.h"
-
 Player::Player(float x, float y) : Entity()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYER));
@@ -22,7 +20,10 @@ Player::Player(float x, float y) : Entity()
 	health = MAX_HEALTH;
 
 	isImmortaling = false;
-		
+
+	isDeath = false;
+	alpha = 255;
+
 }
 Player* Player::instance = NULL;
 Player* Player::GetInstance()
@@ -32,9 +33,16 @@ Player* Player::GetInstance()
 	return instance;
 }
 
-void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
+void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
-	
+	if (isDoneDeath)
+		return;
+	if (health <= 0)
+	{
+		isDeath = true;
+		vx = 0;
+		vy = 0;
+	}
 	// Calculate dx, dy 
 	Entity::Update(dt);
 #pragma region Xử lý vy
@@ -48,7 +56,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		isJumpHandle = true;
 	}
 #pragma endregion
-
 
 #pragma region Xử lý gun flip
 	if (isPressFlipGun == false)
@@ -127,28 +134,29 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
-			// VA CHAM CENTIPEDE
-			if (!isImmortaling)
-			{
-				if (e->obj->GetType() == EntityType::CENTIPEDE || e->obj->GetType() == EntityType::GOLEM)
-				{
-					this->AddHealth(-1);
-					this->AddgunDam(-1);
-					immortalTimer->Start();
-					isImmortaling = true;
-				}
-			}
 		}
 		
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
+}
 
-	
+void Player::SetInjured(int dame)
+{
+	if (isImmortaling)
+		return;
+	health -= dame;
+	gunDam -= dame;
+
+	StartUntouchable();
+	immortalTimer->Start();
+	isImmortaling = true;
 }
 
 void Player::Render()
 {
+	if (isDoneDeath)
+		return;
 	RenderBoundingBox();
 	//LPANIMATION lpp;
 	//int a = lpp->GetFrame();
@@ -156,17 +164,20 @@ void Player::Render()
 
 #pragma region Khai báo biến
 	int ani = -1;
-	int alpha = 255;
 	int current_frame; //luu frame khi dang di chuyen ma dung lai
-	if (untouchable) alpha = 128;
+	alpha = 255;
+	if (isImmortaling) alpha = 128;
 #pragma endregion
-
-	if (state == SOPHIA_STATE_DIE)
+	if (isDeath)
 	{
 		ani = SOPHIA_JASON_ANI_DIE;
-		/*animation_set->at(ani)->RenderFrame(8,x, y, alpha);*/
+		animationSet->at(ani)->Render(direction,x - DURATION_X_TO_DIE, y - DURATION_Y_TO_DIE, alpha);
+		if (animationSet->at(ani)->GetFrame() > 1)
+		{
+			//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrame());
+			isDoneDeath = true;
+		}
 	}
-
 	else if (isPressFlipGun == true)
 	{
 		if (vx == 0)
@@ -305,13 +316,13 @@ void Player::Render()
 	}
 
 }
+
 void Player::SetState(int state)
 {
 	Entity::SetState(state);
 
 	switch (state)
 	{
-		
 	case SOPHIA_STATE_WALKING_RIGHT:
 		vx = SOPHIA_WALKING_SPEED;
 		direction = 1;
@@ -334,25 +345,36 @@ void Player::SetState(int state)
 		break;
 	case SOPHIA_STATE_IDLE:
 		isPressJump = false;
-		vx = 0;
+		if (vx > 0) {
+			vx -= SOPHIA_WALKING_ACC * dt;
+			if (vx < 0)
+				vx = 0;
+		}
+		else if (vx < 0) {
+			vx += SOPHIA_WALKING_ACC * dt;
+			if (vx > 0)
+				vx = 0;
+		}
 		break;
-	case SOPHIA_STATE_DIE:
-		vy = -SOPHIA_DIE_DEFLECT_SPEED;
-		break;
-	
 	}
 }
 
 void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + SOPHIA_JASON_BBOX_WIDTH;
-	bottom = y + SOPHIA_JASON_BBOX_HEIGHT;
+	if (isDoneDeath == false)
+	{
+		left = x;
+		top = y;
+		right = x + SOPHIA_JASON_BBOX_WIDTH;
+		bottom = y + SOPHIA_JASON_BBOX_HEIGHT;
+	}
 }
 
 void Player::Reset()
 {
+	health = MAX_HEALTH;
+	isDoneDeath = false;
+	isDeath = false;
 	SetState(SOPHIA_STATE_IDLE);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);

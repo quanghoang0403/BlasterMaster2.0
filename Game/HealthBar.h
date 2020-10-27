@@ -12,7 +12,7 @@
 
 class HealthBar
 {
-	float posX, posY;
+	float x, y;
 	int currentOwnerHealth, maxOwnerHealth;
 	std::vector<LPANIMATION_SET> health;
 	bool isGun;
@@ -23,11 +23,11 @@ public:
 	void Update(int currentHealth, float X, float Y);
 	void Render();
 
-	void SetPosition(float X, float Y) { posX = X; posY = Y; }
-	float GetPosX() { return posX; }
-	float GetPosY() { return posY; }
-	void ReceivePos(float& x, float& y) { x = this->posX; y = this->posY; }
-	void SetPosX(float X) { this->posX = X; }
-	void SetPosY(float Y) { this->posY = Y; }
+	void SetPosition(float X, float Y) { x = X; y = Y; }
+	float Getx() { return x; }
+	float Gety() { return y; }
+	void ReceivePos(float& x, float& y) { x = this->x; y = this->y; }
+	void Setx(float X) { this->x = X; }
+	void Sety(float Y) { this->y = Y; }
 };
 

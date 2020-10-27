@@ -11,7 +11,9 @@
 
 #define GOLEM_BBOX_WIDTH				12
 #define GOLEM_BBOX_HEIGHT				23
+
 #define GOLEM_BBOX_HEIGHT_DIE			9
+
 
 #define GOLEM_STATE_WALKING				100
 #define GOLEM_STATE_DIE					200
@@ -26,7 +28,7 @@
 #define GOLEM_SITEFOLLOW_PLAYER			80
 #define GOLEM_SITEACTIVE_PLAYER			150
 
-#define GOLEM_MAXHEALTH					1
+#define GOLEM_MAXHEALTH					2
 
 
 
@@ -49,7 +51,7 @@ class Golem: public Enemy
 public:
 	Golem(float x, float y, LPGAMEENTITY t);
 	void FollowTarget(LPGAMEENTITY target);
-
 	virtual void SetState(int state);
+	void SelfDestroy();
 };
 

@@ -1,14 +1,14 @@
 #include "Gate.h"
 
-Gate::Gate(float posX, float posY, int switchId, float simonPosX, float simonPosY, int simonState, bool rsCam)
+Gate::Gate(float x, float y, int switchId, float simonx, float simony, int simonState, bool rsCam)
 {
 	//this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GATE));
 	tag = EntityType::GATE;
-	this->x = posX;
-	this->y = posY;
+	this->x = x;
+	this->y = y;
 	gateSwitchSceneId = switchId;
-	newPlayerPosX = simonPosX;
-	newPlayerPosY = simonPosY;
+	newPlayerx = simonx;
+	newPlayery = simony;
 	newPlayerState = simonState;
 	isNeedResetCam = rsCam;
 }
@@ -22,7 +22,7 @@ void Gate::Render()
 	//if (gateSwitchSceneId == 2 || gateSwitchSceneId == 4)	//Gate tai stage 1 3 khong ve~
 	//	return;
 
-	//animationSet->at(0)->Render(-direction, posX, posY);
+	//animationSet->at(0)->Render(-direction, x, y);
 }
 
 void Gate::GetBoundingBox(float& l, float& t, float& r, float& b)

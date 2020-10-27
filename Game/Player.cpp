@@ -18,9 +18,12 @@ Player::Player(float x, float y) : Entity()
 	backup_JumpY = 0;
 	gunDam = MAX_HEALTH;
 	health = MAX_HEALTH;
+
 	isImmortaling = false;
+
 	isDeath = false;
 	alpha = 255;
+
 }
 Player* Player::instance = NULL;
 Player* Player::GetInstance()

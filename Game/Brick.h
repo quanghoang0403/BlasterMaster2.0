@@ -6,7 +6,7 @@
 
 class Brick : public Entity
 {
-	float frameW, frameH;
+public: float frameW, frameH;
 
 public:
 

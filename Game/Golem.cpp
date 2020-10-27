@@ -62,6 +62,8 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 		
+		
+
 		//Follow theo player
 		if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= GOLEM_SITEFOLLOW_PLAYER)// Kiểm tra bán kính xung quanh Golem xem có player không
 		{
@@ -73,9 +75,11 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			if (nx != 0)
 			{
 				this->nx = -this->nx;
+				
 			}
 			if (ny != 0)
 			{
+				
 				vy = 0;
 				for (int i = 0; i < coEventsResult.size(); i++)
 				{
@@ -97,7 +101,9 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
+			
 		}
+		
 	}
 	
 	// clean up collision events

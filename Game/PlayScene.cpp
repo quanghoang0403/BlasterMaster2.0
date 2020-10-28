@@ -345,7 +345,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_U:
 		if (isMiniSophia)
 			playScene->PlayerGotCar();
-		else
+		if (isMiniSophia == false && player->isJumping == false)
 		{
 			playScene->SetIsMiniSophia(true);
 			player->SetState(SOPHIA_STATE_OUT);

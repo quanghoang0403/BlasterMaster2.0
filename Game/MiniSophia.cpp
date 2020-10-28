@@ -236,6 +236,7 @@ void MiniSophia::SetState(int state)
 		//alpha = 0;
 	case SOPHIA_MINI_STATE_OUT:
 		//alpha = 255;
+		isCrawl = false;
 		if (direction > 0) {
 			vx -= 3 * SOPHIA_MINI_WALKING_ACC * dt;
 			if (vx < 0)
@@ -246,7 +247,7 @@ void MiniSophia::SetState(int state)
 			if (vx > 0)
 				vx = 0;
 		}
-		vy = -SOPHIA_MINI_JUMP_SPEED_Y/2;
+		vy = -SOPHIA_MINI_JUMP_SPEED_Y/1.5f;
 		break;
 	}
 }

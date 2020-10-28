@@ -76,7 +76,6 @@ class Player : public Entity
 	int alpha;
 	int level;
 	int untouchable;
-	bool isJumping = false;
 	bool isGunFlipping = false;
 	bool isJumpHandle;
 	bool isImmortaling;	
@@ -96,6 +95,7 @@ class Player : public Entity
 	bool isOpening;
 
 public:
+	bool isJumping = false;
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 

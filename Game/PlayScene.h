@@ -25,7 +25,7 @@
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
-
+#include "BigSophiaBullet.h"
 
 #include <iostream>
 #include <fstream>
@@ -37,7 +37,8 @@ using namespace std;
 class PlayScene : public Scene
 {
 public:
-	void SetIsMiniSophia(bool isMini) { isMiniSophia = isMini; }
+	int typeSophia;
+	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 protected:
 	Player* player;
@@ -47,7 +48,9 @@ protected:
 	Bullet* bullet1;
 	Bullet* bullet2;
 	Bullet* bullet3;
+	Bullet* bullet4;
 	Bullet* supBullet;
+	Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listObjects;
@@ -60,8 +63,6 @@ protected:
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;
-	bool isPlayerV2;
-	bool isMiniSophia;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

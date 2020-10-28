@@ -1,8 +1,8 @@
-﻿#include "MainJasonBullet.h"
+﻿#include "BigSophiaBullet.h"
 
-MainJasonBullet::MainJasonBullet()
+BigSophiaBullet::BigSophiaBullet()
 {
-	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_JASON_BULLET));
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BIG_SOPHIA_BULLET));
 	x = 0;
 	y = 0;
 	alpha = 0;
@@ -11,21 +11,19 @@ MainJasonBullet::MainJasonBullet()
 	isDone = true;
 	damage = 1;
 	timeDelayed = 0;
-	timeDelayMax = SMALL_JASON_BULLET_DELAY;
+	timeDelayMax = BULLET_DELAY;
 }
 
-MainJasonBullet::~MainJasonBullet() {}
+BigSophiaBullet::~BigSophiaBullet() {}
 
-void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
+void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
 	if (typeBullet == 0)
 		damage = 0.5;
 	else
 		damage = 1;
 	if (isDone == true)
-	{
 		alpha = 0;
-	}
 	else
 	{
 		timeDelayed += dt;
@@ -64,11 +62,11 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (e->obj->GetType() == EntityType::BRICK)
 				{
-						isCollisionBrick = 1;
-						x += min_tx * dx + nx * 0.4f;
-						y += min_ty * dy + ny * 0.4f;
-						vx = 0;
-						vy = 0;
+					isCollisionBrick = 1;
+					x += min_tx * dx + nx * 0.4f;
+					y += min_ty * dy + ny * 0.4f;
+					vx = 0;
+					vy = 0;
 				}
 				if (e->obj->GetType() == EntityType::ENEMY)
 				{
@@ -86,7 +84,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	}
 }
 
-void MainJasonBullet::Render()
+void BigSophiaBullet::Render()
 {
 	RenderBoundingBox();
 	int ani;
@@ -107,19 +105,21 @@ void MainJasonBullet::Render()
 	{
 		if (isCollisionBrick == 0 && isCollisionEnemies == 0)
 		{
-			if (isTargetTop == true)
+			if (direction != 0)
 			{
-				ani = SMALL_BULLET_JASON_ANI_TOP;
-				animationSet->at(ani)->OldRender(x, y, alpha);
-			}
-			else
-			{
-				if (typeBullet == 0)
-					ani = MINI_BULLET_ANI;
-				else
-					ani = SMALL_BULLET_JASON_ANI_RIGHT;
+				if (damage < 2)
+					ani = BIG_SOPHIA_BULLET_JASON_ANI_RIGHT_BLACK;
+				else ani = BIG_SOPHIA_BULLET_JASON_ANI_RIGHT_COLOR;
 				animationSet->at(ani)->Render(direction, x, y, alpha);
 			}
+			else if (directionY != 0)
+			{
+				if (damage < 2)
+					ani = BIG_SOPHIA_BULLET_JASON_ANI_TOP_BLACK;
+				else ani = BIG_SOPHIA_BULLET_JASON_ANI_TOP_COLOR;
+				animationSet->at(ani)->RenderY(direction, x, y, alpha); 
+			}
+
 		}
 		else if (isCollisionEnemies == 1)
 		{
@@ -139,26 +139,18 @@ void MainJasonBullet::Render()
 	}
 }
 
-void MainJasonBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
+void BigSophiaBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
 	if (typeBullet == 0)
-	{ 
-		r = x + MINI_BULLET_BBOX_WIDTH;
-		b = y + MINI_BULLET_BBOX_HEIGHT;
+	{
+		r = x + BIG_SOPHIA_BULLET_BBOX_WIDTH;
+		b = y + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
 	}
 	else
 	{
-		if (isTargetTop == false)
-		{
-			r = x + SMALL_BULLET_BBOX_WIDTH;
-			b = y + SMALL_BULLET_BBOX_HEIGHT;
-		}
-		else
-		{
-			r = x + SMALL_BULLET_BBOX_HEIGHT;
-			b = y + SMALL_BULLET_BBOX_WIDTH;
-		}
+		r = x + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
+		b = y + BIG_SOPHIA_BULLET_BBOX_WIDTH;
 	}
 }

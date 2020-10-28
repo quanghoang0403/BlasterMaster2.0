@@ -24,6 +24,13 @@ void CSprite::Draw(int direction, float x, float y, int alpha)
 	game->Draw(direction, x, y, texture, left, top, right, bottom, alpha);
 }
 
+void CSprite::DrawY(int direction, float x, float y, int alpha)
+{
+	Game* game = Game::GetInstance();
+	game->DrawY(direction, x, y, texture, left, top, right, bottom, alpha);
+}
+
+
 void CSprite::DrawTopBottom(int direction, float x, float y, int alpha)
 {
 	Game* game = Game::GetInstance();

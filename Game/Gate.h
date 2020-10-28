@@ -11,8 +11,9 @@ public:
 	bool isNeedResetCam;
 	float newPlayerx, newPlayery;
 	int newPlayerState;
+	int typePlayer;
 
-	Gate(float x, float y, int switchId, float playerx, float playery, int playerState, bool rsCam);
+	Gate(float x, float y, int switchId, float playerx, float playery, int playerState, bool rsCam, int type);
 	~Gate();
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

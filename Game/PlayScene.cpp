@@ -16,7 +16,7 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	isMiniSophia = false;
+	typeSophia = 1;
 	LoadBaseObjects();
 	ChooseMap(STAGE_1);
 }
@@ -65,10 +65,23 @@ void PlayScene::LoadBaseObjects()
 		listBullets.push_back(bullet3);
 		DebugOut(L"[INFO] Bullet3 CREATED! \n");
 	}
+	if (bullet4 == NULL)
+	{
+		bullet4 = new BigSophiaBullet();
+		DebugOut(L"[INFO] Bullet3 CREATED! \n");
+	}
 	if (supBullet == NULL)
 	{
 		supBullet = new ElectricBullet();
 		DebugOut(L"[INFO] supBullet CREATED! \n");
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		if (bulletBigSophia[i] == NULL)
+		{
+			bulletBigSophia[i] = new BigSophiaBullet();
+			DebugOut(L"[INFO] Bullet big sophia CREATED! \n");
+		}
 	}
 	if (powerUp == NULL)
 	{
@@ -94,75 +107,6 @@ void PlayScene::ChooseMap(int whatMap)
 	LoadSceneObjects();
 }
 
-void PlayScene::Update(DWORD dt)
-{
-#pragma region Camera
-
-	float cx, cy;
-	if (isMiniSophia == false && isPlayerV2 == false)
-	{
-		player->GetPosition(cx, cy);
-		if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-		{
-			//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
-			cx -= mapWidth - SCREEN_WIDTH / 2;
-		}
-		else
-		{
-			if (player->Getx() < SCREEN_WIDTH / 2)
-				cx = 0;
-			else
-				cx -= SCREEN_WIDTH / 2;
-		}
-		cy -= SCREEN_HEIGHT / 2;
-	}
-	if (isMiniSophia)
-	{
-		sophia->GetPosition(cx, cy);
-		if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-		{
-			//cx -= SCREEN_WIDTH / 2 - (mapWidth - player->Getx());
-			cx -= mapWidth - SCREEN_WIDTH / 2;
-		}
-		else
-		{
-			if (sophia->Getx() < SCREEN_WIDTH / 2)
-				cx = 0;
-			else
-				cx -= SCREEN_WIDTH / 2;
-		}
-		if (cx > DX_GET_OUT_CAR)
-			cx -= DX_GET_OUT_CAR;
-		cy -= SCREEN_HEIGHT / 2;
-	}
-	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
-#pragma endregion
-	if (listItems.size() > 0)
-		PlayerCollideItem();
-	PlayerGotGate();
-	PlayerTouchEnemy();
-#pragma region Objects Updates
-	vector<LPGAMEENTITY> coObjects;
-	for (int i = 0; i < listObjects.size(); i++)
-		coObjects.push_back(listObjects[i]);
-	for (int i = 0; i < listEnemies.size(); i++)
-		coObjects.push_back(listEnemies[i]);
-	player->Update(dt, &listObjects);
-	playerV2->Update(dt, &listObjects);
-	sophia->Update(dt, &listObjects);
-	supBullet->Update(dt, &listObjects);
-	for (int i = 0; i < listBullets.size(); i++)
-		listBullets[i]->Update(dt, &coObjects);
-	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Update(dt, &listObjects);
-	for (int i = 0; i < listItems.size(); i++)
-		listItems[i]->Update(dt, &listObjects);
-	for (int i = 0; i < listEnemies.size(); i++)
-		listEnemies[i]->Update(dt, &listObjects);
-#pragma endregion
-
-}
 
 bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 {
@@ -196,7 +140,10 @@ void PlayScene::PlayerGotGate()
 		{
 			if (player->IsCollidingObject(listObjects[i]))
 			{
+				//int newX = player->x -= 100;
+				//player->SetPosition(newX, 40);
         		Gate* gate = dynamic_cast<Gate*>(listObjects[i]);
+				typeSophia = gate->typePlayer;
 				int tempMap = gate->GetIdScene() * STAGE_1;
 				float tempx = gate->newPlayerx;
 				float tempy = gate->newPlayery;
@@ -221,10 +168,28 @@ void PlayScene::PlayerGotGate()
 				if(tempNeed)
 					gameCamera->SetCamPos(0, 0);
 				ChooseMap(tempMap);
-				player->SetPosition(tempx, tempy);
-				player->Setvx(0);
-				player->Setvy(0);
-				player->SetState(tempState);
+				if (typeSophia == 1)
+				{
+					player->SetPosition(tempx, tempy);
+					player->Setvx(0);
+					player->Setvy(0);
+					player->SetState(tempState);
+				}
+				else if (typeSophia == 0)
+				{
+					sophia->SetPosition(tempx, tempy);
+					sophia->Setvx(0);
+					sophia->Setvy(0);
+					sophia->SetState(tempState);
+				}
+				else 
+				{
+					player->SetPosition(tempx, tempy);
+					playerV2->SetPosition(tempx, tempy);
+					playerV2->Setvx(0);
+					playerV2->Setvy(0);
+					playerV2->SetState(tempState);
+				}
 			}
 		}
 	}
@@ -233,9 +198,7 @@ void PlayScene::PlayerGotGate()
 void PlayScene::PlayerGotCar()
 {
 	if (sophia->IsCollidingObject(player))
-	{
-		isMiniSophia = false;
-	}
+		typeSophia = 1;
 }
 
 void PlayScene::PlayerTouchEnemy()
@@ -287,9 +250,9 @@ void PlayScene::PlayerCollideItem()
 
 void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
+#pragma region Init
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
-	bool isPlayerV2 = ((PlayScene*)scence)->isPlayerV2;
+	int typeSophia = ((PlayScene*)scence)->typeSophia;
 	Player* player = ((PlayScene*)scence)->player;
 	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
 	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
@@ -303,8 +266,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
-	int direction, isTargetTop;
+	int direction, directionY, isTargetTop, dame;
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
+#pragma endregion
 	switch (KeyCode)
 	{
 	case DIK_ESCAPE:
@@ -313,9 +277,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		sophia->SetState(SOPHIA_MINI_STATE_CRAWL);
 		break;
 	case DIK_SPACE:
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia ==1)
 			player->SetState(SOPHIA_STATE_JUMP);
-		if (isMiniSophia)
+		else if (typeSophia == 0)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
@@ -326,34 +290,59 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		/*player->Reset();*/
 		break;
 	case DIK_Z:
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia ==1)
 		{
 			for (int i = 0; i < listBullets.size(); i++)
 			{
 				if (listBullets[i]->isDone == true)
 				{
-					listBullets[i]->Fire(direction, isTargetTop, x, y);
+					listBullets[i]->Fire(1, direction, isTargetTop, x, y);
 					break;
 				}
 			}
 		}
-		//if (isMiniSophia)
+		else if (typeSophia == 0)
+		{
+			sophia->GetInfoForBullet(direction, x, y);
+			for (int i = 0; i < listBullets.size(); i++)
+			{
+				if (listBullets[i]->isDone == true)
+				{
+					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR/2);
+					break;
+				}
+			}
+		}
+		else
+		{
+			playerV2->GetInfoBigSophia(direction, directionY, x, y, dame);
+			for (int i = 0; i < listBullets.size(); i++)
+			{
+				if (playScene->bulletBigSophia[i]->isDone == true)
+				{
+					playScene->bulletBigSophia[i]->BigSophiaFire(direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR / 2, dame);
+					break;
+				}
+			}
+
+		}
 		break;
 	case DIK_X:
-		supBullet->Fire(direction, isTargetTop, x, y);
+		supBullet->Fire(1, direction, isTargetTop, x, y);
 		break;
 	case DIK_U:
-		if (isMiniSophia)
+		if (typeSophia == 0)
 			playScene->PlayerGotCar();
-		if (isMiniSophia == false && player->isJumping == false)
+		if (typeSophia == 1)
 		{
-			playScene->SetIsMiniSophia(true);
+			playScene->typeSophia = 0;
 			player->SetState(SOPHIA_STATE_OUT);
 			sophia->direction = direction;
 			sophia->SetPosition(x + DX_GET_OUT_CAR, y);
 			sophia->SetState(SOPHIA_MINI_STATE_OUT);
 		}
 		break;
+#pragma region F6
 	case DIK_F6:
 		for (int i = 0; i < listObjects.size(); i++)
 		{
@@ -375,6 +364,13 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				listEnemies[i]->SetBBARGB(200);
 			else
 				listEnemies[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listBullets.size(); i++)
+		{
+			if (playScene->bulletBigSophia[i]->GetBBARGB() == 0)
+				playScene->bulletBigSophia[i]->SetBBARGB(200);
+			else
+				playScene->bulletBigSophia[i]->SetBBARGB(0);
 		}
 
 		if (player->GetBBARGB() == 0)
@@ -412,7 +408,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else
 			supBullet->SetBBARGB(0);
 		break;
-
+#pragma endregion
 	}
 }
 
@@ -437,8 +433,8 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
-	bool isMiniSophia = ((PlayScene*)scence)->isMiniSophia;
-	bool isPlayerV2 = ((PlayScene*)scence)->isPlayerV2;
+#pragma region INIT
+	int typeSophia = ((PlayScene*)scence)->typeSophia;
 	Player* player = ((PlayScene*)scence)->player;
 	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
 	MiniSophia* sophia = ((PlayScene*)scence)->sophia;
@@ -451,52 +447,63 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
+#pragma endregion
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia == 1)
 			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-		if (isMiniSophia)
+		else if (typeSophia == 0)
 			sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
+		else
+		{
+			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+		}
 	}
 	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 	{
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia == 1)
 			player->SetState(SOPHIA_STATE_WALKING_LEFT);
-		if (isMiniSophia)
+		else if (typeSophia == 0)
 			sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
+		else
+			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+	}
+	else if (Game::GetInstance()->IsKeyDown(DIK_UP))
+	{
+		if (typeSophia == 2)
+			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+	}
+	else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+	{
+		if (typeSophia == 2)
+			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
 	}
 	else
 	{
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia == 1)
 			player->SetState(SOPHIA_STATE_IDLE);
-		if (isMiniSophia)
+		else if (typeSophia == 0)
 		{
 			if (sophia->GetIsCrawl() == false)
-			{
 				sophia->SetState(SOPHIA_MINI_STATE_IDLE);
-				DebugOut(L"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-			}
 			else
-			{
 				sophia->SetState(SOPHIA_MINI_STATE_CRAWL_STOP);
-				DebugOut(L"idle %d , ", sophia->isCrawl);
-			}
 		}
+		else
+			playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia == 1)
 			player->SetPressSpace(true);
-		/*if (isMiniSophia)
-			sophia->SetState(SOPHIA_MINI_STATE_JUMP);*/
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
-		if (isMiniSophia == false && isPlayerV2 == false)
+		if (typeSophia == 1)
 			player->SetPressUp(true);
 	}	
 }
@@ -660,7 +667,8 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float playerPosY = atoi(tokens[5].c_str());
 		int playerState = atoi(tokens[6].c_str());
 		int isResetCamera = atoi(tokens[7].c_str());
-		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera);
+		int typePlayer = atoi(tokens[8].c_str());
+		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add gate !\n");
 		break;
@@ -878,6 +886,87 @@ Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreate
 	return new PowerUp(x, y);
 }
 
+void PlayScene::Update(DWORD dt)
+{
+#pragma region Camera
+
+	float cx, cy;
+	if (typeSophia == 1)
+	{
+		player->GetPosition(cx, cy);
+		if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+			cx -= mapWidth - SCREEN_WIDTH / 2;
+		else
+		{
+			if (player->Getx() < SCREEN_WIDTH / 2)
+				cx = 0;
+			else
+				cx -= SCREEN_WIDTH / 2;
+		}
+		cy -= SCREEN_HEIGHT / 2;
+	}
+	else if (typeSophia == 0)
+	{
+		sophia->GetPosition(cx, cy);
+		if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+			cx -= (mapWidth - SCREEN_WIDTH / 2 + DX_GET_OUT_CAR);
+		else
+		{
+			if (sophia->Getx() < SCREEN_WIDTH / 2 + DX_GET_OUT_CAR)
+				cx = 0;
+			else
+				cx -= (SCREEN_WIDTH / 2 + DX_GET_OUT_CAR);
+		}
+		cy -= SCREEN_HEIGHT / 2;
+	}
+	else
+	{
+		playerV2->GetPosition(cx, cy);
+		if (playerV2->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+			cx -= mapWidth - SCREEN_WIDTH / 2;
+		else
+		{
+			if (playerV2->Getx() < SCREEN_WIDTH / 2)
+				cx = 0;
+			else
+				cx -= SCREEN_WIDTH / 2;
+		}
+		cy -= SCREEN_HEIGHT / 2;
+	}
+	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
+	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+#pragma endregion
+
+	if (listItems.size() > 0)
+		PlayerCollideItem();
+	PlayerGotGate();
+	PlayerTouchEnemy();
+
+#pragma region Objects Updates
+	vector<LPGAMEENTITY> coObjects;
+	for (int i = 0; i < listObjects.size(); i++)
+		coObjects.push_back(listObjects[i]);
+	for (int i = 0; i < listEnemies.size(); i++)
+		coObjects.push_back(listEnemies[i]);
+	player->Update(dt, &listObjects);
+	playerV2->Update(dt, &listObjects);
+	sophia->Update(dt, &listObjects);
+	supBullet->Update(dt, &listObjects);
+	for (int i = 0; i < listBullets.size(); i++)
+	{
+		bulletBigSophia[i]->Update(dt, &coObjects);
+		listBullets[i]->Update(dt, &coObjects);
+	}
+	for (int i = 0; i < listObjects.size(); i++)
+		listObjects[i]->Update(dt, &listObjects);
+	for (int i = 0; i < listItems.size(); i++)
+		listItems[i]->Update(dt, &listObjects);
+	for (int i = 0; i < listEnemies.size(); i++)
+		listEnemies[i]->Update(dt, &listObjects);
+#pragma endregion
+
+}
+
 void PlayScene::Render()
 {
 	//gameMap->Draw();
@@ -887,13 +976,14 @@ void PlayScene::Render()
 		listObjects[i]->Render();
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Render();
+	for (int i = 0; i < 3; i++)
+		bulletBigSophia[i]->Render();
 
-	if (isPlayerV2)
+	if (typeSophia == 2)
 		playerV2->Render();
-	else
+	else 
 		player->Render();
-
-	if (isMiniSophia)
+	if (typeSophia == 0)
 		sophia->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)

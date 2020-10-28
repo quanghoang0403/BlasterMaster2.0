@@ -122,10 +122,10 @@
 #Cot4
 1	243	32	22	29	80
 
-
 #
 #Gate
-2	730	50	1	100	130	0	1
+#	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer
+2	430	50	1	100	50	0	1	2
 #==========Enemies===============
 #Centipede
 #10	250	125	10

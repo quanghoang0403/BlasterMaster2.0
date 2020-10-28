@@ -1,11 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-#define SMALLSOPHIA_BULLET_BBOX_WIDTH	4
-#define SMALLSOPHIA_BULLET_BBOX_HEIGHT	4
-
-#define SMALL_BULLET_ANI_SOPHIA			6
-
 #define DISTANCE_TO_GUN_WIDTH   9
 #define DISTANCE_TO_GUN_HEIGHT  2
 #define DISTANCE_TO_BANG		4
@@ -18,10 +13,13 @@ public:
 	bool isDone;
 	int damage;
 	int isTargetTop;
+	int directionY;
 	int alpha;
 	int isCollisionBrick;
 	int isCollisionEnemies;
 	float timeDelayed, timeDelayMax;
+	int typeBullet;
+	//0 mini 1 small 2 big
 
 public:
 	Bullet();
@@ -30,7 +28,8 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 
-	void Fire(int direct, int isGunFlip, float posX, float posY) {direction = direct; isTargetTop = isGunFlip; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollisionBrick = 0; isCollisionEnemies = 0;}
+	void Fire(int type, int direct, int isGunFlip, float posX, float posY) { typeBullet = type; direction = direct; isTargetTop = isGunFlip; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollisionBrick = 0; isCollisionEnemies = 0; }
+	void BigSophiaFire(int direct, int directY, float posX, float posY, int dame) {direction = direct; directionY = directY; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollisionBrick = 0; isCollisionEnemies = 0; damage = dame; }
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }
 	void SetIsDone(bool isdone) { isDone = isdone; }

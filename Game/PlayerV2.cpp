@@ -17,7 +17,7 @@ PlayerV2::PlayerV2(float x, float y) : Entity()
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	gunDam = MAX_HEALTH;
+	gunDam = 0;
 	health = MAX_HEALTH;
 	isImmortaling = false;
 }
@@ -161,15 +161,23 @@ void PlayerV2::SetState(int state)
 		vy = 0;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_RIGHT:
+		direction = 1;
+		directionY = 0;
 		vx = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_LEFT:
+		direction = -1;
+		directionY = 0;
 		vx = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_TOP:
+		direction = 0;
+		directionY = -1;
 		vy = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_BOT:
+		direction = 0;
+		directionY = 1;
 		vy = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_DIE:

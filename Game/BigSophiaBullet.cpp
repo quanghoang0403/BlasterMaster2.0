@@ -1,10 +1,11 @@
 ﻿#include "BigSophiaBullet.h"
-
+#include "math.h"
+#define PI 3.14159265
 BigSophiaBullet::BigSophiaBullet()
 {
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BIG_SOPHIA_BULLET));
-	x = 0;
-	y = 0;
+	//x = 0;
+	//y = 0;
 	alpha = 0;
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
@@ -18,7 +19,8 @@ BigSophiaBullet::~BigSophiaBullet() {}
 
 void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
-	DebugOut(L"x %f \n", x);
+	//DebugOut(L"toa do y %f \n", y);
+	totalTime += 30;
 	if (isDone == true)
 		alpha = 0;
 	else
@@ -27,17 +29,15 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 		Entity::Update(dt);
 		if (damage > 4)
 		{
-			/*if (direction != 0)
+			if (direction != 0)
 			{
-				if ((x - startX) < 50)
-					vy = BULLET_SPEED/2;
-				if ((x - startX) > 50)
-					vy = -BULLET_SPEED/2;
+				vx = BULLET_SPEED * direction;
+				vy = 2.5* BULLET_SPEED * sin((PI * totalTime) / 180);
 			}
 			if (directionY != 0)
 			{
 				vy = BULLET_SPEED;
-			}*/
+			}
 		}
 		else
 		{

@@ -16,7 +16,7 @@
 #define BULLET_JASON_BANG_ANI				4
 
 #define ANIMATION_SET_BIG_SOPHIA_BULLET		6
-#define BULLET_DELAY		450
+#define BULLET_DELAY		350
 
 
 class BigSophiaBullet : public Bullet
@@ -25,7 +25,7 @@ public:
 	BigSophiaBullet();
 	~BigSophiaBullet();
 
-
+	int totalTime;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	void Render();

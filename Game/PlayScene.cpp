@@ -238,12 +238,16 @@ void PlayScene::PlayerTouchEnemy()
 		else if (typeSophia == MINI_SOPHIA)
 		{
 			if (sophia->IsCollidingObject(listEnemies[i]))
-				player->SetInjured(1);
+				sophia->SetInjured(1);
 		}
-		else
+		else if (typeSophia == BIG_SOPHIA)
 		{
-			if (playerV2->IsCollidingObject(listEnemies[i]))
-				player->SetInjured(1);
+			if (playerV2->IsCollidingObject(listEnemies[i])== true)
+			{
+				playerV2->SetInjured(1);
+				//DebugOut(L"mau %d \n", player->health);
+			}
+			//DebugOut(L"mau %d \n", playerV2->IsCollidingObject(listEnemies[i]));
 		}
 	}
 }
@@ -362,8 +366,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
-					playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x - DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-					DebugOut(L" %d ", playScene->listBigBullets[i]->damage);
+					playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2*direction*DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+					DebugOut(L"toa do y %d \n", playScene->listBigBullets[i]->damage);
+					//DebugOut(L"toa do y %f, y %f", listBullets[i]->y);
 					break;
 				}
 			}
@@ -977,7 +982,12 @@ void PlayScene::Update(DWORD dt)
 		cy -= SCREEN_HEIGHT / 2;
 	}
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
-	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+	if (typeSophia==JASON)
+		gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+	if (typeSophia == MINI_SOPHIA)
+		gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
+	if (typeSophia == BIG_SOPHIA)
+		gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
 	if (listItems.size() > 0)
 		PlayerCollideItem();

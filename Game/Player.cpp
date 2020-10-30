@@ -43,12 +43,9 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 		vx = 0;
 		vy = 0;
 	}
-	// Calculate dx, dy 
 	Entity::Update(dt);
 #pragma region Xử lý vy
-	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
-	//Check hightPlayer
 	if (isJumping && backup_JumpY - y >= HIGHT_LEVER1 && isJumpHandle == false) 
 	{
 		if (!isPressJump)
@@ -90,14 +87,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 	if (state != SOPHIA_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
-	// reset untouchable timer if untouchable time has passed
-	/*if (GetTickCount() - untouchable_start > PLAYER_IMMORTAL_DURATION)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}*/
-
-	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -158,9 +147,6 @@ void Player::Render()
 	if (isDoneDeath)
 		return;
 	RenderBoundingBox();
-	//LPANIMATION lpp;
-	//int a = lpp->GetFrame();
-	//DebugOut(L"[INFO] Start loading game file : %s\n",a);
 
 #pragma region Khai báo biến
 	int ani = -1;
@@ -171,8 +157,8 @@ void Player::Render()
 	if (isDeath)
 	{
 		ani = SOPHIA_JASON_ANI_DIE;
-		animationSet->at(ani)->Render(direction,x - DURATION_X_TO_DIE, y - DURATION_Y_TO_DIE, alpha);
-		if (animationSet->at(ani)->GetFrame() > 1)
+		animationSet->at(ani)->Render(direction,x - DISTANCE_X_TO_DIE, y - DISTANCE_Y_TO_DIE, alpha);
+		if (animationSet->at(ani)->GetFrame() > FRAME_LAST_DIE)
 		{
 			//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrame());
 			isDoneDeath = true;
@@ -181,11 +167,9 @@ void Player::Render()
 	else if (isOpening)
 	{
 		ani = SOPHIA_JASON_ANI_GET_OUT;
-		animationSet->at(ani)->Render(direction, x, y - 8, alpha);
+		animationSet->at(ani)->Render(direction, x, y - DISTANCE_TO_OUT, alpha);
 		if (animationSet->at(ani)->GetFrame() >= 1)
-		{
 			isOpening = false;
-		}
 	}
 	else if (isPressFlipGun == true)
 	{
@@ -256,7 +240,7 @@ void Player::Render()
 		if (isGunFlipping == false)
 		{
 			animationSet->at(ani)->RenderGunFlip(x, y - SOPHIA_JASON_HEIGHT_GUN_FLIP, alpha);
-			if (animationSet->at(ani)->GetFrame() > 3)
+			if (animationSet->at(ani)->GetFrame() > FRAME_LAST_GUNFLIP)
 			{
 				//DebugOut(L"[frame]: %d;\n", animation_set->at(SOPHIA_ANI_JASON_WALKING_RIGHT)->GetFrame());
 				isGunFlipping = true;

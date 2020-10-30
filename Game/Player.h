@@ -3,6 +3,8 @@
 #include <map>
 #include "Timer.h"
 
+
+
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
 #define SOPHIA_WALKING_SPEED			0.1f 
 #define SOPHIA_WALKING_SPEED_BONUS		0.003f//0.007f
@@ -62,10 +64,13 @@
 #define SOPHIA_JASON_BBOX_WIDTH		26
 #define SOPHIA_JASON_BBOX_HEIGHT	16.5
 
-#define DURATION_X_TO_DIE	14
-#define DURATION_Y_TO_DIE	30
+#define DISTANCE_X_TO_DIE	14
+#define DISTANCE_Y_TO_DIE	30
 
-//#define MARIO_UNTOUCHABLE_TIME 5000
+#define DISTANCE_TO_OUT	8
+#define FRAME_LAST_GUNFLIP	3
+#define FRAME_LAST_DIE		1
+
 #define PLAYER_IMMORTAL_DURATION	1000
 
 #define HIGHT_LEVER1 43
@@ -83,9 +88,8 @@ class Player : public Entity
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
 
-	float start_x;			// initial position of Mario at scene
+	float start_x;	
 	float start_y;
-
 
 	float backup_JumpY;
 	bool isPressJump;
@@ -102,7 +106,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL, vector<LPGAMEENTITY>* coEnemies = NULL);
 	virtual void Render();
 
-	//Immortal
 	bool IsImmortaling() { return isImmortaling; }
 	void SetImmortaling(bool immo) { isImmortaling = immo; }
 	void StartImmortalingTimer() { immortalTimer->Start(); }

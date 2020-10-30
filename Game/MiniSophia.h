@@ -42,6 +42,8 @@
 #define PLAYER_IMMORTAL_DURATION	1000
 #define HIGHT_LEVER1 43
 
+#define LAST_FRAME_DIE	13
+
 class MiniSophia : public Entity
 {
 public:

@@ -33,8 +33,6 @@ public:
 	void BigSophiaFire(int direct, int directY, float posX, float posY, int dame) {
 		direction = direct; 
 		directionY = directY;
-		//x = posX;
-		//y = posY;
 		x = posX + DISTANCE_TO_GUN_WIDTH; 
 		y = posY + DISTANCE_TO_GUN_HEIGHT;
 		alpha = 255; isDone = false; 
@@ -43,8 +41,6 @@ public:
 		damage = dame;
 		startX = posX + DISTANCE_TO_GUN_WIDTH; 
 		startY = posY + DISTANCE_TO_GUN_HEIGHT;
-		//startX = posX;
-		//startY = posY;
 	}
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }

@@ -32,13 +32,17 @@ MiniSophia* MiniSophia::GetInstance()
 
 void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
-	//DebugOut(L"xxxxx %d", isCrawl);
-	// Calculate dx, dy 
+	if (isDoneDeath)
+		return;
+	if (health <= 0)
+	{
+		isDeath = true;
+		vx = 0;
+		vy = 0;
+	}
 	Entity::Update(dt);
 #pragma region Xử lý vy
-	// Simple fall down
 	vy += SOPHIA_GRAVITY * dt;
-	//Check hightMiniSophia
 #pragma endregion
 
 #pragma region Timer
@@ -58,14 +62,6 @@ void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAME
 	if (state != SOPHIA_MINI_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
-	// reset untouchable timer if untouchable time has passed
-	/*if (GetTickCount() - untouchable_start > MiniSophia_IMMORTAL_DURATION)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}*/
-
-	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -97,9 +93,7 @@ void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAME
 					}
 
 					if (e->nx != 0)
-					{
 						vx = 0;
-					}
 				}
 			}
 		}
@@ -123,10 +117,9 @@ void MiniSophia::SetInjured(int dame)
 
 void MiniSophia::Render()
 {
+	if (isDoneDeath)
+		return;
 	RenderBoundingBox();
-	//LPANIMATION lpp;
-	//int a = lpp->GetFrame();
-	//DebugOut(L"[INFO] Start loading game file : %s\n",a);
 
 #pragma region Khai báo biến
 	int ani = -1;
@@ -135,9 +128,12 @@ void MiniSophia::Render()
 	if (isImmortaling) alpha = 128;
 #pragma endregion
 
-	if (state == SOPHIA_MINI_STATE_DIE)
+	if (isDeath)
 	{
 		ani = SOPHIA_ANI_MINI_DIE;
+		animationSet->at(ani)->Render(direction, x , y , alpha);
+		if (animationSet->at(ani)->GetFrame() > LAST_FRAME_DIE)
+			isDoneDeath = true;
 	}
 	else
 	{
@@ -212,7 +208,6 @@ void MiniSophia::SetState(int state)
 		break;
 	case SOPHIA_MINI_STATE_IDLE:
 		isPressJump = false;
-		//isCrawl = false;
 		if (!isCrawl)
 		{
 			if (vx > 0) {
@@ -233,9 +228,7 @@ void MiniSophia::SetState(int state)
 		break;
 	case SOPHIA_MINI_STATE_DIE:
 	case SOPHIA_MINI_STATE_IN:
-		//alpha = 0;
 	case SOPHIA_MINI_STATE_OUT:
-		//alpha = 255;
 		isCrawl = false;
 		if (direction > 0) {
 			vx -= 3 * SOPHIA_MINI_WALKING_ACC * dt;
@@ -254,19 +247,22 @@ void MiniSophia::SetState(int state)
 
 void MiniSophia::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (isCrawl)
+	if (!isDoneDeath)
 	{
-		left = x;
-		top = y;
-		right = x + SOPHIA_MINI_CRAWL_BBOX_WIDTH;
-		bottom = y + SOPHIA_MINI_CRAWL_BBOX_HEIGHT;
-	}
-	else
-	{
-		left = x;
-		top = y;
-		right = x + SOPHIA_MINI_BBOX_WIDTH;
-		bottom = y + SOPHIA_MINI_BBOX_HEIGHT;
+		if (isCrawl)
+		{
+			left = x;
+			top = y;
+			right = x + SOPHIA_MINI_CRAWL_BBOX_WIDTH;
+			bottom = y + SOPHIA_MINI_CRAWL_BBOX_HEIGHT;
+		}
+		else
+		{
+			left = x;
+			top = y;
+			right = x + SOPHIA_MINI_BBOX_WIDTH;
+			bottom = y + SOPHIA_MINI_BBOX_HEIGHT;
+		}
 	}
 }
 

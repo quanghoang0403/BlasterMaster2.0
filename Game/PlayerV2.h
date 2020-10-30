@@ -33,6 +33,8 @@
 //#define MARIO_UNTOUCHABLE_TIME 5000
 #define PLAYER_IMMORTAL_DURATION	1000
 
+#define LAST_FRAME_DIE	15
+
 class PlayerV2 : public Entity
 {
 	static PlayerV2* instance;
@@ -56,7 +58,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	virtual void Render();
 
-	//Immortal
 	bool IsImmortaling() { return isImmortaling; }
 	void SetImmortaling(bool immo) { isImmortaling = immo; }
 	void StartImmortalingTimer() { immortalTimer->Start(); }

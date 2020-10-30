@@ -2,8 +2,9 @@
 #include "Bullet.h"
 #include <math.h>
 
-#define BULLET_SPEED					0.25f
-
+#define BULLET_SPEED								0.25f
+#define SPEED_SUPER_BULLET							0.625f
+#define DEGREE_PER_DT								40
 #define BIG_SOPHIA_BULLET_BBOX_WIDTH				8
 #define BIG_SOPHIA_BULLET_BBOX_HEIGHT				10
 
@@ -13,10 +14,11 @@
 #define BIG_SOPHIA_BULLET_JASON_ANI_TOP_BLACK		2
 #define BIG_SOPHIA_BULLET_JASON_ANI_TOP_COLOR		3
 
-#define BULLET_JASON_BANG_ANI				4
+#define BULLET_JASON_BANG_ANI						4
 
-#define ANIMATION_SET_BIG_SOPHIA_BULLET		6
-#define BULLET_DELAY		350
+#define ANIMATION_SET_BIG_SOPHIA_BULLET				6
+#define BULLET_DELAY								350
+
 
 
 class BigSophiaBullet : public Bullet

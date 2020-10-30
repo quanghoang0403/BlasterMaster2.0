@@ -94,14 +94,6 @@ void PlayScene::LoadBaseObjects()
 		listBigBullets.push_back(bigBullet3);
 		DebugOut(L"[INFO] BigBullet CREATED! \n");
 	}
-	/*for (int i = 0; i < NUMBER_BULLET; i++)
-	{
-		if (bulletBigSophia[i] == NULL)
-		{
-			bulletBigSophia[i] = new BigSophiaBullet();
-			DebugOut(L"[INFO] Bullet big sophia CREATED! \n");
-		}
-	}*/
 	if (powerUp == NULL)
 	{
 		powerUp = new PowerUp(100,150);

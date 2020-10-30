@@ -68,8 +68,8 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		y += min_ty * dy + ny * 0.4f;
 
 		
-		DebugOut(L"\nnx:  %f", nx);
-		DebugOut(L"\nny:  %f", ny);
+		//DebugOut(L"\nnx:  %f", nx);
+		//DebugOut(L"\nny:  %f", ny);
 		if (this->dgravity == 3)
 		{
 			

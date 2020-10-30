@@ -48,6 +48,8 @@ class PlayerV2 : public Entity
 	float start_y;
 
 public:
+	bool isDeath;
+	bool isDoneDeath;
 	PlayerV2(float x = 0.0f, float y = 0.0f);
 	static PlayerV2* GetInstance();
 

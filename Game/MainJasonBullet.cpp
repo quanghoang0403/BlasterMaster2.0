@@ -9,7 +9,7 @@ MainJasonBullet::MainJasonBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
-	damage = 1;
+	damage = 2;
 	timeDelayed = 0;
 	timeDelayMax = SMALL_JASON_BULLET_DELAY;
 }
@@ -19,9 +19,9 @@ MainJasonBullet::~MainJasonBullet() {}
 void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
 	if (typeBullet == 0)
-		damage = 0.5;
+		damage =1;
 	else
-		damage = 1;
+		damage = 2;
 	if (isDone == true)
 	{
 		alpha = 0;
@@ -73,6 +73,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				if (e->obj->GetType() == EntityType::ENEMY)
 				{
 					e->obj->AddHealth(-damage);
+					DebugOut(L"xxxxxxxxxxxxxxxx %d", e->obj->health);
 					isCollisionEnemies = 1;
 					x += min_tx * dx + nx * 0.4f;
 					y += min_ty * dy + ny * 0.4f;

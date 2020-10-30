@@ -9,7 +9,7 @@ BigSophiaBullet::BigSophiaBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
-	damage = 1;
+	damage = 5;
 	timeDelayed = 0;
 	timeDelayMax = BULLET_DELAY;
 }
@@ -18,24 +18,41 @@ BigSophiaBullet::~BigSophiaBullet() {}
 
 void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
-	if (typeBullet == 0)
-		damage = 0.5;
-	else
-		damage = 1;
+	DebugOut(L"x %f \n", x);
 	if (isDone == true)
 		alpha = 0;
 	else
 	{
 		timeDelayed += dt;
 		Entity::Update(dt);
-		if (isTargetTop == false) {
-			vx = BULLET_SPEED * direction;
-			vy = 0;
+		if (damage > 4)
+		{
+			/*if (direction != 0)
+			{
+				if ((x - startX) < 50)
+					vy = BULLET_SPEED/2;
+				if ((x - startX) > 50)
+					vy = -BULLET_SPEED/2;
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED;
+			}*/
 		}
-		else {
-			vy = -BULLET_SPEED;
-			vx = 0;
+		else
+		{
+			if (direction != 0)
+			{
+				vx = BULLET_SPEED * direction;
+				vy = 0;
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED * directionY;
+				vx = 0;
+			}
 		}
+
 #pragma region Xử lý va chạm
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
@@ -110,6 +127,7 @@ void BigSophiaBullet::Render()
 				if (damage < 2)
 					ani = BIG_SOPHIA_BULLET_JASON_ANI_RIGHT_BLACK;
 				else ani = BIG_SOPHIA_BULLET_JASON_ANI_RIGHT_COLOR;
+				//DebugOut(L"%d \n", ani);
 				animationSet->at(ani)->Render(direction, x, y, alpha);
 			}
 			else if (directionY != 0)
@@ -117,7 +135,7 @@ void BigSophiaBullet::Render()
 				if (damage < 2)
 					ani = BIG_SOPHIA_BULLET_JASON_ANI_TOP_BLACK;
 				else ani = BIG_SOPHIA_BULLET_JASON_ANI_TOP_COLOR;
-				animationSet->at(ani)->RenderY(direction, x, y, alpha); 
+				animationSet->at(ani)->RenderY(directionY, x, y, alpha); 
 			}
 
 		}
@@ -143,7 +161,7 @@ void BigSophiaBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	if (typeBullet == 0)
+	if (direction == 0)
 	{
 		r = x + BIG_SOPHIA_BULLET_BBOX_WIDTH;
 		b = y + BIG_SOPHIA_BULLET_BBOX_HEIGHT;

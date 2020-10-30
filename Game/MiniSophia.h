@@ -45,7 +45,8 @@
 class MiniSophia : public Entity
 {
 public:
-
+	bool isDeath;
+	bool isDoneDeath;
 	static MiniSophia* instance;
 
 	int level;

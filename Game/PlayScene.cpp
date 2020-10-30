@@ -1,5 +1,8 @@
 #include "PlayScene.h"
 #include "Textures.h"
+#define MINI_SOPHIA	0
+#define JASON		1
+#define BIG_SOPHIA	2
 
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
@@ -11,6 +14,9 @@
 
 #define DX_GET_OUT_CAR		7
 #define HUD_Y				20
+#define NUMBER_BULLET		3
+#define DEFLECT_X_BIGSOPHIA_TO_FIRE	7
+#define DEFLECT_Y_BIGSOPHIA_TO_FIRE	11
 
 
 PlayScene::PlayScene() : Scene()
@@ -28,17 +34,17 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (player == NULL)
 	{
-		player = new Player(135, 100);
+		player = new Player(55, 100);
 		DebugOut(L"[INFO] player CREATED! \n");
 	}
 	if (playerV2 == NULL)
 	{
-		playerV2 = new PlayerV2(165, 100);
+		playerV2 = new PlayerV2(55, 100);
 		DebugOut(L"[INFO] playerv2 CREATED! \n");
 	}
 	if (sophia == NULL)
 	{
-		sophia = new MiniSophia(105, 100);
+		sophia = new MiniSophia(55, 100);
 		DebugOut(L"[INFO] sophia CREATED! \n");
 	}
 	if (gameHUD == NULL)
@@ -65,27 +71,47 @@ void PlayScene::LoadBaseObjects()
 		listBullets.push_back(bullet3);
 		DebugOut(L"[INFO] Bullet3 CREATED! \n");
 	}
-	if (bullet4 == NULL)
-	{
-		bullet4 = new BigSophiaBullet();
-		DebugOut(L"[INFO] Bullet3 CREATED! \n");
-	}
 	if (supBullet == NULL)
 	{
 		supBullet = new ElectricBullet();
 		DebugOut(L"[INFO] supBullet CREATED! \n");
 	}
-	for (int i = 0; i < 3; i++)
+	if (bigBullet1 == NULL)
+	{
+		bigBullet1 = new BigSophiaBullet();
+		listBigBullets.push_back(bigBullet1);
+		DebugOut(L"[INFO] BigBullet CREATED! \n");
+	}
+	if (bigBullet2 == NULL)
+	{
+		bigBullet2 = new BigSophiaBullet();
+		listBigBullets.push_back(bigBullet2);
+		DebugOut(L"[INFO] BigBullet CREATED! \n");
+	}
+	if (bigBullet3 == NULL)
+	{
+		bigBullet3 = new BigSophiaBullet();
+		listBigBullets.push_back(bigBullet3);
+		DebugOut(L"[INFO] BigBullet CREATED! \n");
+	}
+	/*for (int i = 0; i < NUMBER_BULLET; i++)
 	{
 		if (bulletBigSophia[i] == NULL)
 		{
 			bulletBigSophia[i] = new BigSophiaBullet();
 			DebugOut(L"[INFO] Bullet big sophia CREATED! \n");
 		}
-	}
+	}*/
 	if (powerUp == NULL)
 	{
 		powerUp = new PowerUp(100,150);
+		listItems.push_back(powerUp);
+		DebugOut(L"[INFO] powerUp CREATED! \n");
+	}
+	else
+	{
+		powerUp = NULL;
+		powerUp = new PowerUp(100, 150);
 		listItems.push_back(powerUp);
 		DebugOut(L"[INFO] powerUp CREATED! \n");
 	}
@@ -106,7 +132,6 @@ void PlayScene::ChooseMap(int whatMap)
 	sceneFilePath = listSceneFilePath[convertSimple - 1];
 	LoadSceneObjects();
 }
-
 
 bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 {
@@ -205,9 +230,20 @@ void PlayScene::PlayerTouchEnemy()
 {
 	for (UINT i = 0; i < listEnemies.size(); i++)
 	{
-		if (player->IsCollidingObject(listEnemies[i]))
+		if (typeSophia == JASON)
 		{
-			player->SetInjured(1);
+			if (player->IsCollidingObject(listEnemies[i]))
+				player->SetInjured(1);
+		}
+		else if (typeSophia == MINI_SOPHIA)
+		{
+			if (sophia->IsCollidingObject(listEnemies[i]))
+				player->SetInjured(1);
+		}
+		else
+		{
+			if (playerV2->IsCollidingObject(listEnemies[i]))
+				player->SetInjured(1);
 		}
 	}
 }
@@ -277,20 +313,26 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		sophia->SetState(SOPHIA_MINI_STATE_CRAWL);
 		break;
 	case DIK_SPACE:
-		if (typeSophia ==1)
+		if (typeSophia == JASON)
 			player->SetState(SOPHIA_STATE_JUMP);
-		else if (typeSophia == 0)
+		else if (typeSophia == MINI_SOPHIA)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
-		player->SetPosition(6, 60);
+		player->SetPosition(30, 60);
 		player->SetHealth(MAX_HEALTH);
-		/*player->Reset();*/
+		player->isDoneDeath = false;
+		player->isDeath = false;
+		playScene->typeSophia = JASON;
+		break;
+	case DIK_Q:
+		playScene->typeSophia = BIG_SOPHIA;
+		playerV2->SetPosition(30, 60);
 		break;
 	case DIK_Z:
-		if (typeSophia ==1)
+		if (typeSophia == JASON)
 		{
 			for (int i = 0; i < listBullets.size(); i++)
 			{
@@ -301,7 +343,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				}
 			}
 		}
-		else if (typeSophia == 0)
+		else if (typeSophia == MINI_SOPHIA)
 		{
 			sophia->GetInfoForBullet(direction, x, y);
 			for (int i = 0; i < listBullets.size(); i++)
@@ -316,11 +358,12 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else
 		{
 			playerV2->GetInfoBigSophia(direction, directionY, x, y, dame);
-			for (int i = 0; i < listBullets.size(); i++)
+			for (int i = 0; i < playScene->listBigBullets.size(); i++)
 			{
-				if (playScene->bulletBigSophia[i]->isDone == true)
+				if (playScene->listBigBullets[i]->isDone == true)
 				{
-					playScene->bulletBigSophia[i]->BigSophiaFire(direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR / 2, dame);
+					playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x - DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+					DebugOut(L" %d ", playScene->listBigBullets[i]->damage);
 					break;
 				}
 			}
@@ -331,9 +374,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		supBullet->Fire(1, direction, isTargetTop, x, y);
 		break;
 	case DIK_U:
-		if (typeSophia == 0)
+		if (typeSophia == MINI_SOPHIA)
 			playScene->PlayerGotCar();
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 		{
 			playScene->typeSophia = 0;
 			player->SetState(SOPHIA_STATE_OUT);
@@ -365,12 +408,12 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			else
 				listEnemies[i]->SetBBARGB(0);
 		}
-		for (int i = 0; i < listBullets.size(); i++)
+		for (int i = 0; i < playScene->listBigBullets.size(); i++)
 		{
-			if (playScene->bulletBigSophia[i]->GetBBARGB() == 0)
-				playScene->bulletBigSophia[i]->SetBBARGB(200);
+			if (playScene->listBigBullets[i]->GetBBARGB() == 0)
+				playScene->listBigBullets[i]->SetBBARGB(200);
 			else
-				playScene->bulletBigSophia[i]->SetBBARGB(0);
+				playScene->listBigBullets[i]->SetBBARGB(0);
 		}
 
 		if (player->GetBBARGB() == 0)
@@ -452,9 +495,9 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-		else if (typeSophia == 0)
+		else if (typeSophia == MINI_SOPHIA)
 			sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
 		else
 		{
@@ -463,28 +506,28 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	}
 	else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 	{
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 			player->SetState(SOPHIA_STATE_WALKING_LEFT);
-		else if (typeSophia == 0)
+		else if (typeSophia == MINI_SOPHIA)
 			sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
 		else
 			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
 	}
 	else if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
-		if (typeSophia == 2)
+		if (typeSophia == BIG_SOPHIA)
 			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
 	}
 	else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
 	{
-		if (typeSophia == 2)
+		if (typeSophia == BIG_SOPHIA)
 			playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
 	}
 	else
 	{
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 			player->SetState(SOPHIA_STATE_IDLE);
-		else if (typeSophia == 0)
+		else if (typeSophia == MINI_SOPHIA)
 		{
 			if (sophia->GetIsCrawl() == false)
 				sophia->SetState(SOPHIA_MINI_STATE_IDLE);
@@ -497,13 +540,13 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 			player->SetPressSpace(true);
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
-		if (typeSophia == 1)
+		if (typeSophia == JASON)
 			player->SetPressUp(true);
 	}	
 }
@@ -936,7 +979,6 @@ void PlayScene::Update(DWORD dt)
 	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
 	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
 #pragma endregion
-
 	if (listItems.size() > 0)
 		PlayerCollideItem();
 	PlayerGotGate();
@@ -948,23 +990,45 @@ void PlayScene::Update(DWORD dt)
 		coObjects.push_back(listObjects[i]);
 	for (int i = 0; i < listEnemies.size(); i++)
 		coObjects.push_back(listEnemies[i]);
-	player->Update(dt, &listObjects);
-	playerV2->Update(dt, &listObjects);
-	sophia->Update(dt, &listObjects);
+	if (typeSophia == BIG_SOPHIA)
+		playerV2->Update(dt, &listObjects);
+	else 
+		player->Update(dt, &listObjects);
+	if (typeSophia == MINI_SOPHIA)
+		sophia->Update(dt, &listObjects);
 	supBullet->Update(dt, &listObjects);
 	for (int i = 0; i < listBullets.size(); i++)
-	{
-		bulletBigSophia[i]->Update(dt, &coObjects);
 		listBullets[i]->Update(dt, &coObjects);
-	}
+	for (int i = 0; i < listBigBullets.size(); i++)
+		listBigBullets[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Update(dt, &listObjects);
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Update(dt, &listObjects);
 	for (int i = 0; i < listEnemies.size(); i++)
 		listEnemies[i]->Update(dt, &listObjects);
-#pragma endregion
+	if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
+	{
 
+		Unload();
+		ChooseMap(STAGE_1);
+		typeSophia = JASON;
+		player->SetPosition(30, 60);
+		player->SetHealth(MAX_HEALTH);
+		player->isDoneDeath = false;
+		player->isDeath = false;
+
+		playerV2->SetPosition(30, 60);
+		playerV2->SetHealth(MAX_HEALTH);
+		playerV2->isDoneDeath = false;
+		playerV2->isDeath = false;
+
+		sophia->SetPosition(30, 60);
+		sophia->SetHealth(MAX_HEALTH);
+		sophia->isDoneDeath = false;
+		sophia->isDeath = false;
+	}
+#pragma endregion
 }
 
 void PlayScene::Render()
@@ -976,14 +1040,14 @@ void PlayScene::Render()
 		listObjects[i]->Render();
 	for (int i = 0; i < listItems.size(); i++)
 		listItems[i]->Render();
-	for (int i = 0; i < 3; i++)
-		bulletBigSophia[i]->Render();
+	for (int i = 0; i < listBigBullets.size(); i++)
+		listBigBullets[i]->Render();
 
-	if (typeSophia == 2)
+	if (typeSophia == BIG_SOPHIA)
 		playerV2->Render();
 	else 
 		player->Render();
-	if (typeSophia == 0)
+	if (typeSophia == MINI_SOPHIA)
 		sophia->Render();
 	supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)

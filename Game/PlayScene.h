@@ -45,17 +45,22 @@ protected:
 	PlayerV2* playerV2;
 	MiniSophia* sophia;
 	HUD* gameHUD;
+#pragma region Bullet
 	Bullet* bullet1;
 	Bullet* bullet2;
 	Bullet* bullet3;
-	Bullet* bullet4;
 	Bullet* supBullet;
-	Bullet* bulletBigSophia[2];
+	Bullet* bigBullet1;
+	Bullet* bigBullet2;
+	Bullet* bigBullet3;
+#pragma endregion
+	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
 	vector<LPBULLET> listBullets;
+	vector<LPBULLET> listBigBullets;
 	vector<LPCWSTR> listSceneFilePath;
 	vector<LPGAMEITEM> listItems;
 	Camera* gameCamera;

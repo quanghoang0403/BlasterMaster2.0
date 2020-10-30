@@ -17,7 +17,7 @@ PlayerV2::PlayerV2(float x, float y) : Entity()
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	gunDam = 0;
+	gunDam = 5;
 	health = MAX_HEALTH;
 	isImmortaling = false;
 }

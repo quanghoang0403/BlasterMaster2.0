@@ -79,8 +79,6 @@ class Player : public Entity
 	bool isGunFlipping = false;
 	bool isJumpHandle;
 	bool isImmortaling;	
-	bool isDeath;
-	bool isDoneDeath;
 	DWORD untouchable_start;
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
@@ -95,6 +93,8 @@ class Player : public Entity
 	bool isOpening;
 
 public:
+	bool isDeath;
+	bool isDoneDeath;
 	bool isJumping = false;
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();

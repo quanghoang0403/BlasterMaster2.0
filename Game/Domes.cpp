@@ -131,11 +131,8 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-
-		//DebugOut(L"\nnx:  %f", nx);
-		//DebugOut(L"\nny:  %f", ny);
-
 		switch (dgravity)
+
 		{
 		case 3:
 			

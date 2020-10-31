@@ -17,7 +17,7 @@ PlayerV2::PlayerV2(float x, float y) : Entity()
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	gunDam = MAX_HEALTH;
+	gunDam = 5;
 	health = MAX_HEALTH;
 	isImmortaling = false;
 }
@@ -31,6 +31,14 @@ PlayerV2* PlayerV2::GetInstance()
 
 void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (isDoneDeath)
+		return;
+	if (health <= 0)
+	{
+		isDeath = true;
+		vx = 0;
+		vy = 0;
+	}
 	Entity::Update(dt);
 
 #pragma region Timer
@@ -81,9 +89,7 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 
 					if (e->nx != 0)
-					{
 						vx = 0;
-					}
 				}
 			}
 			if (e->obj->GetType() == EntityType::ENEMY)
@@ -108,6 +114,8 @@ void PlayerV2::SetInjured(int dame)
 
 void PlayerV2::Render()
 {
+	if (isDoneDeath)
+		return;
 	RenderBoundingBox();
 
 #pragma region Khai báo biến
@@ -117,9 +125,12 @@ void PlayerV2::Render()
 	if (isImmortaling) alpha = 128;
 #pragma endregion
 
-	if (state == SOPHIA_BIG_STATE_DIE)
+	if (isDeath)
 	{
 		ani = SOPHIA_ANI_BIG_DIE;
+		animationSet->at(ani)->Render(direction, x, y, alpha);
+		if (animationSet->at(ani)->GetFrame() > LAST_FRAME_DIE)
+			isDoneDeath = true;
 	}
 	else
 	{
@@ -161,15 +172,23 @@ void PlayerV2::SetState(int state)
 		vy = 0;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_RIGHT:
+		direction = 1;
+		directionY = 0;
 		vx = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_LEFT:
+		direction = -1;
+		directionY = 0;
 		vx = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_TOP:
+		direction = 0;
+		directionY = -1;
 		vy = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_BOT:
+		direction = 0;
+		directionY = 1;
 		vy = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_DIE:
@@ -180,10 +199,13 @@ void PlayerV2::SetState(int state)
 }
 void PlayerV2::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + SOPHIA_BIG_BBOX_WIDTH;
-	bottom = y + SOPHIA_BIG_BBOX_HEIGHT;
+	if (!isDoneDeath)
+	{
+		left = x;
+		top = y;
+		right = x + SOPHIA_BIG_BBOX_WIDTH;
+		bottom = y + SOPHIA_BIG_BBOX_HEIGHT;
+	}
 }
 
 void PlayerV2::Reset()

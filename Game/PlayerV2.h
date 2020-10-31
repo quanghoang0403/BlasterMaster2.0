@@ -33,6 +33,8 @@
 //#define MARIO_UNTOUCHABLE_TIME 5000
 #define PLAYER_IMMORTAL_DURATION	1000
 
+#define LAST_FRAME_DIE	15
+
 class PlayerV2 : public Entity
 {
 	static PlayerV2* instance;
@@ -48,13 +50,14 @@ class PlayerV2 : public Entity
 	float start_y;
 
 public:
+	bool isDeath;
+	bool isDoneDeath;
 	PlayerV2(float x = 0.0f, float y = 0.0f);
 	static PlayerV2* GetInstance();
 
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	virtual void Render();
 
-	//Immortal
 	bool IsImmortaling() { return isImmortaling; }
 	void SetImmortaling(bool immo) { isImmortaling = immo; }
 	void StartImmortalingTimer() { immortalTimer->Start(); }
@@ -63,12 +66,12 @@ public:
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_BIG_BBOX_WIDTH / 2; y = this->y + SOPHIA_BIG_BBOX_HEIGHT / 2; }
+	void GetInfoBigSophia(int& direct, int& directY, float& playerx, float& playery, int& dame) { direct = direction; directY = directionY; playerx = x; playery = y; dame = gunDam; }
 	void Setvx(float vx) { vx = vx; }
 	void Setvy(float vy) { vy = vy; }
 	float GetDy() { return dy; }
 	float Getvy() { return vy; }
 	void Reset();
-	void GetInfoForBullet(int& direct, float& playerx, float& playery) { direct = direction; playerx = x; playery = y; }
 
 	void SetInjured(int dame);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

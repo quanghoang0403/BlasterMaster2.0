@@ -25,6 +25,7 @@ class Gunner : public Enemy
 public:
 	Gunner();
 	virtual void SetState(int state);
+	virtual void Activation();
 };
 
 

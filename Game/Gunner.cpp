@@ -111,3 +111,7 @@ void Gunner::SetState(int state)
 		vx = -GUNNER_WALKING_SPEED;
 	}
 }
+
+void Gunner::Activation()
+{
+}

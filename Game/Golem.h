@@ -52,6 +52,7 @@ public:
 	Golem(float x, float y, LPGAMEENTITY t);
 	void FollowTarget(LPGAMEENTITY target);
 	virtual void SetState(int state);
+	virtual void Activation();
 	void SelfDestroy();
 };
 

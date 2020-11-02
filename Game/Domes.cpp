@@ -74,13 +74,14 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-<<<<<<< HEAD
 #pragma region Xử lý AI bam tuong va Acttack
 		AIClimdWall(coEventsResult, nx, ny);
 #pragma endregion
 
 #pragma region Xử lý Active
 		Activation();
+
+	
 
 
 #pragma endregion

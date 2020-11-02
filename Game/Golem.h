@@ -28,7 +28,7 @@
 #define GOLEM_SITEFOLLOW_PLAYER			80
 #define GOLEM_SITEACTIVE_PLAYER			150
 
-#define GOLEM_MAXHEALTH					2
+#define GOLEM_MAXHEALTH					4
 
 
 
@@ -52,6 +52,7 @@ public:
 	Golem(float x, float y, LPGAMEENTITY t);
 	void FollowTarget(LPGAMEENTITY target);
 	virtual void SetState(int state);
+	virtual void Activation();
 	void SelfDestroy();
 };
 

@@ -109,19 +109,7 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma endregion
 	/*SelfDestroy();*/
 #pragma region Xử lý Active
-	if (!isActive)
-	{
-		vx = 0;
-	}
-	else
-	{
-		SetState(CENTIPEDE_STATE_WALKING);
-	}
-
-	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEACTIVE_PLAYER)
-	{
-		isActive = true;
-	}
+	Activation();
 
 #pragma endregion
 }
@@ -187,5 +175,22 @@ void Centipede::SetState(int state)
 		{
 			vx = -CENTIPEDE_WALKING_SPEED;
 		}
+	}
+}
+
+void Centipede::Activation()
+{
+	if (!isActive)
+	{
+		vx = 0;
+	}
+	else
+	{
+		SetState(CENTIPEDE_STATE_WALKING);
+	}
+
+	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= CENTIPEDE_SITEACTIVE_PLAYER)
+	{
+		isActive = true;
 	}
 }

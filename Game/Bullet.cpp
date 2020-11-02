@@ -2,7 +2,6 @@
 Bullet::Bullet()
 {
 	isDone = true;
-	//damage = 1;
 }
 
 Bullet::~Bullet()

@@ -111,18 +111,7 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 #pragma endregion
 
 #pragma region Xử lý Active
-	if (!isActive)
-	{
-		vx = 0;
-	}
-	else
-	{
-		SetState(GOLEM_STATE_WALKING);
-	}
-	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= GOLEM_SITEACTIVE_PLAYER)
-	{
-		isActive = true;
-	}
+	Activation();
 
 #pragma endregion
 }
@@ -247,5 +236,21 @@ void Golem::SetState(int state)
 		{
 			vx = -GOLEM_WALKING_SPEED;
 		}
+	}
+}
+
+void Golem::Activation()
+{
+	if (!isActive)
+	{
+		vx = 0;
+	}
+	else
+	{
+		SetState(GOLEM_STATE_WALKING);
+	}
+	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= GOLEM_SITEACTIVE_PLAYER)
+	{
+		isActive = true;
 	}
 }

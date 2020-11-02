@@ -1,8 +1,12 @@
 #pragma once
 #include "Enemy.h"
+#include "Timer.h"
+#include <ctime>
 
 #define DOMES_WALKING_SPEED						0.03f;
-#define DOMES_GRAVITY							0.01f
+#define DOMES_GRAVITY							0.005f
+
+#define DOMES_ATTACK_SPEED						0.3f
 
 #define DOMES_BBOX_WIDTH						18
 #define DOMES_BBOX_HEIGHT						15
@@ -30,13 +34,21 @@
 
 #define DOMES_SITEACTIVE_PLAYER					150
 
+#define DOMES_TIME_ATTACK						500
+
+#define DOMES_TIME_DELAYATTACK					1500
+
 #define DOMES_MAXHEALTH							1
 
 class Domes : public Enemy
 {
 	int dgravity;
 	int directionclock;
+	bool firstFollow;
+	bool actived;
 	LPGAMEENTITY target;
+	Timer* delayAttack = new Timer(DOMES_TIME_DELAYATTACK);
+	Timer* startAttack = new Timer(DOMES_TIME_ATTACK);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
@@ -44,9 +56,14 @@ class Domes : public Enemy
 
 public:
 	Domes(float x, float y, LPGAMEENTITY t);
+	
+	virtual void AIClimdWall(vector<LPCOLLISIONEVENT> coEventsResult, float nx, float ny);
 	virtual void StartAttack();
-
+	virtual void swapgravity();
 	virtual void SetState(int state);
 	virtual void SetStatenoclock(int state);
+	virtual void Activation();
+
+	int random_directionclock();
 };
 

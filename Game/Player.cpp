@@ -116,15 +116,11 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 						if (ny < 0)
 							isJumping = false;
 					}
-				
 					if (e->nx != 0)
-					{
 						vx = 0;
-					}
 				}
 			}
 		}
-		
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion

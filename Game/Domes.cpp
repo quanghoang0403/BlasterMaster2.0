@@ -156,11 +156,11 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					{
 						Brick* brick = dynamic_cast<Brick*>(e->obj);
 
-						if (x > (brick->frameW + brick->x + 0.4f)) // BUG CHUA FIXXXX
+						if (x + DOMES_BBOX_WIDTH > (brick->frameW + brick->x + DOMES_BBOX_WIDTH - 0.4f)) // BUG CHUA FIXXXX
 						{
 							this->dgravity = 4;
-							nx = 0;
-							vx = 0;
+							//nx = 0;
+							//vx = 0;
 							vy = 0;
 
 						}
@@ -405,7 +405,7 @@ Domes::Domes(float x, float y, LPGAMEENTITY t)
 	this->target = t;
 	health = DOMES_MAXHEALTH;
 	isActive = false;
-	directionclock = 1;
+	directionclock = -1;
 	isDamaged = false;
 }
 

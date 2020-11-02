@@ -30,7 +30,6 @@ PlayScene::PlayScene() : Scene()
 void PlayScene::LoadBaseObjects()
 {
 	texturesFilePath = ToLPCWSTR("Resources/Scene/textures_playscene.txt");
-	//texturesFilePath = ToLPCWSTR("Resources/Scene/base.txt");
 	LoadBaseTextures();
 	if (player == NULL)
 	{
@@ -235,11 +234,7 @@ void PlayScene::PlayerTouchEnemy()
 		else if (typeSophia == BIG_SOPHIA)
 		{
 			if (playerV2->IsCollidingObject(listEnemies[i])== true)
-			{
 				playerV2->SetInjured(1);
-				//DebugOut(L"mau %d \n", player->health);
-			}
-			//DebugOut(L"mau %d \n", playerV2->IsCollidingObject(listEnemies[i]));
 		}
 	}
 }
@@ -358,7 +353,10 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
-					playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2*direction*DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+					if (playScene->listBigBullets[i]->damage <4)
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+					else
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 					DebugOut(L"toa do y %d \n", playScene->listBigBullets[i]->damage);
 					//DebugOut(L"toa do y %f, y %f", listBullets[i]->y);
 					break;
@@ -908,7 +906,6 @@ void PlayScene::Unload()
 
 Item* PlayScene::RandomItem(float x, float y)
 {
-
 	int bagrandom = rand() % 100;
 	int random = rand() % 100;
 	if (random <= 30)
@@ -1035,7 +1032,6 @@ void PlayScene::Update(DWORD dt)
 
 void PlayScene::Render()
 {
-	//gameMap->Draw();
 	LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
 	Game::GetInstance()->OldDraw(0,0, maptextures,0,0,mapWidth, mapHeight);
 	for (int i = 0; i < listObjects.size(); i++)

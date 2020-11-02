@@ -10,6 +10,7 @@ typedef Bullet* LPBULLET;
 class Bullet : public Entity
 {
 public:
+	int totalTime;
 	float startX, startY;
 	bool isDone;
 	int damage;
@@ -41,6 +42,7 @@ public:
 		damage = dame;
 		startX = posX + DISTANCE_TO_GUN_WIDTH; 
 		startY = posY + DISTANCE_TO_GUN_HEIGHT;
+		totalTime = 0;
 	}
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }

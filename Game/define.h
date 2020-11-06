@@ -21,8 +21,8 @@
 
 #define BGColor D3DCOLOR_XRGB(255,255,200)
 #define BGColorCrossing D3DCOLOR_XRGB(255,255,200)
-#define SCREEN_WIDTH 300	//530
-#define SCREEN_HEIGHT 280	//480
+#define SCREEN_WIDTH 270	//530
+#define SCREEN_HEIGHT 275	//480
 #define BOTTOM_SCREEN 450
 
 #define MaxFrameRate 100	//default Frame Rate is the truth
@@ -107,6 +107,7 @@ enum EntityType
 	STAIRS = 25,
 	GATE = 26,
 	BUSH = 27,
+	GATEV2 = 28,
 
 	//Item Zone 40-70
 	POWERUP = 40,

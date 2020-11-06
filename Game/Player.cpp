@@ -106,7 +106,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 			if (e->obj->GetType() == EntityType::BRICK)
 			{
 				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.4f;	
+				y += min_ty * dy + ny * 0.005f;	
 				if (e->ny != 0)
 				{
 
@@ -344,6 +344,10 @@ void Player::SetState(int state)
 			if (vx > 0)
 				vx = 0;
 		}
+		break;
+		isPressJump = false;
+	case SOPHIA_STATE_IDLE2:
+		vx = 0;
 		break;
 	case SOPHIA_STATE_OUT:
 		vx = 0;

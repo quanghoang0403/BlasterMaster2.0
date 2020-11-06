@@ -10,7 +10,7 @@ Gate::Gate(float x, float y, int switchId, float simonx, float simony, int simon
 	newPlayerx = simonx;
 	newPlayery = simony;
 	newPlayerState = simonState;
-	isNeedResetCam = rsCam;
+	directionCam = rsCam;
 	typePlayer = type;
 }
 

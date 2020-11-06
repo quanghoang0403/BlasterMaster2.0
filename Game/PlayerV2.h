@@ -13,7 +13,8 @@
 #define SOPHIA_BIG_STATE_WALKING_LEFT		200
 #define SOPHIA_BIG_STATE_WALKING_TOP		300
 #define SOPHIA_BIG_STATE_WALKING_BOT		400
-#define SOPHIA_BIG_STATE_DIE				500
+#define SOPHIA_BIG_STATE_DIE				500		
+#define SOPHIA_BIG_STATE_AUTO_RUN			600
 
 #define SOPHIA_ANI_BIG_IDLE_RIGHT				0
 #define SOPHIA_ANI_BIG_IDLE_LEFT				1
@@ -38,7 +39,7 @@
 class PlayerV2 : public Entity
 {
 	static PlayerV2* instance;
-	int directionY;
+
 	int level;
 	int untouchable;
 	bool isImmortaling;
@@ -50,6 +51,10 @@ class PlayerV2 : public Entity
 	float start_y;
 
 public:
+	int directionY;
+	float oldX, oldY;
+	bool isAutoRun;
+	int directionAutoRun;
 	bool isDeath;
 	bool isDoneDeath;
 	PlayerV2(float x = 0.0f, float y = 0.0f);
@@ -61,7 +66,7 @@ public:
 	bool IsImmortaling() { return isImmortaling; }
 	void SetImmortaling(bool immo) { isImmortaling = immo; }
 	void StartImmortalingTimer() { immortalTimer->Start(); }
-
+	void AutoRun(int direct);
 	void SetDirection(int d) { direction = d; }
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }

@@ -67,7 +67,7 @@ void Gunner::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		
 
 		x += min_tx * dx + nx * 0.1f;
-		y += min_ty * dy + ny * 0.1f;
+		y += min_ty * dy + ny * 0.04f;
 	
 	}
 

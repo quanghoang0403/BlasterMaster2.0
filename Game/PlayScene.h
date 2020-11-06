@@ -37,7 +37,15 @@ using namespace std;
 class PlayScene : public Scene
 {
 public:
+	float oldPosX;
+	float oldPosY;
+	int directMoveCam = -1;
+	float posX, posY;
 	int typeSophia;
+	float nCamXGo;
+	float nCamXBack;
+	float nCamYGo;
+	float nCamYBack;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 protected:
@@ -57,11 +65,14 @@ protected:
 	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
 	GunUp* gunUp;
+	vector<LPGAMEENTITY> listGates;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
 	vector<LPCWSTR> listSceneFilePath;
+	vector<int> listWidth;
+	vector<int> listHeight;
 	vector<LPGAMEITEM> listItems;
 	Camera* gameCamera;
 
@@ -93,6 +104,7 @@ public:
 	void PlayerGotCar();
 	void PlayerTouchEnemy();
 	void PlayerCollideItem();
+	void PlayerGotGateV2();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();

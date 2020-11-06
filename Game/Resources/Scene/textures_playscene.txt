@@ -3,10 +3,14 @@
 0	Resources/bbox.png	255	255	0
 1	Resources/item.png	255	255	0
 10	Resources/sophia_die.png	176	0	248
-20	Resources/sophia.png	255	0	255
+25	Resources/sophia.png	255	0	255
 30	Resources/jssophia.png	255	0	255
 40	Resources/Enemy/enemies.png	255	0	255
-11	Resources/Scene/area_1.jpg	255	0	255
+11	Resources/Scene//Map/area_1.jpg	255	0	255
+12	Resources/Scene//Map/area_2.jpg	255	0	255
+13	Resources/Scene//Map/area_3.jpg	255	0	255
+14	Resources/Scene//Map/area_4.png	255	0	255
+20	Resources/Scene//Map/fullmap2.png	255	0	255
 50	Resources/HealthBar.png	255	255	255
 60	Resources/item2.png		255	255	0
 # id	left	top	right	bottom	texture_id
@@ -14,47 +18,47 @@
 ##============ BIG  SOPHIA ===================
 ##right
 #idle
-1	137	74	161	106	20
-2	167	74	191	106	20
-3	195	74	219	106	20
+1	137	74	161	106	25
+2	167	74	191	106	25
+3	195	74	219	106	25
 #left
 #idle
-4	103	74	127	106	20
-5	73	74	97	106	20
-6	45	74	69	106	20
+4	103	74	127	106	25
+5	73	74	97	106	25
+6	45	74	69	106	25
 #top
-7	108	39	128	71	20
+7	108	39	128	71	25
 #idle
-8	82	39	102	71	20
-9	56	39	76	71	20
+8	82	39	102	71	25
+9	56	39	76	71	25
 #bot
-10	133	39	153	71	20
+10	133	39	153	71	25
 #idle
-11	158	39	178	71	20
-12	182	39	202	71	20
+11	158	39	178	71	25
+12	182	39	202	71	25
 #die
-13	79	105	103	134	20
-14	107	105	130	134	20
-15	134	105	158	134	20
-16	162	105	186	134	20
+13	79	105	103	134	25
+14	107	105	130	134	25
+15	134	105	158	134	25
+16	162	105	186	134	25
 ##============ SMALL SOPHIA ==================
 #idle right
-20	136	0	146	17	20
+20	136	0	146	17	25
 #walk right
 #jump
-21	149	0	159	17	20
-22	175	0	185	17	20
-23	162	0	172	17	20
+21	149	0	159	17	25
+22	175	0	185	17	25
+23	162	0	172	17	25
 
 #crawl
-24	202	7	218	17	20
-25	218	7	234	17	20
+24	202	7	218	17	25
+25	218	7	234	17	25
 #die
-26	136	20	150	36	20
-27	190	22	206	36	20
-28	172	20	186	36	20
-29	153	22	169	36	20
-30	208	22	224	36	20
+26	136	20	150	36	25
+27	190	22	206	36	25
+28	172	20	186	36	25
+29	153	22	169	36	25
+30	208	22	224	36	25
 ##============ SOPHIA JASON =================
 # idle right
 10001	146	5	172	23	30
@@ -323,19 +327,22 @@
 13	902
 [SCENE]
 #Stage1
-Resources/Scene/scene1.txt	512	120
-#Stage2_1
-Resources/Scene/scene2_1.txt	525	490
-#Stage2_2
-Resources/Scene/scene2_2.txt	1050	490
-#Stage3_1
-Resources/Scene/scene3_1.txt	1575	490
-#Stage3_2
-Resources/Scene/scene3_2.txt	1575	490
+Resources/Scene/scene1.txt	1024	275
+#Stage2
+Resources/Scene/scene2.txt	527	1315
+#Stage3
+Resources/Scene/scene3.txt	545	277
 #Stage4
-Resources/Scene/scene4.txt	1575	490
-#Test
-Resources/Scene/scene1.txt	1575	490
-Resources/Scene/scene3_1.txt	1575	490
-
-
+Resources/Scene/scene4.txt	520	1023
+#Stage5
+Resources/Scene/scene5.txt	1575	490
+#Stage6
+Resources/Scene/scene6.txt	1575	490
+#Stage7
+Resources/Scene/scene7.txt	1575	490
+#Stage8
+Resources/Scene/scene8.txt	1575	490
+#Stage9
+Resources/Scene/scene9.txt	1575	490
+#Stage10
+Resources/Scene/scene10.txt	2048	2048

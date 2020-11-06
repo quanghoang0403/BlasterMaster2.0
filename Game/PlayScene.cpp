@@ -1,11 +1,13 @@
 #include "PlayScene.h"
 #include "Textures.h"
+#include "GateV2.h"
 #define MINI_SOPHIA	0
 #define JASON		1
 #define BIG_SOPHIA	2
 
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
+#define OBJECT_TYPE_GATEV2		200
 
 #define OBJECT_TYPE_CENTIPEDE	10
 #define OBJECT_TYPE_GOLEM		11
@@ -22,9 +24,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 1;
+	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(5000);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -38,7 +40,7 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (playerV2 == NULL)
 	{
-		playerV2 = new PlayerV2(55, 100);
+		playerV2 = new PlayerV2(135, 1800);
 		DebugOut(L"[INFO] playerv2 CREATED! \n");
 	}
 	if (sophia == NULL)
@@ -150,21 +152,21 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 
 void PlayScene::PlayerGotGate()
 {
-	for (UINT i = 0; i < listObjects.size(); i++)
+	for (UINT i = 0; i < listGates.size(); i++)
 	{
-		if (listObjects[i]->GetType() == EntityType::GATE)
+		if (listGates[i]->GetType() == EntityType::GATE)
 		{
-			if (player->IsCollidingObject(listObjects[i]))
+			if (player->IsCollidingObject(listGates[i]))
 			{
 				//int newX = player->x -= 100;
 				//player->SetPosition(newX, 40);
-        		Gate* gate = dynamic_cast<Gate*>(listObjects[i]);
+        		Gate* gate = dynamic_cast<Gate*>(listGates[i]);
 				typeSophia = gate->typePlayer;
 				int tempMap = gate->GetIdScene() * STAGE_1;
 				float tempx = gate->newPlayerx;
 				float tempy = gate->newPlayery;
 				int tempState = gate->newPlayerState;
-				bool tempNeed = gate->isNeedResetCam;
+				bool tempNeed = gate->directionCam;
 				/*if (idStage == STAGE_1)
 				{
 					if (!PlayerPassingStage(listObjects[i]->Getx() + 20.0f, 1))
@@ -215,6 +217,34 @@ void PlayScene::PlayerGotCar()
 {
 	if (sophia->IsCollidingObject(player))
 		typeSophia = 1;
+}
+
+void PlayScene::PlayerGotGateV2()
+{
+	for (UINT i = 0; i < listGates.size(); i++)
+	{
+
+		if (listGates[i]->GetType() == EntityType::GATEV2)
+		{
+			DebugOut(L"khong va cham %d \n", i);
+			if (playerV2->IsCollidingObject(listGates[i]))
+			{
+				//oldPosX = gameCamera->GetCamx();
+				//oldPosY = gameCamera->GetCamy();
+				GateV2* gateV2 = dynamic_cast<GateV2*>(listGates[i]);
+				playerV2->AutoRun(gateV2->directionCam);
+				nCamXGo = gateV2->intoXGo;
+				nCamXBack = gateV2->intoXBack;
+				nCamYGo = gateV2->intoYGo;
+				nCamYBack = gateV2->intoYBack;
+				directMoveCam = gateV2->directionCam;
+			}
+			//else
+			//{
+			//	directMoveCam = -2;
+			//}
+		}
+	}
 }
 
 void PlayScene::PlayerTouchEnemy()
@@ -296,6 +326,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	int direction, directionY, isTargetTop, dame;
 	player->GetInfoForBullet(direction, isTargetTop, x, y);
 #pragma endregion
+	if (playerV2->isAutoRun)
+		return;
 	switch (KeyCode)
 	{
 	case DIK_ESCAPE:
@@ -356,7 +388,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					if (playScene->listBigBullets[i]->damage <4)
 						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 					DebugOut(L"toa do y %d \n", playScene->listBigBullets[i]->damage);
 					//DebugOut(L"toa do y %f, y %f", listBullets[i]->y);
 					break;
@@ -454,19 +487,32 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	Player* player = ((PlayScene*)scence)->player;
+	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObj = ((PlayScene*)scence)->listObjects;
+	if (playerV2->isAutoRun)
+		return;
 	switch (KeyCode)
 	{
 	case DIK_UP:
 		//player->SetState(SOPHIA_STATE_GUN_UNFLIP);
 		player->SetPressUp(false);
 		player->SetState(SOPHIA_STATE_GUN_UNFLIP);
+		playerV2->Setvy(0);
+		break;
+	case DIK_DOWN:
+		playerV2->Setvy(0);
 		break;
 	case DIK_SPACE:
 		player->SetPressSpace(false);
 		break;
+	case DIK_RIGHT:
+	case DIK_LEFT:
+		player->SetState(SOPHIA_STATE_IDLE2);
+		playerV2->Setvx(0);
+		break;
 	}
+
 }
 
 void PlayScenceKeyHandler::KeyState(BYTE* states)
@@ -485,6 +531,9 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
+
+	if (playerV2->isAutoRun)
+		return;
 #pragma endregion
 	if (player->GetState() == SOPHIA_STATE_DIE) return;
 
@@ -665,8 +714,9 @@ void PlayScene::_ParseSection_SCENEFILEPATH(string line)
 	if (tokens.size() < 3) return;
 
 	listSceneFilePath.push_back(ToLPCWSTR(tokens[0]));
-	mapWidth = atoi(tokens[1].c_str());
-	mapHeight = atoi(tokens[2].c_str());
+
+	listWidth.push_back(atoi(tokens[1].c_str()));
+	listHeight.push_back(atoi(tokens[2].c_str()));
 	//Hien tai chi lay mapWidth/Height cua list cuoi cung` :P co the dem vo tung file scene rieng de phan biet (hoac khong can, camera co chay toi duoc dau)
 }
 
@@ -707,8 +757,20 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		int isResetCamera = atoi(tokens[7].c_str());
 		int typePlayer = atoi(tokens[8].c_str());
 		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer);
-		listObjects.push_back(obj);
+		listGates.push_back(obj);
 		DebugOut(L"[test] add gate !\n");
+		break;
+	}
+	case OBJECT_TYPE_GATEV2:
+	{
+		int direct = atoi(tokens[7].c_str());
+		float newCamXGo = atoi(tokens[3].c_str());
+		float newCamXBack = atoi(tokens[4].c_str());
+		float newCamYGo = atoi(tokens[5].c_str());
+		float newCamYBack = atoi(tokens[6].c_str());
+		obj = new GateV2(x, y, newCamXGo, newCamXBack, newCamYGo, newCamYBack, direct);
+		listGates.push_back(obj);
+		DebugOut(L"[test] add gatev2 !\n");
 		break;
 	}
 	case OBJECT_TYPE_GOLEM:
@@ -915,7 +977,6 @@ Item* PlayScene::RandomItem(float x, float y)
 	else if (60< random && random <= 100)
 		return new PowerUp(x, y);
 }
-
 Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreater)
 {
 	if (createrType == ENEMY)
@@ -928,11 +989,13 @@ void PlayScene::Update(DWORD dt)
 #pragma region Camera
 
 	float cx, cy;
-	if (typeSophia == 1)
+	mapWidth = listWidth[idStage / STAGE_1 - 1];
+	mapHeight = listHeight[idStage / STAGE_1 - 1];
+	if (typeSophia == JASON)
 	{
 		player->GetPosition(cx, cy);
 		if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-			cx -= mapWidth - SCREEN_WIDTH / 2;
+			cx = mapWidth - SCREEN_WIDTH;
 		else
 		{
 			if (player->Getx() < SCREEN_WIDTH / 2)
@@ -940,9 +1003,38 @@ void PlayScene::Update(DWORD dt)
 			else
 				cx -= SCREEN_WIDTH / 2;
 		}
-		cy -= SCREEN_HEIGHT / 2;
+		
+		if (posY + SCREEN_HEIGHT >= mapHeight)
+		{
+			
+			cy = mapHeight - SCREEN_HEIGHT;
+			posY = cy;
+			DebugOut(L"map height= %d \n", mapHeight);
+			DebugOut(L"screen height= %d \n", SCREEN_HEIGHT);
+			DebugOut(L"posY= %f \n", posY);
+		}
+		else
+		{
+			if (player->Gety() < SCREEN_HEIGHT / 3)
+			{
+				cy = 0;
+				posY = cy;
+			}
+			else
+			{
+				if ((cy - posY) < (SCREEN_HEIGHT / 4))
+				{
+					posY -= 0.223 * dt;
+				}
+				if ((cy - posY) > (SCREEN_HEIGHT / 2))
+				{
+					posY += 0.223 * dt;
+				}
+			}
+		}
+		gameCamera->SetCamPos(cx, posY);
 	}
-	else if (typeSophia == 0)
+	else if (typeSophia == MINI_SOPHIA)
 	{
 		sophia->GetPosition(cx, cy);
 		if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
@@ -954,13 +1046,93 @@ void PlayScene::Update(DWORD dt)
 			else
 				cx -= (SCREEN_WIDTH / 2 + DX_GET_OUT_CAR);
 		}
-		cy -= SCREEN_HEIGHT / 2;
+
+		if (sophia->Gety() + SCREEN_HEIGHT / 2 >= mapHeight)
+		{
+			cy = mapHeight - SCREEN_HEIGHT / 2;
+			posY = cy;
+		}
+		else
+		{
+			if (sophia->Gety() < SCREEN_HEIGHT / 3)
+			{
+				cy = 0;
+				posY = cy;
+			}
+			else
+			{
+				if ((cy - posY) < SCREEN_HEIGHT / 4)
+				{
+					posY -= 0.1 * dt;
+				}
+				if ((cy - posY) > (SCREEN_HEIGHT / 2))
+				{
+					posY += 0.1 * dt;
+				}
+			}
+		}
+		gameCamera->SetCamPos(cx, posY);
 	}
 	else
 	{
-		playerV2->GetPosition(cx, cy);
+		//DebugOut(L"xxxxx %d \n", playerV2->direction);
+		if (directMoveCam == -1)
+		{
+			posX = 0;
+			posY = 1800;
+			directMoveCam = 0;
+		}
+		PlayerGotGateV2();
+		if (directMoveCam == 1 || directMoveCam == 2)
+		{
+			if (playerV2->direction > 0)
+			{
+				if (posX < nCamXGo)
+					posX += 0.15 * dt;
+				else
+				{
+					posX = nCamXGo + 1;
+					directMoveCam = 0;
+				}
+			}
+			else if (playerV2->direction <0)
+			{ 
+				if (posX > nCamXBack)
+					posX -= 0.15 * dt;
+				else
+				{
+					posX = nCamXBack - 1;
+					directMoveCam = 0;
+				}
+			}
+			else if (playerV2->directionY < 0)
+			{
+				if (posY > nCamYGo)
+					posY -= 0.15 * dt;
+				else
+				{
+					posY = nCamYGo - 1;
+					directMoveCam = 0;
+				}
+			}
+			else if (playerV2->directionY > 0)
+			{
+				if (posY < nCamYBack)
+					posY += 0.15 * dt;
+				else
+				{
+					posY = nCamYBack + 1;
+					directMoveCam = 0;
+				}
+			}
+		}
+		//DebugOut(L"cam oldX, %f \n", oldPosX);
+		//DebugOut(L"cam X, %f \n", posX);
+		gameCamera->SetCamPos(posX, posY);
+		
+		/*playerV2->GetPosition(cx, cy);
 		if (playerV2->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-			cx -= mapWidth - SCREEN_WIDTH / 2;
+			cx = mapWidth - SCREEN_WIDTH / 2;
 		else
 		{
 			if (playerV2->Getx() < SCREEN_WIDTH / 2)
@@ -968,15 +1140,40 @@ void PlayScene::Update(DWORD dt)
 			else
 				cx -= SCREEN_WIDTH / 2;
 		}
-		cy -= SCREEN_HEIGHT / 2;
+
+		if (playerV2->Gety() + SCREEN_HEIGHT / 4 >= mapHeight)
+		{
+			cy = mapHeight - SCREEN_HEIGHT / 4;
+			posY = cy;
+		}
+		else
+		{
+			if (playerV2->Gety() < SCREEN_HEIGHT / 3)
+			{
+				cy = 0;
+				posY = cy;
+			}
+			else
+			{
+				if ((cy - posY) < SCREEN_HEIGHT / 4)
+				{
+					posY -= 0.1 * dt;
+				}
+				if ((cy - posY) > (SCREEN_HEIGHT / 2))
+				{
+					posY += 0.1 * dt;
+				}
+			}
+		}
+		gameCamera->SetCamPos(cx, posY); */
 	}
-	gameCamera->SetCamPos(cx, 0.0f);//cy khi muon camera move theo y player 
+
 	if (typeSophia==JASON)
 		gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
 	if (typeSophia == MINI_SOPHIA)
 		gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
-	if (typeSophia == BIG_SOPHIA)
-		gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
+	//if (typeSophia == BIG_SOPHIA)
+	//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
 	if (listItems.size() > 0)
 		PlayerCollideItem();
@@ -1040,6 +1237,8 @@ void PlayScene::Render()
 		listItems[i]->Render();
 	for (int i = 0; i < listBigBullets.size(); i++)
 		listBigBullets[i]->Render();
+	for (int i = 0; i < listGates.size(); i++)
+		listGates[i]->Render();
 
 	if (typeSophia == BIG_SOPHIA)
 		playerV2->Render();

@@ -97,6 +97,9 @@
     <ClCompile Include="BigSophiaBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="GateV2.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="BigSophiaBullet.h">
       <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GateV2.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

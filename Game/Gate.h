@@ -8,7 +8,7 @@ class Gate : public Entity
 {
 	int gateSwitchSceneId;	//Gate nay se dan~ den scene nao
 public:
-	bool isNeedResetCam;
+	bool directionCam;
 	float newPlayerx, newPlayery;
 	int newPlayerState;
 	int typePlayer;

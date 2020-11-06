@@ -1,6 +1,6 @@
 #include "Gate.h"
 
-Gate::Gate(float x, float y, int switchId, float simonx, float simony, int simonState, bool rsCam, int type)
+Gate::Gate(float x, float y, int switchId, float simonx, float simony, int simonState, bool rsCam, int type, float camX, float camY)
 {
 	//this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GATE));
 	tag = EntityType::GATE;
@@ -12,6 +12,8 @@ Gate::Gate(float x, float y, int switchId, float simonx, float simony, int simon
 	newPlayerState = simonState;
 	directionCam = rsCam;
 	typePlayer = type;
+	camPosX = camX;
+	camPosY = camY;
 }
 
 Gate::~Gate() {}

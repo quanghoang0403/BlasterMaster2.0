@@ -10,6 +10,11 @@
 12	Resources/Scene//Map/area_2.jpg	255	0	255
 13	Resources/Scene//Map/area_3.jpg	255	0	255
 14	Resources/Scene//Map/area_4.png	255	0	255
+15	Resources/Scene//Map/area_5.png	255	0	255
+16	Resources/Scene//Map/area_6.png	255	0	255
+17	Resources/Scene//Map/area_7.png	255	0	255
+18	Resources/Scene//Map/area_8.png	255	0	255
+19	Resources/Scene//Map/area_9.jpg	255	0	255
 20	Resources/Scene//Map/fullmap2.png	255	0	255
 50	Resources/HealthBar.png	255	255	255
 60	Resources/item2.png		255	255	0
@@ -335,14 +340,14 @@ Resources/Scene/scene3.txt	545	277
 #Stage4
 Resources/Scene/scene4.txt	520	1023
 #Stage5
-Resources/Scene/scene5.txt	1575	490
+Resources/Scene/scene5.txt	516	1800
 #Stage6
-Resources/Scene/scene6.txt	1575	490
+Resources/Scene/scene6.txt	510	275
 #Stage7
-Resources/Scene/scene7.txt	1575	490
+Resources/Scene/scene7.txt	512	543
 #Stage8
-Resources/Scene/scene8.txt	1575	490
+Resources/Scene/scene8.txt	518	275
 #Stage9
-Resources/Scene/scene9.txt	1575	490
+Resources/Scene/scene9.txt	280	275
 #Stage10
 Resources/Scene/scene10.txt	2048	2048

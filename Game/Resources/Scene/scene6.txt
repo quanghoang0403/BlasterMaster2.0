@@ -1,0 +1,12 @@
+[OBJECTS]
+# type	x	y	ani_set_id	extra_settings per object type
+
+# BRICK
+1	0	192	22	510	48
+1	0	160	22	96	32
+1	160	160	22	64	32
+1	288	160	22	64	32
+1	416	160	22	94	32
+
+1	0	0	22	32	235
+1	480	0	22	32	235

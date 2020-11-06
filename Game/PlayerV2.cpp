@@ -56,7 +56,7 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 				vy = 0;
 			}
 		}
-		if (directionAutoRun == 2 && abs(y - oldY) <= 125)
+		else if (directionAutoRun == 2 && abs(y - oldY) <= 125)
 		{
 			if (directionY != 0)
 			{
@@ -68,10 +68,13 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		{
 			isAutoRun = false;
 		}
+		Entity::Update(dt);
+		x += dx;
+		y += dy;
+		return;
 	}
-	Entity::Update(dt);
 #pragma endregion
-
+	Entity::Update(dt);
 #pragma region Xử lý va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

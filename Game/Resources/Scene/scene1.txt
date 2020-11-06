@@ -167,8 +167,8 @@
 #cột ngang cuối
 1	0	224	22	1000	15
 #Gate
-#	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer
-2	979	120	2	100	50	0	1	2
+#	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
+2	979	120	2	40	1165	0	1	1	0	800
 #==========Enemies===============
 #Centipede
 10	250	125	10

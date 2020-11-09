@@ -85,4 +85,9 @@
 1	256	959	33	32	79
 #dọc cuối
 1	319	1087	33	32	79
-#Brick
+#Gate
+#	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
+#back
+2	0	1130	1	942	143	0	1	1	754	0
+#go
+2	465	120	3	95	141.5	0	1	1	0	0

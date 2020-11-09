@@ -168,7 +168,7 @@
 1	0	224	22	1000	15
 #Gate
 #	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
-2	979	120	2	40	1165	0	1	1	0	800
+2	979	120	2	65	1165	0	1	1	0	1031.372437
 #==========Enemies===============
 #Centipede
 10	250	125	10

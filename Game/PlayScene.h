@@ -46,6 +46,10 @@ public:
 	float nCamXBack;
 	float nCamYGo;
 	float nCamYBack;
+	float camMap1X;
+	float camMap1Y;
+	bool tempNeed; 
+	DWORD timeResetCam; 
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 protected:

@@ -345,7 +345,6 @@ Resources/Scene/scene5.txt	516	1800
 Resources/Scene/scene6.txt	510	275
 #Stage7
 Resources/Scene/scene7.txt	512	543
-#Stage8
 Resources/Scene/scene8.txt	518	275
 #Stage9
 Resources/Scene/scene9.txt	280	275

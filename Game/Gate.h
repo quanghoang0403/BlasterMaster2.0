@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 #define GATE_BBOX_WIDTH				48
-#define GATE_BBOX_HEIGHT			96
+#define GATE_BBOX_HEIGHT			66
 
 class Gate : public Entity
 {

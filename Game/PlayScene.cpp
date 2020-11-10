@@ -1,6 +1,7 @@
 #include "PlayScene.h"
 #include "Textures.h"
 #include "GateV2.h"
+
 #define MINI_SOPHIA	0
 #define JASON		1
 #define BIG_SOPHIA	2
@@ -19,20 +20,31 @@
 #define NUMBER_BULLET		3
 #define DEFLECT_X_BIGSOPHIA_TO_FIRE	7
 #define DEFLECT_Y_BIGSOPHIA_TO_FIRE	11
+#define SPEED_CAM_WORLD1	0.223
+#define SPEED_CAM_WORLD2	0.15
+#define POSY_CAM_WORLD2	1800
 
+#define INTRO	0
+#define PLAY	1
+#define END		-1
 
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = JASON;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
+	ChooseMap(STAGE_1);
 }
 
 void PlayScene::LoadBaseObjects()
 {
 	texturesFilePath = ToLPCWSTR("Resources/Scene/textures_playscene.txt");
 	LoadBaseTextures();
+	if (introScene == NULL)
+	{
+		introScene = new IntroScene(0,0);
+		DebugOut(L"[INFO] intro scene CREATED! \n");
+	}
 	if (player == NULL)
 	{
 		player = new Player(44, 143.5);
@@ -117,6 +129,14 @@ void PlayScene::LoadBaseObjects()
 	gameCamera = Camera::GetInstance();
 }
 
+void PlayScene::LoadIntroScene()
+{
+}
+
+void PlayScene::LoadEndScene()
+{
+}
+
 void PlayScene::ChooseMap(int whatMap)
 {
 	idStage = whatMap;
@@ -125,30 +145,6 @@ void PlayScene::ChooseMap(int whatMap)
 	sceneFilePath = listSceneFilePath[convertSimple - 1];
 	LoadSceneObjects();
 }
-
-//bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
-//{
-//	if (directionGo == 1)	//cua o ben phai
-//	{
-//		if (player->Getx() < DistanceXWant)
-//		{
-//			player->SetDirection(directionGo);
-//			player->SetState(SOPHIA_STATE_IDLE);
-//			return false;
-//		}
-//	}
-//	else
-//		if (directionGo == -1)	//cua o ben trai
-//		{
-//			if (player->Getx() > DistanceXWant)
-//			{
-//				player->SetDirection(directionGo);
-//				player->SetState(SOPHIA_STATE_IDLE);
-//				return false;
-//			}
-//		}
-//	return true;
-//}
 
 void PlayScene::PlayerGotGate()
 {
@@ -169,8 +165,8 @@ void PlayScene::PlayerGotGate()
 				camMap1Y = gate->camPosY;
 				Unload();
 
-				DebugOut(L"toa do cam x %f \n ", gameCamera->GetCamx());
-				DebugOut(L"toa do cam y %f \n ", gameCamera->GetCamy());
+				//DebugOut(L"toa do cam x %f \n ", gameCamera->GetCamx());
+				//DebugOut(L"toa do cam y %f \n ", gameCamera->GetCamy());
 				ChooseMap(tempMap);
 
 				player->SetPosition(tempx, tempy);
@@ -375,10 +371,10 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					if (playScene->listBigBullets[i]->damage <4)
 						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 					else
-						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-					DebugOut(L"toa do y %d \n", playScene->listBigBullets[i]->damage);
-					//DebugOut(L"toa do y %f, y %f", listBullets[i]->y);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 +  directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+					//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
+					//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
 					break;
 				}
 			}
@@ -978,6 +974,7 @@ Item* PlayScene::RandomItem(float x, float y)
 	else if (60< random && random <= 100)
 		return new PowerUp(x, y);
 }
+
 Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreater)
 {
 	if (createrType == ENEMY)
@@ -991,259 +988,288 @@ void PlayScene::Update(DWORD dt)
 	float cx, cy;
 	mapWidth = listWidth[idStage / STAGE_1 - 1];
 	mapHeight = listHeight[idStage / STAGE_1 - 1];
-	if (typeSophia == JASON)
+	if (typeScene == -1)
 	{
-		player->GetPosition(cx, cy);
-		if (tempNeed)
+		if (posX < (509-270))
 		{
-			//timeResetCam += dt;
-			gameCamera->SetCamPos(camMap1X, camMap1Y);
-			posY = camMap1Y;
-			//if (timeResetCam > 1000)
-			tempNeed = 0;
+			posX += 0.05 * dt;
 		}
-		else
-		{
-			if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-				cx = mapWidth - SCREEN_WIDTH;
-			else
-			{
-				if (player->Getx() < SCREEN_WIDTH / 2)
-					cx = 0;
-				else
-					cx -= SCREEN_WIDTH / 2;
-			}
-
-			if (cy + SCREEN_HEIGHT >= mapHeight)
-			{
-
-				cy = mapHeight - SCREEN_HEIGHT;
-				posY = cy;
-			}
-			else
-			{
-				if (player->Gety() < SCREEN_HEIGHT / 3)
-				{
-					posY = 0;
-				}
-				else
-				{
-					DebugOut(L"cy - posY %f \n", cy - posY);
-					if ((cy - posY) < (SCREEN_HEIGHT / 4))
-					{
-						posY -= 0.223 * dt;
-					}
-					if ((cy - posY) > (SCREEN_HEIGHT / 2))
-					{
-						posY += 0.223 * dt;
-					}
-				}
-			}
-			DebugOut(L"toa do cam x %f \n ", cx);
-			DebugOut(L"toa do cam y %f \n ", posY);
-			gameCamera->SetCamPos(cx, posY);
-		}
-
-	}
-	else if (typeSophia == MINI_SOPHIA)
-	{
-		sophia->GetPosition(cx, cy);
-		if (tempNeed)
-		{
-			//timeResetCam += dt;
-			gameCamera->SetCamPos(camMap1X, camMap1Y);
-			posY = camMap1Y;
-			//if (timeResetCam > 1000)
-			tempNeed = 0;
-		}
-		else
-		{
-			if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
-				cx = mapWidth - SCREEN_WIDTH;
-			else
-			{
-				if (sophia->Getx() < SCREEN_WIDTH / 2)
-					cx = 0;
-				else
-					cx -= SCREEN_WIDTH / 2;
-			}
-
-			if (posY + SCREEN_HEIGHT >= mapHeight)
-			{
-
-				cy = mapHeight - SCREEN_HEIGHT;
-				posY = cy;
-				DebugOut(L"trong hop tren = %d \n", mapHeight);
-				//DebugOut(L"screen height= %d \n", SCREEN_HEIGHT);
-			}
-			else
-			{
-				if (sophia->Gety() < SCREEN_HEIGHT / 3)
-				{
-					posY = 0;
-					DebugOut(L"trong hop giua = %d \n", mapHeight);
-				}
-				else
-				{
-					DebugOut(L"cy - posY %f \n", cy - posY);
-					if ((cy - posY) < (SCREEN_HEIGHT / 4))
-					{
-						posY -= 0.223 * dt;
-					}
-					if ((cy - posY) > (SCREEN_HEIGHT / 2))
-					{
-						posY += 0.223 * dt;
-					}
-					DebugOut(L"trong hop duoi = %d \n", mapHeight);
-				}
-			}
-			//DebugOut(L"toa do cam x %f \n ", cx);
-			//DebugOut(L"toa do cam y %f \n ", posY);
-			gameCamera->SetCamPos(cx, posY);
-		}
+		gameCamera->SetCamPos(posX, 0);
 	}
 	else
 	{
-		//DebugOut(L"xxxxx %d \n", playerV2->direction);
-		if (directMoveCam == -1)
+		if (typeSophia == JASON)
 		{
-			posX = 0;
-			posY = 1800;
-			directMoveCam = 0;
-		}
-		PlayerGotGateV2();
-		if (directMoveCam == 1 || directMoveCam == 2)
-		{
-			if (playerV2->direction > 0)
+			player->GetPosition(cx, cy);
+			if (tempNeed)
 			{
-				if (posX < nCamXGo)
-					posX += 0.15 * dt;
-				else
-				{
-					posX = nCamXGo + 1;
-					directMoveCam = 0;
-				}
+				//timeResetCam += dt;
+				gameCamera->SetCamPos(camMap1X, camMap1Y);
+				posY = camMap1Y;
+				//if (timeResetCam > 1000)
+				tempNeed = 0;
 			}
-			else if (playerV2->direction <0)
-			{ 
-				if (posX > nCamXBack)
-					posX -= 0.15 * dt;
-				else
-				{
-					posX = nCamXBack - 1;
-					directMoveCam = 0;
-				}
-			}
-			else if (playerV2->directionY < 0)
+			else
 			{
-				if (posY > nCamYGo)
-					posY -= 0.15 * dt;
+				if (player->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+					cx = mapWidth - SCREEN_WIDTH;
 				else
 				{
-					posY = nCamYGo - 1;
-					directMoveCam = 0;
+					if (player->Getx() < SCREEN_WIDTH / 2)
+						cx = 0;
+					else
+						cx -= SCREEN_WIDTH / 2;
 				}
-			}
-			else if (playerV2->directionY > 0)
-			{
-				if (posY < nCamYBack)
-					posY += 0.15 * dt;
-				else
-				{
-					posY = nCamYBack + 1;
-					directMoveCam = 0;
-				}
-			}
-		}
-		//DebugOut(L"cam oldX, %f \n", oldPosX);
-		//DebugOut(L"cam X, %f \n", posX);
-		gameCamera->SetCamPos(posX, posY);
-	}
 
-	if (typeSophia==JASON)
-		gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
-	if (typeSophia == MINI_SOPHIA)
-		gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
-	//if (typeSophia == BIG_SOPHIA)
-	//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
+				if (cy + SCREEN_HEIGHT >= mapHeight)
+				{
+
+					cy = mapHeight - SCREEN_HEIGHT;
+					posY = cy;
+				}
+				else
+				{
+					if (player->Gety() < SCREEN_HEIGHT / 3)
+					{
+						posY = 0;
+					}
+					else
+					{
+						//DebugOut(L"cy - posY %f \n", cy - posY);
+						if ((cy - posY) < (SCREEN_HEIGHT / 4))
+						{
+							posY -= SPEED_CAM_WORLD1 * dt;
+						}
+						if ((cy - posY) > (SCREEN_HEIGHT / 2))
+						{
+							posY += SPEED_CAM_WORLD1 * dt;
+						}
+					}
+				}
+				//DebugOut(L"toa do cam x %f \n ", cx);
+				//DebugOut(L"toa do cam y %f \n ", posY);
+				gameCamera->SetCamPos(cx, posY);
+			}
+
+		}
+		else if (typeSophia == MINI_SOPHIA)
+		{
+			sophia->GetPosition(cx, cy);
+			if (tempNeed)
+			{
+				gameCamera->SetCamPos(camMap1X, camMap1Y);
+				posY = camMap1Y;
+				tempNeed = 0;
+			}
+			else
+			{
+				if (sophia->Getx() + SCREEN_WIDTH / 2 >= mapWidth)
+					cx = mapWidth - SCREEN_WIDTH;
+				else
+				{
+					if (sophia->Getx() < SCREEN_WIDTH / 2)
+						cx = 0;
+					else
+						cx -= SCREEN_WIDTH / 2;
+				}
+
+				if (posY + SCREEN_HEIGHT >= mapHeight)
+				{
+
+					cy = mapHeight - SCREEN_HEIGHT;
+					posY = cy;
+					//DebugOut(L"trong hop tren = %d \n", mapHeight);
+					//DebugOut(L"screen height= %d \n", SCREEN_HEIGHT);
+				}
+				else
+				{
+					if (sophia->Gety() < SCREEN_HEIGHT / 3)
+					{
+						posY = 0;
+						//DebugOut(L"trong hop giua = %d \n", mapHeight);
+					}
+					else
+					{
+						//DebugOut(L"cy - posY %f \n", cy - posY);
+						if ((cy - posY) < (SCREEN_HEIGHT / 4))
+						{
+							posY -= SPEED_CAM_WORLD1 * dt;
+						}
+						if ((cy - posY) > (SCREEN_HEIGHT / 2))
+						{
+							posY += SPEED_CAM_WORLD1 * dt;
+						}
+						//DebugOut(L"trong hop duoi = %d \n", mapHeight);
+					}
+				}
+				//DebugOut(L"toa do cam x %f \n ", cx);
+				//DebugOut(L"toa do cam y %f \n ", posY);
+				gameCamera->SetCamPos(cx, posY);
+			}
+		}
+		else
+		{
+			//DebugOut(L"xxxxx %d \n", playerV2->direction);
+			if (directMoveCam == -1)
+			{
+				posX = 0;
+				posY = POSY_CAM_WORLD2;
+				directMoveCam = 0;
+			}
+			PlayerGotGateV2();
+			if (directMoveCam == 1 || directMoveCam == 2)
+			{
+				if (playerV2->direction > 0)
+				{
+					if (posX < nCamXGo)
+						posX += SPEED_CAM_WORLD2 * dt;
+					else
+					{
+						posX = nCamXGo + 1;
+						directMoveCam = 0;
+					}
+				}
+				else if (playerV2->direction < 0)
+				{
+					if (posX > nCamXBack)
+						posX -= SPEED_CAM_WORLD2 * dt;
+					else
+					{
+						posX = nCamXBack - 1;
+						directMoveCam = 0;
+					}
+				}
+				else if (playerV2->directionY < 0)
+				{
+					if (posY > nCamYGo)
+						posY -= SPEED_CAM_WORLD2 * dt;
+					else
+					{
+						posY = nCamYGo - 1;
+						directMoveCam = 0;
+					}
+				}
+				else if (playerV2->directionY > 0)
+				{
+					if (posY < nCamYBack)
+						posY += SPEED_CAM_WORLD2 * dt;
+					else
+					{
+						posY = nCamYBack + 1;
+						directMoveCam = 0;
+					}
+				}
+			}
+			//DebugOut(L"cam oldX, %f \n", oldPosX);
+			//DebugOut(L"cam X, %f \n", posX);
+			gameCamera->SetCamPos(posX, posY);
+		}
+
+		if (typeSophia == JASON)
+			gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+		if (typeSophia == MINI_SOPHIA)
+			gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
+		//if (typeSophia == BIG_SOPHIA)
+		//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
-	if (listItems.size() > 0)
-		PlayerCollideItem();
-	PlayerGotGate();
-	PlayerTouchEnemy();
+		if (listItems.size() > 0)
+			PlayerCollideItem();
+		PlayerGotGate();
+		PlayerTouchEnemy();
 
 #pragma region Objects Updates
-	vector<LPGAMEENTITY> coObjects;
-	for (int i = 0; i < listObjects.size(); i++)
-		coObjects.push_back(listObjects[i]);
-	for (int i = 0; i < listEnemies.size(); i++)
-		coObjects.push_back(listEnemies[i]);
-	if (typeSophia == BIG_SOPHIA)
-		playerV2->Update(dt, &listObjects);
-	else
-	{
-		if (typeSophia == MINI_SOPHIA)
-			sophia->Update(dt, &listObjects);
+		vector<LPGAMEENTITY> coObjects;
+		//introScene->Update(dt, &listObjects);
+		if (typeScene == 0)
+		{
+			return;
+		}
+		for (int i = 0; i < listObjects.size(); i++)
+			coObjects.push_back(listObjects[i]);
+		for (int i = 0; i < listEnemies.size(); i++)
+			coObjects.push_back(listEnemies[i]);
+		if (typeSophia == BIG_SOPHIA)
+			playerV2->Update(dt, &listObjects);
 		else
-			player->Update(dt, &listObjects);
-	}
-	supBullet->Update(dt, &listObjects);
-	for (int i = 0; i < listBullets.size(); i++)
-		listBullets[i]->Update(dt, &coObjects);
-	for (int i = 0; i < listBigBullets.size(); i++)
-		listBigBullets[i]->Update(dt, &coObjects);
-	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Update(dt, &listObjects);
-	for (int i = 0; i < listItems.size(); i++)
-		listItems[i]->Update(dt, &listObjects);
-	for (int i = 0; i < listEnemies.size(); i++)
-		listEnemies[i]->Update(dt, &listObjects);
-	if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
-	{
-		Unload();
-		ChooseMap(STAGE_1);
-		typeSophia = JASON;
-		player->SetPosition(30, 60);
-		player->SetHealth(MAX_HEALTH);
-		player->isDoneDeath = false;
-		player->isDeath = false;
+		{
+			if (typeSophia == MINI_SOPHIA)
+				sophia->Update(dt, &listObjects);
+			else
+				player->Update(dt, &listObjects);
+		}
+		supBullet->Update(dt, &listObjects);
+		for (int i = 0; i < listBullets.size(); i++)
+			listBullets[i]->Update(dt, &coObjects);
+		for (int i = 0; i < listBigBullets.size(); i++)
+			listBigBullets[i]->Update(dt, &coObjects);
+		for (int i = 0; i < listObjects.size(); i++)
+			listObjects[i]->Update(dt, &listObjects);
+		for (int i = 0; i < listItems.size(); i++)
+			listItems[i]->Update(dt, &listObjects);
+		for (int i = 0; i < listEnemies.size(); i++)
+			listEnemies[i]->Update(dt, &listObjects);
+		if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
+		{
+			Unload();
+			ChooseMap(STAGE_1);
+			typeSophia = JASON;
+			player->SetPosition(30, 60);
+			player->SetHealth(MAX_HEALTH);
+			player->isDoneDeath = false;
+			player->isDeath = false;
 
-		playerV2->SetPosition(30, 60);
-		playerV2->SetHealth(MAX_HEALTH);
-		playerV2->isDoneDeath = false;
-		playerV2->isDeath = false;
+			playerV2->SetPosition(30, 60);
+			playerV2->SetHealth(MAX_HEALTH);
+			playerV2->isDoneDeath = false;
+			playerV2->isDeath = false;
 
-		sophia->SetPosition(30, 60);
-		sophia->SetHealth(MAX_HEALTH);
-		sophia->isDoneDeath = false;
-		sophia->isDeath = false;
+			sophia->SetPosition(30, 60);
+			sophia->SetHealth(MAX_HEALTH);
+			sophia->isDoneDeath = false;
+			sophia->isDeath = false;
+		}
 	}
 #pragma endregion
 }
 
 void PlayScene::Render()
 {
-	LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
-	Game::GetInstance()->OldDraw(0,0, maptextures,0,0,mapWidth, mapHeight);
-	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Render();
-	for (int i = 0; i < listItems.size(); i++)
-		listItems[i]->Render();
-	for (int i = 0; i < listBigBullets.size(); i++)
-		listBigBullets[i]->Render();
-	for (int i = 0; i < listGates.size(); i++)
-		listGates[i]->Render();
-	if (typeSophia == BIG_SOPHIA)
-		playerV2->Render();
-	else 
-		player->Render();
-	if (typeSophia == MINI_SOPHIA)
-		sophia->Render();
-	supBullet->Render();
-	for (int i = 0; i < listBullets.size(); i++)
-		listBullets[i]->Render();
-	for (int i = 0; i < listEnemies.size(); i++)
-		listEnemies[i]->Render();
-	gameHUD->Render(player);
+	if (typeScene == INTRO)
+	{
+		introScene->SetType(0);
+		introScene->Render();
+		if (introScene->animationSet->at(0)->GetFrame() >= 120)
+			typeScene = 1;
+	}
+	else if (typeScene == END)
+	{
+		introScene->SetType(1);
+		introScene->Render();
+	}
+	else
+	{
+		LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
+		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
+		for (int i = 0; i < listObjects.size(); i++)
+			listObjects[i]->Render();
+		for (int i = 0; i < listItems.size(); i++)
+			listItems[i]->Render();
+		for (int i = 0; i < listBigBullets.size(); i++)
+			listBigBullets[i]->Render();
+		for (int i = 0; i < listGates.size(); i++)
+			listGates[i]->Render();
+		if (typeSophia == BIG_SOPHIA)
+			playerV2->Render();
+		else
+			player->Render();
+		if (typeSophia == MINI_SOPHIA)
+			sophia->Render();
+		supBullet->Render();
+		for (int i = 0; i < listBullets.size(); i++)
+			listBullets[i]->Render();
+		for (int i = 0; i < listEnemies.size(); i++)
+			listEnemies[i]->Render();
+		gameHUD->Render(player);
+	}
 }
 

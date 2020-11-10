@@ -31,12 +31,14 @@
 #include <fstream>
 
 #include"Entity.h"
+#include "IntroScene.h"
 
 using namespace std;
 
 class PlayScene : public Scene
 {
 public:
+	int typeScene = -1;
 	float oldPosX;
 	float oldPosY;
 	int directMoveCam = -1;
@@ -65,6 +67,7 @@ protected:
 	Bullet* bigBullet1;
 	Bullet* bigBullet2;
 	Bullet* bigBullet3;
+	IntroScene* introScene;
 #pragma endregion
 	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
@@ -99,7 +102,6 @@ protected:
 
 public:
 	PlayScene();
-
 	void LoadBaseObjects();
 	void LoadBaseTextures();
 	void ChooseMap(int whatStage);
@@ -113,7 +115,8 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
+	void LoadIntroScene();
+	void LoadEndScene();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

@@ -2,6 +2,7 @@
 [TEXTURES]
 40	Resources/Enemy/enemies.png	255	0	255
 50	Resources/item.png	255	255	0
+60	Resources/item2.png	255	255	0
 # id	left	top	right	bottom	texture_id
 
 [SPRITES]
@@ -47,6 +48,15 @@
 7009	145	478	163	495	40
 
 
+#FLOATERS
+#Fly
+8000	80	406	98	421	40
+#Shot
+8001	100	405	118	421	40
+
+#BulletFloater
+9000	359	161	365	167	60
+
 #ENEMY DIE
 90000	176	94	183	102	50
 90001	192	91	208	104	50
@@ -82,6 +92,14 @@
 #Attack Top Bottom
 705	7009	100
 
+#FLOATERS
+#Fly
+800	8000	100
+#Shot
+801	8001	100
+
+#BULLETFLOATERS
+900	9000	1000
 
 #ENEMY DIE
 9000	90000	50	90001	50	90002	50	90002	50
@@ -100,7 +118,11 @@
 12	600	9000
 #DOMES
 13	700	701	702	703	704	705	9000
-	
+#FLOATERS
+14	800	801
+15	800	801
+16	800	801
+
 [OBJECTS]
 # type	x	y	extra_settings per object type	width	height
 # type
@@ -179,4 +201,9 @@
 #12	100	100	12	
 #Domes
 #13	200	125	13
+#FLOATER
+14	200	100	14
+#15	150	100	15
+#16	130	100	16
+
 

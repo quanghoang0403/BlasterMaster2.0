@@ -22,6 +22,7 @@
 #include "Golem.h"
 #include "Gunner.h"
 #include "Domes.h"
+#include "Floaters.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

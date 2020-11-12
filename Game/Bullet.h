@@ -30,7 +30,19 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 
-	void Fire(int type, int direct, int isGunFlip, float posX, float posY) { typeBullet = type; direction = direct; isTargetTop = isGunFlip; x = posX + DISTANCE_TO_GUN_WIDTH; y = posY + DISTANCE_TO_GUN_HEIGHT; alpha = 255; isDone = false; isCollisionBrick = 0; isCollisionEnemies = 0; }
+	void Fire(int type, 
+		int direct, 
+		int isGunFlip, 
+		float posX, 
+		float posY) { 
+		typeBullet = type; 
+		direction = direct; 
+		isTargetTop = isGunFlip; 
+		x = posX + DISTANCE_TO_GUN_WIDTH; 
+		y = posY + DISTANCE_TO_GUN_HEIGHT; 
+		alpha = 255; isDone = false; 
+		isCollisionBrick = 0; 
+		isCollisionEnemies = 0; }
 	void BigSophiaFire(int direct, int directY, float posX, float posY, int dame) {
 		direction = direct; 
 		directionY = directY;

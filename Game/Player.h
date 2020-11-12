@@ -110,7 +110,7 @@ public:
 	bool IsImmortaling() { return isImmortaling; }
 	void SetImmortaling(bool immo) { isImmortaling = immo; }
 	void StartImmortalingTimer() { immortalTimer->Start(); }
-
+	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void SetDirection(int d) { direction = d; }
 	void SetState(int state);
 	void SetPressSpace(bool isPress) { isPressJump = isPress; }
@@ -124,7 +124,9 @@ public:
 	float Getvy() { return vy; }
 	void Reset();
 	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerx, float& playery) { direct = direction; isTargetTop = isGunFlipping; playerx = x; playery = y; }
-	
+	int GetX() { return x; }
+	int GetY() { return y; }
+
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 	void SetInjured(int dame);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

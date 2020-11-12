@@ -72,8 +72,11 @@ enum EnemyType
 	CENTIPEDE = 1,
 	GOLEM = 2,
 	DOMES = 3,
-	GUNNER = 4
+	GUNNER = 4,
+	FLOATERS = 5
 };
+
+
 enum EntityType
 {
 	//For Special Case
@@ -162,7 +165,14 @@ enum EntityType
 
 	//Ex
 	ITEMPOKEBALL = -9,
-	POKEBALL = -10
+	POKEBALL = -10,
+
+	//weaponenemy
+	BULLETNENEMY,
+	BULLETFLOATERS = 120,
+
+
+	Null = -1
 };
 
 class define

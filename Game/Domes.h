@@ -9,7 +9,7 @@
 #define DOMES_ATTACK_SPEED						0.3f
 
 #define DOMES_BBOX_WIDTH						18
-#define DOMES_BBOX_HEIGHT						15
+#define DOMES_BBOX_HEIGHT						18
 #define DOMES_BBOX_HEIGHT_DIE					9
 
 #define DOMES_STATE_WALKING_TOP_BOTTOM_RIGHT	100
@@ -46,7 +46,7 @@ class Domes : public Enemy
 	int directionclock;
 	bool firstFollow;
 	bool actived;
-	LPGAMEENTITY target;
+	
 	Timer* delayAttack = new Timer(DOMES_TIME_DELAYATTACK);
 	Timer* startAttack = new Timer(DOMES_TIME_ATTACK);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

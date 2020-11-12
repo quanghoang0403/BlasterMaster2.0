@@ -97,6 +97,15 @@
     <ClCompile Include="BigSophiaBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Floaters.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEnemy.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFloaters.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -195,6 +204,15 @@
     <ClInclude Include="BigSophiaBullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Floaters.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEnemy.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFloaters.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -232,6 +250,9 @@
     </Filter>
     <Filter Include="Header Files\Object\Obstacle">
       <UniqueIdentifier>{65c26205-a79e-4e0f-a889-81d257288753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Enemy\BulletEnemy">
+      <UniqueIdentifier>{8e4ca3d9-e09e-4217-89d1-70e66554f551}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

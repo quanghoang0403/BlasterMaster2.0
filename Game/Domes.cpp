@@ -34,12 +34,10 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 #pragma region Xử lý Attack
 	StartAttack();
-	
 #pragma endregion
 
 #pragma region Xử lý State
 	swapgravity();
-	
 #pragma endregion
 	
 #pragma region Xử lý tiền va chạm
@@ -80,14 +78,9 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 #pragma region Xử lý Active
 		Activation();
-
-	
-
-
 #pragma endregion
 				
 	}
-		
 #pragma endregion
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -200,6 +193,7 @@ void Domes::AIClimdWall(vector<LPCOLLISIONEVENT> coEventsResult, float nx, float
 			{
 				this->dgravity = 2;
 				vx = 0;
+				ny = 0;
 			}
 		}
 		else if (nx == 0 && ny == -1)
@@ -342,7 +336,7 @@ void Domes::AIClimdWall(vector<LPCOLLISIONEVENT> coEventsResult, float nx, float
 			directionclock = random_directionclock();
 			isDamaged = false;
 		}
-		else if (ny == -1)
+		else if (ny == -1 && vx > 0)
 		{
 			this->dgravity = 3;
 			vy = 0;
@@ -447,7 +441,7 @@ void Domes::StartAttack()
 				break;
 			}
 			
-			//DebugOut(L"\ntime:  %f", delayAttack->IsTimeUp());
+			
 		}
 	}
 }

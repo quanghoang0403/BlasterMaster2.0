@@ -1,22 +1,25 @@
 #include "PlayScene.h"
 #include "Textures.h"
-#define MINI_SOPHIA	0
-#define JASON		1
-#define BIG_SOPHIA	2
+#define MINI_SOPHIA						0
+#define JASON							1
+#define BIG_SOPHIA						2
 
-#define OBJECT_TYPE_BRICK		1
-#define OBJECT_TYPE_GATE		2
+#define OBJECT_TYPE_BRICK				1
+#define OBJECT_TYPE_GATE				2
 
-#define OBJECT_TYPE_CENTIPEDE	10
-#define OBJECT_TYPE_GOLEM		11
-#define OBJECT_TYPE_GUNNER		12
-#define OBJECT_TYPE_DOMES		13
+#define OBJECT_TYPE_CENTIPEDE			10
+#define OBJECT_TYPE_GOLEM				11
+#define OBJECT_TYPE_GUNNER				12
+#define OBJECT_TYPE_DOMES				13
+#define OBJECT_TYPE_FLOATERS			14
+#define OBJECT_TYPE_FLOATERS2			15
+#define OBJECT_TYPE_FLOATERS3			16
 
-#define DX_GET_OUT_CAR		7
-#define HUD_Y				20
-#define NUMBER_BULLET		3
-#define DEFLECT_X_BIGSOPHIA_TO_FIRE	7
-#define DEFLECT_Y_BIGSOPHIA_TO_FIRE	11
+#define DX_GET_OUT_CAR					7
+#define HUD_Y							20
+#define NUMBER_BULLET					3
+#define DEFLECT_X_BIGSOPHIA_TO_FIRE		7
+#define DEFLECT_Y_BIGSOPHIA_TO_FIRE		11
 
 
 PlayScene::PlayScene() : Scene()
@@ -756,6 +759,42 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		listEnemies.push_back(obj);
 		DebugOut(L"[test] add domes !\n");
+		break;
+	}
+	case OBJECT_TYPE_FLOATERS:
+	{
+		obj = new Floaters(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add floaters !\n");
+		break;
+	}
+	case OBJECT_TYPE_FLOATERS2:
+	{
+		obj = new Floaters(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add floaters !\n");
+		break;
+	}
+	case OBJECT_TYPE_FLOATERS3:
+	{
+		obj = new Floaters(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add floaters !\n");
 		break;
 	}
 	default:

@@ -1,0 +1,31 @@
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
+# 5 = DarkenBat, 6 = Knight, 7 = BreakableBrick, 8 = Candle, 9 = Moving Flatform
+#viền trái
+1	0	0	22	64	170
+#viền phải
+1	512	0	22	31	170
+#viền trên
+1	0	50	22	530	30
+#viền dưới
+1	0	159	22	567	34
+#cột 1
+1	64	80	22	17	30
+#cột 2
+1	128	80	22	17	30
+#cột 3
+1	192	80	22	17	30
+#cột 4
+1	256	80	22	17	30
+#cột 5
+1	320	80	22	17	30
+#cột 6
+1	384	80	22	17	30
+#cột 7
+1	448	80	22	17	30
+#Gate
+#back
+2	30	130	2	420	142	0	1	1	257	7
+#go
+2	495	128	4	66	879	0	1	1	0	745

@@ -4,7 +4,7 @@
 
 #define BULLET_SPEED								0.25f
 #define SPEED_SUPER_BULLET							0.625f
-#define DEGREE_PER_DT								40
+#define DEGREE_PER_DT								60
 #define BIG_SOPHIA_BULLET_BBOX_WIDTH				8
 #define BIG_SOPHIA_BULLET_BBOX_HEIGHT				10
 
@@ -27,7 +27,6 @@ public:
 	BigSophiaBullet();
 	~BigSophiaBullet();
 
-	int totalTime;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	void Render();

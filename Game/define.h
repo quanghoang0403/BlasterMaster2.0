@@ -19,10 +19,10 @@
 #define WIN_NAME L"Blaster Master"
 #define WIN_TITLE L"Blaster Master"
 
-#define BGColor D3DCOLOR_XRGB(255,255,200)
-#define BGColorCrossing D3DCOLOR_XRGB(255,255,200)
-#define SCREEN_WIDTH 300	//530
-#define SCREEN_HEIGHT 280	//480
+#define BGColor D3DCOLOR_XRGB(0,0,0)
+#define BGColorCrossing D3DCOLOR_XRGB(0,0,0)
+#define SCREEN_WIDTH 270	//530
+#define SCREEN_HEIGHT 275	//480
 #define BOTTOM_SCREEN 450
 
 #define MaxFrameRate 100	//default Frame Rate is the truth
@@ -63,7 +63,6 @@
 #define ANIMATION_SET_ITEM_GUNUP			13
 #define ANIMATION_SET_BRICK					20
 #define ANIMATION_SET_GATE					26
-
 
 //Nen define thanh nhieu lop type
 //Vd Zombie thuoc EntityType, EnemyType
@@ -111,6 +110,7 @@ enum EntityType
 	STAIRS = 25,
 	GATE = 26,
 	BUSH = 27,
+	GATEV2 = 28,
 
 	//Item Zone 40-70
 	POWERUP = 40,

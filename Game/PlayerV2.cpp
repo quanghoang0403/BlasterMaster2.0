@@ -39,7 +39,6 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		vx = 0;
 		vy = 0;
 	}
-	Entity::Update(dt);
 
 #pragma region Timer
 	if (isImmortaling && immortalTimer->IsTimeUp())
@@ -47,8 +46,35 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		isImmortaling = false;
 		immortalTimer->Reset();
 	}
+	if (isAutoRun)
+	{
+		if (directionAutoRun == 1 && abs(x - oldX) <= 82)
+		{
+			if (direction != 0)
+			{
+				vx = 0.05*direction;
+				vy = 0;
+			}
+		}
+		else if (directionAutoRun == 2 && abs(y - oldY) <= 125)
+		{
+			if (directionY != 0)
+			{
+				vy = 0.07 * directionY;
+				vx = 0;
+			}
+		}
+		else
+		{
+			isAutoRun = false;
+		}
+		Entity::Update(dt);
+		x += dx;
+		y += dy;
+		return;
+	}
 #pragma endregion
-
+	Entity::Update(dt);
 #pragma region Xử lý va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -195,6 +221,16 @@ void PlayerV2::SetState(int state)
 		vx = 0;
 		vy = 0;
 		break;
+	}
+}
+void PlayerV2::AutoRun(int direct)
+{
+	if (!isAutoRun)
+	{
+		isAutoRun = true;
+		oldX = x;
+		oldY = y;
+		directionAutoRun = direct;
 	}
 }
 void PlayerV2::GetBoundingBox(float& left, float& top, float& right, float& bottom)

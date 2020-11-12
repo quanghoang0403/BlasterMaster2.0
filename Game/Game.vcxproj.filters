@@ -79,9 +79,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Header Files\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
     <ClCompile Include="Gate.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>

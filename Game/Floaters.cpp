@@ -8,6 +8,8 @@ void Floaters::GetBoundingBox(float& left, float& top, float& right, float& bott
 	bottom = y + FLOATERS_BBOX_HEIGHT;
 }
 
+
+
 Floaters::Floaters(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = FLOATERS;
@@ -27,13 +29,13 @@ Floaters::Floaters(float x, float y, LPGAMEENTITY t)
 
 void Floaters::Attack()
 {
-	bullet.push_back(new BulletFloaters(x, y, target->x, target->y));
+	RECT player = target->GetBBox();
+	bullet.push_back(new BulletFloaters(x, y, x + FLOATERS_BBOX_WIDTH, y + FLOATERS_BBOX_HEIGHT, player.left, player.top, player.right, player.bottom));
 	isDamaged = 1;
 }
 
 void Floaters::randomSpeed()
 {
-	
 	random_device rm;
 	mt19937 t(rm());
 	uniform_real_distribution<float> rand(0, FLOATERS_SPEED_MAXVY);
@@ -46,7 +48,8 @@ void Floaters::randomSpeed()
 		else
 			res = -rand(t);
 	}
-	for (int i = 0; i < randj(t); ++i) {
+	for (int i = 0; i < randj(t); ++i)
+	{
 		if (i % 2 == 0)
 			vxR = FLOATERS_SPEED_CONSTVX;
 		else
@@ -83,8 +86,10 @@ void Floaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Update(dt, coObjects);
-		//DebugOut(L"\nsadad:  %d", bullet.size());
+		if (bullet.at(i)->IsFinish())
+			bullet.erase(bullet.begin() + i);
 	}
+	
 	
 
 #pragma region Xử lý tiền va chạm

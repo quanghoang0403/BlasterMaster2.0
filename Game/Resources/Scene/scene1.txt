@@ -54,13 +54,26 @@
 #Shot
 8001	100	405	118	421	40
 
-#BulletFloater
-9000	359	161	365	167	60
+#INSECT
+#Fly Right
+9000	128	529	136	547	40
+9001	148	532	156	547	40
+
+
+
 
 #ENEMY DIE
 90000	176	94	183	102	50
 90001	192	91	208	104	50
 90002	213	90	229	106	50
+
+
+# =============== BULLET ENEMY ==============
+
+#BulletFloater
+100000	359	161	365	167	60
+
+
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 
@@ -98,11 +111,18 @@
 #Shot
 801	8001	100
 
-#BULLETFLOATERS
-900	9000	1000
+#INSECT
+#Fly Right
+900	9000	100	9001	100
 
 #ENEMY DIE
 9000	90000	50	90001	50	90002	50	90002	50
+
+# =============== BULLET ENEMY ==============
+#BULLETFLOATERS
+10000	100000	1000
+
+
 
 # id	ani1	ani2	ani3
 # id tuan theo define
@@ -119,9 +139,10 @@
 #DOMES
 13	700	701	702	703	704	705	9000
 #FLOATERS
-14	800	801
-15	800	801
-16	800	801
+14	800	801	9000
+#INSECT
+15	900	9000
+
 
 [OBJECTS]
 # type	x	y	extra_settings per object type	width	height
@@ -203,7 +224,8 @@
 #13	200	125	13
 #FLOATER
 14	200	100	14
-#15	150	100	15
-#16	130	100	16
+#INSECT
+#15	200	100	15
+
 
 

@@ -16,8 +16,8 @@
 #define OBJECT_TYPE_GUNNER				12
 #define OBJECT_TYPE_DOMES				13
 #define OBJECT_TYPE_FLOATERS			14
-#define OBJECT_TYPE_FLOATERS2			15
-#define OBJECT_TYPE_FLOATERS3			16
+#define OBJECT_TYPE_INSECT				15
+
 
 #define DX_GET_OUT_CAR		7
 #define HUD_Y				20
@@ -828,28 +828,16 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add floaters !\n");
 		break;
 	}
-	case OBJECT_TYPE_FLOATERS2:
+	case OBJECT_TYPE_INSECT:
 	{
-		obj = new Floaters(x, y, player);
+		obj = new Insect(x, y, player);
 
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
 		listEnemies.push_back(obj);
-		DebugOut(L"[test] add floaters !\n");
-		break;
-	}
-	case OBJECT_TYPE_FLOATERS3:
-	{
-		obj = new Floaters(x, y, player);
-
-		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
-		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add floaters !\n");
+		DebugOut(L"[test] add Insect !\n");
 		break;
 	}
 	default:

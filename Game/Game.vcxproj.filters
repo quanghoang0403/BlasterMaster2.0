@@ -103,6 +103,7 @@
     <ClCompile Include="IntroScene.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="BrickBreak.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -207,6 +208,7 @@
     <ClInclude Include="IntroScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="BrickBreak.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

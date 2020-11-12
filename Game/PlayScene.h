@@ -40,7 +40,7 @@ using namespace std;
 class PlayScene : public Scene
 {
 public:
-	int typeScene = -1;
+	int typeScene = 1;
 	float oldPosX;
 	float oldPosY;
 	int directMoveCam = -1;

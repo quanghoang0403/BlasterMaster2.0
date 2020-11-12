@@ -37,7 +37,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = JASON;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*8);
 }
 
 void PlayScene::LoadBaseObjects()

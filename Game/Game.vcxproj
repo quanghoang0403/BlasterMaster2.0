@@ -126,6 +126,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigSophiaBullet.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrickBreak.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletEnemy.h" />
     <ClInclude Include="BulletFloaters.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigSophiaBullet.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickBreak.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />

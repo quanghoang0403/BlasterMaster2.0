@@ -15,7 +15,7 @@ BulletEnemy::~BulletEnemy()
 
 bool BulletEnemy::IsFinish()
 {
-	return false;
+	return isFinish;
 }
 
 void BulletEnemy::SetFinish()

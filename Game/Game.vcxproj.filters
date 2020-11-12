@@ -106,6 +106,9 @@
     <ClCompile Include="BulletFloaters.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Insect.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="BulletFloaters.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Insect.h">
+      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

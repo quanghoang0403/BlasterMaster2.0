@@ -144,6 +144,7 @@
     <ClInclude Include="GunUp.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Insect.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="MiniSophia.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="GunUp.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Insect.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniSophia.cpp" />

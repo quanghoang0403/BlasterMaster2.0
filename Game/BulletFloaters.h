@@ -2,13 +2,14 @@
 #include "BulletEnemy.h"
 #include "Player.h"
 
+
 #define BULLET_SPEED					0.05f;
 
 
 #define BULLET_BBOX_WIDTH				4
 #define BULLET_BBOX_HEIGHT				4
 
-#define BULLET_LOATERS_ANI				900
+#define BULLET_LOATERS_ANI				10000
 
 #define LOATERS_BULLET_SPEED			2
 
@@ -26,19 +27,24 @@ class BulletFloaters: public BulletEnemy
 	bool isStart;
 	
 	LPGAMEENTITY playerE = Player::GetInstance();
-	int Xplayer, Yplayer;
-	LPANIMATION aniBullet;
-	float postargetX, postargetY;
-public:
-	BulletFloaters(float _x, float _y, float _postargetX, float _postargetY);
-	~BulletFloaters();
 	
+	LPANIMATION aniBullet;
+	float RenderVx;
+	float RenderVy;
+	float postargetLeft, postargetTop; //Left, top
+	float postargetRight, postargetBottom;
+	float posRight, posBottom;
+
+public:
+	BulletFloaters(float _x, float _y,float _posRight, float _posBottom, float _postargetLeft, float _postargetTop, float _postargetRight, float _postargetBottom);
+		
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
-
+	void RenderSpeedFollowTarget(float _x, float _y);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int GetDamage();
 	bool IsStart();
 	void Start(float _x, float _y);
+	virtual void SetCenterBoundingBox(float &x, float &y,float _posLeft, float _posTop, float _posRight, float _posBottom);
 };
 

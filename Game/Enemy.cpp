@@ -26,3 +26,7 @@ float Enemy::GetDistance(D3DXVECTOR2 pos, D3DXVECTOR2 target)
 {
 	return (float)sqrt(pow(pos.x - target.x, 2) + pow(pos.y - target.y, 2));
 }
+
+void Enemy::GetCenterBoundingBox(float& x, float& y)
+{
+}

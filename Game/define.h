@@ -73,7 +73,8 @@ enum EnemyType
 	GOLEM = 2,
 	DOMES = 3,
 	GUNNER = 4,
-	FLOATERS = 5
+	FLOATERS = 5,
+	INSECT = 6
 };
 
 

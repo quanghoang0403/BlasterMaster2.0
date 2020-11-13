@@ -6,6 +6,7 @@ BulletEnemy::BulletEnemy()
 	lifeTime = 0;
 	tag = BULLETNENEMY;
 	BULLETENEMY = Null;
+	CheckBulletEnemy = 0;
 
 }
 

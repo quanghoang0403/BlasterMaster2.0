@@ -34,7 +34,7 @@
 class Floaters : public Enemy
 {
 	vector<BulletFloaters*> bullet;
-
+	
 	Timer* delayTimer = new Timer(randomTimeAttack());
 	Timer* delayTimeranishot = new Timer(FLOATERS_TIME_DELAYANI);
 	float vxR, vyR;

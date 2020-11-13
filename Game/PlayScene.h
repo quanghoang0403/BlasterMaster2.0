@@ -29,6 +29,8 @@
 #include "ElectricBullet.h"
 #include "BigSophiaBullet.h"
 
+#include "BulletEnemy.h"
+
 #include <iostream>
 #include <fstream>
 
@@ -70,6 +72,8 @@ protected:
 	Bullet* bigBullet2;
 	Bullet* bigBullet3;
 	IntroScene* introScene;
+
+	
 #pragma endregion
 	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
@@ -79,6 +83,9 @@ protected:
 	vector<LPGAMEENTITY> listEnemies;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
+	
+	
+
 	vector<LPCWSTR> listSceneFilePath;
 	vector<int> listWidth;
 	vector<int> listHeight;

@@ -1,6 +1,8 @@
 #pragma once
 #include "BulletEnemy.h"
 #include "Player.h"
+#include "Brick.h"
+#include "Player.h"
 
 
 #define BULLET_SPEED					0.05f;
@@ -9,7 +11,8 @@
 #define BULLET_BBOX_WIDTH				4
 #define BULLET_BBOX_HEIGHT				4
 
-#define BULLET_LOATERS_ANI				10000
+#define BULLET_LOATERS_ANI_FLY				10000
+#define BULLET_LOATERS_ANI_BANG			10100
 
 #define LOATERS_BULLET_SPEED			2
 
@@ -17,7 +20,7 @@
 
 #define LOATERS_BULLET_VFLY				0.4f
 
-#define LOATERS_BULLET_DELAY			500
+#define LOATERS_BULLET_DELAY			350
 
 #define LOATERS_BULLET_DAMAGE			1
 
@@ -36,6 +39,8 @@ class BulletFloaters: public BulletEnemy
 	float posRight, posBottom;
 
 public:
+	bool _isFinish;
+
 	BulletFloaters(float _x, float _y,float _posRight, float _posBottom, float _postargetLeft, float _postargetTop, float _postargetRight, float _postargetBottom);
 		
 	void Render();

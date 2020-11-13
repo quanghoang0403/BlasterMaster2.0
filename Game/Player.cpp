@@ -140,6 +140,8 @@ void Player::SetInjured(int dame)
 	isImmortaling = true;
 }
 
+
+
 void Player::Render()
 {
 	if (isDoneDeath)

@@ -54,6 +54,8 @@ public:
 	float vy;
 	int health;
 
+	bool CheckBulletEnemy;
+
 	int nx;
 	int ny;
 	int gunDam; // gun damage

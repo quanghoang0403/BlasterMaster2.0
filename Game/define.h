@@ -150,6 +150,7 @@ enum EntityType
 	HUNCHMAN = 86,
 	SKELETON = 87,
 	TLEBAT = 88,
+	FLOATERSS = 89,
 
 	//Scene Zone 100-120
 	TITLESCENE = 100,

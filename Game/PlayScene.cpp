@@ -37,7 +37,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = JASON;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*8);
+	ChooseMap(STAGE_1);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -238,10 +238,12 @@ void PlayScene::PlayerTouchEnemy()
 {
 	for (UINT i = 0; i < listEnemies.size(); i++)
 	{
+		
 		if (typeSophia == JASON)
 		{
 			if (player->IsCollidingObject(listEnemies[i]))
 				player->SetInjured(1);
+			
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
@@ -254,6 +256,8 @@ void PlayScene::PlayerTouchEnemy()
 				playerV2->SetInjured(1);
 		}
 	}
+
+
 }
 
 void PlayScene::PlayerCollideItem()
@@ -307,6 +311,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEENTITY> listEnemies = ((PlayScene*)scence)->listEnemies;
+	
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
@@ -1235,7 +1240,18 @@ void PlayScene::Update(DWORD dt)
 		for (int i = 0; i < listItems.size(); i++)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
+		{
+			if (listEnemies[i]->GetType() == EntityType::FLOATERSS)
+			{
+				if (listEnemies[i]->CheckBulletEnemy == 1)
+				{
+					player->SetInjured(1);
+					listEnemies[i]->CheckBulletEnemy = 0;
+				}
+			}
 			listEnemies[i]->Update(dt, &listObjects);
+		}
+			
 		if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
 		{
 			Unload();

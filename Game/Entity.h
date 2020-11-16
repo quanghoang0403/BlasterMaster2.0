@@ -55,6 +55,7 @@ public:
 	int health;
 
 	bool CheckBulletEnemy;
+	bool CheckColisionEnemy;
 
 	int nx;
 	int ny;
@@ -81,6 +82,7 @@ public:
 	int GetHealth() { return health; }
 	void SetHealth(int value) { health = value; }
 	int GetgunDam() { return gunDam; }
+	virtual D3DXVECTOR2 GetPosCam();
 	void SetgunDam(int value) { gunDam = value; }
 	void AddHealth(int BonusHealth) { health += BonusHealth; }
 	void AddgunDam(int BonusgunDam) { gunDam += BonusgunDam; }

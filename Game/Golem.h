@@ -9,7 +9,7 @@
 #define GOLEM_JUMP_SPEED_Y				0.35f
 #define GOLEM_GRAVITY					0.0015f
 
-#define GOLEM_BBOX_WIDTH				12
+#define GOLEM_BBOX_WIDTH				14
 #define GOLEM_BBOX_HEIGHT				23
 
 #define GOLEM_BBOX_HEIGHT_DIE			9
@@ -43,13 +43,14 @@ class Golem: public Enemy
 	Timer* delayTimer = new Timer(GOLEM_TIME_DONTFOLLOW_PLAYER);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	int randomTimeJump();
+	
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 	
 
 public:
 	Golem(float x, float y, LPGAMEENTITY t);
+	int randomTimeJump();
 	void FollowTarget(LPGAMEENTITY target);
 	virtual void SetState(int state);
 	virtual void Activation();

@@ -135,6 +135,7 @@ public:
 	int GetX() { return x; }
 	int GetY() { return y; }
 	
+	
 		
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 	void SetInjured(int dame);

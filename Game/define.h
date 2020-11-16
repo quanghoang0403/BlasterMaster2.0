@@ -73,7 +73,8 @@ enum EnemyType
 	DOMES = 3,
 	GUNNER = 4,
 	FLOATERS = 5,
-	INSECT = 6
+	INSECT = 6,
+	ORBS = 7
 };
 
 
@@ -151,6 +152,7 @@ enum EntityType
 	SKELETON = 87,
 	TLEBAT = 88,
 	FLOATERSS = 89,
+	ORBSS = 200,
 
 	//Scene Zone 100-120
 	TITLESCENE = 100,

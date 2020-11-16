@@ -17,6 +17,7 @@
 #define OBJECT_TYPE_DOMES				13
 #define OBJECT_TYPE_FLOATERS			14
 #define OBJECT_TYPE_INSECT				15
+#define OBJECT_TYPE_ORBS				16
 
 
 #define DX_GET_OUT_CAR		7
@@ -787,17 +788,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Golem !\n");
 		break;
 	}
-	case OBJECT_TYPE_GUNNER:
-	{
-		obj = new Gunner();
-		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
-		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add Gunner !\n");
-		break;
-	}
+	
 	case OBJECT_TYPE_CENTIPEDE:
 	{
 		//obj = new Centipede(x,y,player);
@@ -843,6 +834,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Insect !\n");
+		break;
+	}
+	case OBJECT_TYPE_ORBS:
+	{
+		obj = new Orbs(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Orbs !\n");
 		break;
 	}
 	default:
@@ -1241,13 +1244,15 @@ void PlayScene::Update(DWORD dt)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
 		{
-			if (listEnemies[i]->GetType() == EntityType::FLOATERSS)
+			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS)
 			{
 				if (listEnemies[i]->CheckBulletEnemy == 1)
 				{
 					player->SetInjured(1);
 					listEnemies[i]->CheckBulletEnemy = 0;
 				}
+				if (listEnemies[i]->IsCollidingObject(player))
+					listEnemies[i]->CheckColisionEnemy = 1;
 			}
 			listEnemies[i]->Update(dt, &listObjects);
 		}

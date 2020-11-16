@@ -64,9 +64,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Gunner.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
@@ -104,6 +101,13 @@
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Insect.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickBreak.cpp" />
+    <ClCompile Include="GateV2.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="Orbs.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,9 +178,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Gunner.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -214,6 +215,12 @@
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Insect.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreak.h" />
+    <ClInclude Include="GateV2.h" />
+    <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="Orbs.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,9 +34,9 @@ class BulletFloaters: public BulletEnemy
 	LPANIMATION aniBullet;
 	float RenderVx;
 	float RenderVy;
-	float postargetLeft, postargetTop; //Left, top
-	float postargetRight, postargetBottom;
-	float posRight, posBottom;
+	//float postargetLeft, postargetTop; //Left, top
+	//float postargetRight, postargetBottom;
+	//float posRight, posBottom;
 
 public:
 	bool _isFinish;
@@ -45,7 +45,14 @@ public:
 		
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
-	void RenderSpeedFollowTarget(float _x, float _y);
+	void RenderSpeedFollowTarget(float _x, float _y, 
+									float _posRight, 
+									float _posBottom, 
+									float _postargetLeft, 
+									float _postargetRight, 
+									float _postargetTop, 
+									float _postargetBottom,
+									float _BULLET_SPEED);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int GetDamage();
 	bool IsStart();

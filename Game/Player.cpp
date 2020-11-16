@@ -35,8 +35,7 @@ Player* Player::GetInstance()
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
-	DebugOut(L"x: %f \n", x);
-	DebugOut(L"x: %f \n", y);
+	
 	if (isDoneDeath)
 		return;
 	if (health <= 0)
@@ -380,3 +379,4 @@ void Player::Reset()
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
 }
+

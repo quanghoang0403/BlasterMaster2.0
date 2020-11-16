@@ -6,15 +6,15 @@ BulletFloaters::BulletFloaters(float _x, float _y, float _posRight, float _posBo
 	tag = BULLETENEMY = BULLETFLOATERS;
 	
 	isFinish = false;
-	posRight = _posRight;
+	/*posRight = _posRight;
 	posBottom = _posBottom;
 	postargetLeft = _postargetLeft; 
 	postargetTop = _postargetTop; 
 	postargetRight = _postargetRight;
-	postargetBottom = _postargetBottom;
+	postargetBottom = _postargetBottom;*/
 	_isFinish = 0;
 	aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_FLY);
-	RenderSpeedFollowTarget(_x, _y);
+	RenderSpeedFollowTarget(_x, _y, _posRight, _posBottom, _postargetLeft, _postargetRight, _postargetTop, _postargetBottom, LOATERS_BULLET_SPEED);
 }
 
 void BulletFloaters::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -104,12 +104,19 @@ void BulletFloaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void BulletFloaters::RenderSpeedFollowTarget(float _x, float _y)
+void BulletFloaters::RenderSpeedFollowTarget(float _posLeft, float _posTop,
+												float _posRight, 
+												float _posBottom, 
+												float _postargetLeft,		
+												float _postargetRight, 
+												float _postargetTop, 
+												float _postargetBottom, 
+												float _BULLET_SPEED)
 {
-	SetCenterBoundingBox(x, y, _x, _y, posRight, posBottom);
+	SetCenterBoundingBox(x, y, _posLeft, _posTop, _posRight, _posBottom);
 	posBullet = D3DXVECTOR2(x, y);
-	focus = CreatePosFollowTarget(D3DXVECTOR2((postargetLeft + postargetRight) / 2, (postargetTop + postargetBottom) / 2), posBullet);
-	posBullet = RadialMovement(focus, posBullet, LOATERS_BULLET_SPEED);
+	focus = CreatePosFollowTarget(D3DXVECTOR2((_postargetLeft + _postargetRight) / 2, (_postargetTop + _postargetBottom) / 2), posBullet);
+	posBullet = RadialMovement(focus, posBullet, _BULLET_SPEED);
 	RenderVx = posBullet.x/14;
 	RenderVy = posBullet.y/14;
 }

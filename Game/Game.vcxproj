@@ -142,7 +142,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GateV2.h" />
     <ClInclude Include="Golem.h" />
-    <ClInclude Include="Gunner.h" />
     <ClInclude Include="GunUp.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
@@ -151,6 +150,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="MiniSophia.h" />
+    <ClInclude Include="Orbs.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerV2.h" />
     <ClInclude Include="PlayScene.h" />
@@ -183,7 +183,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GateV2.cpp" />
     <ClCompile Include="Golem.cpp" />
-    <ClCompile Include="Gunner.cpp" />
     <ClCompile Include="GunUp.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -192,6 +191,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniSophia.cpp" />
+    <ClCompile Include="Orbs.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerV2.cpp" />
     <ClCompile Include="PlayScene.cpp" />

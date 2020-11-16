@@ -103,7 +103,21 @@
     <ClCompile Include="BulletFloaters.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="BrickBreak.cpp" />
+    <ClCompile Include="Brick.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreak.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GateV2.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -211,7 +225,18 @@
     <ClInclude Include="BulletFloaters.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="BrickBreak.h" />
+    <ClInclude Include="BrickBreak.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GateV2.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

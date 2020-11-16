@@ -42,7 +42,8 @@ void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAME
 	}
 	Entity::Update(dt);
 #pragma region Xử lý vy
-	vy += SOPHIA_GRAVITY * dt;
+	if (!isOnStair)
+		vy += SOPHIA_GRAVITY * dt;
 #pragma endregion
 
 #pragma region Timer
@@ -81,7 +82,7 @@ void MiniSophia::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAME
 			if (e->obj->GetType() == EntityType::BRICK)
 			{
 				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.4f;
+				y += min_ty * dy + ny * 0.001f;
 				if (e->ny != 0)
 				{
 
@@ -141,6 +142,13 @@ void MiniSophia::Render()
 		{
 			ani = SOPHIA_ANI_MINI_JUMP;
 		}
+		else if (isOnStair)
+		{
+			if (vy == 0)
+				ani = SOPHIA_ANI_MINI_IDLESTAIR;
+			else
+				ani = SOPHIA_ANI_MINI_GOSTAIR;
+		}
 		else if (isCrawl)
 		{
 			if (vx == 0)
@@ -168,6 +176,8 @@ void MiniSophia::SetState(int state)
 	case SOPHIA_MINI_STATE_WALKING_RIGHT:
 		if (isCrawl)
 			vx = SOPHIA_MINI_CRAWLING_SPEED;
+		else if (isOnStair)
+			vx = SOPHIA_MINI_GOSTAIR_SPEED;
 		else
 			vx = SOPHIA_MINI_WALKING_SPEED;
 		direction = 1;
@@ -175,6 +185,8 @@ void MiniSophia::SetState(int state)
 	case SOPHIA_MINI_STATE_WALKING_LEFT:
 		if (isCrawl)
 			vx = -SOPHIA_MINI_CRAWLING_SPEED;
+		else if (isOnStair)
+			vx = -SOPHIA_MINI_GOSTAIR_SPEED;
 		else
 			vx = -SOPHIA_MINI_WALKING_SPEED;
 		direction = -1;
@@ -189,7 +201,9 @@ void MiniSophia::SetState(int state)
 				isCrawl = false;
 			}
 			else
+			{
 				isCrawl = true;
+			}
 		}
 		break;
 	case SOPHIA_MINI_STATE_JUMP:
@@ -208,6 +222,7 @@ void MiniSophia::SetState(int state)
 		break;
 	case SOPHIA_MINI_STATE_IDLE:
 		isPressJump = false;
+		isOnStair = false;
 		if (!isCrawl)
 		{
 			if (vx > 0) {
@@ -241,6 +256,21 @@ void MiniSophia::SetState(int state)
 				vx = 0;
 		}
 		vy = -SOPHIA_MINI_JUMP_SPEED_Y/1.5f;
+		break;
+	case SOPHIA_MINI_STATE_UP_STAIR:
+		if (isOnStair)
+			vy = -SOPHIA_MINI_JUMP_SPEED_Y / 4;
+		break;
+	case SOPHIA_MINI_STATE_DOWN_STAIR:
+		if (isOnStair)
+			vy = SOPHIA_MINI_JUMP_SPEED_Y / 4;
+		break;
+	case SOPHIA_MINI_STATE_IDLE_STAIR:
+		if (isOnStair)
+		{
+			vx = 0;
+			vy = 0;
+		}
 		break;
 	}
 }

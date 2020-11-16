@@ -191,10 +191,12 @@
 #Gate
 #	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
 2	979	120	2	65	1165	0	1	1	0	1031.372437
+#Stair
+300	100	100	22
 #==========Enemies===============
 #Centipede
-10	250	125	10
-10	180	125	10
+#10	250	125	10
+#10	180	125	10
 #Golem
 #11	300	125	11
 #Gunner
@@ -202,7 +204,7 @@
 #Domes
 #13	200	125	13
 #FLOATER
-14	200	100	14
+#14	200	100	14
 #15	150	100	15
 #16	130	100	16
 

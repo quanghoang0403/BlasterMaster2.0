@@ -52,6 +52,7 @@ public:
 	float camMap1X;
 	float camMap1Y;
 	bool tempNeed; 
+	bool isTouchStair;
 	DWORD timeResetCam; 
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
@@ -74,6 +75,7 @@ protected:
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listGates;
+	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
 	vector<LPBULLET> listBullets;
@@ -112,6 +114,7 @@ public:
 	void PlayerTouchEnemy();
 	void PlayerCollideItem();
 	void PlayerGotGateV2();
+	void PlayerTouchStair();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();

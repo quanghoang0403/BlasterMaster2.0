@@ -1,6 +1,6 @@
 #include "PlayScene.h"
 #include "Textures.h"
-
+#include "Stair.h"
 #include "GateV2.h"
 
 #define MINI_SOPHIA	0
@@ -10,6 +10,7 @@
 #define OBJECT_TYPE_BRICK		1
 #define OBJECT_TYPE_GATE		2
 #define OBJECT_TYPE_GATEV2		200
+#define	OBJECT_TYPE_STAIR		300
 
 #define OBJECT_TYPE_CENTIPEDE			10
 #define OBJECT_TYPE_GOLEM				11
@@ -24,8 +25,9 @@
 #define NUMBER_BULLET		3
 #define DEFLECT_X_BIGSOPHIA_TO_FIRE	7
 #define DEFLECT_Y_BIGSOPHIA_TO_FIRE	11
-#define SPEED_CAM_WORLD1	0.223
-#define SPEED_CAM_WORLD2	0.15
+#define SPEED_CAM_WORLD1		0.223
+#define SPEED_CAM_WORLD1_MINU	0.0375
+#define SPEED_CAM_WORLD2		0.15
 #define POSY_CAM_WORLD2	1800
 
 #define INTRO	0
@@ -37,7 +39,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = JASON;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*8);
+	ChooseMap(STAGE_1*5);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -212,6 +214,21 @@ void PlayScene::PlayerGotCar()
 		typeSophia = 1;
 }
 
+void PlayScene::PlayerTouchStair()
+{
+	for (UINT i = 0; i < listStairs.size(); i++)
+	{
+		if (sophia->IsCollidingObject(listStairs[i]))
+			isTouchStair = true;
+		else
+		{
+			isTouchStair = false;
+			sophia->isOnStair = false;
+			sophia->SetState(SOPHIA_MINI_STATE_IDLE);
+		}
+	}
+}
+
 void PlayScene::PlayerGotGateV2()
 {
 	for (UINT i = 0; i < listGates.size(); i++)
@@ -320,7 +337,20 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_ESCAPE:
 		DestroyWindow(Game::GetInstance()->GetWindowHandle());
 	case DIK_DOWN:
-		sophia->SetState(SOPHIA_MINI_STATE_CRAWL);
+		if (sophia->isOnStair == false && playScene->isTouchStair == true)
+		{
+			sophia->isOnStair = true;
+		}
+		break;
+	case DIK_V:
+		if (!sophia->isOnStair)
+			sophia->SetState(SOPHIA_MINI_STATE_CRAWL);
+		break;
+	case DIK_UP:
+		if (sophia->isOnStair == false && playScene->isTouchStair == true)
+		{
+			sophia->isOnStair = true;
+		}
 		break;
 	case DIK_SPACE:
 		if (typeSophia == JASON)
@@ -513,6 +543,7 @@ void PlayScenceKeyHandler::OnKeyUp(int KeyCode)
 void PlayScenceKeyHandler::KeyState(BYTE* states)
 {
 #pragma region INIT
+
 	int typeSophia = ((PlayScene*)scence)->typeSophia;
 	Player* player = ((PlayScene*)scence)->player;
 	PlayerV2* playerV2 = ((PlayScene*)scence)->playerV2;
@@ -526,7 +557,48 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
-
+	if (typeSophia == MINI_SOPHIA)
+	{
+		if (sophia->isOnStair)
+		{
+			if (Game::GetInstance()->IsKeyDown(DIK_UP))
+			{
+				sophia->SetState(SOPHIA_MINI_STATE_UP_STAIR);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+			{
+				sophia->SetState(SOPHIA_MINI_STATE_DOWN_STAIR);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+				sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
+			else if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+				sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
+			else
+			{
+				sophia->SetState(SOPHIA_MINI_STATE_IDLE_STAIR);
+				DebugOut(L"idle stair 1");
+			}
+		}
+		else
+		{
+			if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+				sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
+			else if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+				sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
+			else
+			{
+				if (sophia->isCrawl == false)
+				{
+					sophia->SetState(SOPHIA_MINI_STATE_IDLE);
+				}
+				else
+				{
+					//if (!sophia->isOnStair)
+					sophia->SetState(SOPHIA_MINI_STATE_CRAWL_STOP);
+				}
+			}
+		}
+	}
 	if (!playerV2->isAutoRun)
 	{
 #pragma endregion
@@ -536,8 +608,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		{
 			if (typeSophia == JASON)
 				player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-			else if (typeSophia == MINI_SOPHIA)
-				sophia->SetState(SOPHIA_MINI_STATE_WALKING_RIGHT);
 			else
 			{
 				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
@@ -547,8 +617,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		{
 			if (typeSophia == JASON)
 				player->SetState(SOPHIA_STATE_WALKING_LEFT);
-			else if (typeSophia == MINI_SOPHIA)
-				sophia->SetState(SOPHIA_MINI_STATE_WALKING_LEFT);
 			else
 				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
 		}
@@ -566,13 +634,6 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 		{
 			if (typeSophia == JASON)
 				player->SetState(SOPHIA_STATE_IDLE);
-			else if (typeSophia == MINI_SOPHIA)
-			{
-				if (sophia->GetIsCrawl() == false)
-					sophia->SetState(SOPHIA_MINI_STATE_IDLE);
-				else
-					sophia->SetState(SOPHIA_MINI_STATE_CRAWL_STOP);
-			}
 			else
 				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
 		}
@@ -768,6 +829,13 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float newCamYBack = atoi(tokens[6].c_str());
 		obj = new GateV2(x, y, newCamXGo, newCamXBack, newCamYGo, newCamYBack, direct);
 		listGates.push_back(obj);
+		DebugOut(L"[test] add gatev2 !\n");
+		break;
+	}
+	case OBJECT_TYPE_STAIR:
+	{
+		obj = new Stair(x, y);
+		listStairs.push_back(obj);
 		DebugOut(L"[test] add gatev2 !\n");
 		break;
 	}
@@ -1133,11 +1201,17 @@ void PlayScene::Update(DWORD dt)
 						//DebugOut(L"cy - posY %f \n", cy - posY);
 						if ((cy - posY) < (SCREEN_HEIGHT / 4))
 						{
-							posY -= SPEED_CAM_WORLD1 * dt;
+							if (sophia->isOnStair)
+								posY -= SPEED_CAM_WORLD1_MINU * dt;
+							else
+								posY -= SPEED_CAM_WORLD1 * dt;
 						}
 						if ((cy - posY) > (SCREEN_HEIGHT / 2))
 						{
-							posY += SPEED_CAM_WORLD1 * dt;
+							if (sophia->isOnStair)
+								posY += SPEED_CAM_WORLD1_MINU * dt;
+							else
+								posY += SPEED_CAM_WORLD1 * dt;
 						}
 						//DebugOut(L"trong hop duoi = %d \n", mapHeight);
 					}
@@ -1216,7 +1290,7 @@ void PlayScene::Update(DWORD dt)
 			PlayerCollideItem();
 		PlayerGotGate();
 		PlayerTouchEnemy();
-
+		PlayerTouchStair();
 #pragma region Objects Updates
 		vector<LPGAMEENTITY> coObjects;
 		//introScene->Update(dt, &listObjects);
@@ -1240,6 +1314,8 @@ void PlayScene::Update(DWORD dt)
 		supBullet->Update(dt, &listObjects);
 		for (int i = 0; i < listBullets.size(); i++)
 			listBullets[i]->Update(dt, &coObjects);
+		for (int i = 0; i < listStairs.size(); i++)
+			listStairs[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listBigBullets.size(); i++)
 			listBigBullets[i]->Update(dt, &coObjects);
 		for (int i = 0; i < listObjects.size(); i++)
@@ -1298,6 +1374,8 @@ void PlayScene::Render()
 			listBigBullets[i]->Render();
 		for (int i = 0; i < listGates.size(); i++)
 			listGates[i]->Render();
+		for (int i = 0; i < listStairs.size(); i++)
+			listStairs[i]->Render();
 		if (typeSophia == BIG_SOPHIA)
 			playerV2->Render();
 		else

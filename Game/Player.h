@@ -84,13 +84,15 @@ class Player : public Entity
 	int untouchable;
 	bool isGunFlipping = false;
 	bool isJumpHandle;
-	bool isImmortaling;	
+	bool isImmortaling;
 	DWORD untouchable_start;
 
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
 
-	float start_x;	
+	float start_x;
 	float start_y;
+
+	
 
 	float backup_JumpY;
 	bool isPressJump;
@@ -101,6 +103,11 @@ public:
 	bool isDeath;
 	bool isDoneDeath;
 	bool isJumping = false;
+
+	float Width = SOPHIA_JASON_BBOX_WIDTH;
+	float Height = SOPHIA_JASON_BBOX_HEIGHT;
+
+
 	Player(float x = 0.0f, float y = 0.0f);
 	static Player* GetInstance();
 
@@ -126,7 +133,8 @@ public:
 	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerx, float& playery) { direct = direction; isTargetTop = isGunFlipping; playerx = x; playery = y; }
 	int GetX() { return x; }
 	int GetY() { return y; }
-
+	
+		
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 	void SetInjured(int dame);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

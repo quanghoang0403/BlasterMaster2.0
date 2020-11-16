@@ -1,17 +1,21 @@
 ﻿#include "BulletFloaters.h"
 #include <algorithm>
 
-BulletFloaters::BulletFloaters(float _x, float _y, float _postargetX, float _postargetY)
+BulletFloaters::BulletFloaters(float _x, float _y, float _posRight, float _posBottom, float _postargetLeft, float _postargetTop, float _postargetRight, float _postargetBottom)
 {
 	
 	tag = BULLETENEMY = BULLETFLOATERS;
 	isFinish = false;
-	postargetX = _postargetX;
-	postargetY = _postargetY;
+	posRight = _posRight;
+	posBottom = _posBottom;
+	postargetLeft = _postargetLeft; 
+	postargetTop = _postargetTop; 
+	postargetRight = _postargetRight;
+	postargetBottom = _postargetBottom;
+	
 	isStart = 0;
 	aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI);
-	posBullet = D3DXVECTOR2(_x, _y);
-	focus = CreatePosFollowTarget(D3DXVECTOR2(postargetX, postargetY), posBullet);
+	RenderSpeedFollowTarget(_x, _y);
 }
 
 void BulletFloaters::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -39,15 +43,22 @@ void BulletFloaters::Start(float _x, float _y)
 	y = _y;
 }
 
+void BulletFloaters::SetCenterBoundingBox(float& x, float& y, float _posLeft, float _posTop, float _posRight, float _posBottom)
+{
+	x = (_posLeft + _posRight) / 2;
+	y = (_posTop + _posBottom) / 2;
+	
+}
+
 void BulletFloaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
-			
+	
+	
 	if (!isFinish)
 	{
-		posBullet += RadialMovement(focus, posBullet, LOATERS_BULLET_SPEED);
-		x = posBullet.x;
-		y = posBullet.y;
+		vx = RenderVx;
+		vy = RenderVy;
 	}
 	
 	if (isFinish) { vx = 0; vy = 0; return; }
@@ -88,12 +99,19 @@ void BulletFloaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 
 	for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	
-	
 }
 
-
-
+void BulletFloaters::RenderSpeedFollowTarget(float _x, float _y)
+{
+	SetCenterBoundingBox(x, y, _x, _y, posRight, posBottom);
+	posBullet = D3DXVECTOR2(x, y);
+	focus = CreatePosFollowTarget(D3DXVECTOR2((postargetLeft + postargetRight) / 2, (postargetTop + postargetBottom) / 2), posBullet);
+	vx = 0;
+	vy = 0;
+	posBullet = RadialMovement(focus, posBullet, LOATERS_BULLET_SPEED);
+	RenderVx = posBullet.x/13;
+	RenderVy = posBullet.y/13;
+}
 
 
 

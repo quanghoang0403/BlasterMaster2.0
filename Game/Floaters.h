@@ -23,7 +23,7 @@
 #define FLOATERS_ANI_DIE								2
 
 #define FLOATERS_SITEACTIVE_PLAYER						150
-	
+
 #define FLOATERS_MAXTIME_ATTACK							8000
 
 #define FLOATERS_MAXHEALTH								1
@@ -34,11 +34,11 @@
 class Floaters : public Enemy
 {
 	vector<BulletFloaters*> bullet;
-	
+
 	Timer* delayTimer = new Timer(randomTimeAttack());
 	Timer* delayTimeranishot = new Timer(FLOATERS_TIME_DELAYANI);
 	float vxR, vyR;
-	
+
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
@@ -53,4 +53,3 @@ public:
 
 
 };
-

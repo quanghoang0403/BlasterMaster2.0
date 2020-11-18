@@ -110,6 +110,12 @@
     <ClCompile Include="Orbs.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Skulls.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSkulls.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -222,6 +228,12 @@
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Orbs.h">
       <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skulls.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSkulls.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,7 @@
 #include "Floaters.h"
 #include "Insect.h"
 #include "Orbs.h"
+#include "Skulls.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

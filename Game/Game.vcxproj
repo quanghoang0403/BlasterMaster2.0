@@ -130,6 +130,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletEnemy.h" />
     <ClInclude Include="BulletFloaters.h" />
+    <ClInclude Include="BulletSkulls.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Centipede.h" />
     <ClInclude Include="debug.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="MainJasonBullet.h" />
+    <ClInclude Include="Skulls.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Timer.h" />
@@ -171,6 +173,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />
+    <ClCompile Include="BulletSkulls.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Centipede.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -200,6 +203,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="MainJasonBullet.cpp" />
+    <ClCompile Include="Skulls.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Timer.cpp" />

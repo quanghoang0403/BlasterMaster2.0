@@ -142,7 +142,4 @@ void BulletFloaters::Render()
 		aniBullet->OldRender(x, y);
 	}
 		
-		
-	
-	
 }

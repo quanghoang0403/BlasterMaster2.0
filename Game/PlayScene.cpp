@@ -18,6 +18,7 @@
 #define OBJECT_TYPE_FLOATERS			14
 #define OBJECT_TYPE_INSECT				15
 #define OBJECT_TYPE_ORBS				16
+#define OBJECT_TYPE_SKULLS				17	
 
 
 #define DX_GET_OUT_CAR		7
@@ -848,6 +849,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Orbs !\n");
 		break;
 	}
+	case OBJECT_TYPE_SKULLS:
+	{
+		obj = new Skulls(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Skulls !\n");
+		break;
+	}
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
@@ -1244,7 +1257,7 @@ void PlayScene::Update(DWORD dt)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
 		{
-			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS)
+			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS || listEnemies[i]->GetType() == EntityType::SKULLSS)
 			{
 				if (listEnemies[i]->CheckBulletEnemy == 1)
 				{

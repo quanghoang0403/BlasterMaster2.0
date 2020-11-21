@@ -133,14 +133,33 @@ void PlayScene::LoadBaseObjects()
 		DebugOut(L"[INFO] gunUp CREATED! \n");
 	}
 	gameCamera = Camera::GetInstance();
+	grid = new Grid(mapWidth, mapHeight);
 }
 
-void PlayScene::LoadIntroScene()
+void PlayScene::GetObjectFromGrid()
 {
-}
+	/*listUnits.clear();
+	listObjects.clear();
+	listDoors.clear();
+	listStairs.clear();
+	listZombie.clear();
 
-void PlayScene::LoadEndScene()
-{
+	grid->Get(game->GetCameraPositon(), listUnits);
+
+	for (UINT i = 0; i < listUnits.size(); i++)
+	{
+
+		LPGAMEOBJECT obj = listUnits[i]->GetObj();
+		listObjects.push_back(obj);
+
+		if (dynamic_cast<Door*>(obj))
+			listDoors.push_back(obj);
+		if (dynamic_cast<Stair*>(obj))
+			listStairs.push_back(obj);
+		if (dynamic_cast<Zombie*>(obj))
+			listZombie.push_back(obj);
+
+	}*/
 }
 
 void PlayScene::ChooseMap(int whatMap)
@@ -149,7 +168,11 @@ void PlayScene::ChooseMap(int whatMap)
 	Game::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
 	int convertSimple = idStage / STAGE_1;
 	sceneFilePath = listSceneFilePath[convertSimple - 1];
+	mapWidth = listWidth[idStage / STAGE_1 - 1];
+	mapHeight = listHeight[idStage / STAGE_1 - 1];
+	grid->Reset(mapWidth, mapHeight);
 	LoadSceneObjects();
+
 }
 
 void PlayScene::PlayerGotGate()
@@ -1274,11 +1297,13 @@ void PlayScene::Update(DWORD dt)
 		//if (typeSophia == BIG_SOPHIA)
 		//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
+		GetObjectFromGrid();
 		if (listItems.size() > 0)
 			PlayerCollideItem();
 		PlayerGotGate();
 		PlayerTouchEnemy();
 		PlayerTouchStair();
+
 #pragma region Objects Updates
 		vector<LPGAMEENTITY> coObjects;
 		//introScene->Update(dt, &listObjects);
@@ -1332,8 +1357,25 @@ void PlayScene::Update(DWORD dt)
 			sophia->isDoneDeath = false;
 			sophia->isDeath = false;
 		}
+		UpdateGrid();
 	}
 #pragma endregion
+}
+
+void PlayScene::UpdateGrid()
+{
+	/*for (int i = 0; i < listUnits.size(); i++)
+	{
+		LPGAMEOBJECT obj = listUnits[i]->GetObj();
+
+		if (obj->IsEnable() == false)
+			continue;
+
+		float newPos_x, newPos_y;
+		obj->GetPosition(newPos_x, newPos_y);
+		if (dynamic_cast<Zombie*>(obj))
+			listUnits[i]->Move(newPos_x, newPos_y);
+	}*/
 }
 
 void PlayScene::Render()

@@ -34,6 +34,7 @@
 
 #include"Entity.h"
 #include "IntroScene.h"
+#include "Grid.h"
 
 using namespace std;
 
@@ -76,17 +77,21 @@ protected:
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listGates;
+	vector<LPGAMEITEM> listItems;
 	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
+	vector<LPGAMEENTITY> listObjectsToGrid;	//Parse Object from file to this, Grid receive this list
+	vector<LPGAMEENTITY> listObjectsFromGrid;	//temp list to transfer from Grid to listObj
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
 	vector<LPCWSTR> listSceneFilePath;
 	vector<int> listWidth;
 	vector<int> listHeight;
-	vector<LPGAMEITEM> listItems;
-	Camera* gameCamera;
 
+	Camera* gameCamera;
+	Grid* grid;
+	Unit* unit;
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;
@@ -109,19 +114,18 @@ public:
 	void LoadBaseObjects();
 	void LoadBaseTextures();
 	void ChooseMap(int whatStage);
-	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
 	void PlayerGotCar();
 	void PlayerTouchEnemy();
 	void PlayerCollideItem();
 	void PlayerGotGateV2();
 	void PlayerTouchStair();
+	void UpdateGrid();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	void LoadIntroScene();
-	void LoadEndScene();
+	void GetObjectFromGrid();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

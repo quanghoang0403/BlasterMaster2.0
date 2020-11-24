@@ -37,9 +37,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = JASON;
+	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*10);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -152,30 +152,8 @@ void PlayScene::GetObjectFromGrid()
 	//for (int i = 0; i < listObjects.size(); i++)
 	//	delete listObjects[i];
 	grid->GetListObject(gameCamera->GetCamx(), gameCamera->GetCamy(), listObjectLoad);
-	//listUnits= grid->GetList(gameCamera->GetCamx(), gameCamera->GetCamy());
 	for (UINT i = 0; i < listObjectLoad.size(); i++)
 	{
-		//LPGAMEENTITY obj = listUnits[i]->GetObj();
-		/*if (dynamic_cast<Gate*>(obj))
-			listGates.push_back(obj);
-		if (dynamic_cast<GateV2*>(obj))
-			listGates.push_back(obj);
-		if (dynamic_cast<Stair*>(obj))
-			listStairs.push_back(obj);
-		if (dynamic_cast<Brick*>(obj))
-			listObjects.push_back(obj);
-		if (dynamic_cast<Golem*>(obj))
-			listEnemies.push_back(obj);
-		if (dynamic_cast<Gunner*>(obj))
-			listEnemies.push_back(obj);
-		if (dynamic_cast<Centipede*>(obj))
-			listEnemies.push_back(obj);
-		if (dynamic_cast<Domes*>(obj))
-			listEnemies.push_back(obj);
-		if (dynamic_cast<Floaters*>(obj))
-			listEnemies.push_back(obj);
-		if (dynamic_cast<Insect*>(obj))
-			listEnemies.push_back(obj);*/
 		if (dynamic_cast<Gate*>(listObjectLoad[i]))
 			listGates.push_back(listObjectLoad[i]);
 		if (dynamic_cast<GateV2*>(listObjectLoad[i]))
@@ -212,6 +190,7 @@ void PlayScene::ChooseMap(int whatMap)
 	}
 	else
 		grid->Reset(mapWidth, mapHeight);
+	totalObjectsIntoGrid.clear();
 	LoadSceneObjects();
 }
 
@@ -244,7 +223,7 @@ void PlayScene::PlayerGotGate()
 				player->SetState(tempState);
 
 			}
-			if (sophia->IsCollidingObject(listGates[i]))
+			else if (sophia->IsCollidingObject(listGates[i]))
 			{
 				Gate* gate = dynamic_cast<Gate*>(listGates[i]);
 				if (gate->typePlayer==2)
@@ -866,9 +845,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		
 		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
 		//totalObjectsIntoGrid.push_back(obj);
-		//listUnits.push_back(unit);
 		DebugOut(L"[test] add brick %d !\n", (int)(x/ (SCREEN_WIDTH/2)));
 		break;
 	}
@@ -884,9 +861,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		int camY = atoi(tokens[10].c_str());
 		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer, camX, camY);
 		//listGates.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
 		totalObjectsIntoGrid.push_back(obj);
-		//listUnits.push_back(unit);
 		DebugOut(L"[test] add gate %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -898,8 +873,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float newCamYGo = atoi(tokens[5].c_str());
 		float newCamYBack = atoi(tokens[6].c_str());
 		obj = new GateV2(x, y, newCamXGo, newCamXBack, newCamYGo, newCamYBack, direct);
-		//unit = new Unit(grid, obj, x, y);
-		//listUnits.push_back(unit);
 		//listGates.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add gatev2 %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
@@ -909,8 +882,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new Stair(x, y);
 		//listStairs.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
-		//listUnits.push_back(unit);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add gatev2 %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
@@ -923,8 +894,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
-		//listUnits.push_back(unit);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Golem %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -937,9 +906,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
 		totalObjectsIntoGrid.push_back(obj);
-		//listUnits.push_back(unit);
 		DebugOut(L"[test] add Gunner %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -952,8 +919,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
-		//listUnits.push_back(unit);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add centipede %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -966,8 +931,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
-		//listUnits.push_back(unit);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add domes %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -981,9 +944,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
 		totalObjectsIntoGrid.push_back(obj);
-		//listUnits.push_back(unit);
 		DebugOut(L"[test] add floaters %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -996,9 +957,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
-		//unit = new Unit(grid, obj, x, y);
 		totalObjectsIntoGrid.push_back(obj);
-		//listUnits.push_back(unit);
 		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
@@ -1127,7 +1086,6 @@ void PlayScene::LoadSceneObjects()
 		case SCENE_SECTION_CLEARANIMATIONS: _ParseSection_CLEARANIMATIONS(line); break;
 		case SCENE_SECTION_CLEARANIMATION_SETS: _ParseSection_CLEARANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
-		//case SCENE_SECTION_TILEMAP:	_ParseSection_TILEMAP(line); break;
 		}
 	}
 
@@ -1141,12 +1099,12 @@ void PlayScene::LoadSceneObjects()
 
 void PlayScene::Unload()
 {
-	for (int i = 0; i < listObjectLoad.size(); i++)
-		delete listObjectLoad[i];
-	listObjectLoad.clear();
-	for (int i = 0; i < totalObjectsIntoGrid.size(); i++)
-		delete totalObjectsIntoGrid[i];
-	totalObjectsIntoGrid.clear();
+	//for (int i = 0; i < listObjectLoad.size(); i++)
+		//delete listObjectLoad[i];
+	//listObjectLoad.clear();
+	//for (int i = 0; i < totalObjectsIntoGrid.size(); i++)
+		//delete totalObjectsIntoGrid[i];
+	//totalObjectsIntoGrid.clear();
 	for (int i = 0; i < listObjects.size(); i++)
 		delete listObjects[i];
 	listObjects.clear();

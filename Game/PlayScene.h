@@ -42,7 +42,6 @@ class PlayScene : public Scene
 {
 private:
 	Grid* grid;
-	//Unit* unit;
 public:
 	int typeScene = 1;
 	float oldPosX;
@@ -84,7 +83,6 @@ protected:
 	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
-	//vector<LPUNIT> listUnits;
 	vector<LPGAMEENTITY> totalObjectsIntoGrid;
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;

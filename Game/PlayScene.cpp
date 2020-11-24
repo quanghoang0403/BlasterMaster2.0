@@ -137,14 +137,20 @@ void PlayScene::LoadBaseObjects()
 
 void PlayScene::GetObjectFromGrid()
 {
-	//listUnits.clear();
+	//for (int i = 0; i < listObjectLoad.size(); i++)
+		//delete listObjectLoad[i];
 	listObjectLoad.clear();
+	//for (int i = 0; i < listGates.size(); i++)
+	//	delete listGates[i];
 	listGates.clear();
-	listItems.clear();
+	//for (int i = 0; i < listStairs.size(); i++)
+	//	delete listStairs[i];
 	listStairs.clear();
-	listObjects.clear();
+	//for (int i = 0; i < listEnemies.size(); i++)
+	//		delete listEnemies[i];
 	listEnemies.clear();
-
+	//for (int i = 0; i < listObjects.size(); i++)
+	//	delete listObjects[i];
 	grid->GetListObject(gameCamera->GetCamx(), gameCamera->GetCamy(), listObjectLoad);
 	//listUnits= grid->GetList(gameCamera->GetCamx(), gameCamera->GetCamy());
 	for (UINT i = 0; i < listObjectLoad.size(); i++)
@@ -176,8 +182,6 @@ void PlayScene::GetObjectFromGrid()
 			listGates.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Stair*>(listObjectLoad[i]))
 			listStairs.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Brick*>(listObjectLoad[i]))
-			listObjects.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Golem*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Gunner*>(listObjectLoad[i]))
@@ -861,9 +865,9 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		
 		//obj->SetAnimationSet(ani_set);
-		//listObjects.push_back(obj);
+		listObjects.push_back(obj);
 		//unit = new Unit(grid, obj, x, y);
-		totalObjectsIntoGrid.push_back(obj);
+		//totalObjectsIntoGrid.push_back(obj);
 		//listUnits.push_back(unit);
 		DebugOut(L"[test] add brick %d !\n", (int)(x/ (SCREEN_WIDTH/2)));
 		break;
@@ -1137,6 +1141,12 @@ void PlayScene::LoadSceneObjects()
 
 void PlayScene::Unload()
 {
+	for (int i = 0; i < listObjectLoad.size(); i++)
+		delete listObjectLoad[i];
+	listObjectLoad.clear();
+	for (int i = 0; i < totalObjectsIntoGrid.size(); i++)
+		delete totalObjectsIntoGrid[i];
+	totalObjectsIntoGrid.clear();
 	for (int i = 0; i < listObjects.size(); i++)
 		delete listObjects[i];
 	listObjects.clear();

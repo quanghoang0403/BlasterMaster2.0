@@ -29,14 +29,6 @@ Grid::Grid(int map_width, int map_height)
 		cells[i].resize(numberOfColumns);
 
 	for (int i = 0; i < numberOfRows; i++)
-	{
-		for (int j = 0; j < numberOfColumns; j++)
-		{
-			cells[i][j].resize(50);
-		}
-	}
-
-	for (int i = 0; i < numberOfRows; i++)
 		for (int j = 0; j < numberOfColumns; j++)
 			cells[i][j].clear();
 }
@@ -82,25 +74,33 @@ void Grid::PushObjectIntoGrid(vector<LPGAMEENTITY> listObj)
 		int col = (int)(listObj[i]->x/ cell_width);
 		int row = (int)(listObj[i]->y / cell_height);
 		cells[row][col].push_back(listObj[i]);
+		DebugOut(L"Them 1 object vo hang %d cot %d \n", row, col);
 	}
 }
 
 void Grid::GetListObject(float camX, float camY, vector<LPGAMEENTITY>& listObj)
 {
+
 	int start_col = (int)(camX / cell_width);
 	int start_row = (int)(camY / cell_height);
+	DebugOut(L" %d %d \n", start_row, start_col);
 	int end_col = start_col + 2;
 	int end_row = start_row + 2;
+
 	if (numberOfRows < end_row)
 		end_row = numberOfRows;
 	if (numberOfColumns < end_col)
 		end_col = numberOfColumns;
-	for (int j = start_col; j < end_col; j++)
+	DebugOut(L" end %d %d \n", end_row, end_col);
+	for (int j = start_col; j <= end_col; j++)
 	{
-		for (int k = start_row; k < end_row; k++)
+		for (int k = start_row; k <= end_row; k++)
 		{
-			for (int i = 0; i < cells[start_row][start_col].size(); i++)
-				listObj.push_back(cells[start_row][start_col][i]);
+			for (int i = 0; i < cells[k][j].size(); i++)
+			{
+				listObj.push_back(cells[k][j][i]);
+				DebugOut(L"them object grid hang %d cot %d thu %d \n", k,j,i);
+			}
 		}
 	}
 }

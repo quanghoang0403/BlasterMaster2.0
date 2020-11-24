@@ -40,6 +40,9 @@ using namespace std;
 
 class PlayScene : public Scene
 {
+private:
+	Grid* grid;
+	//Unit* unit;
 public:
 	int typeScene = 1;
 	float oldPosX;
@@ -81,8 +84,9 @@ protected:
 	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
-	vector<LPGAMEENTITY> listObjectsToGrid;	//Parse Object from file to this, Grid receive this list
-	vector<LPGAMEENTITY> listObjectsFromGrid;	//temp list to transfer from Grid to listObj
+	//vector<LPUNIT> listUnits;
+	vector<LPGAMEENTITY> totalObjectsIntoGrid;
+	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
 	vector<LPCWSTR> listSceneFilePath;
@@ -90,8 +94,7 @@ protected:
 	vector<int> listHeight;
 
 	Camera* gameCamera;
-	Grid* grid;
-	Unit* unit;
+
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;
@@ -120,7 +123,6 @@ public:
 	void PlayerCollideItem();
 	void PlayerGotGateV2();
 	void PlayerTouchStair();
-	void UpdateGrid();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();

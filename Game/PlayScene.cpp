@@ -39,7 +39,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = JASON;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*5);
+	ChooseMap(STAGE_1);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -133,33 +133,64 @@ void PlayScene::LoadBaseObjects()
 		DebugOut(L"[INFO] gunUp CREATED! \n");
 	}
 	gameCamera = Camera::GetInstance();
-	grid = new Grid(mapWidth, mapHeight);
 }
 
 void PlayScene::GetObjectFromGrid()
 {
-	/*listUnits.clear();
-	listObjects.clear();
-	listDoors.clear();
+	//listUnits.clear();
+	listObjectLoad.clear();
+	listGates.clear();
+	listItems.clear();
 	listStairs.clear();
-	listZombie.clear();
+	listObjects.clear();
+	listEnemies.clear();
 
-	grid->Get(game->GetCameraPositon(), listUnits);
-
-	for (UINT i = 0; i < listUnits.size(); i++)
+	grid->GetListObject(gameCamera->GetCamx(), gameCamera->GetCamy(), listObjectLoad);
+	//listUnits= grid->GetList(gameCamera->GetCamx(), gameCamera->GetCamy());
+	for (UINT i = 0; i < listObjectLoad.size(); i++)
 	{
-
-		LPGAMEOBJECT obj = listUnits[i]->GetObj();
-		listObjects.push_back(obj);
-
-		if (dynamic_cast<Door*>(obj))
-			listDoors.push_back(obj);
+		//LPGAMEENTITY obj = listUnits[i]->GetObj();
+		/*if (dynamic_cast<Gate*>(obj))
+			listGates.push_back(obj);
+		if (dynamic_cast<GateV2*>(obj))
+			listGates.push_back(obj);
 		if (dynamic_cast<Stair*>(obj))
 			listStairs.push_back(obj);
-		if (dynamic_cast<Zombie*>(obj))
-			listZombie.push_back(obj);
-
-	}*/
+		if (dynamic_cast<Brick*>(obj))
+			listObjects.push_back(obj);
+		if (dynamic_cast<Golem*>(obj))
+			listEnemies.push_back(obj);
+		if (dynamic_cast<Gunner*>(obj))
+			listEnemies.push_back(obj);
+		if (dynamic_cast<Centipede*>(obj))
+			listEnemies.push_back(obj);
+		if (dynamic_cast<Domes*>(obj))
+			listEnemies.push_back(obj);
+		if (dynamic_cast<Floaters*>(obj))
+			listEnemies.push_back(obj);
+		if (dynamic_cast<Insect*>(obj))
+			listEnemies.push_back(obj);*/
+		if (dynamic_cast<Gate*>(listObjectLoad[i]))
+			listGates.push_back(listObjectLoad[i]);
+		if (dynamic_cast<GateV2*>(listObjectLoad[i]))
+			listGates.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Stair*>(listObjectLoad[i]))
+			listStairs.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Brick*>(listObjectLoad[i]))
+			listObjects.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Golem*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Gunner*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Centipede*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Domes*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Floaters*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<Insect*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+	}
 }
 
 void PlayScene::ChooseMap(int whatMap)
@@ -170,9 +201,14 @@ void PlayScene::ChooseMap(int whatMap)
 	sceneFilePath = listSceneFilePath[convertSimple - 1];
 	mapWidth = listWidth[idStage / STAGE_1 - 1];
 	mapHeight = listHeight[idStage / STAGE_1 - 1];
-	grid->Reset(mapWidth, mapHeight);
+	if (grid == NULL)
+	{
+		grid = new Grid(mapWidth, mapHeight);
+		DebugOut(L"[INFO] GRID CREATED! \n");
+	}
+	else
+		grid->Reset(mapWidth, mapHeight);
 	LoadSceneObjects();
-
 }
 
 void PlayScene::PlayerGotGate()
@@ -815,6 +851,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 
 	Entity* obj = NULL;
+	//Unit *unit = NULL;
 	switch (object_type)
 	{
 	case OBJECT_TYPE_BRICK:
@@ -824,8 +861,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		
 		//obj->SetAnimationSet(ani_set);
-		listObjects.push_back(obj);
-		DebugOut(L"[test] add brick !\n");
+		//listObjects.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		totalObjectsIntoGrid.push_back(obj);
+		//listUnits.push_back(unit);
+		DebugOut(L"[test] add brick %d !\n", (int)(x/ (SCREEN_WIDTH/2)));
 		break;
 	}
 	case OBJECT_TYPE_GATE:
@@ -839,8 +879,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float camX = atoi(tokens[9].c_str());
 		int camY = atoi(tokens[10].c_str());
 		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer, camX, camY);
-		listGates.push_back(obj);
-		DebugOut(L"[test] add gate !\n");
+		//listGates.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		totalObjectsIntoGrid.push_back(obj);
+		//listUnits.push_back(unit);
+		DebugOut(L"[test] add gate %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_GATEV2:
@@ -851,15 +894,21 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float newCamYGo = atoi(tokens[5].c_str());
 		float newCamYBack = atoi(tokens[6].c_str());
 		obj = new GateV2(x, y, newCamXGo, newCamXBack, newCamYGo, newCamYBack, direct);
-		listGates.push_back(obj);
-		DebugOut(L"[test] add gatev2 !\n");
+		//unit = new Unit(grid, obj, x, y);
+		//listUnits.push_back(unit);
+		//listGates.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add gatev2 %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_STAIR:
 	{
 		obj = new Stair(x, y);
-		listStairs.push_back(obj);
-		DebugOut(L"[test] add gatev2 !\n");
+		//listStairs.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		//listUnits.push_back(unit);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add gatev2 %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
 	case OBJECT_TYPE_GOLEM:
@@ -869,8 +918,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add Golem !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		//listUnits.push_back(unit);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add Golem %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_GUNNER:
@@ -880,8 +932,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add Gunner !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		totalObjectsIntoGrid.push_back(obj);
+		//listUnits.push_back(unit);
+		DebugOut(L"[test] add Gunner %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_CENTIPEDE:
@@ -892,8 +947,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add centipede !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		//listUnits.push_back(unit);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add centipede %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_DOMES:
@@ -903,8 +961,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add domes !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		//listUnits.push_back(unit);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add domes %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_FLOATERS:
@@ -915,8 +976,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add floaters !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		totalObjectsIntoGrid.push_back(obj);
+		//listUnits.push_back(unit);
+		DebugOut(L"[test] add floaters %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_INSECT:
@@ -927,8 +991,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
-		DebugOut(L"[test] add Insect !\n");
+		//listEnemies.push_back(obj);
+		//unit = new Unit(grid, obj, x, y);
+		totalObjectsIntoGrid.push_back(obj);
+		//listUnits.push_back(unit);
+		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
 	default:
@@ -1063,6 +1130,9 @@ void PlayScene::LoadSceneObjects()
 	f.close();
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Resources\\bbox.png", D3DCOLOR_XRGB(255, 255, 0));
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
+	grid->PushObjectIntoGrid(totalObjectsIntoGrid);
+	DebugOut(L"[INFO] Done push object into grid \n");
+
 }
 
 void PlayScene::Unload()
@@ -1357,25 +1427,8 @@ void PlayScene::Update(DWORD dt)
 			sophia->isDoneDeath = false;
 			sophia->isDeath = false;
 		}
-		UpdateGrid();
 	}
 #pragma endregion
-}
-
-void PlayScene::UpdateGrid()
-{
-	/*for (int i = 0; i < listUnits.size(); i++)
-	{
-		LPGAMEOBJECT obj = listUnits[i]->GetObj();
-
-		if (obj->IsEnable() == false)
-			continue;
-
-		float newPos_x, newPos_y;
-		obj->GetPosition(newPos_x, newPos_y);
-		if (dynamic_cast<Zombie*>(obj))
-			listUnits[i]->Move(newPos_x, newPos_y);
-	}*/
 }
 
 void PlayScene::Render()

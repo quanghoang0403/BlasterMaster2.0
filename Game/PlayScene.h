@@ -25,6 +25,7 @@
 #include "Insect.h"
 #include "Orbs.h"
 #include "Skulls.h"
+#include "OrbEz.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

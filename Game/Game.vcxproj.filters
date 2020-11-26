@@ -116,6 +116,9 @@
     <ClCompile Include="BulletSkulls.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="OrbEz.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -234,6 +237,9 @@
     </ClInclude>
     <ClInclude Include="BulletSkulls.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbEz.h">
+      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@
 #define OBJECT_TYPE_INSECT				15
 #define OBJECT_TYPE_ORBS				16
 #define OBJECT_TYPE_SKULLS				17	
+#define OBJECT_TYPE_ORBEZ				18
 
 
 #define DX_GET_OUT_CAR		7
@@ -859,6 +860,16 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		listEnemies.push_back(obj);
 		DebugOut(L"[test] add Skulls !\n");
+		break;
+	}
+	case OBJECT_TYPE_ORBEZ:
+	{
+		obj = new OrbEz(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add OrbEz !\n");
 		break;
 	}
 	default:

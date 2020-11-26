@@ -151,6 +151,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="MiniSophia.h" />
+    <ClInclude Include="OrbEz.h" />
     <ClInclude Include="Orbs.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerV2.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniSophia.cpp" />
+    <ClCompile Include="OrbEz.cpp" />
     <ClCompile Include="Orbs.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerV2.cpp" />

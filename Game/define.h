@@ -75,7 +75,8 @@ enum EnemyType
 	FLOATERS = 5,
 	INSECT = 6,
 	ORBS = 7,
-	SKULLS = 8
+	SKULLS = 8,
+	ORBEZ = 9
 };
 
 
@@ -155,6 +156,7 @@ enum EntityType
 	FLOATERSS = 89,
 	ORBSS = 200,
 	SKULLSS = 201,
+	ORBEZZ,
 
 	//Scene Zone 100-120
 	TITLESCENE = 100,

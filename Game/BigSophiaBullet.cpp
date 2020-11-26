@@ -9,7 +9,7 @@ BigSophiaBullet::BigSophiaBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
-	damage = 8;
+	damage =2;
 	timeDelayed = 0;
 	timeDelayMax = BULLET_DELAY;
 }

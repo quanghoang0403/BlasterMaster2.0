@@ -37,9 +37,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
+	ChooseMap(STAGE_1);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -301,6 +301,11 @@ void PlayScene::PlayerTouchEnemy()
 		{
 			if (player->IsCollidingObject(listEnemies[i]))
 				player->SetInjured(1);
+			if (supBullet->IsCollidingObject(listEnemies[i]))
+			{
+				listEnemies[i]->AddHealth(-1);
+				DebugOut(L"mau quai %d \n", listEnemies[i]->health);
+			}
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
@@ -309,7 +314,7 @@ void PlayScene::PlayerTouchEnemy()
 		}
 		else if (typeSophia == BIG_SOPHIA)
 		{
-			if (playerV2->IsCollidingObject(listEnemies[i])== true)
+			if (playerV2->IsCollidingObject(listEnemies[i]))
 				playerV2->SetInjured(1);
 		}
 	}
@@ -445,9 +450,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
 					if (playScene->listBigBullets[i]->damage <4)
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 +  directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 +  directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
 						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 					//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
 					//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
@@ -458,7 +463,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		supBullet->Fire(1, direction, isTargetTop, x, y);
+		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)

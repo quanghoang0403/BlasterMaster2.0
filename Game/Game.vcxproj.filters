@@ -118,6 +118,10 @@
     <ClCompile Include="IntroScene.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Insect.cpp" />
+    <ClCompile Include="Grid.cpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -235,6 +239,10 @@
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="IntroScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Insect.h" />
+    <ClInclude Include="Grid.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,7 +8,7 @@
 #define ELECTRIC_BULLET_JASON_BBOX_WIDTH	14
 #define ELECTRIC_BULLET_JASON_BBOX_HEIGHT	16
 
-#define ELECTRIC_DELAY	600
+#define ELECTRIC_DELAY	200
 class ElectricBullet : public Bullet
 {
 public:

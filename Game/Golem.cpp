@@ -103,7 +103,6 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			}
 			
 		}
-		
 	}
 	
 	// clean up collision events

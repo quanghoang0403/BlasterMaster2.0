@@ -69,6 +69,7 @@ void Grid::Reset(int map_width, int map_height)
 {
 	this->map_width = map_width;
 	this->map_height = map_height;
+
 	this->numberOfColumns = (int)(map_width / (SCREEN_WIDTH / 2)) + 1;
 	this->numberOfRows = (int)(map_height / (SCREEN_HEIGHT / 2)) + 1;
 

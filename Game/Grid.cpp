@@ -65,6 +65,7 @@ void Grid::GetListObject(float camX, float camY, vector<LPGAMEENTITY>& listObj)
 	}
 }
 
+
 void Grid::Reset(int map_width, int map_height)
 {
 	this->map_width = map_width;

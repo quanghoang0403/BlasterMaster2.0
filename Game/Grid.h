@@ -21,6 +21,5 @@ public:
 	void PushObjectIntoGrid(vector<LPGAMEENTITY> listObj);
 	void GetListObject(float camX, float camY, vector<LPGAMEENTITY>& listObj);
 	void Reset(int map_width, int map_height);
-
 };
 

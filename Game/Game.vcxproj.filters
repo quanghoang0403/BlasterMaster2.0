@@ -106,9 +106,6 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="BrickBreak.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
     <ClCompile Include="Stair.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="LavaBrick.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
@@ -232,9 +232,6 @@
     <ClInclude Include="BulletFloaters.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="BrickBreak.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
     <ClInclude Include="Stair.h">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
@@ -249,6 +246,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="LavaBrick.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker.h">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>

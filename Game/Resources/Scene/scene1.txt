@@ -142,8 +142,6 @@
 14	800	801	9000
 #INSECT
 15	900	9000
-
-
 [OBJECTS]
 # type	x	y	extra_settings per object type	width	height
 # type

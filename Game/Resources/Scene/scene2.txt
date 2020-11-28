@@ -5,13 +5,27 @@
 # Id	FilePath			R	G	B
 [TEXTURES
 # id	left	top	right	bottom	texture_id
+60	Resources/item2.png	255	255	0
 [SPRITES]
+#brick breaker
+4003	70	33	102	49	60
+#bang
+90000	203	155	221	173	60
+90001	253	155	278	173	60
+90002	303	155	321	173	60
 [ANIMATIONS]
+#brick breaker
+501	4003	100
+9000	90000	50	90001	50	90002	50	90002	50
 # id tuan theo define
 [ANIMATION_SETS]
+#brick breaker
+17	501	9000
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 1 = Brick, 2 = Torch, 3 = Gate, 4 = Stairs
+#brick breaker
+
 #viền trái
 1	0	0	22	31	1440
 #viền phải
@@ -85,6 +99,12 @@
 1	256	959	33	32	79
 #dọc cuối
 1	319	1087	33	32	79
+#brick breaker
+17	256	208	17	32	16
+17	256	784	17	32	16
+17	319	912	17	32	16
+17	256	1040	17	32	16
+17	319	1168	17	32	16
 #Gate
 #	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
 #back

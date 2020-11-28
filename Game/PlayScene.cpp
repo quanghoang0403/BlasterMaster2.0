@@ -19,6 +19,7 @@
 #define OBJECT_TYPE_FLOATERS			14
 #define OBJECT_TYPE_INSECT				15
 #define OBJECT_TYPE_LAVA_BRICK			16
+#define OBJECT_TYPE_BREAKER_BRICK		17
 
 
 #define DX_GET_OUT_CAR		7
@@ -40,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*3);
+	ChooseMap(STAGE_1*2);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -174,6 +175,8 @@ void PlayScene::GetObjectFromGrid()
 		if (dynamic_cast<Insect*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 		if (dynamic_cast<LavaBrick*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<BrickBreaker*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 	}
 }
@@ -374,6 +377,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEENTITY> listEnemies = ((PlayScene*)scence)->listEnemies;
+	vector<LPGAMEENTITY> listGates = ((PlayScene*)scence)->listGates;
 	vector<LPGAMEITEM> listItems = ((PlayScene*)scence)->listItems;
 	vector<LPBULLET> listBullets = ((PlayScene*)scence)->listBullets;
 	float x, y;
@@ -484,75 +488,70 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_F6:
 		for (int i = 0; i < listObjects.size(); i++)
 		{
-			if (listObjects[i]->GetBBARGB() == 0)
-				listObjects[i]->SetBBARGB(200);
-			else
-				listObjects[i]->SetBBARGB(0);
+			listObjects[i]->SetBBARGB(200);
+		}
+		for (int i = 0; i < listGates.size(); i++)
+		{
+			listGates[i]->SetBBARGB(200);
 		}
 		for (int i = 0; i < listItems.size(); i++)
 		{
-			if (listItems[i]->GetBBARGB() == 0)
-				listItems[i]->SetBBARGB(200);
-			else
-				listItems[i]->SetBBARGB(0);
+			listItems[i]->SetBBARGB(200);
 		}
 		for (int i = 0; i < listEnemies.size(); i++)
 		{
-			if (listEnemies[i]->GetBBARGB() == 0)
-				listEnemies[i]->SetBBARGB(200);
-			else
-				listEnemies[i]->SetBBARGB(0);
+			listEnemies[i]->SetBBARGB(200);
 		}
 		for (int i = 0; i < playScene->listBigBullets.size(); i++)
 		{
-			if (playScene->listBigBullets[i]->GetBBARGB() == 0)
-				playScene->listBigBullets[i]->SetBBARGB(200);
-			else
-				playScene->listBigBullets[i]->SetBBARGB(0);
+			playScene->listBigBullets[i]->SetBBARGB(200);
 		}
 		for (int i = 0; i < playScene->listGates.size(); i++)
 		{
-			if (playScene->listGates[i]->GetBBARGB() == 0)
-				playScene->listGates[i]->SetBBARGB(200);
-			else
-				playScene->listGates[i]->SetBBARGB(0);
+			playScene->listGates[i]->SetBBARGB(200);
 		}
 
+		player->SetBBARGB(200);
+		playerV2->SetBBARGB(200);
+		sophia->SetBBARGB(200);
+		bullet1->SetBBARGB(200);
+		bullet2->SetBBARGB(200);
+		bullet3->SetBBARGB(200);
+		supBullet->SetBBARGB(200);
+		break;
+	case DIK_F7:
+		for (int i = 0; i < listObjects.size(); i++)
+		{
+			listObjects[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listGates.size(); i++)
+		{
+			listGates[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listItems.size(); i++)
+		{
+			listItems[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < listEnemies.size(); i++)
+		{
+			listEnemies[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < playScene->listBigBullets.size(); i++)
+		{
+			playScene->listBigBullets[i]->SetBBARGB(0);
+		}
+		for (int i = 0; i < playScene->listGates.size(); i++)
+		{
+			playScene->listGates[i]->SetBBARGB(0);
+		}
 
-		if (player->GetBBARGB() == 0)
-			player->SetBBARGB(200);
-		else
-			player->SetBBARGB(0);
-
-		if (playerV2->GetBBARGB() == 0)
-			playerV2->SetBBARGB(200);
-		else
-			playerV2->SetBBARGB(0);
-
-		if (sophia->GetBBARGB() == 0)
-			sophia->SetBBARGB(200);
-		else
-			sophia->SetBBARGB(0);
-
-		if (bullet1->GetBBARGB() == 0)
-			bullet1->SetBBARGB(200);
-		else
-			bullet1->SetBBARGB(0);
-
-		if (bullet2->GetBBARGB() == 0)
-			bullet2->SetBBARGB(200);
-		else
-			bullet2->SetBBARGB(0);
-
-		if (bullet3->GetBBARGB() == 0)
-			bullet3->SetBBARGB(200);
-		else
-			bullet3->SetBBARGB(0);
-
-		if (supBullet->GetBBARGB() == 0)
-			supBullet->SetBBARGB(200);
-		else
-			supBullet->SetBBARGB(0);
+		player->SetBBARGB(0);
+		playerV2->SetBBARGB(0);
+		sophia->SetBBARGB(0);
+		bullet1->SetBBARGB(0);
+		bullet2->SetBBARGB(0);
+		bullet3->SetBBARGB(0);
+		supBullet->SetBBARGB(0);
 		break;
 #pragma endregion
 	}
@@ -978,7 +977,19 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
-		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
+		DebugOut(L"[test] add Lava Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
+		break;
+	}
+	case OBJECT_TYPE_BREAKER_BRICK:
+	{
+		obj = new BrickBreaker();
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		//listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add Breaker Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
 	default:

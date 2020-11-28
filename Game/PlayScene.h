@@ -25,6 +25,7 @@
 #include "Floaters.h"
 #include "Insect.h"
 #include "LavaBrick.h"
+#include "BrickBreaker.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

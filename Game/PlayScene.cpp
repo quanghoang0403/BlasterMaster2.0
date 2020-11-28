@@ -18,6 +18,7 @@
 #define OBJECT_TYPE_DOMES				13
 #define OBJECT_TYPE_FLOATERS			14
 #define OBJECT_TYPE_INSECT				15
+#define OBJECT_TYPE_LAVA_BRICK			16
 
 
 #define DX_GET_OUT_CAR		7
@@ -171,6 +172,8 @@ void PlayScene::GetObjectFromGrid()
 		if (dynamic_cast<Floaters*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Insect*>(listObjectLoad[i]))
+			listEnemies.push_back(listObjectLoad[i]);
+		if (dynamic_cast<LavaBrick*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 	}
 }
@@ -957,6 +960,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new Insect(x, y, player);
 
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		//listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
+		break;
+	}
+	case OBJECT_TYPE_LAVA_BRICK:
+	{
+		obj = new LavaBrick();
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 

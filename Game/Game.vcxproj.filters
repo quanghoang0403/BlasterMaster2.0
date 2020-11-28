@@ -122,6 +122,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="LavaBrick.cpp">
+      <Filter>Header Files\Object\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -244,6 +247,9 @@
     <ClInclude Include="Insect.h" />
     <ClInclude Include="Grid.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LavaBrick.h">
+      <Filter>Header Files\Object\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

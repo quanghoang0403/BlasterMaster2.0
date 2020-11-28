@@ -24,6 +24,7 @@
 #include "Domes.h"
 #include "Floaters.h"
 #include "Insect.h"
+#include "LavaBrick.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

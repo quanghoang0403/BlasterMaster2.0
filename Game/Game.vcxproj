@@ -151,6 +151,7 @@
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
+    <ClInclude Include="LavaBrick.h" />
     <ClInclude Include="MiniSophia.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerV2.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Insect.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LavaBrick.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniSophia.cpp" />
     <ClCompile Include="Player.cpp" />

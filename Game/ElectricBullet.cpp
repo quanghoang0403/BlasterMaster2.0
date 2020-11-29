@@ -85,8 +85,11 @@ void ElectricBullet::Render()
 
 void ElectricBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y + 13;
-	r = x + ELECTRIC_BULLET_JASON_BBOX_WIDTH;
-	b = y + ELECTRIC_BULLET_JASON_BBOX_HEIGHT+13;
+	if (!isDone)
+	{
+		l = x;
+		t = y + 13;
+		r = x + ELECTRIC_BULLET_JASON_BBOX_WIDTH;
+		b = y + ELECTRIC_BULLET_JASON_BBOX_HEIGHT + 13;
+	}
 }

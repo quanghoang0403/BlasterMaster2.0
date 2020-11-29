@@ -30,6 +30,7 @@
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
 #include "BigSophiaBullet.h"
+#include "ThreeBullet.h"
 
 #include <iostream>
 #include <fstream>
@@ -76,8 +77,8 @@ protected:
 	Bullet* bigBullet2;
 	Bullet* bigBullet3;
 	IntroScene* introScene;
+	ThreeBullet* supBulletThree;
 #pragma endregion
-	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listGates;

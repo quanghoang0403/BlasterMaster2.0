@@ -21,6 +21,7 @@ public:
 	int isCollisionEnemies;
 	float timeDelayed, timeDelayMax;
 	int typeBullet;
+	float oldX, oldY;
 	//0 mini 1 small 2 big
 
 public:
@@ -42,7 +43,11 @@ public:
 		y = posY + DISTANCE_TO_GUN_HEIGHT; 
 		alpha = 255; isDone = false; 
 		isCollisionBrick = 0; 
-		isCollisionEnemies = 0; }
+		isCollisionEnemies = 0; 
+		oldX = posX;
+		oldY = posY;
+	}
+	
 	void BigSophiaFire(int direct, int directY, float posX, float posY, int dame) {
 		direction = direct; 
 		directionY = directY;

@@ -125,6 +125,9 @@
     <ClCompile Include="BrickBreaker.cpp">
       <Filter>Header Files\Object\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="ThreeBullet.cpp">
+      <Filter>Header Files\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="BrickBreaker.h">
       <Filter>Header Files\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreeBullet.h">
+      <Filter>Header Files\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

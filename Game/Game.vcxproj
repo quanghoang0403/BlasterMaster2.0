@@ -164,6 +164,7 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stair.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="ThreeBullet.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +209,7 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="ThreeBullet.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

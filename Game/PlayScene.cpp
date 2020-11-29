@@ -41,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*2);
+	ChooseMap(STAGE_1);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -96,6 +96,11 @@ void PlayScene::LoadBaseObjects()
 	{
 		supBullet = new ElectricBullet();
 		DebugOut(L"[INFO] supBullet CREATED! \n");
+	}
+	if (supBulletThree == NULL)
+	{
+		supBulletThree = new ThreeBullet();
+		DebugOut(L"[INFO] supBulletThree CREATED! \n");
 	}
 	if (bigBullet1 == NULL)
 	{
@@ -374,6 +379,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	Bullet* bullet2 = ((PlayScene*)scence)->bullet2;
 	Bullet* bullet3 = ((PlayScene*)scence)->bullet3;
 	Bullet* supBullet = ((PlayScene*)scence)->supBullet;
+	ThreeBullet* supBulletThree = ((PlayScene*)scence)->supBulletThree;
 	PlayScene* playScene = dynamic_cast<PlayScene*>(scence);
 	vector<LPGAMEENTITY> listObjects = ((PlayScene*)scence)->listObjects;
 	vector<LPGAMEENTITY> listEnemies = ((PlayScene*)scence)->listEnemies;
@@ -471,6 +477,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_X:
 		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		break;
+	case DIK_C:
+		supBulletThree->FireThreeBullet(direction, x, y);
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)
@@ -1394,6 +1403,7 @@ void PlayScene::Update(DWORD dt)
 				player->Update(dt, &listObjects);
 		}
 		supBullet->Update(dt, &listObjects);
+		supBulletThree->Update(dt, &listEnemies);
 		for (int i = 0; i < listBullets.size(); i++)
 			listBullets[i]->Update(dt, &coObjects);
 		for (int i = 0; i < listStairs.size(); i++)
@@ -1465,6 +1475,7 @@ void PlayScene::Render()
 		if (typeSophia == MINI_SOPHIA)
 			sophia->Render();
 		supBullet->Render();
+		supBulletThree->Render();
 		for (int i = 0; i < listBullets.size(); i++)
 			listBullets[i]->Render();
 		for (int i = 0; i < listEnemies.size(); i++)

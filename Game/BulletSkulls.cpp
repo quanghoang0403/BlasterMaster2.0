@@ -22,7 +22,7 @@ void BulletSkulls::Render()
 		aniBullet = CAnimations::GetInstance()->Get(BULLET_SKULLS_ANI_BANG);
 		RenderBoundingBox();
 		aniBullet->OldRender(x, y);
-		if (CAnimations::GetInstance()->Get(BULLET_SKULLS_ANI_BANG)->GetFrame() == 3) //Luc nay no bang 3 hoai, phai cho no bang 0 tip
+		if (CAnimations::GetInstance()->Get(BULLET_SKULLS_ANI_BANG)->GetFrame() == 3) 
 		{
 			isFinish = 1;
 			return;
@@ -110,6 +110,7 @@ void BulletSkulls::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	
 			
 	}
+	for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void BulletSkulls::GetBoundingBox(float& left, float& top, float& right, float& bottom)

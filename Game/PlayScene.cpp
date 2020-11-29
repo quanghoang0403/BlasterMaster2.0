@@ -20,6 +20,7 @@
 #define OBJECT_TYPE_ORBS				16
 #define OBJECT_TYPE_SKULLS				17	
 #define OBJECT_TYPE_ORBEZ				18
+#define OBJECT_TYPE_MINES				19
 
 
 #define DX_GET_OUT_CAR		7
@@ -872,6 +873,16 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add OrbEz !\n");
 		break;
 	}
+	case OBJECT_TYPE_MINES:
+	{
+		obj = new Mines(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Mines !\n");
+		break;
+	}
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
@@ -1268,7 +1279,7 @@ void PlayScene::Update(DWORD dt)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
 		{
-			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS || listEnemies[i]->GetType() == EntityType::SKULLSS)
+			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS || listEnemies[i]->GetType() == EntityType::SKULLSS || listEnemies[i]->GetType() == EntityType::MINESS)
 			{
 				if (listEnemies[i]->CheckBulletEnemy == 1)
 				{
@@ -1278,6 +1289,7 @@ void PlayScene::Update(DWORD dt)
 				if (listEnemies[i]->IsCollidingObject(player))
 					listEnemies[i]->CheckColisionEnemy = 1;
 			}
+
 			listEnemies[i]->Update(dt, &listObjects);
 		}
 			

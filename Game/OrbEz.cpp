@@ -32,18 +32,7 @@ void OrbEz::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
 
-	if (TimerRotation->IsTimeUp())
-	{
 	
-		TimerRotation->Reset();
-		TimerRotation->Start();
-		isRotation = 1;
-		SetState(ORBEZ_STATE_FLY_ROTATE_RIGHT360);
-	}
-	else if (ani == ORBEZ_ANI_FLY_RIGHT && !isRotation)
-	{
-		SetState(ORBEZ_STATE_FLY_RIGHT);
-	}
 	
 
 #pragma region Xử lý tiền va chạm
@@ -232,4 +221,28 @@ void OrbEz::SetState(int state)
 
 void OrbEz::Activation()
 {
+	if (!isActive)
+	{
+		vx = 0;
+		vy = 0;
+	}
+	else
+	{
+		if (TimerRotation->IsTimeUp())
+		{
+
+			TimerRotation->Reset();
+			TimerRotation->Start();
+			isRotation = 1;
+			SetState(ORBEZ_STATE_FLY_ROTATE_RIGHT360);
+		}
+		else if (ani == ORBEZ_ANI_FLY_RIGHT && !isRotation)
+		{
+			SetState(ORBEZ_STATE_FLY_RIGHT);
+		}
+	}
+	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= ORBEZ_SITEACTIVE_PLAYER && !isActive)
+	{
+		isActive = true;
+	}
 }

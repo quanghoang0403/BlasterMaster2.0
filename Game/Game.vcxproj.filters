@@ -119,6 +119,12 @@
     <ClCompile Include="OrbEz.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMines.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -240,6 +246,12 @@
     </ClInclude>
     <ClInclude Include="OrbEz.h">
       <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mines.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMines.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

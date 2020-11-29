@@ -26,6 +26,7 @@
 #include "Orbs.h"
 #include "Skulls.h"
 #include "OrbEz.h"
+#include "Mines.h"
 
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"

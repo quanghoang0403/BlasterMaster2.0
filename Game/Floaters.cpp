@@ -160,8 +160,12 @@ void Floaters::Render()
 	int ani;
 	if (health <= 0)
 	{
+	
 		ani = FLOATERS_ANI_DIE;
 		animationSet->at(ani)->OldRender(x, y);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(FLOATERS_STATE_DIE);
 	}
 	else if (delayTimeranishot->IsTimeUp())
 	{

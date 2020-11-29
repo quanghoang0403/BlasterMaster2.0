@@ -408,7 +408,7 @@ Resources/Scene/scene2.txt	527	1315
 #Stage3
 Resources/Scene/scene3.txt	545	277
 #Stage4
-Resources/Scene/scene4.txt	520	1023
+Resources/Scene/scene4.txt	520	1028
 #Stage5
 Resources/Scene/scene5.txt	516	1800
 #Stage6

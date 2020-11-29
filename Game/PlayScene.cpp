@@ -41,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*7);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -1185,7 +1185,7 @@ void PlayScene::Update(DWORD dt)
 	float cx, cy;
 	mapWidth = listWidth[idStage / STAGE_1 - 1];
 	mapHeight = listHeight[idStage / STAGE_1 - 1];
-	if (typeScene == -1)
+	if (typeScene == END)
 	{
 		if (posX < (509-270))
 		{
@@ -1218,33 +1218,36 @@ void PlayScene::Update(DWORD dt)
 						cx -= SCREEN_WIDTH / 2;
 				}
 
-				if (cy + SCREEN_HEIGHT >= mapHeight)
+				if (cy + SCREEN_HEIGHT/1.85 >= mapHeight)
 				{
-
+					DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
 					cy = mapHeight - SCREEN_HEIGHT;
 					posY = cy;
 				}
 				else
 				{
-					if (player->Gety() < SCREEN_HEIGHT / 3)
+					//DebugOut(L"player->Gety() %f \n", player->Gety());
+					if (cy < (SCREEN_HEIGHT / 4))
 					{
 						posY = 0;
+						//DebugOut(L"pos y = 0");
 					}
 					else
 					{
+						//DebugOut(L"toa do cam y %f \n ", posY);
 						//DebugOut(L"cy - posY %f \n", cy - posY);
 						if ((cy - posY) < (SCREEN_HEIGHT / 4))
 						{
 							posY -= SPEED_CAM_WORLD1 * dt;
+							//DebugOut(L"len cam");
 						}
 						if ((cy - posY) > (SCREEN_HEIGHT / 2))
 						{
 							posY += SPEED_CAM_WORLD1 * dt;
+							//DebugOut(L"xuong cam");
 						}
 					}
 				}
-				//DebugOut(L"toa do cam x %f \n ", cx);
-				//DebugOut(L"toa do cam y %f \n ", posY);
 				gameCamera->SetCamPos(cx, posY);
 			}
 
@@ -1269,8 +1272,8 @@ void PlayScene::Update(DWORD dt)
 					else
 						cx -= SCREEN_WIDTH / 2;
 				}
-
-				if (posY + SCREEN_HEIGHT >= mapHeight)
+				//sophia->Gety() + SCREEN_HEIGHT/3 >= mapHeight
+				if (cy + SCREEN_HEIGHT >= mapHeight)
 				{
 
 					cy = mapHeight - SCREEN_HEIGHT;

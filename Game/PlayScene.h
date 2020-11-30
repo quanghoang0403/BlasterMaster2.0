@@ -37,11 +37,10 @@
 #include "ThreeBullet.h"
 
 #include "BulletEnemy.h"
-
 #include <iostream>
 #include <fstream>
 
-#include"Entity.h"
+#include "Entity.h"
 #include "IntroScene.h"
 #include "Grid.h"
 

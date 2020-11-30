@@ -23,8 +23,8 @@
 #define OBJECT_TYPE_ORBEZ				18
 #define OBJECT_TYPE_MINES				19
 
-#define OBJECT_TYPE_LAVA_BRICK			16
-#define OBJECT_TYPE_BREAKER_BRICK		17
+#define OBJECT_TYPE_LAVA_BRICK			160
+#define OBJECT_TYPE_BREAKER_BRICK		170
 
 
 #define DX_GET_OUT_CAR		7
@@ -46,7 +46,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*2);
 
 }
 
@@ -175,8 +175,8 @@ void PlayScene::GetObjectFromGrid()
 			listStairs.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Golem*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Gunner*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
+		//if (dynamic_cast<Gunner*>(listObjectLoad[i]))
+		//	listEnemies.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Centipede*>(listObjectLoad[i]))
 			listEnemies.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Domes*>(listObjectLoad[i]))
@@ -923,18 +923,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Golem %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
-	case OBJECT_TYPE_GUNNER:
-	{
-		obj = new Gunner();
-		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+	//case OBJECT_TYPE_GUNNER:
+	//{
+	//	obj = new Gunner();
+	//	obj->SetPosition(x, y);
+	//	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
-		obj->SetAnimationSet(ani_set);
-		//listEnemies.push_back(obj);
-		totalObjectsIntoGrid.push_back(obj);
-		DebugOut(L"[test] add Gunner %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
-		break;
-	}
+	//	obj->SetAnimationSet(ani_set);
+	//	//listEnemies.push_back(obj);
+	//	totalObjectsIntoGrid.push_back(obj);
+	//	DebugOut(L"[test] add Gunner %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
+	//	break;
+	//}
 	case OBJECT_TYPE_CENTIPEDE:
 	{
 		//obj = new Centipede(x,y,player);

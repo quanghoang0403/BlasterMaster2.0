@@ -137,6 +137,11 @@ bool Entity::IsCollidingObject(Entity* Obj)
 
 
 
+D3DXVECTOR2 Entity::GetPosCam()
+{
+	return D3DXVECTOR2(x,y);
+}
+
 RECT Entity::GetBBox()
 {
 	float left, top, right, bottom;

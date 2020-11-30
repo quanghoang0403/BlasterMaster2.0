@@ -64,9 +64,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Gunner.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
@@ -127,6 +124,28 @@
     </ClCompile>
     <ClCompile Include="ThreeBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickBreak.cpp" />
+    <ClCompile Include="GateV2.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="Orbs.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skulls.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSkulls.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbEz.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMines.cpp">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +215,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Gunner.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -256,6 +272,27 @@
     </ClInclude>
     <ClInclude Include="ThreeBullet.h">
       <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreak.h" />
+    <ClInclude Include="GateV2.h" />
+    <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="Orbs.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skulls.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSkulls.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbEz.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mines.h">
+      <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMines.h">
+      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

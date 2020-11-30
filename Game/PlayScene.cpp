@@ -18,6 +18,11 @@
 #define OBJECT_TYPE_DOMES				13
 #define OBJECT_TYPE_FLOATERS			14
 #define OBJECT_TYPE_INSECT				15
+#define OBJECT_TYPE_ORBS				16
+#define OBJECT_TYPE_SKULLS				17	
+#define OBJECT_TYPE_ORBEZ				18
+#define OBJECT_TYPE_MINES				19
+
 #define OBJECT_TYPE_LAVA_BRICK			16
 #define OBJECT_TYPE_BREAKER_BRICK		17
 
@@ -41,7 +46,8 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*2);
+	ChooseMap(STAGE_1);
+
 }
 
 void PlayScene::LoadBaseObjects()
@@ -308,6 +314,7 @@ void PlayScene::PlayerTouchEnemy()
 {
 	for (UINT i = 0; i < listEnemies.size(); i++)
 	{
+		
 		if (typeSophia == JASON)
 		{
 			if (player->IsCollidingObject(listEnemies[i]))
@@ -329,6 +336,8 @@ void PlayScene::PlayerTouchEnemy()
 				playerV2->SetInjured(1);
 		}
 	}
+
+
 }
 
 void PlayScene::PlayerCollideItem()
@@ -1001,6 +1010,50 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Breaker Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
+	case OBJECT_TYPE_ORBS:
+	{
+		obj = new Orbs(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Orbs !\n");
+		break;
+	}
+	case OBJECT_TYPE_SKULLS:
+	{
+		obj = new Skulls(x, y, player);
+
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Skulls !\n");
+		break;
+	}
+	case OBJECT_TYPE_ORBEZ:
+	{
+		obj = new OrbEz(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add OrbEz !\n");
+		break;
+	}
+	case OBJECT_TYPE_MINES:
+	{
+		obj = new Mines(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		listEnemies.push_back(obj);
+		DebugOut(L"[test] add Mines !\n");
+		break;
+	}
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
@@ -1418,7 +1471,21 @@ void PlayScene::Update(DWORD dt)
 		for (int i = 0; i < listItems.size(); i++)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
+		{
+			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS || listEnemies[i]->GetType() == EntityType::SKULLSS || listEnemies[i]->GetType() == EntityType::MINESS)
+			{
+				if (listEnemies[i]->CheckBulletEnemy == 1)
+				{
+					player->SetInjured(1);
+					listEnemies[i]->CheckBulletEnemy = 0;
+				}
+				if (listEnemies[i]->IsCollidingObject(player))
+					listEnemies[i]->CheckColisionEnemy = 1;
+			}
+
 			listEnemies[i]->Update(dt, &listObjects);
+		}
+			
 		if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
 		{
 			Unload();

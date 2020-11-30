@@ -3,19 +3,18 @@
 
 BulletFloaters::BulletFloaters(float _x, float _y, float _posRight, float _posBottom, float _postargetLeft, float _postargetTop, float _postargetRight, float _postargetBottom)
 {
-	
 	tag = BULLETENEMY = BULLETFLOATERS;
+	
 	isFinish = false;
-	posRight = _posRight;
+	/*posRight = _posRight;
 	posBottom = _posBottom;
 	postargetLeft = _postargetLeft; 
 	postargetTop = _postargetTop; 
 	postargetRight = _postargetRight;
-	postargetBottom = _postargetBottom;
-	
-	isStart = 0;
-	aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI);
-	RenderSpeedFollowTarget(_x, _y);
+	postargetBottom = _postargetBottom;*/
+	_isFinish = 0;
+	aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_FLY);
+	RenderSpeedFollowTarget(_x, _y, _posRight, _posBottom, _postargetLeft, _postargetRight, _postargetTop, _postargetBottom, LOATERS_BULLET_SPEED);
 }
 
 void BulletFloaters::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -47,35 +46,37 @@ void BulletFloaters::SetCenterBoundingBox(float& x, float& y, float _posLeft, fl
 {
 	x = (_posLeft + _posRight) / 2;
 	y = (_posTop + _posBottom) / 2;
-	
 }
 
 void BulletFloaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
 	
-	
-	if (!isFinish)
+	if (!_isFinish)
 	{
 		vx = RenderVx;
 		vy = RenderVy;
 	}
-	
-	if (isFinish) { vx = 0; vy = 0; return; }
-	
+	else
+	{
+		vx = 0;
+		vy = 0;
+	}
+		
+
 #pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-	vector<LPGAMEENTITY> bricks;
+	vector<LPGAMEENTITY> collision;
 
 	coEvents.clear();
-	bricks.clear();
+	collision.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == EntityType::BRICK)
-			bricks.push_back(coObjects->at(i));
+		if (coObjects->at(i)->GetType() == EntityType::BRICK || coObjects->at(i)->GetType() == EntityType::PLAYER)
+			collision.push_back(coObjects->at(i));
 
 	// turn off collision when die 
-	CalcPotentialCollisions(&bricks, coEvents);
+	CalcPotentialCollisions(&collision, coEvents);
 
 #pragma endregion
 
@@ -95,28 +96,50 @@ void BulletFloaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-		isFinish = 1;
+						
+		if (!nx || !ny)
+			_isFinish = 1;
+							
 	}
-
 	for (int i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void BulletFloaters::RenderSpeedFollowTarget(float _x, float _y)
+void BulletFloaters::RenderSpeedFollowTarget(float _posLeft, float _posTop,
+												float _posRight, 
+												float _posBottom, 
+												float _postargetLeft,		
+												float _postargetRight, 
+												float _postargetTop, 
+												float _postargetBottom, 
+												float _BULLET_SPEED)
 {
-	SetCenterBoundingBox(x, y, _x, _y, posRight, posBottom);
+	SetCenterBoundingBox(x, y, _posLeft, _posTop, _posRight, _posBottom);
 	posBullet = D3DXVECTOR2(x, y);
-	focus = CreatePosFollowTarget(D3DXVECTOR2((postargetLeft + postargetRight) / 2, (postargetTop + postargetBottom) / 2), posBullet);
-	vx = 0;
-	vy = 0;
-	posBullet = RadialMovement(focus, posBullet, LOATERS_BULLET_SPEED);
-	RenderVx = posBullet.x/13;
-	RenderVy = posBullet.y/13;
+	focus = CreatePosFollowTarget(D3DXVECTOR2((_postargetLeft + _postargetRight) / 2, (_postargetTop + _postargetBottom) / 2), posBullet);
+	posBullet = RadialMovement(focus, posBullet, _BULLET_SPEED);
+	RenderVx = posBullet.x/14;
+	RenderVy = posBullet.y/14;
 }
-
 
 
 void BulletFloaters::Render()
 {
-	RenderBoundingBox();
-	aniBullet->OldRender(x, y);
+	if (_isFinish)
+	{
+		aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_BANG);
+		RenderBoundingBox();
+		aniBullet->OldRender(x, y);
+		if (CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_BANG)->GetFrame() == 3) //Luc nay no bang 3 hoai, phai cho no bang 0 tip
+		{
+			isFinish = 1;
+			return;
+		}
+	}
+	else
+	{
+		aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_FLY);
+		RenderBoundingBox();
+		aniBullet->OldRender(x, y);
+	}
+		
 }

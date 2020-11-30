@@ -6,6 +6,7 @@ void Floaters::GetBoundingBox(float& left, float& top, float& right, float& bott
 	top = y;
 	right = x + FLOATERS_BBOX_WIDTH;
 	bottom = y + FLOATERS_BBOX_HEIGHT;
+	
 }
 
 
@@ -13,6 +14,7 @@ void Floaters::GetBoundingBox(float& left, float& top, float& right, float& bott
 Floaters::Floaters(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = FLOATERS;
+	tag = FLOATERSS;
 	this->x = x;
 	this->y = y;
 	this->target = t;
@@ -24,6 +26,7 @@ Floaters::Floaters(float x, float y, LPGAMEENTITY t)
 	SetState(FLOATERS_STATE_FLY);
 	vx = vxR;
 	vy = vyR;
+	CheckBulletEnemy = 0;
 	
 }
 
@@ -70,7 +73,7 @@ int Floaters::randomTimeAttack()
 void Floaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
 	Entity::Update(dt);
-
+#pragma region Xử lý bullet
 	if (delayTimer->IsTimeUp())
 	{
 		Attack();
@@ -85,12 +88,15 @@ void Floaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 	for (int i = 0; i < bullet.size(); i++)
 	{
+		if (target->IsCollidingObject(bullet.at(i)))
+		{
+			CheckBulletEnemy = 1;
+		}
 		bullet.at(i)->Update(dt, coObjects);
 		if (bullet.at(i)->IsFinish())
 			bullet.erase(bullet.begin() + i);
 	}
-	
-	
+#pragma endregion
 
 #pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -154,8 +160,12 @@ void Floaters::Render()
 	int ani;
 	if (health <= 0)
 	{
+	
 		ani = FLOATERS_ANI_DIE;
 		animationSet->at(ani)->OldRender(x, y);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(FLOATERS_STATE_DIE);
 	}
 	else if (delayTimeranishot->IsTimeUp())
 	{

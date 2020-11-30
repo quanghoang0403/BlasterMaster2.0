@@ -20,10 +20,14 @@
 
 #include "Centipede.h"
 #include "Golem.h"
-#include "Gunner.h"
 #include "Domes.h"
 #include "Floaters.h"
 #include "Insect.h"
+#include "Orbs.h"
+#include "Skulls.h"
+#include "OrbEz.h"
+#include "Mines.h"
+
 #include "LavaBrick.h"
 #include "BrickBreaker.h"
 
@@ -31,6 +35,8 @@
 #include "ElectricBullet.h"
 #include "BigSophiaBullet.h"
 #include "ThreeBullet.h"
+
+#include "BulletEnemy.h"
 
 #include <iostream>
 #include <fstream>
@@ -90,6 +96,9 @@ protected:
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
+	
+	
+
 	vector<LPCWSTR> listSceneFilePath;
 	vector<int> listWidth;
 	vector<int> listHeight;

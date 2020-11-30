@@ -35,6 +35,7 @@ Player* Player::GetInstance()
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
+
 	//DebugOut(L"x: %f \n", x);
 	//DebugOut(L"x: %f \n", y);
 	if (isDoneDeath)
@@ -139,6 +140,8 @@ void Player::SetInjured(int dame)
 	immortalTimer->Start();
 	isImmortaling = true;
 }
+
+
 
 void Player::Render()
 {
@@ -378,3 +381,4 @@ void Player::Reset()
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
 }
+

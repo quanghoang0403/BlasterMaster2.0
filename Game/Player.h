@@ -123,6 +123,7 @@ public:
 	void SetPressSpace(bool isPress) { isPressJump = isPress; }
 	void SetPressUp(bool a) { isPressFlipGun = a; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_JASON_BBOX_WIDTH / 2; y = this->y + SOPHIA_JASON_BBOX_HEIGHT / 2; }
 	bool isGunFlippingg() { return isGunFlipping; }
 	void Setvx(float vx) { vx = vx; }
@@ -134,8 +135,10 @@ public:
 	int GetX() { return x; }
 	int GetY() { return y; }
 	
+	
 		
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }
 	void SetInjured(int dame);
+	
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -28,9 +28,13 @@
 #include "OrbEz.h"
 #include "Mines.h"
 
+#include "LavaBrick.h"
+#include "BrickBreaker.h"
+
 #include "MainJasonBullet.h"
 #include "ElectricBullet.h"
 #include "BigSophiaBullet.h"
+#include "ThreeBullet.h"
 
 #include "BulletEnemy.h"
 
@@ -39,11 +43,14 @@
 
 #include"Entity.h"
 #include "IntroScene.h"
+#include "Grid.h"
 
 using namespace std;
 
 class PlayScene : public Scene
 {
+private:
+	Grid* grid;
 public:
 	int typeScene = 1;
 	float oldPosX;
@@ -58,6 +65,7 @@ public:
 	float camMap1X;
 	float camMap1Y;
 	bool tempNeed; 
+	bool isTouchStair;
 	DWORD timeResetCam; 
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
@@ -75,15 +83,17 @@ protected:
 	Bullet* bigBullet2;
 	Bullet* bigBullet3;
 	IntroScene* introScene;
-
-	
+	ThreeBullet* supBulletThree;
 #pragma endregion
-	//Bullet* bulletBigSophia[2];
 	PowerUp* powerUp;
 	GunUp* gunUp;
 	vector<LPGAMEENTITY> listGates;
+	vector<LPGAMEITEM> listItems;
+	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
+	vector<LPGAMEENTITY> totalObjectsIntoGrid;
+	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
 	
@@ -92,7 +102,7 @@ protected:
 	vector<LPCWSTR> listSceneFilePath;
 	vector<int> listWidth;
 	vector<int> listHeight;
-	vector<LPGAMEITEM> listItems;
+
 	Camera* gameCamera;
 
 	int idStage;
@@ -117,18 +127,17 @@ public:
 	void LoadBaseObjects();
 	void LoadBaseTextures();
 	void ChooseMap(int whatStage);
-	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
 	void PlayerGotCar();
 	void PlayerTouchEnemy();
 	void PlayerCollideItem();
 	void PlayerGotGateV2();
+	void PlayerTouchStair();
 	virtual void LoadSceneObjects();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	void LoadIntroScene();
-	void LoadEndScene();
+	void GetObjectFromGrid();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

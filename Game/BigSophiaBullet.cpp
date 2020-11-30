@@ -9,7 +9,7 @@ BigSophiaBullet::BigSophiaBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
-	damage = 8;
+	damage =2;
 	timeDelayed = 0;
 	timeDelayMax = BULLET_DELAY;
 }
@@ -159,16 +159,19 @@ void BigSophiaBullet::Render()
 
 void BigSophiaBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y;
-	if (direction == 0)
+	if (!isDone)
 	{
-		r = x + BIG_SOPHIA_BULLET_BBOX_WIDTH;
-		b = y + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
-	}
-	else
-	{
-		r = x + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
-		b = y + BIG_SOPHIA_BULLET_BBOX_WIDTH;
+		l = x;
+		t = y;
+		if (direction == 0)
+		{
+			r = x + BIG_SOPHIA_BULLET_BBOX_WIDTH;
+			b = y + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
+		}
+		else
+		{
+			r = x + BIG_SOPHIA_BULLET_BBOX_HEIGHT;
+			b = y + BIG_SOPHIA_BULLET_BBOX_WIDTH;
+		}
 	}
 }

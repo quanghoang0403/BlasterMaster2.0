@@ -245,7 +245,6 @@
 
 #MINES
 19	1300	9000
-
 [OBJECTS]
 # type	x	y	extra_settings per object type	width	height
 # type

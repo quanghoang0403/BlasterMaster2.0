@@ -31,7 +31,7 @@ class MainJasonBullet : public Bullet
 public:
 	MainJasonBullet();
 	~MainJasonBullet();
-
+	int isThreeBullet = 0;
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);

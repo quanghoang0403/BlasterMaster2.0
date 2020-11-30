@@ -69,6 +69,9 @@
 28	172	20	186	36	26
 29	153	22	169	36	26
 30	208	22	224	36	26
+#go stair
+31	188	1	200	17	26	
+32	62	1	74	17	26
 ##============ SOPHIA JASON =================
 # idle right
 10001	146	5	172	23	30
@@ -280,6 +283,10 @@
 14	26	70	27	70	28	70	29	70	26	70	27	70	28	70	29	70	26	70	27	70	28	70	29	70	26	300	30	300	30	300
 #jump right
 15	21	100
+#go stair
+16	31	100	32	100
+#idle stair
+17	31	100
 ##JASON=========================
 #idle right
 400	10001	100
@@ -380,7 +387,7 @@
 #BIG SOPHIA
 2	1	2	3	4	5	6	7	8	9
 #SMALL SOPHIA
-3	10	11	12	13	14	15
+3	10	11	12	13	14	15	16	17
 #=== BULLET ======
 #small +big bullet
 4	700	701	702	703	704	710
@@ -401,7 +408,7 @@ Resources/Scene/scene2.txt	527	1315
 #Stage3
 Resources/Scene/scene3.txt	545	277
 #Stage4
-Resources/Scene/scene4.txt	520	1023
+Resources/Scene/scene4.txt	520	1028
 #Stage5
 Resources/Scene/scene5.txt	516	1800
 #Stage6

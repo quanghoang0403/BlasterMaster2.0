@@ -7,8 +7,9 @@
 
 #define SOPHIA_GRAVITY						0.0004f
 #define SOPHIA_MINI_WALKING_SPEED			0.07f 
-#define SOPHIA_MINI_WALKING_ACC				0.00015f
+#define SOPHIA_MINI_WALKING_ACC				0.0003f
 #define SOPHIA_MINI_CRAWLING_SPEED			0.03f 
+#define SOPHIA_MINI_GOSTAIR_SPEED			0.02F
 #define SOPHIA_MINI_JUMP_SPEED_Y			0.15f
 
 #define SOPHIA_ANI_MINI_IDLE_RIGHT				0
@@ -17,6 +18,8 @@
 #define SOPHIA_ANI_MINI_WALKING_CRAWL_RIGHT		3
 #define SOPHIA_ANI_MINI_DIE						4
 #define SOPHIA_ANI_MINI_JUMP					5
+#define SOPHIA_ANI_MINI_GOSTAIR					6
+#define SOPHIA_ANI_MINI_IDLESTAIR				7
 
 #define SOPHIA_MINI_STATE_IDLE			    0
 #define SOPHIA_MINI_STATE_WALKING_RIGHT		100
@@ -29,6 +32,9 @@
 #define SOPHIA_MINI_STATE_OUT				800
 #define SOPHIA_MINI_STATE_CRAWL				900
 #define SOPHIA_MINI_STATE_CRAWL_STOP		1000
+#define SOPHIA_MINI_STATE_UP_STAIR			1100
+#define SOPHIA_MINI_STATE_DOWN_STAIR		1200
+#define SOPHIA_MINI_STATE_IDLE_STAIR		1300
 
 #define MAX_HEALTH						8
 
@@ -47,6 +53,7 @@
 class MiniSophia : public Entity
 {
 public:
+	bool isOnStair = false;
 	bool isDeath;
 	bool isDoneDeath;
 	static MiniSophia* instance;

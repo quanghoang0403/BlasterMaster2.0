@@ -117,6 +117,7 @@ void BigSophiaBullet::Render()
 		}*/
 		isDone = true;
 		timeDelayed = 0;
+		isCountBack = false;
 	}
 	else
 	{
@@ -142,16 +143,23 @@ void BigSophiaBullet::Render()
 		else if (isCollisionEnemies == 1)
 		{
 			isDone = true;
-			timeDelayed = 0;;
+			timeDelayed = 0;
+			isCountBack = false;
 		}
 		else if (isCollisionBrick == 1)
 		{
 			ani = BULLET_JASON_BANG_ANI;
+			if (!isCountBack)
+			{
+				animationSet->at(ani)->ResetCurrentFrame();
+				isCountBack = true;
+			}
 			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)
 			{
 				isDone = true;
 				timeDelayed = 0;
+				isCountBack = false;
 			}
 		}
 	}

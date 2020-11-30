@@ -46,7 +46,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*2);
+	ChooseMap(STAGE_1);
 
 }
 
@@ -485,7 +485,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		supBullet->Fire(1, direction, isTargetTop, x-3, y + 17);
 		break;
 	case DIK_C:
 		supBulletThree->FireThreeBullet(direction, x, y);
@@ -536,6 +536,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		bullet2->SetBBARGB(200);
 		bullet3->SetBBARGB(200);
 		supBullet->SetBBARGB(200);
+		supBulletThree->OffBoundingBox(200);
 		break;
 	case DIK_F7:
 		for (int i = 0; i < listObjects.size(); i++)
@@ -570,6 +571,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		bullet2->SetBBARGB(0);
 		bullet3->SetBBARGB(0);
 		supBullet->SetBBARGB(0);
+		supBulletThree->OffBoundingBox(0);
 		break;
 #pragma endregion
 	}

@@ -7,8 +7,8 @@ ElectricBullet::ElectricBullet()
 	y = 0;
 	alpha = 0;
 	isCollisionBrick = 0;
-	timeDelayed = 0;
-	timeDelayMax = ELECTRIC_DELAY;
+	//timeDelayed = 0;
+	//timeDelayMax = ELECTRIC_DELAY;
 }
 
 ElectricBullet::~ElectricBullet() {}
@@ -68,19 +68,22 @@ void ElectricBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 
 void ElectricBullet::Render()
 {
-
-	int ani;
-	if (timeDelayed >= timeDelayMax)
+	if (!isDone)
 	{
-		isDone = true;
-		timeDelayed = 0;
-	}
-	else
-	{
-		ani = ELECTRIC_BULLET_ANI_JASON;
+		if (!isCountBack)
+		{
+			animationSet->at(0)->ResetCurrentFrame();
+			isCountBack = true;
+		}
 		animationSet->at(0)->OldRender(x, y, alpha);
+		if (animationSet->at(0)->GetFrame() == 9)
+		{
+			isDone = true;
+			//timeDelayed = 0;
+			isCountBack = false;
+		}
+		RenderBoundingBox();
 	}
-	RenderBoundingBox();
 }
 
 void ElectricBullet::GetBoundingBox(float& l, float& t, float& r, float& b)

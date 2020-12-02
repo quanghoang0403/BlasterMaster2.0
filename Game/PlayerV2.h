@@ -72,8 +72,8 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void GetPositionCenter(float& x, float& y) { x = this->x + SOPHIA_BIG_BBOX_WIDTH / 2; y = this->y + SOPHIA_BIG_BBOX_HEIGHT / 2; }
 	void GetInfoBigSophia(int& direct, int& directY, float& playerx, float& playery, int& dame) { direct = direction; directY = directionY; playerx = x; playery = y; dame = gunDam; }
-	void Setvx(float vx) { vx = vx; }
-	void Setvy(float vy) { vy = vy; }
+	void Setvx(float vx) { this->vx = vx; }
+	void Setvy(float vy) { this->vy = vy; }
 	float GetDy() { return dy; }
 	float Getvy() { return vy; }
 	void Reset();

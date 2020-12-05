@@ -44,7 +44,7 @@ class PlayerV2 : public Entity
 	int untouchable;
 	bool isImmortaling;
 	DWORD untouchable_start;
-
+	bool isGoVertical;
 	Timer* immortalTimer = new Timer(PLAYER_IMMORTAL_DURATION);
 
 	float start_x;

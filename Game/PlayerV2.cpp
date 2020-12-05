@@ -162,14 +162,20 @@ void PlayerV2::Render()
 	{
 		if (vx == 0 && vy == 0)
 		{
-			if (direction > 0)
-				ani = SOPHIA_ANI_BIG_IDLE_RIGHT;
-			else if (direction < 0)
-				ani = SOPHIA_ANI_BIG_IDLE_LEFT;
-			else if (directionY > 0)
-				ani = SOPHIA_ANI_BIG_IDLE_BOT;
-			else if (directionY < 0)
-				ani = SOPHIA_ANI_BIG_IDLE_TOP;
+			if (!isGoVertical)
+			{
+				if (direction > 0)
+					ani = SOPHIA_ANI_BIG_IDLE_RIGHT;
+				else if (direction < 0)
+					ani = SOPHIA_ANI_BIG_IDLE_LEFT;
+			}
+			if (isGoVertical)
+			{
+				if (directionY > 0)
+					ani = SOPHIA_ANI_BIG_IDLE_BOT;
+				else if (directionY < 0)
+					ani = SOPHIA_ANI_BIG_IDLE_TOP;
+			}
 		}
 		else
 		{
@@ -200,21 +206,25 @@ void PlayerV2::SetState(int state)
 	case SOPHIA_BIG_STATE_WALKING_RIGHT:
 		direction = 1;
 		//directionY = 0;
+		isGoVertical = false;
 		vx = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_LEFT:
 		direction = -1;
 		//directionY = 0;
+		isGoVertical = false;
 		vx = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_TOP:
 		//direction = 0;
+		isGoVertical = true;
 		directionY = -1;
 		vy = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_BOT:
 		//direction = 0;
 		directionY = 1;
+		isGoVertical = true;
 		vy = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_DIE:

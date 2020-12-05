@@ -14,7 +14,6 @@ void Skulls::GetBoundingBox(float& left, float& top, float& right, float& bottom
 Skulls::Skulls(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = SKULLS;
-	tag = SKULLSS;
 	this->x = x;
 	this->y = y;
 	this->target = t;

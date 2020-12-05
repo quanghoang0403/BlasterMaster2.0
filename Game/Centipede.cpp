@@ -142,18 +142,33 @@ void Centipede::FollowTarget(LPGAMEENTITY target)
 
 void Centipede::Render()
 {
-	if (vx > 0)
-		direction = 1;
-	else
-		direction = -1;
-
-	int ani = CENTIPEDE_ANI_WALKING;
-	if (state == CENTIPEDE_STATE_DIE) {
+	if (isDeath)
+		return;
+	int ani;
+	if (health <= 0)
+	{
 		ani = CENTIPEDE_ANI_DIE;
+		animationSet->at(ani)->Render(direction, x, y);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(CENTIPEDE_STATE_DIE);
 	}
-	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
-	animationSet->at(ani)->Render(direction, x, y);
-	RenderBoundingBox();
+	else
+	{
+		if (vx > 0)
+			direction = 1;
+		else
+			direction = -1;
+
+		int ani = CENTIPEDE_ANI_WALKING;
+		if (state == CENTIPEDE_STATE_DIE) {
+			ani = CENTIPEDE_ANI_DIE;
+		}
+		//DebugOut(L"[xxxxxx] direction: %s\n", direction);
+		animationSet->at(ani)->Render(direction, x, y);
+		RenderBoundingBox();
+	}
+	
 }
 
 void Centipede::SetState(int state)
@@ -162,9 +177,10 @@ void Centipede::SetState(int state)
 	switch (state)
 	{
 	case CENTIPEDE_STATE_DIE:
-		y += CENTIPEDE_BBOX_HEIGHT - CENTIPEDE_BBOX_HEIGHT_DIE + 1;
+		//y += CENTIPEDE_BBOX_HEIGHT - CENTIPEDE_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
 		vy = 0;
+		isDeath = 1;
 		break;
 	case CENTIPEDE_STATE_WALKING:
 		if (nx > 0)

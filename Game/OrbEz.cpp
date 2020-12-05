@@ -14,7 +14,6 @@ void OrbEz::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 OrbEz::OrbEz(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = ORBEZ;
-	tag = ORBEZZ;
 	this->x = x;
 	this->y = y;
 	this->target = t;

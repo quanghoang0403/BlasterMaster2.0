@@ -22,6 +22,7 @@
 #define OBJECT_TYPE_SKULLS				17	
 #define OBJECT_TYPE_ORBEZ				18
 #define OBJECT_TYPE_MINES				19
+#define OBJECT_TYPE_EYEBALLS			20
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -46,7 +47,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*2);
+	ChooseMap(STAGE_1*1);
 
 }
 
@@ -173,22 +174,10 @@ void PlayScene::GetObjectFromGrid()
 			listGates.push_back(listObjectLoad[i]);
 		if (dynamic_cast<Stair*>(listObjectLoad[i]))
 			listStairs.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Golem*>(listObjectLoad[i]))
+		if (listObjectLoad[i]->tag == ENEMY)
+		{
 			listEnemies.push_back(listObjectLoad[i]);
-		//if (dynamic_cast<Gunner*>(listObjectLoad[i]))
-		//	listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Centipede*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Domes*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Floaters*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<Insect*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<LavaBrick*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
-		if (dynamic_cast<BrickBreaker*>(listObjectLoad[i]))
-			listEnemies.push_back(listObjectLoad[i]);
+		}
 	}
 }
 
@@ -229,11 +218,8 @@ void PlayScene::PlayerGotGate()
 				camMap1X = gate->camPosX;
 				camMap1Y = gate->camPosY;
 				Unload();
-
-				//DebugOut(L"toa do cam x %f \n ", gameCamera->GetCamx());
-				//DebugOut(L"toa do cam y %f \n ", gameCamera->GetCamy());
 				ChooseMap(tempMap);
-
+			
 				player->SetPosition(tempx, tempy);
 				player->Setvx(0);
 				player->Setvy(0);
@@ -322,7 +308,7 @@ void PlayScene::PlayerTouchEnemy()
 			if (supBullet->IsCollidingObject(listEnemies[i]))
 			{
 				listEnemies[i]->AddHealth(-1);
-				DebugOut(L"mau quai %d \n", listEnemies[i]->health);
+				//DebugOut(L"mau quai %d \n", listEnemies[i]->health);
 			}
 		}
 		else if (typeSophia == MINI_SOPHIA)
@@ -428,6 +414,20 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
+		/*playScene->Unload();
+		playScene->ChooseMap(STAGE_1*10);
+		
+
+		playerV2->SetPosition(131, 1905);
+		playerV2->SetHealth(MAX_HEALTH);
+		playerV2->isDoneDeath = false;
+		playerV2->isDeath = false;
+		
+		playScene->directMoveCam = -1;
+		
+		playScene->typeSophia = 2;*/
+
+
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
 		player->SetPosition(30, 60);
@@ -436,6 +436,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		player->isDeath = false;
 		playScene->typeSophia = JASON;
 		break;
+		
+		
 	case DIK_Q:
 		playScene->typeSophia = BIG_SOPHIA;
 		playerV2->SetPosition(30, 60);
@@ -1018,7 +1020,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Orbs !\n");
 		break;
 	}
@@ -1030,7 +1032,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Skulls !\n");
 		break;
 	}
@@ -1040,7 +1042,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add OrbEz !\n");
 		break;
 	}
@@ -1050,8 +1052,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
-		listEnemies.push_back(obj);
+		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Mines !\n");
+		break;
+	}
+	case OBJECT_TYPE_EYEBALLS:
+	{
+		obj = new Eyeballs(x, y, player);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add Eyeballs !\n");
 		break;
 	}
 	default:
@@ -1273,7 +1285,7 @@ void PlayScene::Update(DWORD dt)
 
 				if (cy + SCREEN_HEIGHT/1.85 >= mapHeight)
 				{
-					DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
+					//DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
 					cy = mapHeight - SCREEN_HEIGHT;
 					posY = cy;
 				}
@@ -1472,7 +1484,7 @@ void PlayScene::Update(DWORD dt)
 			listItems[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
 		{
-			if (listEnemies[i]->GetType() == EntityType::FLOATERSS|| listEnemies[i]->GetType() == EntityType::ORBSS || listEnemies[i]->GetType() == EntityType::SKULLSS || listEnemies[i]->GetType() == EntityType::MINESS)
+			if (listEnemies[i]->GetType() == ENEMY)
 			{
 				if (listEnemies[i]->CheckBulletEnemy == 1)
 				{

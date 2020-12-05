@@ -52,18 +52,6 @@
     <ClCompile Include="PowerUp.cpp">
       <Filter>Header Files\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Centipede.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Domes.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Golem.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
@@ -90,9 +78,6 @@
     </ClCompile>
     <ClCompile Include="BigSophiaBullet.cpp">
       <Filter>Header Files\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Floaters.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="BulletEnemy.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
@@ -127,25 +112,43 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="GateV2.cpp" />
     <ClCompile Include="IntroScene.cpp" />
-    <ClCompile Include="Orbs.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Skulls.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="BulletSkulls.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="OrbEz.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Mines.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="BulletMines.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Centipede.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Domes.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Floaters.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Golem.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
     <ClCompile Include="Insect.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbEz.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Orbs.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Skulls.cpp">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Eyeballs.cpp">
+      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -204,18 +207,6 @@
     <ClInclude Include="PowerUp.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Centipede.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Domes.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Golem.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -242,9 +233,6 @@
     </ClInclude>
     <ClInclude Include="BigSophiaBullet.h">
       <Filter>Header Files\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Floaters.h">
-      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="BulletEnemy.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
@@ -275,25 +263,43 @@
     </ClInclude>
     <ClInclude Include="GateV2.h" />
     <ClInclude Include="IntroScene.h" />
-    <ClInclude Include="Orbs.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Skulls.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="BulletSkulls.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="OrbEz.h">
-      <Filter>Header Files\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Mines.h">
-      <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="BulletMines.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Centipede.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Domes.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Floaters.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
     <ClInclude Include="Insect.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Mines.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbEz.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Orbs.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Skulls.h">
+      <Filter>Header Files\Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="Eyeballs.h">
+      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -336,6 +342,12 @@
     </Filter>
     <Filter Include="Header Files\Object\Enemy\BulletEnemy">
       <UniqueIdentifier>{8e4ca3d9-e09e-4217-89d1-70e66554f551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Enemy\OverWorld">
+      <UniqueIdentifier>{054657ce-2d3c-4937-907b-1f47db9ec811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Enemy\Area2">
+      <UniqueIdentifier>{d3525428-439e-4d5a-9f82-def53c993f8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

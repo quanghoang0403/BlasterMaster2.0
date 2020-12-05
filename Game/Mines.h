@@ -27,6 +27,7 @@ class Mines: public Enemy
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();
 	bool CheckColli;
+	
 public:
 
 	Mines(float x, float y, LPGAMEENTITY t);

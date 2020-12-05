@@ -14,13 +14,14 @@ void Floaters::GetBoundingBox(float& left, float& top, float& right, float& bott
 Floaters::Floaters(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = FLOATERS;
-	tag = FLOATERSS;
+	//tag = FLOATERSS;
 	this->x = x;
 	this->y = y;
 	this->target = t;
 	health = FLOATERS_MAXHEALTH;
 	isActive = false;
 	isDamaged = false;
+	isDeath = 0;
 	randomSpeed();
 	delayTimer->Start();
 	SetState(FLOATERS_STATE_FLY);
@@ -35,6 +36,7 @@ void Floaters::Attack()
 	RECT player = target->GetBBox();
 	bullet.push_back(new BulletFloaters(x, y, x + FLOATERS_BBOX_WIDTH, y + FLOATERS_BBOX_HEIGHT, player.left, player.top, player.right, player.bottom));
 	isDamaged = 1;
+	
 }
 
 void Floaters::randomSpeed()
@@ -197,9 +199,10 @@ void Floaters::SetState(int state)
 	switch (state)
 	{
 	case FLOATERS_STATE_DIE:
-		y += FLOATERS_BBOX_HEIGHT - FLOATERS_BBOX_HEIGHT_DIE + 1;
+		//y += FLOATERS_BBOX_HEIGHT - FLOATERS_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
 		vy = 0;
+		isDeath = 1;
 		break;
 			
 	case FLOATERS_STATE_FLY:

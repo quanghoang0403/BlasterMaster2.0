@@ -77,7 +77,9 @@ enum EnemyType
 	ORBS = 7,
 	SKULLS = 8,
 	ORBEZ = 9,
-	MINES = 10
+	MINES = 10,
+	EYEBALLS = 11
+
 };
 
 
@@ -159,6 +161,7 @@ enum EntityType
 	SKULLSS = 201,
 	ORBEZZ = 202,
 	MINESS = 203,
+	EYEBALLSS = 204,
 
 	//Scene Zone 100-120
 	TITLESCENE = 100,

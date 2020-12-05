@@ -14,7 +14,6 @@ void Mines::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 Mines::Mines(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = MINES;
-	tag = MINESS;
 	this->x = x;
 	this->y = y;
 	this->target = t;
@@ -22,7 +21,7 @@ Mines::Mines(float x, float y, LPGAMEENTITY t)
 	health = MINES_MAXHEALTH;
 	isActive = false;
 	CheckColli = 0;
-
+	isDamaged = 0;
 }
 
 void Mines::Attack()
@@ -109,16 +108,16 @@ void Mines::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	if (health == 0 && !CheckColisionEnemy)
+	if (health <= 0 && !CheckColisionEnemy && !isDamaged)
 	{
 		for (int i = 0; i < RandomAttack(); i++)
 			Attack();
 	}
-	else if (health == -1 && !CheckColisionEnemy)
+	/*else if (health == -1 && !CheckColisionEnemy)
 	{
 		for (int i = 0; i < RandomAttack(); i++)
 			Attack();
-	}
+	}*/
 #pragma endregion
 }
 
@@ -127,7 +126,7 @@ void Mines::Render()
 	if (isDeath)
 		return;
 	int ani;
-	if (health == 0 || health == -1)
+	if (health <= 0 && health >= -10)
 	{
 		ani = MINES_ANI_DIE;
 		animationSet->at(ani)->OldRender(x, y);

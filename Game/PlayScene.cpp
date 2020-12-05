@@ -44,9 +44,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
+	ChooseMap(STAGE_1);
 
 }
 
@@ -495,11 +495,14 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			playScene->PlayerGotCar();
 		if (typeSophia == JASON)
 		{
-			playScene->typeSophia = 0;
-			player->SetState(SOPHIA_STATE_OUT);
-			sophia->direction = direction;
-			sophia->SetPosition(x + DX_GET_OUT_CAR, y);
-			sophia->SetState(SOPHIA_MINI_STATE_OUT);
+			if (!player->isJumping)
+			{
+				playScene->typeSophia = 0;
+				player->SetState(SOPHIA_STATE_OUT);
+				sophia->direction = direction;
+				sophia->SetPosition(x + DX_GET_OUT_CAR, y);
+				sophia->SetState(SOPHIA_MINI_STATE_OUT);
+			}
 		}
 		break;
 #pragma region F6
@@ -1316,7 +1319,7 @@ void PlayScene::Update(DWORD dt)
 
 				if (cy + SCREEN_HEIGHT/1.85 >= mapHeight)
 				{
-					DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
+					//DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
 					cy = mapHeight - SCREEN_HEIGHT;
 					posY = cy;
 				}

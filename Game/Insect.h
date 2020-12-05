@@ -26,7 +26,7 @@
 
 #define INSECT_MAXHEALTH			1
 
-#define INSECT_SITEACTIVE_PLAYER	150
+#define INSECT_SITEACTIVE_PLAYER	200
 
 class Insect: public Enemy
 {

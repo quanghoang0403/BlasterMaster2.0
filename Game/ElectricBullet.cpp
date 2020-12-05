@@ -7,6 +7,7 @@ ElectricBullet::ElectricBullet()
 	y = 0;
 	alpha = 0;
 	isCollisionBrick = 0;
+	damage = 2;
 	//timeDelayed = 0;
 	//timeDelayMax = ELECTRIC_DELAY;
 }
@@ -25,43 +26,19 @@ void ElectricBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 		Entity::Update(dt);
 
 #pragma region Xử lý va chạm
-		/*vector<LPCOLLISIONEVENT> coEvents;
-		vector<LPCOLLISIONEVENT> coEventsResult;
-
-		coEvents.clear();
-
-		CalcPotentialCollisions(colliable_objects, coEvents);
-
-		if (coEvents.size() == 0)
+		for (UINT i = 0; i < colliable_objects->size(); i++)
 		{
-			x += dx;
-			y += dy;
-		}
-		else
-		{
-			float min_tx, min_ty, nx = 0, ny;
-			float rdx = 0;
-			float rdy = 0;
-
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-			for (UINT i = 0; i < coEventsResult.size(); i++)
+			if (colliable_objects->at(i)->GetType() == EntityType::ENEMY)
 			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (e->obj->GetType() == EntityType::GATE)
+				if (this->IsCollidingObject(colliable_objects->at(i)))
 				{
-					if (e->nx != 0)
-					{
-						isCollision = 1;
-						x += min_tx * dx + nx * 0.4f;
-						y += min_ty * dy + ny * 0.4f;
-						vx = 0;
-						vy = 0;
-					}
+					colliable_objects->at(i)->AddHealth(-damage);
+					isCollisionEnemies = 1;
+					vx = 0;
+					vy = 0;
 				}
 			}
 		}
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];*/
 #pragma endregion
 	}
 }

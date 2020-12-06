@@ -113,6 +113,19 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 
 			CalcPotentialCollisions(colliable_objects, coEvents);
 
+			for (UINT i = 0; i < colliable_objects->size(); i++)
+			{
+				if (colliable_objects->at(i)->GetType() == EntityType::ENEMY)
+				{
+					if (this->IsCollidingObject(colliable_objects->at(i)))
+					{
+						colliable_objects->at(i)->AddHealth(-damage);
+						isCollisionEnemies = 1;
+						vx = 0;
+						vy = 0;
+					}
+				}
+			}
 			if (coEvents.size() == 0)
 			{
 				x += dx;
@@ -137,7 +150,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						vx = 0;
 						vy = 0;
 					}
-					if (e->obj->GetType() == EntityType::ENEMY)
+					/*if (e->obj->GetType() == EntityType::ENEMY)
 					{
 						e->obj->AddHealth(-damage);
 						DebugOut(L"xxxxxxxxxxxxxxxx %d", e->obj->health);
@@ -146,8 +159,9 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						y += min_ty * dy + ny * 0.4f;
 						vx = 0;
 						vy = 0;
-					}
+					}*/
 				}
+
 			}
 			for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion

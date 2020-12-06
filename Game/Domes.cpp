@@ -26,6 +26,7 @@ Domes::Domes(float x, float y, LPGAMEENTITY t)
 	isDamaged = false;
 	firstFollow = true;
 	actived = false;
+	isDeath = 0;
 }
 
 void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
@@ -87,11 +88,19 @@ void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 void Domes::Render()
 {
+	if (isDeath)
+		return;
 	int ani;
-
-	switch (dgravity)
+	if (health <= 0)
 	{
-	case 1:
+		ani = DOMES_ANI_DIE;
+		animationSet->at(ani)->Render(direction, x, y);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(DOMES_STATE_DIE);
+	}
+	else
+	{
 
 		if (isDamaged)
 		{
@@ -163,10 +172,29 @@ void Domes::Render()
 			animationSet->at(ani)->Render(-1, x, y, alpha);
 		}
 		break;
+		case 4:
+			if (isDamaged)
+			{
+				ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
+				animationSet->at(ani)->Render(-1, x, y);
+			}
+			else if (vy > 0)
+			{
+				ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
+				animationSet->at(ani)->Render(-1, x, y);
+			}
+			else if (vy < 0)
+			{
+				ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
+				animationSet->at(ani)->Render(-1, x, y);
+			}
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
 	}
+	
 
 			
 	RenderBoundingBox();
@@ -565,9 +593,10 @@ void Domes::SetState(int state)
 	switch (state)
 	{
 	case DOMES_STATE_DIE:
-		y += DOMES_BBOX_HEIGHT - DOMES_BBOX_HEIGHT_DIE + 1;
+		//y += DOMES_BBOX_HEIGHT - DOMES_BBOX_HEIGHT_DIE + 1;
 		vx = 0;
 		vy = 0;
+		isDeath = 1;
 		break;
 	case DOMES_STATE_ATTACK_LEFT_RIGHT:
 		if (dgravity == 4)
@@ -635,10 +664,12 @@ void Domes::SetStatenoclock(int state)
 	switch (state)
 	{
 	case DOMES_STATE_DIE:
-		y += DOMES_BBOX_HEIGHT - DOMES_BBOX_HEIGHT_DIE + 1;
+	{
 		vx = 0;
 		vy = 0;
+		isDeath = 1;
 		break;
+	}
 	case DOMES_STATE_ATTACK_LEFT_RIGHT:
 		if (dgravity == 4)
 		{

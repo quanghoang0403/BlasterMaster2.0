@@ -20,6 +20,7 @@ Insect::Insect(float x, float y, LPGAMEENTITY t)
 	health = INSECT_MAXHEALTH;
 	isActive = false;
 	isFly = 1;
+	isDeath = 0;
 		
 }
 
@@ -122,8 +123,10 @@ void Insect::Render()
 	if (health <= 0)
 	{
 		ani = INSECT_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y, alpha);
-				
+		animationSet->at(ani)->Render(direction, x, y, alpha);
+		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
+		if (animationSet->at(ani)->GetFrame() == 3)
+			SetState(INSECT_STATE_DIE);			
 	}
 	else
 	{

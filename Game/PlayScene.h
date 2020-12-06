@@ -27,6 +27,7 @@
 #include "Skulls.h"
 #include "OrbEz.h"
 #include "Mines.h"
+#include "Eyeballs.h"
 
 #include "LavaBrick.h"
 #include "BrickBreaker.h"
@@ -51,6 +52,8 @@ class PlayScene : public Scene
 private:
 	Grid* grid;
 public:
+
+
 	int typeScene = 1;
 	float oldPosX;
 	float oldPosY;
@@ -68,6 +71,8 @@ public:
 	DWORD timeResetCam; 
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
+
+
 protected:
 	Player* player;
 	PlayerV2* playerV2;

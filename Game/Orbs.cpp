@@ -14,7 +14,6 @@ void Orbs::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 Orbs::Orbs(float x, float y, LPGAMEENTITY t)
 {
 	enemyType = ORBS;
-	tag = ORBSS;
 	this->x = x;
 	this->y = y;
 	this->target = t;

@@ -27,6 +27,8 @@ Orbs::Orbs(float x, float y, LPGAMEENTITY t)
 
 void Orbs::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 	
 #pragma region Xử lý follow target

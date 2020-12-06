@@ -460,7 +460,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (listBullets[i]->isDone == true)
 				{
-					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR/2);
+					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR/1.5);
 					break;
 				}
 			}

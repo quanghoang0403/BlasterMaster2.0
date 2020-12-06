@@ -2,11 +2,13 @@
 
 void Floaters::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + FLOATERS_BBOX_WIDTH;
-	bottom = y + FLOATERS_BBOX_HEIGHT;
-	
+	if (!isDeath)
+	{
+		left = x;
+		top = y;
+		right = x + FLOATERS_BBOX_WIDTH;
+		bottom = y + FLOATERS_BBOX_HEIGHT;
+	}
 }
 
 
@@ -74,6 +76,8 @@ int Floaters::randomTimeAttack()
 
 void Floaters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 #pragma region Xử lý bullet
 	if (delayTimer->IsTimeUp())

@@ -15,14 +15,19 @@ Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 
 void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + CENTIPEDE_BBOX_WIDTH;
-	bottom = y + CENTIPEDE_BBOX_HEIGHT;
+	if (!isDeath)
+	{
+		left = x;
+		top = y;
+		right = x + CENTIPEDE_BBOX_WIDTH;
+		bottom = y + CENTIPEDE_BBOX_HEIGHT;
+	}
 }
 
 void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 #pragma region Xử lý vy khi rơi
@@ -166,11 +171,11 @@ void Centipede::Render()
 			ani = CENTIPEDE_ANI_DIE;
 		}
 		//DebugOut(L"[xxxxxx] direction: %s\n", direction);
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x, y, alpha);
 		RenderBoundingBox();
 	}
 	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
-	animationSet->at(ani)->Render(direction, x, y, alpha);
+
 	RenderBoundingBox();
 }
 

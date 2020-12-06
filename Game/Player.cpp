@@ -28,16 +28,15 @@ Player::Player(float x, float y) : Entity()
 Player* Player::instance = NULL;
 Player* Player::GetInstance()
 {
-	if (instance == NULL)
-		instance = new Player();
-	return instance;
+if (instance == NULL)
+instance = new Player();
+return instance;
 }
 
 void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTITY>* coEnemies)
 {
-
-	//DebugOut(L"x: %f \n", x);
-	//DebugOut(L"x: %f \n", y);
+	DebugOut(L"x: %f y: %f \n", x, y);
+	//DebugOut(L"y: %f \n", y);
 	if (isDoneDeath)
 		return;
 	if (health <= 0)
@@ -49,7 +48,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 	Entity::Update(dt);
 #pragma region Xử lý vy
 	vy += SOPHIA_GRAVITY * dt;
-	if (isJumping && backup_JumpY - y >= HIGHT_LEVER1 && isJumpHandle == false) 
+	if (isJumping && backup_JumpY - y >= HIGHT_LEVER1 && isJumpHandle == false)
 	{
 		if (!isPressJump)
 			vy = 0;
@@ -109,7 +108,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 			if (e->obj->GetType() == EntityType::BRICK)
 			{
 				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.005f;	
+				y += min_ty * dy + ny * 0.005f;
 				if (e->ny != 0)
 				{
 
@@ -126,6 +125,12 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
+	if (abs(vy) > 0.01)
+	{
+		isJumping = true;
+	}
+
 #pragma endregion
 }
 

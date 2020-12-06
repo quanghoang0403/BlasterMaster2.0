@@ -151,6 +151,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ThreeBulletDetail.cpp">
+      <Filter>Header Files\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreeBulletDetail.h">
+      <Filter>Header Files\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

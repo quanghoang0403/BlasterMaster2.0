@@ -26,7 +26,7 @@ class BigSophiaBullet : public Bullet
 public:
 	BigSophiaBullet();
 	~BigSophiaBullet();
-
+	bool isCountBack = true;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	void Render();

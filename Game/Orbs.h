@@ -18,7 +18,7 @@
 
 #define ORBS_MAXHEALTH					4
 
-#define ORBS_SITEACTIVE_PLAYER			200
+#define ORBS_SITEACTIVE_PLAYER			125
 class Orbs: public Enemy
 {
 

@@ -47,7 +47,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*3);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -61,7 +61,7 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (player == NULL)
 	{
-		player = new Player(44, 143.5);
+		player = new Player(80, 110);
 		DebugOut(L"[INFO] player CREATED! \n");
 	}
 	if (playerV2 == NULL)
@@ -489,7 +489,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		supBullet->Fire(1, direction, isTargetTop, x-3, y + 17);
 		break;
 	case DIK_C:
-		supBulletThree->FireThreeBullet(direction, x, y);
+		if (supBulletThree->isDone)
+			supBulletThree->FireThreeBullet(direction, x, y);
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)

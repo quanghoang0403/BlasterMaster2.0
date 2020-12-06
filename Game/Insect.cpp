@@ -50,7 +50,7 @@ void Insect::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		SetState(INSECT_STATE_FLY);
 	}
 	
-	DebugOut(L"\nisFly:   %d\n", delayTimerDowm->IsTimeUp());
+	//DebugOut(L"\nisFly:   %d\n", delayTimerDowm->IsTimeUp());
 #pragma endregion
 
 #pragma region Xử lý tiền va chạm

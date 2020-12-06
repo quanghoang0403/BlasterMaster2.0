@@ -21,6 +21,9 @@ ThreeBullet::~ThreeBullet() {}
 
 void ThreeBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
+	timeDelayed += dt;
+	if (timeDelayed > timeDelayMax)
+		isDone = true;
 	bullet_top->Update(dt, colliable_objects);
 	bullet_mid->Update(dt, colliable_objects);
 	bullet_bot->Update(dt, colliable_objects);
@@ -46,6 +49,8 @@ void ThreeBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void ThreeBullet::FireThreeBullet(int direction, float posX, float posY)
 {
+	timeDelayed = 0;
+	isDone = false;
 	bullet_top->isThreeBullet = 1;
 	bullet_mid->isThreeBullet = 2;
 	bullet_bot->isThreeBullet = 3;

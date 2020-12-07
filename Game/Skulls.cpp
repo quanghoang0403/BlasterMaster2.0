@@ -23,6 +23,7 @@ Skulls::Skulls(float x, float y, LPGAMEENTITY t)
 	this->nx = -1;
 	isfly = 1;
 	isDamaged = 0;
+	alpha = 255;
 }
 
 
@@ -118,7 +119,7 @@ void Skulls::Render()
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();
-		
+
 	}
 	RenderBoundingBox();
 }

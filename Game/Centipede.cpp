@@ -32,7 +32,7 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 #pragma region Xử lý vy khi rơi
 	if (isActive)
-		vy += CENTIPEDE_GRAVITY * dt;
+		vy = 13*CENTIPEDE_GRAVITY * dt;
 #pragma endregion
 
 #pragma region Xử lý tiền va chạm

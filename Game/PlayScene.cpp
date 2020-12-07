@@ -47,7 +47,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*3);
+	ChooseMap(STAGE_1*4);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -61,7 +61,7 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (player == NULL)
 	{
-		player = new Player(80, 110);
+		player = new Player(73, 879);
 		DebugOut(L"[INFO] player CREATED! \n");
 	}
 	if (playerV2 == NULL)

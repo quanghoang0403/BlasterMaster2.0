@@ -353,8 +353,10 @@
 
 #	gateX	gateY	stage	playerX	playerY	state	camera	typeplayer	camX	camY
 2	979	120	2	65	1165	0	1	1	0	1031.372437
-
-
+#lava brick
+160	1	210	22	350	35
+160	350	210	22	350	35
+160	700	210	22	350	35
 ##<<<<<<<<<<<<<<<<<<<<<<<<<ENEMY>>>>>>>>>>>>>>>>>>>>>>##
 #Centipede
 10	148	40	10

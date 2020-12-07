@@ -19,6 +19,7 @@ Golem::Golem(float x, float y, LPGAMEENTITY t)
 
 void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	DebugOut(L"vy = %f \n", vy);
 	if (health <= 0)
 		return;
 	Entity::Update(dt);
@@ -43,7 +44,6 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		CalcPotentialCollisions(&bricks, coEvents);
 		
 #pragma endregion
-	
 
 #pragma region Xử lý logic khi va chạm
 	if (coEvents.size() == 0)
@@ -60,7 +60,7 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		y += min_ty * dy + ny * 0.004f;
 		
 		
 
@@ -75,8 +75,12 @@ void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			if (nx != 0)
 			{
 				this->nx = -this->nx;
-				
 			}
+			/*if (ny > 0)
+			{
+				vy = 0;
+				y += dy;
+			}*/
 			if (ny != 0)
 			{
 				

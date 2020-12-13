@@ -100,7 +100,7 @@ void OrbEz::Render()
 	if (health <= 0)
 	{
 		ani = ORBEZ_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x, y, alpha);
 		if (animationSet->at(ani)->GetFrame() == 3)
 		{
 			SetState(ORBEZ_STATE_DIE);
@@ -110,7 +110,7 @@ void OrbEz::Render()
 	else if (ani == ORBEZ_ANI_COLLISION_FLY_RIGHT_BEHIND)
 	{
 		
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x, y, alpha);
 		if (animationSet->at(ani)->GetFrame() == 3)
 		{
 			ani = ORBEZ_ANI_FLY_RIGHT;
@@ -119,7 +119,7 @@ void OrbEz::Render()
 	}
 	else if (ani == ORBEZ_ANI_COLLISION_FLY_RIGHT_INFRONTOF)
 	{
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x, y, alpha);
 		if (animationSet->at(ani)->GetFrame() == 4)
 		{
 			ani = ORBEZ_ANI_FLY_RIGHT;
@@ -131,7 +131,7 @@ void OrbEz::Render()
 	{
 
 		ani = ORBEZ_ANI_FLY_ROTATE_RIGHT360;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x, y, alpha);
 		if (animationSet->at(ani)->GetFrame() == 7)
 		{
 			ani = ORBEZ_ANI_FLY_RIGHT;
@@ -144,7 +144,7 @@ void OrbEz::Render()
 			direction = -1;
 		else direction = 1;
 		ani = ORBEZ_ANI_FLY_RIGHT;
-		animationSet->at(ani)->Render(direction,x, y);
+		animationSet->at(ani)->Render(direction,x, y, alpha);
 	}
 	RenderBoundingBox();
 }
@@ -224,9 +224,11 @@ void OrbEz::Activation()
 	{
 		vx = 0;
 		vy = 0;
+		alpha = 0;
 	}
 	else
 	{
+		alpha = 255;
 		if (TimerRotation->IsTimeUp())
 		{
 

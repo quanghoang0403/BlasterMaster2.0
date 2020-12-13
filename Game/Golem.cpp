@@ -242,10 +242,12 @@ void Golem::Activation()
 {
 	if (!isActive)
 	{
+		alpha = 0;
 		vx = 0;
 	}
 	else
 	{
+		alpha = 255;
 		SetState(GOLEM_STATE_WALKING);
 	}
 	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= GOLEM_SITEACTIVE_PLAYER)

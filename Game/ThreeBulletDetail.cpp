@@ -1,8 +1,9 @@
-﻿#include "MainJasonBullet.h"
+﻿#include "ThreeBulletDetail.h"
 
-MainJasonBullet::MainJasonBullet()
+
+ThreeBulletDetail::ThreeBulletDetail()
 {
-	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_JASON_BULLET));
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(8));
 	x = 0;
 	y = 0;
 	alpha = 0;
@@ -14,11 +15,11 @@ MainJasonBullet::MainJasonBullet()
 	timeDelayMax = SMALL_JASON_BULLET_DELAY;
 }
 
-MainJasonBullet::~MainJasonBullet() {}
+ThreeBulletDetail::~ThreeBulletDetail() {}
 
-void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
+void ThreeBulletDetail::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
-	if (isThreeBullet != 0 )
+	if (isThreeBullet != 0)
 	{
 		vx = 0.15f * direction;
 		if (isThreeBullet == 1)
@@ -81,7 +82,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				}
 			}
 		}
-		
+
 	}
 	else
 	{
@@ -113,19 +114,6 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 
 			CalcPotentialCollisions(colliable_objects, coEvents);
 
-			for (UINT i = 0; i < colliable_objects->size(); i++)
-			{
-				if (colliable_objects->at(i)->GetType() == EntityType::ENEMY)
-				{
-					if (this->IsCollidingObject(colliable_objects->at(i)))
-					{
-						colliable_objects->at(i)->AddHealth(-damage);
-						isCollisionEnemies = 1;
-						vx = 0;
-						vy = 0;
-					}
-				}
-			}
 			if (coEvents.size() == 0)
 			{
 				x += dx;
@@ -150,7 +138,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						vx = 0;
 						vy = 0;
 					}
-					/*if (e->obj->GetType() == EntityType::ENEMY)
+					if (e->obj->GetType() == EntityType::ENEMY)
 					{
 						e->obj->AddHealth(-damage);
 						DebugOut(L"xxxxxxxxxxxxxxxx %d", e->obj->health);
@@ -159,9 +147,8 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						y += min_ty * dy + ny * 0.4f;
 						vx = 0;
 						vy = 0;
-					}*/
+					}
 				}
-
 			}
 			for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
@@ -169,7 +156,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	}
 }
 
-void MainJasonBullet::Render()
+void ThreeBulletDetail::Render()
 {
 	RenderBoundingBox();
 	int ani;
@@ -191,29 +178,18 @@ void MainJasonBullet::Render()
 	{
 		if (isCollisionBrick == 0 && isCollisionEnemies == 0)
 		{
-			if (isTargetTop == true)
-			{
-				ani = SMALL_BULLET_JASON_ANI_TOP;
-				animationSet->at(ani)->OldRender(x, y, alpha);
-			}
-			else
-			{
-				if (typeBullet == 0)
-					ani = MINI_BULLET_ANI;
-				else
-					ani = SMALL_BULLET_JASON_ANI_RIGHT;
-				animationSet->at(ani)->Render(direction, x, y, alpha);
-			}
+			ani = 0;
+			animationSet->at(ani)->Render(direction, x, y, alpha);
 		}
 		else if (isCollisionEnemies == 1)
 		{
 			isDone = true;
-			timeDelayed = 0;
+			timeDelayed = 0;;
 			isCountBack = false;
 		}
 		else if (isCollisionBrick == 1)
 		{
-			ani = BULLET_JASON_BANG_ANI;
+			ani = 1;
 			if (!isCountBack)
 			{
 				animationSet->at(ani)->ResetCurrentFrame();
@@ -230,7 +206,7 @@ void MainJasonBullet::Render()
 	}
 }
 
-void MainJasonBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
+void ThreeBulletDetail::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	if (!isDone)
 	{

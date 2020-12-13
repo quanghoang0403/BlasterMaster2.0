@@ -101,65 +101,77 @@ void Domes::Render()
 	}
 	else
 	{
-		
 
-		switch (dgravity)
+		if (isDamaged)
 		{
-		case 1:
+			ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
+			animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
+		}
+		else if (vx > 0)
+		{
+			ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
+			animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
+		}
+		else
+		{
+			ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
+			animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
+		}
+		break;
 
-			if (isDamaged)
-			{
-				ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
-			}
-			else if (vx > 0)
-			{
-				ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
-			}
-			else
-			{
-				ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
-			}
-			break;
+	case 2:
+		if (isDamaged)
+		{
+			ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
+			animationSet->at(ani)->Render(1, x, y, alpha);
+		}
+		else if (vy > 0)
+		{
+			ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
+			animationSet->at(ani)->Render(1, x, y, alpha);
+		}
+		else if (vy < 0)
+		{
+			ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
+			animationSet->at(ani)->Render(1, x, y, alpha);
+		}
+		break;
 
-		case 2:
-			if (isDamaged)
-			{
-				ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
-				animationSet->at(ani)->Render(1, x, y);
-			}
-			else if (vy > 0)
-			{
-				ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
-				animationSet->at(ani)->Render(1, x, y);
-			}
-			else if (vy < 0)
-			{
-				ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
-				animationSet->at(ani)->Render(1, x, y);
-			}
-			break;
+	case 3:
+		if (isDamaged)
+		{
+			ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
+			animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
+		}
+		else if (vx > 0)
+		{
+			ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
+			animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
+		}
+		else
+		{
+			ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
+			animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
+		}
+		break;
 
-		case 3:
-			if (isDamaged)
-			{
-				ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
-			}
-			else if (vx > 0)
-			{
-				ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
-			}
-			else
-			{
-				ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
-			}
-			break;
-
+	case 4:
+		if (isDamaged)
+		{
+			ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
+			animationSet->at(ani)->Render(-1, x, y, alpha);
+		}
+		else if (vy > 0)
+		{
+			ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
+			animationSet->at(ani)->Render(-1, x, y, alpha);
+		}
+		else if (vy < 0)
+		{
+			ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
+			animationSet->at(ani)->Render(-1, x, y, alpha);
+		}
+		break;
 		case 4:
 			if (isDamaged)
 			{
@@ -700,10 +712,12 @@ void Domes::Activation()
 {
 	if (!isActive && !actived)
 	{
+		alpha = 0;
 		vx = 0;
 	}
 	else if (isActive && !actived)
 	{
+		alpha = 255;
 		vx = -DOMES_WALKING_SPEED;
 		actived = true;
 	}

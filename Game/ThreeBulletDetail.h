@@ -8,8 +8,8 @@
 #define MINI_BULLET_BBOX_WIDTH			4
 #define MINI_BULLET_BBOX_HEIGHT			4
 
-#define THREE_BULLET_BBOX_WIDTH			8
-#define THREE_BULLET_BBOX_HEIGHT		6
+#define THREE_BULLET_BBOX_WIDTH			19
+#define THREE_BULLET_BBOX_HEIGHT		7
 
 #define BIG_BULLET_BBOX_WIDTH			22
 #define BIG_BULLET_BBOX_HEIGHT			6
@@ -26,11 +26,11 @@
 #define ANIMATION_SET_JASON_BULLET		4
 #define SMALL_JASON_BULLET_DELAY		560
 
-class MainJasonBullet : public Bullet
+class ThreeBulletDetail : public Bullet
 {
 public:
-	MainJasonBullet();
-	~MainJasonBullet();
+	ThreeBulletDetail();
+	~ThreeBulletDetail();
 	int isThreeBullet = 0;
 	bool isCountBack = true;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

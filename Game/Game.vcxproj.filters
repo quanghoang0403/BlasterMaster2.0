@@ -151,11 +151,16 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
+
     <ClCompile Include="BulletEyeballs.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Teleporters.cpp">
       <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+
+    <ClCompile Include="ThreeBulletDetail.cpp">
+      <Filter>Header Files\Bullet</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,11 +313,16 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
+
     <ClInclude Include="BulletEyeballs.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Teleporters.h">
       <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+
+    <ClInclude Include="ThreeBulletDetail.h">
+      <Filter>Header Files\Bullet</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,19 @@
 #include "Camera.h"
 
-Camera* Camera::__instance = NULL;
+Camera* Camera::instance = NULL;
 
 Camera* Camera::GetInstance()
 {
-	if (__instance == NULL) __instance = new Camera();
-	return __instance;
+	if (instance == NULL) 
+		instance = new Camera();
+	return instance;
+}
+
+void Camera::GetCenter(int& _x, int& _y)
+{
+	_x = camx + float(SCREEN_WIDTH) / 2;
+	_y = camy + float(SCREEN_HEIGHT) / 2;
+	
 }
 
 Camera::Camera()

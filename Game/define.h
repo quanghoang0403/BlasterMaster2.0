@@ -183,6 +183,7 @@ enum EntityType
 	//weaponenemy
 	BULLETNENEMY,
 	BULLETFLOATERS = 120,
+	BULLETEYEBALLS = 121,
 
 
 	Null = -1

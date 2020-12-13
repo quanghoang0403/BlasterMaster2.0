@@ -50,7 +50,10 @@ PlayScene::PlayScene() : Scene()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of b9d3bcf... Merge branch 'DuyDepTrai01_12' of https://github.com/quanghoang0403/BlasterMaster2.0 into DuyDepTrai01_12
 	ChooseMap(STAGE_1*10);
 =======
 	ChooseMap(STAGE_1*1);

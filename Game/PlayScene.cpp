@@ -49,6 +49,7 @@ PlayScene::PlayScene() : Scene()
 	LoadBaseObjects();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ChooseMap(STAGE_1*10);
 =======
@@ -57,6 +58,9 @@ PlayScene::PlayScene() : Scene()
 =======
 	ChooseMap(STAGE_1*1);
 >>>>>>> parent of 4dde46a... Merge branch 'master' into DuyDepTrai01_12
+=======
+	ChooseMap(STAGE_1*1);
+>>>>>>> parent of b74a007... Eyeballs Complete
 
 }
 
@@ -435,8 +439,13 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playScene->directMoveCam = -1;
 		
 		playScene->typeSophia = 2;*/
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> parent of b74a007... Eyeballs Complete
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
 		player->SetPosition(30, 60);

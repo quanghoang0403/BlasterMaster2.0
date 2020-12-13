@@ -28,6 +28,7 @@
 #include "OrbEz.h"
 #include "Mines.h"
 #include "Eyeballs.h"
+#include "Teleporters.h"
 
 #include "LavaBrick.h"
 #include "BrickBreaker.h"
@@ -66,9 +67,9 @@ public:
 	float nCamYBack;
 	float camMap1X;
 	float camMap1Y;
-	bool tempNeed; 
+	bool tempNeed;
 	bool isTouchStair;
-	DWORD timeResetCam; 
+	DWORD timeResetCam;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 
@@ -100,8 +101,8 @@ protected:
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
-	
-	
+
+
 
 	vector<LPCWSTR> listSceneFilePath;
 	vector<int> listWidth;

@@ -1,9 +1,9 @@
 #pragma once
 #include <Windows.h>
-
+#include "define.h"
 class Camera
 {
-	static Camera* __instance;
+	static Camera* instance;
 	float camx, camy;
 
 	Camera();
@@ -15,5 +15,7 @@ public:
 	void SetCamPos(float x, float y) { camx = x; camy = y; }
 	float GetCamx() { return camx; }
 	float GetCamy() { return camy; }
+	void GetCenter(int& _x, int& _y);
+
 };
 

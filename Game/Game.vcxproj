@@ -129,6 +129,7 @@
     <ClInclude Include="BrickBreaker.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletEnemy.h" />
+    <ClInclude Include="BulletEyeballs.h" />
     <ClInclude Include="BulletFloaters.h" />
     <ClInclude Include="BulletMines.h" />
     <ClInclude Include="BulletSkulls.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Skulls.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stair.h" />
+    <ClInclude Include="Teleporters.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="ThreeBullet.h" />
     <ClInclude Include="Timer.h" />
@@ -180,6 +182,7 @@
     <ClCompile Include="BrickBreaker.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
+    <ClCompile Include="BulletEyeballs.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />
     <ClCompile Include="BulletMines.cpp" />
     <ClCompile Include="BulletSkulls.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="Skulls.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stair.cpp" />
+    <ClCompile Include="Teleporters.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="ThreeBullet.cpp" />
     <ClCompile Include="Timer.cpp" />

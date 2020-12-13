@@ -2,390 +2,356 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Header Files\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="ElectricBullet.cpp">
-      <Filter>Header Files\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="MainJasonBullet.cpp">
-      <Filter>Header Files\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="define.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Header Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
-      <Filter>Header Files\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Header Files\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="GunUp.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerUp.cpp">
-      <Filter>Header Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Header Files\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Gate.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerV2.cpp">
-      <Filter>Header Files\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniSophia.cpp">
-      <Filter>Header Files\Object\Player</Filter>
+      <Filter>Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BigSophiaBullet.cpp">
-      <Filter>Header Files\Bullet</Filter>
+      <Filter>Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletEnemy.cpp">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClCompile Include="ElectricBullet.cpp">
+      <Filter>Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletFloaters.cpp">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Stair.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="GateV2.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="IntroScene.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="LavaBrick.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="BrickBreaker.cpp">
-      <Filter>Header Files\Object\Obstacle</Filter>
+    <ClCompile Include="MainJasonBullet.cpp">
+      <Filter>Bullet</Filter>
     </ClCompile>
     <ClCompile Include="ThreeBullet.cpp">
-      <Filter>Header Files\Bullet</Filter>
+      <Filter>Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp" />
-    <ClCompile Include="GateV2.cpp" />
-    <ClCompile Include="IntroScene.cpp" />
-    <ClCompile Include="BulletSkulls.cpp">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Framework\Render</Filter>
     </ClCompile>
-    <ClCompile Include="BulletMines.cpp">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="define.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GunUp.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
     <ClCompile Include="Centipede.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Domes.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Floaters.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Golem.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Insect.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
-    </ClCompile>
-    <ClCompile Include="Mines.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="OrbEz.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Orbs.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Skulls.cpp">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
+    </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
     <ClCompile Include="Eyeballs.cpp">
-      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEnemy.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEyeballs.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFloaters.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMines.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSkulls.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GateV2.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="LavaBrick.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>Object\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Header Files\Object\Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of b9d3bcf... Merge branch 'DuyDepTrai01_12' of https://github.com/quanghoang0403/BlasterMaster2.0 into DuyDepTrai01_12
-    <ClCompile Include="BulletEyeballs.cpp">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClCompile Include="MiniSophia.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerV2.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="Teleporters.cpp">
-      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+      <Filter>Object\Enemy\OverWorld</Filter>
     </ClCompile>
-=======
->>>>>>> parent of b74a007... Eyeballs Complete
-=======
->>>>>>> parent of 4dde46a... Merge branch 'master' into DuyDepTrai01_12
-=======
->>>>>>> parent of b74a007... Eyeballs Complete
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="ElectricBullet.h">
-      <Filter>Header Files\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="MainJasonBullet.h">
-      <Filter>Header Files\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="define.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Header Files\Framework\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardHandler.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBar.h">
-      <Filter>Header Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Header Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="GunUp.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="PowerUp.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Gate.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerV2.h">
-      <Filter>Header Files\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="MiniSophia.h">
-      <Filter>Header Files\Object\Player</Filter>
+      <Filter>Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BigSophiaBullet.h">
-      <Filter>Header Files\Bullet</Filter>
+      <Filter>Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BulletEnemy.h">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClInclude Include="ElectricBullet.h">
+      <Filter>Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BulletFloaters.h">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Stair.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="GateV2.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="LavaBrick.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="BrickBreaker.h">
-      <Filter>Header Files\Object\Obstacle</Filter>
+    <ClInclude Include="MainJasonBullet.h">
+      <Filter>Bullet</Filter>
     </ClInclude>
     <ClInclude Include="ThreeBullet.h">
-      <Filter>Header Files\Bullet</Filter>
+      <Filter>Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="GateV2.h" />
-    <ClInclude Include="IntroScene.h" />
-    <ClInclude Include="BulletSkulls.h">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClInclude Include="Animations.h">
+      <Filter>Framework\Render</Filter>
     </ClInclude>
-    <ClInclude Include="BulletMines.h">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClInclude Include="Sprites.h">
+      <Filter>Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardHandler.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GunUp.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Item</Filter>
     </ClInclude>
     <ClInclude Include="Centipede.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Domes.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Floaters.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Golem.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Insect.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Mines.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="OrbEz.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Orbs.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
     <ClInclude Include="Skulls.h">
-      <Filter>Header Files\Object\Enemy\Area2</Filter>
+      <Filter>Object\Enemy\Area2</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEnemy.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEyeballs.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFloaters.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMines.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSkulls.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Eyeballs.h">
-      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+      <Filter>Object\Enemy\OverWorld</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Object\Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of b9d3bcf... Merge branch 'DuyDepTrai01_12' of https://github.com/quanghoang0403/BlasterMaster2.0 into DuyDepTrai01_12
-    <ClInclude Include="BulletEyeballs.h">
-      <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
+    <ClInclude Include="Brick.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBreaker.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GateV2.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="LavaBrick.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniSophia.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerV2.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Teleporters.h">
-      <Filter>Header Files\Object\Enemy\OverWorld</Filter>
+      <Filter>Object\Enemy\OverWorld</Filter>
     </ClInclude>
-=======
->>>>>>> parent of b74a007... Eyeballs Complete
-=======
->>>>>>> parent of 4dde46a... Merge branch 'master' into DuyDepTrai01_12
-=======
->>>>>>> parent of b74a007... Eyeballs Complete
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{f16bbd92-2b88-461e-9a92-23da33915f32}</UniqueIdentifier>
+    <Filter Include="Bullet">
+      <UniqueIdentifier>{ae34277a-97ff-437e-945d-2e4e4c9929a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{ca265dbc-00bb-430f-a7f0-c2d5aca4252e}</UniqueIdentifier>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{523ce63b-b960-4dec-a8b7-abb1bf7d6cd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Bullet">
-      <UniqueIdentifier>{23b014fd-027b-467b-a69f-5e43b24107a5}</UniqueIdentifier>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{61a037e9-9073-4907-aabb-ffd85c64b3d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Framework">
-      <UniqueIdentifier>{45c8c1da-2bfe-438a-a92c-48d419fc782b}</UniqueIdentifier>
+    <Filter Include="Main">
+      <UniqueIdentifier>{bc6e9f5c-2748-4859-9adf-c8aa341394cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Framework\Render">
-      <UniqueIdentifier>{15f77c12-24bb-43df-8119-a2a815587c5e}</UniqueIdentifier>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{cd5caf9f-5808-4302-9407-337ac7c05dce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\HUD">
-      <UniqueIdentifier>{99a60d1f-1ec7-4d5f-bc0d-ea7423250fe3}</UniqueIdentifier>
+    <Filter Include="Framework\Render">
+      <UniqueIdentifier>{fff75cfc-1286-4989-93ad-ace79aa235d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Item">
-      <UniqueIdentifier>{3c924ced-d5bb-4e2a-9c0b-45869c0060e7}</UniqueIdentifier>
+    <Filter Include="Item">
+      <UniqueIdentifier>{84a1cf75-317d-4582-bbca-791d8e7627a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object">
-      <UniqueIdentifier>{10c4220a-c9a2-431a-840a-31c5b5df7469}</UniqueIdentifier>
+    <Filter Include="Object">
+      <UniqueIdentifier>{6eff8a3f-8632-4c67-ba58-bbb2efe60c28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Enemy">
-      <UniqueIdentifier>{ddabff90-9098-4069-9ff2-1d86898f84f5}</UniqueIdentifier>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{4be81f80-fa92-4046-b25b-76f09bc04fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{29dec266-4c6b-4a2b-9a82-56e39b6f987e}</UniqueIdentifier>
+    <Filter Include="Object\Enemy\Area2">
+      <UniqueIdentifier>{c7dfd8c1-9205-4a93-bd85-4cfeb4b86394}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Player">
-      <UniqueIdentifier>{e492c037-5c49-4a56-9369-e21b01c2b546}</UniqueIdentifier>
+    <Filter Include="Object\Enemy\BulletEnemy">
+      <UniqueIdentifier>{e61dbb80-3484-49a9-85a1-bc7a45cd391a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Obstacle">
-      <UniqueIdentifier>{65c26205-a79e-4e0f-a889-81d257288753}</UniqueIdentifier>
+    <Filter Include="Object\Enemy\OverWorld">
+      <UniqueIdentifier>{baa44afe-87f2-4006-9bac-38de97f79ce5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Enemy\BulletEnemy">
-      <UniqueIdentifier>{8e4ca3d9-e09e-4217-89d1-70e66554f551}</UniqueIdentifier>
+    <Filter Include="Object\Obstacle">
+      <UniqueIdentifier>{ba4cb55c-7c80-4d8e-b9e9-b81378619a8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Object\Enemy\OverWorld">
-      <UniqueIdentifier>{054657ce-2d3c-4937-907b-1f47db9ec811}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Object\Enemy\Area2">
-      <UniqueIdentifier>{d3525428-439e-4d5a-9f82-def53c993f8b}</UniqueIdentifier>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{8c0828c3-a962-419e-8918-32a638762c61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

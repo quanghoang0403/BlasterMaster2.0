@@ -22,7 +22,8 @@
 #define OBJECT_TYPE_SKULLS				17	
 #define OBJECT_TYPE_ORBEZ				18
 #define OBJECT_TYPE_MINES				19
-#define OBJECT_TYPE_EYEBALLS			20
+#define OBJECT_TYPE_EYEBALLS			100
+#define OBJECT_TYPE_TELEPORTERS			101
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -45,25 +46,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 1;
+	typeSophia = 2;
 	LoadBaseObjects();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of b9d3bcf... Merge branch 'DuyDepTrai01_12' of https://github.com/quanghoang0403/BlasterMaster2.0 into DuyDepTrai01_12
-	ChooseMap(STAGE_1*10);
-=======
-	ChooseMap(STAGE_1*1);
->>>>>>> parent of b74a007... Eyeballs Complete
-=======
-	ChooseMap(STAGE_1*1);
->>>>>>> parent of 4dde46a... Merge branch 'master' into DuyDepTrai01_12
-=======
-	ChooseMap(STAGE_1*1);
->>>>>>> parent of b74a007... Eyeballs Complete
+	ChooseMap(STAGE_1 * 10);
 
 }
 
@@ -73,7 +58,7 @@ void PlayScene::LoadBaseObjects()
 	LoadBaseTextures();
 	if (introScene == NULL)
 	{
-		introScene = new IntroScene(0,0);
+		introScene = new IntroScene(0, 0);
 		DebugOut(L"[INFO] intro scene CREATED! \n");
 	}
 	if (player == NULL)
@@ -145,7 +130,7 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (powerUp == NULL)
 	{
-		powerUp = new PowerUp(100,150);
+		powerUp = new PowerUp(100, 150);
 		listItems.push_back(powerUp);
 		DebugOut(L"[INFO] powerUp CREATED! \n");
 	}
@@ -235,7 +220,7 @@ void PlayScene::PlayerGotGate()
 				camMap1Y = gate->camPosY;
 				Unload();
 				ChooseMap(tempMap);
-			
+
 				player->SetPosition(tempx, tempy);
 				player->Setvx(0);
 				player->Setvy(0);
@@ -245,7 +230,7 @@ void PlayScene::PlayerGotGate()
 			else if (sophia->IsCollidingObject(listGates[i]))
 			{
 				Gate* gate = dynamic_cast<Gate*>(listGates[i]);
-				if (gate->typePlayer==2)
+				if (gate->typePlayer == 2)
 					typeSophia = gate->typePlayer;
 				int tempMap = gate->GetIdScene() * STAGE_1;
 				float tempx = gate->newPlayerx;
@@ -316,7 +301,7 @@ void PlayScene::PlayerTouchEnemy()
 {
 	for (UINT i = 0; i < listEnemies.size(); i++)
 	{
-		
+
 		if (typeSophia == JASON)
 		{
 			if (player->IsCollidingObject(listEnemies[i]))
@@ -430,35 +415,26 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
-		/*playScene->Unload();
-		playScene->ChooseMap(STAGE_1*10);
-		
-
+		playScene->Unload();
+		playScene->ChooseMap(STAGE_1 * 10);
 		playerV2->SetPosition(131, 1905);
 		playerV2->SetHealth(MAX_HEALTH);
 		playerV2->isDoneDeath = false;
 		playerV2->isDeath = false;
-		
 		playScene->directMoveCam = -1;
-		
-		playScene->typeSophia = 2;*/
-<<<<<<< HEAD
-
-
-=======
-
-
->>>>>>> parent of b74a007... Eyeballs Complete
-		playScene->Unload();
-		playScene->ChooseMap(STAGE_1);
-		player->SetPosition(30, 60);
-		player->SetHealth(MAX_HEALTH);
-		player->isDoneDeath = false;
-		player->isDeath = false;
-		playScene->typeSophia = JASON;
+		playScene->typeSophia = 2;
 		break;
-		
-		
+
+		/*	playScene->Unload();
+			playScene->ChooseMap(STAGE_1);
+			player->SetPosition(30, 60);
+			player->SetHealth(MAX_HEALTH);
+			player->isDoneDeath = false;
+			player->isDeath = false;
+			playScene->typeSophia = JASON;
+			break;*/
+
+
 	case DIK_Q:
 		playScene->typeSophia = BIG_SOPHIA;
 		playerV2->SetPosition(30, 60);
@@ -482,7 +458,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (listBullets[i]->isDone == true)
 				{
-					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR/2);
+					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR / 2);
 					break;
 				}
 			}
@@ -494,13 +470,13 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
-					if (playScene->listBigBullets[i]->damage <4)
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2*directionY*DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+					if (playScene->listBigBullets[i]->damage < 4)
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2 +  directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
-						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-					//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
-					//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+					//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
+				//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
+				//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
 					break;
 				}
 			}
@@ -887,14 +863,14 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 	case OBJECT_TYPE_BRICK:
 	{
-		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
+		obj = new Brick(atof(tokens[4].c_str()), atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
 		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-		
+
 		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		//totalObjectsIntoGrid.push_back(obj);
-		DebugOut(L"[test] add brick %d !\n", (int)(x/ (SCREEN_WIDTH/2)));
+		DebugOut(L"[test] add brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
 	case OBJECT_TYPE_GATE:
@@ -936,7 +912,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_GOLEM:
 	{
-		obj = new Golem(x,y,player);
+		obj = new Golem(x, y, player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
@@ -961,7 +937,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CENTIPEDE:
 	{
 		//obj = new Centipede(x,y,player);
-		obj = new Centipede(x,y,player);
+		obj = new Centipede(x, y, player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
@@ -1074,17 +1050,53 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+
 		DebugOut(L"[test] add Mines !\n");
 		break;
 	}
 	case OBJECT_TYPE_EYEBALLS:
 	{
-		obj = new Eyeballs(x, y, player);
+		obj = new Eyeballs(x, y, playerV2, 300); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set1 = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set1);
+		totalObjectsIntoGrid.push_back(obj);
+		DebugOut(L"[test] add Eyeballs !\n");
+		//obj = new Eyeballs(x, y, playerV2, 100); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		//obj->SetPosition(x, y);
+		//LPANIMATION_SET ani_set2 = animation_sets->Get(ani_set_id);
+		//obj->SetAnimationSet(ani_set2);
+		//totalObjectsIntoGrid.push_back(obj);
+		//DebugOut(L"[test] add Eyeballs !\n");
+		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		//obj->SetPosition(x, y);
+		//LPANIMATION_SET ani_set3 = animation_sets->Get(ani_set_id);
+		//obj->SetAnimationSet(ani_set3);
+		//totalObjectsIntoGrid.push_back(obj);
+		//DebugOut(L"[test] add Eyeballs !\n");
+		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		//obj->SetPosition(x, y);
+		//LPANIMATION_SET ani_set4 = animation_sets->Get(ani_set_id);
+		//obj->SetAnimationSet(ani_set4);
+		//totalObjectsIntoGrid.push_back(obj);
+		//DebugOut(L"[test] add Eyeballs !\n");
+		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		//obj->SetPosition(x, y);
+		//LPANIMATION_SET ani_set5 = animation_sets->Get(ani_set_id);
+		//obj->SetAnimationSet(ani_set5);
+		//totalObjectsIntoGrid.push_back(obj);
+		//DebugOut(L"[test] add Eyeballs !\n");
+		break;
+	}
+	case OBJECT_TYPE_TELEPORTERS:
+	{
+		obj = new Teleporters(x, y, player);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-		DebugOut(L"[test] add Eyeballs !\n");
+
+		DebugOut(L"[test] add Teleporters !\n");
 		break;
 	}
 	default:
@@ -1254,7 +1266,7 @@ Item* PlayScene::RandomItem(float x, float y)
 		return new PowerUp(x, y);
 	else if (30 < random && random <= 60)
 		return new PowerUp(x, y);
-	else if (60< random && random <= 100)
+	else if (60 < random && random <= 100)
 		return new PowerUp(x, y);
 }
 
@@ -1273,7 +1285,7 @@ void PlayScene::Update(DWORD dt)
 	mapHeight = listHeight[idStage / STAGE_1 - 1];
 	if (typeScene == END)
 	{
-		if (posX < (509-270))
+		if (posX < (509 - 270))
 		{
 			posX += 0.05 * dt;
 		}
@@ -1304,7 +1316,7 @@ void PlayScene::Update(DWORD dt)
 						cx -= SCREEN_WIDTH / 2;
 				}
 
-				if (cy + SCREEN_HEIGHT/1.85 >= mapHeight)
+				if (cy + SCREEN_HEIGHT / 1.85 >= mapHeight)
 				{
 					//DebugOut(L"cy + SCREEN_HEIGHT %f \n", (cy + SCREEN_HEIGHT - mapHeight));
 					cy = mapHeight - SCREEN_HEIGHT;
@@ -1518,7 +1530,7 @@ void PlayScene::Update(DWORD dt)
 
 			listEnemies[i]->Update(dt, &listObjects);
 		}
-			
+
 		if (sophia->isDoneDeath == true || player->isDoneDeath == true || playerV2->isDoneDeath == true)
 		{
 			Unload();

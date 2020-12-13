@@ -22,7 +22,7 @@
 #define OBJECT_TYPE_SKULLS				17	
 #define OBJECT_TYPE_ORBEZ				18
 #define OBJECT_TYPE_MINES				19
-#define OBJECT_TYPE_EYEBALLS			100
+#define OBJECT_TYPE_EYEBALLS			20
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -45,10 +45,14 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
+<<<<<<< HEAD
 
 	ChooseMap(STAGE_1*10);
+=======
+	ChooseMap(STAGE_1*1);
+>>>>>>> parent of b74a007... Eyeballs Complete
 
 }
 
@@ -415,24 +419,28 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
 	case DIK_A:
-		playScene->Unload();
+		/*playScene->Unload();
 		playScene->ChooseMap(STAGE_1*10);
+		
+
 		playerV2->SetPosition(131, 1905);
 		playerV2->SetHealth(MAX_HEALTH);
 		playerV2->isDoneDeath = false;
 		playerV2->isDeath = false;
+		
 		playScene->directMoveCam = -1;
-		playScene->typeSophia = 2;
-		break;
+		
+		playScene->typeSophia = 2;*/
 
-	/*	playScene->Unload();
+
+		playScene->Unload();
 		playScene->ChooseMap(STAGE_1);
 		player->SetPosition(30, 60);
 		player->SetHealth(MAX_HEALTH);
 		player->isDoneDeath = false;
 		player->isDeath = false;
 		playScene->typeSophia = JASON;
-		break;*/
+		break;
 		
 		
 	case DIK_Q:
@@ -1096,45 +1104,19 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
 		DebugOut(L"[test] add Mines !\n");
 		break;
 	}
 	case OBJECT_TYPE_EYEBALLS:
 	{
-		obj = new Eyeballs(x, y, playerV2, 300); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
+		obj = new Eyeballs(x, y, player);
 		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set1 = animation_sets->Get(ani_set_id);
-		obj->SetAnimationSet(ani_set1);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Eyeballs !\n");
-		//obj = new Eyeballs(x, y, playerV2, 100); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
-		//obj->SetPosition(x, y);
-		//LPANIMATION_SET ani_set2 = animation_sets->Get(ani_set_id);
-		//obj->SetAnimationSet(ani_set2);
-		//totalObjectsIntoGrid.push_back(obj);
-		//DebugOut(L"[test] add Eyeballs !\n");
-		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
-		//obj->SetPosition(x, y);
-		//LPANIMATION_SET ani_set3 = animation_sets->Get(ani_set_id);
-		//obj->SetAnimationSet(ani_set3);
-		//totalObjectsIntoGrid.push_back(obj);
-		//DebugOut(L"[test] add Eyeballs !\n");
-		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
-		//obj->SetPosition(x, y);
-		//LPANIMATION_SET ani_set4 = animation_sets->Get(ani_set_id);
-		//obj->SetAnimationSet(ani_set4);
-		//totalObjectsIntoGrid.push_back(obj);
-		//DebugOut(L"[test] add Eyeballs !\n");
-		//obj = new Eyeballs(x, y, playerV2, 200); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
-		//obj->SetPosition(x, y);
-		//LPANIMATION_SET ani_set5 = animation_sets->Get(ani_set_id);
-		//obj->SetAnimationSet(ani_set5);
-		//totalObjectsIntoGrid.push_back(obj);
-		//DebugOut(L"[test] add Eyeballs !\n");
 		break;
 	}
-
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;

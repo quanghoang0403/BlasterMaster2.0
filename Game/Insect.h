@@ -2,7 +2,6 @@
 #pragma once
 #include "Enemy.h"
 #include "Timer.h"
-#include "Player.h"
 
 #define INSECT_FLYUP_SPEED			0.039f
 #define INSECT_FLYDOWN_SPEED		0.01f
@@ -31,7 +30,6 @@
 
 class Insect: public Enemy
 {
-	
 	int isFly;
 	Timer* delayTimerUp = new Timer(INSECT_DELAYTIME_FLYUP);
 	Timer* delayTimerDowm = new Timer(INSECT_DELAYTIME_FLYDOWM);

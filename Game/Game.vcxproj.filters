@@ -151,6 +151,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClCompile>
+<<<<<<< HEAD
 
     <ClCompile Include="BulletEyeballs.cpp">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
@@ -162,6 +163,8 @@
       <Filter>Header Files\Bullet</Filter>
 
     </ClCompile>
+=======
+>>>>>>> parent of b74a007... Eyeballs Complete
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -313,6 +316,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Object\Enemy</Filter>
     </ClInclude>
+<<<<<<< HEAD
 
     <ClInclude Include="BulletEyeballs.h">
       <Filter>Header Files\Object\Enemy\BulletEnemy</Filter>
@@ -324,6 +328,8 @@
       <Filter>Header Files\Bullet</Filter>
 
     </ClInclude>
+=======
+>>>>>>> parent of b74a007... Eyeballs Complete
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

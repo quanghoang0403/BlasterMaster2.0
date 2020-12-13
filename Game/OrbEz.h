@@ -36,7 +36,8 @@
 
 #define ORBEZ_MAXHEALTH					4
 
-#define ORBEZ_SITEACTIVE_PLAYER			200
+#define ORBEZ_SITEACTIVE_PLAYER			150
+
 
 
 class OrbEz: public Enemy

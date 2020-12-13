@@ -31,7 +31,6 @@ PlayerV2* PlayerV2::GetInstance()
 
 void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	DebugOut(L"x = %f y = %f \n", x, y);
 	if (isDoneDeath)
 		return;
 	if (health <= 0)
@@ -50,7 +49,8 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	if (isAutoRun)
 	{
 		if (directionAutoRun == 1 && abs(x - oldX) <= 82)
-		{	if (direction != 0)
+		{
+			if (direction != 0)
 			{
 				vx = 0.05*direction;
 				vy = 0;
@@ -162,20 +162,14 @@ void PlayerV2::Render()
 	{
 		if (vx == 0 && vy == 0)
 		{
-			if (!isGoVertical)
-			{
-				if (direction > 0)
-					ani = SOPHIA_ANI_BIG_IDLE_RIGHT;
-				else if (direction < 0)
-					ani = SOPHIA_ANI_BIG_IDLE_LEFT;
-			}
-			if (isGoVertical)
-			{
-				if (directionY > 0)
-					ani = SOPHIA_ANI_BIG_IDLE_BOT;
-				else if (directionY < 0)
-					ani = SOPHIA_ANI_BIG_IDLE_TOP;
-			}
+			if (direction > 0)
+				ani = SOPHIA_ANI_BIG_IDLE_RIGHT;
+			else if (direction < 0)
+				ani = SOPHIA_ANI_BIG_IDLE_LEFT;
+			else if (directionY > 0)
+				ani = SOPHIA_ANI_BIG_IDLE_BOT;
+			else if (directionY < 0)
+				ani = SOPHIA_ANI_BIG_IDLE_TOP;
 		}
 		else
 		{
@@ -205,26 +199,22 @@ void PlayerV2::SetState(int state)
 		break;
 	case SOPHIA_BIG_STATE_WALKING_RIGHT:
 		direction = 1;
-		//directionY = 0;
-		isGoVertical = false;
+		directionY = 0;
 		vx = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_LEFT:
 		direction = -1;
-		//directionY = 0;
-		isGoVertical = false;
+		directionY = 0;
 		vx = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_TOP:
-		//direction = 0;
-		isGoVertical = true;
+		direction = 0;
 		directionY = -1;
 		vy = -SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_WALKING_BOT:
-		//direction = 0;
+		direction = 0;
 		directionY = 1;
-		isGoVertical = true;
 		vy = SOPHIA_BIG_WALKING_SPEED;
 		break;
 	case SOPHIA_BIG_STATE_DIE:

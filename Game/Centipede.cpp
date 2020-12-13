@@ -26,8 +26,7 @@ void Centipede::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	Entity::Update(dt);
 
 #pragma region Xử lý vy khi rơi
-	if (isActive)
-		vy += CENTIPEDE_GRAVITY * dt;
+	vy += CENTIPEDE_GRAVITY * dt;
 #pragma endregion
 
 #pragma region Xử lý tiền va chạm
@@ -169,9 +168,7 @@ void Centipede::Render()
 		animationSet->at(ani)->Render(direction, x, y);
 		RenderBoundingBox();
 	}
-	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
-	animationSet->at(ani)->Render(direction, x, y, alpha);
-	RenderBoundingBox();
+	
 }
 
 void Centipede::SetState(int state)
@@ -201,12 +198,10 @@ void Centipede::Activation()
 {
 	if (!isActive)
 	{
-		alpha = 0;
 		vx = 0;
 	}
 	else
 	{
-		alpha = 255;
 		SetState(CENTIPEDE_STATE_WALKING);
 	}
 

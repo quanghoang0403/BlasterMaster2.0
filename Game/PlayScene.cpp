@@ -48,11 +48,15 @@ PlayScene::PlayScene() : Scene()
 	typeSophia = 1;
 	LoadBaseObjects();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ChooseMap(STAGE_1*10);
 =======
 	ChooseMap(STAGE_1*1);
 >>>>>>> parent of b74a007... Eyeballs Complete
+=======
+	ChooseMap(STAGE_1*1);
+>>>>>>> parent of 4dde46a... Merge branch 'master' into DuyDepTrai01_12
 
 }
 
@@ -492,7 +496,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		supBullet->Fire(1, direction, isTargetTop, x-3, y + 17);
+		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
 		break;
 	case DIK_C:
 		supBulletThree->FireThreeBullet(direction, x, y);
@@ -502,14 +506,11 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			playScene->PlayerGotCar();
 		if (typeSophia == JASON)
 		{
-			if (!player->isJumping)
-			{
-				playScene->typeSophia = 0;
-				player->SetState(SOPHIA_STATE_OUT);
-				sophia->direction = direction;
-				sophia->SetPosition(x + DX_GET_OUT_CAR, y);
-				sophia->SetState(SOPHIA_MINI_STATE_OUT);
-			}
+			playScene->typeSophia = 0;
+			player->SetState(SOPHIA_STATE_OUT);
+			sophia->direction = direction;
+			sophia->SetPosition(x + DX_GET_OUT_CAR, y);
+			sophia->SetState(SOPHIA_MINI_STATE_OUT);
 		}
 		break;
 #pragma region F6
@@ -546,7 +547,6 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		bullet2->SetBBARGB(200);
 		bullet3->SetBBARGB(200);
 		supBullet->SetBBARGB(200);
-		supBulletThree->OffBoundingBox(200);
 		break;
 	case DIK_F7:
 		for (int i = 0; i < listObjects.size(); i++)
@@ -581,7 +581,6 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		bullet2->SetBBARGB(0);
 		bullet3->SetBBARGB(0);
 		supBullet->SetBBARGB(0);
-		supBulletThree->OffBoundingBox(0);
 		break;
 #pragma endregion
 	}
@@ -678,96 +677,55 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			}
 		}
 	}
-	else if (typeSophia == JASON)
+	if (!playerV2->isAutoRun)
 	{
+#pragma endregion
+		if (player->GetState() == SOPHIA_STATE_DIE) return;
+
 		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-	
+			if (typeSophia == JASON)
+				player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+			else
+			{
+				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+			}
 		}
 		else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			player->SetState(SOPHIA_STATE_WALKING_LEFT);
-
+			if (typeSophia == JASON)
+				player->SetState(SOPHIA_STATE_WALKING_LEFT);
+			else
+				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+		}
+		else if (Game::GetInstance()->IsKeyDown(DIK_UP))
+		{
+			if (typeSophia == BIG_SOPHIA)
+				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+		}
+		else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+		{
+			if (typeSophia == BIG_SOPHIA)
+				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
 		}
 		else
-			player->SetState(SOPHIA_STATE_IDLE);
+		{
+			if (typeSophia == JASON)
+				player->SetState(SOPHIA_STATE_IDLE);
+			else
+				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
+		}
 
 		if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 		{
-			player->SetPressSpace(true);
+			if (typeSophia == JASON)
+				player->SetPressSpace(true);
 		}
 
 		if (Game::GetInstance()->IsKeyDown(DIK_UP))
 		{
-			player->SetPressUp(true);
-		}
-	}
-	else
-	{
-		if (!playerV2->isAutoRun)
-		{
-#pragma endregion
-			if (player->GetState() == SOPHIA_STATE_DIE) return;
-
-			/*if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-			{
-				if (typeSophia == JASON)
-					player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-				else
-				{
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
-				}
-			}
-			else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-			{
-				if (typeSophia == JASON)
-					player->SetState(SOPHIA_STATE_WALKING_LEFT);
-				else
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
-			}
-			else if (Game::GetInstance()->IsKeyDown(DIK_UP))
-			{
-				if (typeSophia == BIG_SOPHIA)
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
-			}
-			else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
-			{
-				if (typeSophia == BIG_SOPHIA)
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
-			}
-			else
-			{
-				if (typeSophia == JASON)
-					player->SetState(SOPHIA_STATE_IDLE);
-				else
-					playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
-			}*/
-			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT) || Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_UP) || Game::GetInstance()->IsKeyDown(DIK_DOWN))
-			{
-				if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-				{
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
-
-				}
-				else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-				{
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
-				}
-
-				if (Game::GetInstance()->IsKeyDown(DIK_UP))
-				{
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
-				}
-				else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
-				{
-					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
-				}
-			}
-			else
-			{
-				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
-			}
+			if (typeSophia == JASON)
+				player->SetPressUp(true);
 		}
 	}
 }
@@ -1041,7 +999,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_LAVA_BRICK:
 	{
-		obj = new LavaBrick(atof(tokens[4].c_str()), atof(tokens[5].c_str()));
+		obj = new LavaBrick();
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
@@ -1439,7 +1397,7 @@ void PlayScene::Update(DWORD dt)
 				directMoveCam = 0;
 			}
 			PlayerGotGateV2();
-			if (directMoveCam == 1)
+			if (directMoveCam == 1 || directMoveCam == 2)
 			{
 				if (playerV2->direction > 0)
 				{
@@ -1461,10 +1419,7 @@ void PlayScene::Update(DWORD dt)
 						directMoveCam = 0;
 					}
 				}
-			}
-			else if (directMoveCam == 2)
-			{
-				if (playerV2->directionY < 0)
+				else if (playerV2->directionY < 0)
 				{
 					if (posY > nCamYGo)
 						posY -= SPEED_CAM_WORLD2 * dt;

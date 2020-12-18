@@ -24,6 +24,7 @@
 #define OBJECT_TYPE_MINES				19
 #define OBJECT_TYPE_EYEBALLS			100
 #define OBJECT_TYPE_TELEPORTERS			101
+#define OBJECT_TYPE_CANNONS				102
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -1090,7 +1091,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_TELEPORTERS:
 	{
-		obj = new Teleporters(x, y, player);
+		obj = new Teleporters(x, y, playerV2);
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
@@ -1099,6 +1100,18 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Teleporters !\n");
 		break;
 	}
+	case OBJECT_TYPE_CANNONS:
+	{
+		obj = new Cannons(x, y, playerV2);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		totalObjectsIntoGrid.push_back(obj);
+
+		DebugOut(L"[test] add Cannons !\n");
+		break;
+	}
+
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
@@ -1521,10 +1534,19 @@ void PlayScene::Update(DWORD dt)
 			{
 				if (listEnemies[i]->CheckBulletEnemy == 1)
 				{
-					player->SetInjured(1);
+					if (typeSophia == 2)
+					{
+						playerV2->SetInjured(1);
+					}
+					else
+					{
+						player->SetInjured(1);
+						
+					}
 					listEnemies[i]->CheckBulletEnemy = 0;
+					
 				}
-				if (listEnemies[i]->IsCollidingObject(player))
+				if (listEnemies[i]->IsCollidingObject(player) || listEnemies[i]->IsCollidingObject(playerV2))
 					listEnemies[i]->CheckColisionEnemy = 1;
 			}
 

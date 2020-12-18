@@ -249,7 +249,7 @@ void Eyeballs::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 #pragma endregion
 
-
+	Activation();
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 }

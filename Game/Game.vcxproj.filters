@@ -154,6 +154,12 @@
     <ClCompile Include="Teleporters.cpp">
       <Filter>Object\Enemy\OverWorld</Filter>
     </ClCompile>
+    <ClCompile Include="Cannons.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletCannons.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -308,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="Teleporters.h">
       <Filter>Object\Enemy\OverWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannons.h">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletCannons.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

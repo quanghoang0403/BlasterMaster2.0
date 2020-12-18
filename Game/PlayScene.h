@@ -29,6 +29,7 @@
 #include "Mines.h"
 #include "Eyeballs.h"
 #include "Teleporters.h"
+#include "Cannons.h"
 
 #include "LavaBrick.h"
 #include "BrickBreaker.h"

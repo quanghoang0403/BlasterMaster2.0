@@ -303,7 +303,7 @@ void PlayScene::PlayerTouchEnemy()
 		if (typeSophia == JASON)
 		{
 			if (player->IsCollidingObject(listEnemies[i]))
-				player->SetInjured(1);
+				//player->SetInjured(1);
 			if (supBullet->IsCollidingObject(listEnemies[i]))
 			{
 				listEnemies[i]->AddHealth(-1);
@@ -312,13 +312,13 @@ void PlayScene::PlayerTouchEnemy()
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
-			if (sophia->IsCollidingObject(listEnemies[i]))
-				sophia->SetInjured(1);
+			//if (sophia->IsCollidingObject(listEnemies[i]))
+				//sophia->SetInjured(1);
 		}
 		else if (typeSophia == BIG_SOPHIA)
 		{
-			if (playerV2->IsCollidingObject(listEnemies[i]))
-				playerV2->SetInjured(1);
+			//if (playerV2->IsCollidingObject(listEnemies[i]))
+				//playerV2->SetInjured(1);
 		}
 	}
 

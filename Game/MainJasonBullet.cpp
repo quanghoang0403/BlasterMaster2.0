@@ -185,7 +185,6 @@ void MainJasonBullet::Render()
 		}*/
 		isDone = true;
 		timeDelayed = 0;
-		isCountBack = false;
 	}
 	else
 	{
@@ -208,23 +207,16 @@ void MainJasonBullet::Render()
 		else if (isCollisionEnemies == 1)
 		{
 			isDone = true;
-			timeDelayed = 0;
-			isCountBack = false;
+			timeDelayed = 0;;
 		}
 		else if (isCollisionBrick == 1)
 		{
 			ani = BULLET_JASON_BANG_ANI;
-			if (!isCountBack)
-			{
-				animationSet->at(ani)->ResetCurrentFrame();
-				isCountBack = true;
-			}
 			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)
 			{
 				isDone = true;
 				timeDelayed = 0;
-				isCountBack = false;
 			}
 		}
 	}
@@ -245,13 +237,13 @@ void MainJasonBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 		{
 			if (isTargetTop == false)
 			{
-				r = x + THREE_BULLET_BBOX_WIDTH;
-				b = y + THREE_BULLET_BBOX_HEIGHT;
+				r = x + SMALL_BULLET_BBOX_WIDTH;
+				b = y + SMALL_BULLET_BBOX_HEIGHT;
 			}
 			else
 			{
-				r = x + THREE_BULLET_BBOX_HEIGHT;
-				b = y + THREE_BULLET_BBOX_WIDTH;
+				r = x + SMALL_BULLET_BBOX_HEIGHT;
+				b = y + SMALL_BULLET_BBOX_WIDTH;
 			}
 		}
 	}

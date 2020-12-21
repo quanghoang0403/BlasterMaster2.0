@@ -174,9 +174,6 @@ void Centipede::Render()
 		animationSet->at(ani)->Render(direction, x, y, alpha);
 		RenderBoundingBox();
 	}
-	//DebugOut(L"[xxxxxx] direction: %s\n", direction);
-
-	RenderBoundingBox();
 }
 
 void Centipede::SetState(int state)
@@ -206,12 +203,10 @@ void Centipede::Activation()
 {
 	if (!isActive)
 	{
-		alpha = 0;
 		vx = 0;
 	}
 	else
 	{
-		alpha = 255;
 		SetState(CENTIPEDE_STATE_WALKING);
 	}
 

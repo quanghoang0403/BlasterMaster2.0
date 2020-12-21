@@ -102,7 +102,7 @@ void Skulls::Render()
 	if (health <= 0)
 	{
 		ani = SKULLS_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y, alpha);
+		animationSet->at(ani)->OldRender(x, y);
 	
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(SKULLS_STATE_DIE);
@@ -114,7 +114,7 @@ void Skulls::Render()
 		else if (vx < 0)
 			direction = -1;
 		ani = SKULLS_ANI_FLYRIGHT;
-		animationSet->at(ani)->Render(direction, x, y, alpha);
+		animationSet->at(ani)->Render(direction, x, y);
 	}
 	for (int i = 0; i < bullet.size(); i++)
 	{

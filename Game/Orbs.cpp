@@ -111,10 +111,10 @@ void Orbs::Render()
 	if (isDeath)
 		return;
 	int ani;
-	if (health <= 0)
+	if (health <=0)
 	{
 		ani = ORBS_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y, alpha);
+		animationSet->at(ani)->OldRender(x, y);
 		if (animationSet->at(ani)->GetFrame() == 3)
 		{
 			SetState(ORBS_STATE_DIE);
@@ -124,7 +124,7 @@ void Orbs::Render()
 	else
 	{
 		ani = ORBS_ANI_ATTACK;
-		animationSet->at(ani)->OldRender(x, y, alpha);
+		animationSet->at(ani)->OldRender(x, y);
 	}
 	RenderBoundingBox();
 }
@@ -151,11 +151,9 @@ void Orbs::Activation()
 		vx = 0;
 		vy = 0;
 		isDamaged = 0;
-		alpha = 0;
 	}
 	else
 	{
-		alpha = 255;
 		SetState(ORBS_STATE_ATTACK);
 	}
 	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= ORBS_SITEACTIVE_PLAYER)

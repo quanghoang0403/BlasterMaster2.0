@@ -10,7 +10,7 @@ protected:
 	bool isArmor;
 	bool isBoss;
 	bool isDeath;
-	int alpha;
+
 	float RenderVx;
 	float RenderVy;
 

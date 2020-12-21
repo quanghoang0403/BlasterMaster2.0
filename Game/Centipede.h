@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Timer.h"
 #include <ctime>
-#define CENTIPEDE_WALKING_SPEED 0.04f;
+#define CENTIPEDE_WALKING_SPEED 0.05f;
 #define CENTIPEDE_GRAVITY		0.002f
 
 #define CENTIPEDE_BBOX_WIDTH 17

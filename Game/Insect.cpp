@@ -126,10 +126,10 @@ void Insect::Render()
 	if (health <= 0)
 	{
 		ani = INSECT_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y, alpha);
+		animationSet->at(ani)->Render(direction, x, y);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
-			SetState(INSECT_STATE_DIE);			
+			SetState(INSECT_STATE_DIE);
 	}
 	else
 	{
@@ -138,7 +138,7 @@ void Insect::Render()
 		else
 			direction = -1;
 		ani = INSECT_ANI_FLY;
-		animationSet->at(ani)->Render(direction, x, y, alpha);
+		animationSet->at(ani)->Render(direction, x, y);
 	}
 	RenderBoundingBox();
 }
@@ -204,11 +204,9 @@ void Insect::Activation()
 	{
 		vx = 0;
 		vy = 0;
-		alpha = 0;
 	}
 	else
 	{
-		alpha = 255;
 		SetState(INSECT_STATE_FLY);
 	}
 	if (GetDistance(D3DXVECTOR2(this->x, this->y), D3DXVECTOR2(target->x, target->y)) <= INSECT_SITEACTIVE_PLAYER)

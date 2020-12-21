@@ -64,7 +64,7 @@ void PlayScene::LoadBaseObjects()
 	}
 	if (player == NULL)
 	{
-		player = new Player(44, 143.5);
+		player = new Player(44, 143);
 		DebugOut(L"[INFO] player CREATED! \n");
 	}
 	if (playerV2 == NULL)
@@ -459,7 +459,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (listBullets[i]->isDone == true)
 				{
-					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR / 2);
+					listBullets[i]->Fire(0, direction, isTargetTop, x - DX_GET_OUT_CAR, y + DX_GET_OUT_CAR/1.5);
 					break;
 				}
 			}
@@ -488,7 +488,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
 		break;
 	case DIK_C:
-		supBulletThree->FireThreeBullet(direction, x, y);
+		if (supBulletThree->isDone)
+			supBulletThree->FireThreeBullet(direction, x, y);
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)

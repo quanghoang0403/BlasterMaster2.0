@@ -29,6 +29,8 @@ OrbEz::OrbEz(float x, float y, LPGAMEENTITY t)
 
 void OrbEz::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 	

@@ -2,7 +2,7 @@
 
 void Mines::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (isDeath == false)
+	if (!isDeath)
 	{
 		left = x;
 		top = y;
@@ -17,7 +17,7 @@ Mines::Mines(float x, float y, LPGAMEENTITY t)
 	this->x = x;
 	this->y = y;
 	this->target = t;
-	isDeath = 0;
+	isDeath = false;
 	health = MINES_MAXHEALTH;
 	isActive = false;
 	CheckColli = 0;

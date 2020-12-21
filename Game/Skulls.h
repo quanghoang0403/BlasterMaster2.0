@@ -23,7 +23,7 @@
 #define SKULLS_ANI_ATTACK					1
 #define SKULLS_ANI_DIE						2
 
-#define SKULLS_MAXHEALTH					4
+#define SKULLS_MAXHEALTH					2
 
 
 #define SKULLS_TIME_DELAYCHANGESTATE		1500

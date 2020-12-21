@@ -2,10 +2,13 @@
 
 void Insect::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + INSECT_BBOX_WIDTH;
-	bottom = y + INSECT_BBOX_HEIGHT;
+	if (!isDeath)
+	{
+		left = x;
+		top = y;
+		right = x + INSECT_BBOX_WIDTH;
+		bottom = y + INSECT_BBOX_HEIGHT;
+	}
 }
 
 Insect::Insect(float x, float y, LPGAMEENTITY t)
@@ -47,7 +50,7 @@ void Insect::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		SetState(INSECT_STATE_FLY);
 	}
 	
-	DebugOut(L"\nisFly:   %d\n", delayTimerDowm->IsTimeUp());
+	//DebugOut(L"\nisFly:   %d\n", delayTimerDowm->IsTimeUp());
 #pragma endregion
 
 #pragma region Xử lý tiền va chạm

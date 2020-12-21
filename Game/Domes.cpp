@@ -5,10 +5,13 @@
 
 void Domes::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + DOMES_BBOX_WIDTH;
-	bottom = y + DOMES_BBOX_HEIGHT;
+	if (!isDeath)
+	{
+		left = x;
+		top = y;
+		right = x + DOMES_BBOX_WIDTH;
+		bottom = y + DOMES_BBOX_HEIGHT;
+	}
 }
 
 Domes::Domes(float x, float y, LPGAMEENTITY t)
@@ -31,6 +34,8 @@ Domes::Domes(float x, float y, LPGAMEENTITY t)
 
 void Domes::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 #pragma region Xử lý Attack
@@ -101,8 +106,6 @@ void Domes::Render()
 	}
 	else
 	{
-		
-
 		switch (dgravity)
 		{
 		case 1:
@@ -110,17 +113,20 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
+
+				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			else if (vx > 0)
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
+
+				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			else
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
-				animationSet->at(ani)->RenderTopBottom(1, x, y);
+
+				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			break;
 
@@ -128,17 +134,18 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
-				animationSet->at(ani)->Render(1, x, y);
+
+				animationSet->at(ani)->Render(1, x, y, alpha);
 			}
 			else if (vy > 0)
 			{
 				ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
-				animationSet->at(ani)->Render(1, x, y);
+				animationSet->at(ani)->Render(1, x, y, alpha);
 			}
 			else if (vy < 0)
 			{
 				ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
-				animationSet->at(ani)->Render(1, x, y);
+				animationSet->at(ani)->Render(1, x, y, alpha);
 			}
 			break;
 
@@ -146,17 +153,17 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
+				animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
 			}
 			else if (vx > 0)
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
+				animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
 			}
 			else
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
-				animationSet->at(ani)->RenderTopBottom(-1, x, y);
+				animationSet->at(ani)->RenderTopBottom(-1, x, y, alpha);
 			}
 			break;
 
@@ -164,28 +171,25 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
-				animationSet->at(ani)->Render(-1, x, y);
+				animationSet->at(ani)->Render(-1, x, y, alpha);
 			}
 			else if (vy > 0)
 			{
 				ani = DOMES_ANI_WALKING_LEFT_RIGHT_BOTTOM;
-				animationSet->at(ani)->Render(-1, x, y);
+				animationSet->at(ani)->Render(-1, x, y, alpha);
 			}
 			else if (vy < 0)
 			{
 				ani = DOMES_ANI_WALKING_LEFT_RIGHT_TOP;
-				animationSet->at(ani)->Render(-1, x, y);
+				animationSet->at(ani)->Render(-1, x, y, alpha);
 			}
 			break;
 
 		default:
 			break;
 		}
+		RenderBoundingBox();
 	}
-	
-
-			
-	RenderBoundingBox();
 }
 
 void Domes::AIClimdWall(vector<LPCOLLISIONEVENT> coEventsResult, float nx, float ny)

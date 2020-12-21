@@ -113,16 +113,19 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_TOP_BOTTOM;
+
 				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			else if (vx > 0)
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_LEFT;
+
 				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			else
 			{
 				ani = DOMES_ANI_WALKING_TOP_BOTTOM_RIGHT;
+
 				animationSet->at(ani)->RenderTopBottom(1, x, y, alpha);
 			}
 			break;
@@ -131,6 +134,7 @@ void Domes::Render()
 			if (isDamaged)
 			{
 				ani = DOMES_ANI_ATTACK_LEFT_RIGHT;
+
 				animationSet->at(ani)->Render(1, x, y, alpha);
 			}
 			else if (vy > 0)
@@ -700,12 +704,10 @@ void Domes::Activation()
 {
 	if (!isActive && !actived)
 	{
-		alpha = 0;
 		vx = 0;
 	}
 	else if (isActive && !actived)
 	{
-		alpha = 255;
 		vx = -DOMES_WALKING_SPEED;
 		actived = true;
 	}

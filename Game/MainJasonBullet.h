@@ -8,8 +8,8 @@
 #define MINI_BULLET_BBOX_WIDTH			4
 #define MINI_BULLET_BBOX_HEIGHT			4
 
-#define THREE_BULLET_BBOX_WIDTH			8
-#define THREE_BULLET_BBOX_HEIGHT		6
+#define SMALL_BULLET_BBOX_WIDTH			8
+#define SMALL_BULLET_BBOX_HEIGHT		6
 
 #define BIG_BULLET_BBOX_WIDTH			22
 #define BIG_BULLET_BBOX_HEIGHT			6
@@ -32,7 +32,7 @@ public:
 	MainJasonBullet();
 	~MainJasonBullet();
 	int isThreeBullet = 0;
-	bool isCountBack = true;
+
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	void Render();

@@ -78,7 +78,10 @@ enum EnemyType
 	SKULLS = 8,
 	ORBEZ = 9,
 	MINES = 10,
-	EYEBALLS = 11
+	EYEBALLS = 11,
+	TELEPORTERS = 12,
+	CANNONS = 13
+
 
 };
 
@@ -145,7 +148,7 @@ enum EntityType
 	ADDSCOREEFFECT = 73,
 
 	//Enemies Zone 80-100
-	ENEMY = 80 ,
+	ENEMY = 80,
 	//GOLEM = 80,
 	//CENTIPEDE = 81,
 	//DOMES = 82,
@@ -162,6 +165,8 @@ enum EntityType
 	ORBEZZ = 202,
 	MINESS = 203,
 	EYEBALLSS = 204,
+	TELEPORTERSS= 205,
+
 
 	//Scene Zone 100-120
 	TITLESCENE = 100,
@@ -183,6 +188,8 @@ enum EntityType
 	//weaponenemy
 	BULLETNENEMY,
 	BULLETFLOATERS = 120,
+	BULLETEYEBALLS = 121,
+	BULLETCANNONS = 122,
 
 
 	Null = -1

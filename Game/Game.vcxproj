@@ -128,11 +128,14 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBreaker.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletCannons.h" />
     <ClInclude Include="BulletEnemy.h" />
+    <ClInclude Include="BulletEyeballs.h" />
     <ClInclude Include="BulletFloaters.h" />
     <ClInclude Include="BulletMines.h" />
     <ClInclude Include="BulletSkulls.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cannons.h" />
     <ClInclude Include="Centipede.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
@@ -169,9 +172,9 @@
     <ClInclude Include="Skulls.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stair.h" />
+    <ClInclude Include="Teleporters.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="ThreeBullet.h" />
-    <ClInclude Include="ThreeBulletDetail.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,11 +183,14 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBreaker.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletCannons.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
+    <ClCompile Include="BulletEyeballs.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />
     <ClCompile Include="BulletMines.cpp" />
     <ClCompile Include="BulletSkulls.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cannons.cpp" />
     <ClCompile Include="Centipede.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
@@ -221,9 +227,9 @@
     <ClCompile Include="Skulls.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stair.cpp" />
+    <ClCompile Include="Teleporters.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="ThreeBullet.cpp" />
-    <ClCompile Include="ThreeBulletDetail.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

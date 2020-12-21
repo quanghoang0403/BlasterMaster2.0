@@ -15,6 +15,6 @@ public:
 	virtual bool IsContain(RECT rect1, RECT rect2);
 	virtual float GetDistance(D3DXVECTOR2 pos, D3DXVECTOR2 target);
 	virtual void GetCenterBoundingBox(float& x, float& y);
-	LavaBrick();
+	LavaBrick(float fWidth, float fHeight);
 	~LavaBrick();
 };

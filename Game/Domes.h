@@ -46,7 +46,7 @@ class Domes : public Enemy
 	int directionclock;
 	bool firstFollow;
 	bool actived;
-	
+	int alpha;
 	Timer* delayAttack = new Timer(DOMES_TIME_DELAYATTACK);
 	Timer* startAttack = new Timer(DOMES_TIME_ATTACK);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

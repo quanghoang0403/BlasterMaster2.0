@@ -31,6 +31,7 @@ PlayerV2* PlayerV2::GetInstance()
 
 void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	DebugOut(L"x: %f y: %f \n", x, y);
 	if (isDoneDeath)
 		return;
 	if (health <= 0)
@@ -130,7 +131,7 @@ void PlayerV2::SetInjured(int dame)
 {
 	if (isImmortaling)
 		return;
-	health -= dame;
+	//health -= dame;
 	gunDam -= dame;
 
 	StartUntouchable();

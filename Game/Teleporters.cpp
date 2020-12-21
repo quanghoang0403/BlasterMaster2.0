@@ -18,7 +18,7 @@ Teleporters::Teleporters(float x, float y, LPGAMEENTITY t)
 	this->x = x;
 	this->y = y;
 	this->target = t;
-	health = EYEBALLS_MAXHEALTH;
+	health = 3;
 	isActive = false;
 	isDamaged = false;
 	isDeath = 0;

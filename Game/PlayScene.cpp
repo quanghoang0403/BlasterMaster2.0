@@ -989,7 +989,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_LAVA_BRICK:
 	{
-		obj = new LavaBrick();
+		obj = new LavaBrick(atof(tokens[4].c_str()), atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 

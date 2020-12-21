@@ -36,9 +36,9 @@ void LavaBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = y + frameH;
 }
 
-LavaBrick::LavaBrick()
+LavaBrick::LavaBrick(float fWidth, float fHeight)
 {
 	tag = EntityType::ENEMY;
-	this->frameH = BRICK_BBOX_HEIGHT;
-	this->frameW = BRICK_BBOX_WIDTH;
+	this->frameH = fHeight;
+	this->frameW = fWidth;
 }

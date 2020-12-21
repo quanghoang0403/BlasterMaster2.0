@@ -705,9 +705,11 @@ void Domes::Activation()
 	if (!isActive && !actived)
 	{
 		vx = 0;
+		alpha = 0;
 	}
 	else if (isActive && !actived)
 	{
+		alpha = 255;
 		vx = -DOMES_WALKING_SPEED;
 		actived = true;
 	}

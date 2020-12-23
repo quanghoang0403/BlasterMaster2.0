@@ -160,6 +160,9 @@
     <ClCompile Include="BulletCannons.cpp">
       <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="GateImage.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -306,9 +309,6 @@
     <ClInclude Include="PlayScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -320,6 +320,12 @@
     </ClInclude>
     <ClInclude Include="BulletCannons.h">
       <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GateImage.h">
+      <Filter>Object\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

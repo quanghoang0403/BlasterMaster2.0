@@ -2,6 +2,7 @@
 #include "Textures.h"
 #include "Stair.h"
 #include "GateV2.h"
+#include "GateImage.h"
 
 #define MINI_SOPHIA	0
 #define JASON		1
@@ -25,6 +26,8 @@
 #define OBJECT_TYPE_EYEBALLS			100
 #define OBJECT_TYPE_TELEPORTERS			101
 #define OBJECT_TYPE_CANNONS				102
+#define OBJECT_TYPE_GATE 				103
+#define OBJECT_TYPE_GATE_IMAGE			104
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -991,9 +994,9 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new LavaBrick(atof(tokens[4].c_str()), atof(tokens[5].c_str()));
 		obj->SetPosition(x, y);
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		//LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
-		obj->SetAnimationSet(ani_set);
+		//obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add Lava Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
@@ -1112,7 +1115,13 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[test] add Cannons !\n");
 		break;
 	}
-
+	case OBJECT_TYPE_GATE_IMAGE:
+	{
+		obj = new GateImage(atoi(tokens[3].c_str()));
+		obj->SetPosition(x, y);
+		listGateImage.push_back(obj);
+		break;
+	}
 	default:
 		DebugOut(L"[ERRO] Invalid object type: %d\n", object_type);
 		return;
@@ -1619,6 +1628,8 @@ void PlayScene::Render()
 		for (int i = 0; i < listEnemies.size(); i++)
 			listEnemies[i]->Render();
 		gameHUD->Render(player);
+		/*for (int i = 0; i < listGateImage.size(); i++)
+			listGateImage[i]->Render();*/
 	}
 }
 

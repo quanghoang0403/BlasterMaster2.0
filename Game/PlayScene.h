@@ -102,6 +102,7 @@ protected:
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
 	vector<LPBULLET> listBigBullets;
+	vector<LPGAMEENTITY> listGateImage;
 
 
 

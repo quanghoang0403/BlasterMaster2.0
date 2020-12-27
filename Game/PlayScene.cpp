@@ -1120,6 +1120,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj = new GateImage(atoi(tokens[3].c_str()));
 		obj->SetPosition(x, y);
 		listGateImage.push_back(obj);
+		DebugOut(L"[test] add Gate image !\n");
 		break;
 	}
 	default:
@@ -1628,8 +1629,8 @@ void PlayScene::Render()
 		for (int i = 0; i < listEnemies.size(); i++)
 			listEnemies[i]->Render();
 		gameHUD->Render(player);
-		/*for (int i = 0; i < listGateImage.size(); i++)
-			listGateImage[i]->Render();*/
+		for (int i = 0; i < listGateImage.size(); i++)
+			listGateImage[i]->Render();
 	}
 }
 

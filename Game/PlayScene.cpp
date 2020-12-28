@@ -50,9 +50,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1 * 10);
+	ChooseMap(STAGE_1*2);
 
 }
 
@@ -874,6 +874,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		//totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -924,6 +925,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Golem %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -949,6 +951,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add centipede %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -961,6 +964,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add domes %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -974,6 +978,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add floaters %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -987,6 +992,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
@@ -1011,6 +1017,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Breaker Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
@@ -1023,6 +1030,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Orbs !\n");
 		break;
 	}
@@ -1035,6 +1043,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Skulls !\n");
 		break;
 	}
@@ -1045,6 +1054,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add OrbEz !\n");
 		break;
 	}
@@ -1055,7 +1065,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Mines !\n");
 		break;
 	}
@@ -1066,6 +1076,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set1 = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set1);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Eyeballs !\n");
 		//obj = new Eyeballs(x, y, playerV2, 100); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
 		//obj->SetPosition(x, y);
@@ -1100,7 +1111,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Teleporters !\n");
 		break;
 	}
@@ -1111,7 +1122,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Cannons !\n");
 		break;
 	}
@@ -1534,7 +1545,7 @@ void PlayScene::Update(DWORD dt)
 		for (int i = 0; i < listStairs.size(); i++)
 			listStairs[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listBigBullets.size(); i++)
-			listBigBullets[i]->Update(dt, &coObjects);
+			listBigBullets[i]->Update(dt, &listEnemiesForBullet);
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listItems.size(); i++)
@@ -1560,7 +1571,32 @@ void PlayScene::Update(DWORD dt)
 				if (listEnemies[i]->IsCollidingObject(player) || listEnemies[i]->IsCollidingObject(playerV2))
 					listEnemies[i]->CheckColisionEnemy = 1;
 			}
+			if (listEnemies[i]->health == 0 && listEnemies[i]->isSpawnItem == false)
+			{
 
+				if (listEnemies[i]->isLavar == false)
+				{
+					PowerUp* powerUp;
+					GunUp* gunUp;
+					float x, y;
+					listEnemies[i]->GetPosition(x, y);
+					int random = rand() % 6;
+					DebugOut(L"%d \n", random);
+					if (random <= 2)
+					{
+						PowerUp* powerUp = new PowerUp(x, y);
+						//powerUp->Render();
+						listItems.push_back(powerUp);
+					}
+					else if (random == 3)
+					{
+						GunUp* gunUp = new GunUp(x, y);
+						//gunUp->Render();
+						listItems.push_back(gunUp);
+					}
+					listEnemies[i]->isSpawnItem = true;
+				}
+			}
 			listEnemies[i]->Update(dt, &listObjects);
 		}
 

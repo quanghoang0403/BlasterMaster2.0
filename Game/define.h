@@ -80,8 +80,8 @@ enum EnemyType
 	MINES = 10,
 	EYEBALLS = 11,
 	TELEPORTERS = 12,
-	CANNONS = 13
-
+	CANNONS = 13,
+	LAVAR =14
 
 };
 

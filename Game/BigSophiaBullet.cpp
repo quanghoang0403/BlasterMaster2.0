@@ -87,6 +87,8 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				}
 				if (e->obj->GetType() == EntityType::ENEMY)
 				{
+					if (e->obj->isLavar == true)
+						return;
 					e->obj->AddHealth(-damage);
 					isCollisionEnemies = 1;
 					x += min_tx * dx + nx * 0.4f;

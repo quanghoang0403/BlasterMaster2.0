@@ -17,7 +17,7 @@
 #define BULLET_JASON_BANG_ANI						4
 
 #define ANIMATION_SET_BIG_SOPHIA_BULLET				6
-#define BULLET_DELAY								350
+#define BULLET_DELAY								250
 
 
 

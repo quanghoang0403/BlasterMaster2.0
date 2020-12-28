@@ -98,6 +98,7 @@ protected:
 	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
+	vector<LPGAMEENTITY> listEnemiesForBullet;
 	vector<LPGAMEENTITY> totalObjectsIntoGrid;
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;

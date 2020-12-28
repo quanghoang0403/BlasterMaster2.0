@@ -26,7 +26,6 @@
 #define OBJECT_TYPE_EYEBALLS			100
 #define OBJECT_TYPE_TELEPORTERS			101
 #define OBJECT_TYPE_CANNONS				102
-#define OBJECT_TYPE_GATE 				103
 #define OBJECT_TYPE_GATE_IMAGE			104
 
 #define OBJECT_TYPE_LAVA_BRICK			160
@@ -50,9 +49,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 1;
+	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*10);
 
 }
 
@@ -308,8 +307,8 @@ void PlayScene::PlayerTouchEnemy()
 
 		if (typeSophia == JASON)
 		{
-			if (player->IsCollidingObject(listEnemies[i]))
-				//player->SetInjured(1);
+			if (player->IsCollidingObject(listEnemies[i])==true && listEnemies[i]->health>0)
+				player->SetInjured(1);
 			if (supBullet->IsCollidingObject(listEnemies[i]))
 			{
 				listEnemies[i]->AddHealth(-1);
@@ -318,13 +317,16 @@ void PlayScene::PlayerTouchEnemy()
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
-			//if (sophia->IsCollidingObject(listEnemies[i]))
-				//sophia->SetInjured(1);
+			if (sophia->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
+			{
+				sophia->SetInjured(0);
+				player->SetInjured(1);
+			}
 		}
 		else if (typeSophia == BIG_SOPHIA)
 		{
-			//if (playerV2->IsCollidingObject(listEnemies[i]))
-				//playerV2->SetInjured(1);
+			if (playerV2->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
+				playerV2->SetInjured(1);
 		}
 	}
 
@@ -356,6 +358,33 @@ void PlayScene::PlayerCollideItem()
 						player->AddgunDam(GUN_HP_RESTORE);
 					else
 						player->SetgunDam(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				default:
+					break;
+				}
+			}
+
+			if (playerV2->IsCollidingObject(listItems[i]))
+			{
+				switch (listItems[i]->GetType())
+				{
+				case EntityType::POWERUP:
+				{
+					if (playerV2->GetHealth() + POWER_HP_RESTORE <= MAX_HEALTH)
+						playerV2->AddHealth(POWER_HP_RESTORE);
+					else
+						playerV2->SetHealth(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					break;
+				}
+				case EntityType::GUNUP:
+				{
+					if (playerV2->GetgunDam() + GUN_HP_RESTORE <= MAX_HEALTH)
+						playerV2->AddgunDam(GUN_HP_RESTORE);
+					else
+						playerV2->SetgunDam(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
 					break;
 				}
@@ -670,55 +699,96 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			}
 		}
 	}
-	if (!playerV2->isAutoRun)
+	else if (typeSophia == JASON)
 	{
-#pragma endregion
-		if (player->GetState() == SOPHIA_STATE_DIE) return;
-
 		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-			else
-			{
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
-			}
+			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+
 		}
 		else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_WALKING_LEFT);
-			else
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
-		}
-		else if (Game::GetInstance()->IsKeyDown(DIK_UP))
-		{
-			if (typeSophia == BIG_SOPHIA)
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
-		}
-		else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
-		{
-			if (typeSophia == BIG_SOPHIA)
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+			player->SetState(SOPHIA_STATE_WALKING_LEFT);
+
 		}
 		else
-		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_IDLE);
-			else
-				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
-		}
+			player->SetState(SOPHIA_STATE_IDLE);
 
 		if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 		{
-			if (typeSophia == JASON)
-				player->SetPressSpace(true);
+			player->SetPressSpace(true);
 		}
 
 		if (Game::GetInstance()->IsKeyDown(DIK_UP))
 		{
-			if (typeSophia == JASON)
-				player->SetPressUp(true);
+			player->SetPressUp(true);
+		}
+	}
+	else
+	{
+		if (playerV2->isAutoRun== false && playScene->checkCamMove == false)
+		{
+#pragma endregion
+			if (player->GetState() == SOPHIA_STATE_DIE) return;
+
+			/*if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+				else
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+				}
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_WALKING_LEFT);
+				else
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_UP))
+			{
+				if (typeSophia == BIG_SOPHIA)
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+			{
+				if (typeSophia == BIG_SOPHIA)
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+			}
+			else
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_IDLE);
+				else
+					playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
+			}*/
+			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT) || Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_UP) || Game::GetInstance()->IsKeyDown(DIK_DOWN))
+			{
+				if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+
+				}
+				else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+				}
+
+				if (Game::GetInstance()->IsKeyDown(DIK_UP))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+				}
+				else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+				}
+			}
+			else
+			{
+				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
+			}
 		}
 	}
 }
@@ -890,7 +960,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float camX = atoi(tokens[9].c_str());
 		int camY = atoi(tokens[10].c_str());
 		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer, camX, camY);
-		//listGates.push_back(obj);
+		listGates.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add gate %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -1382,6 +1452,7 @@ void PlayScene::Update(DWORD dt)
 					}
 				}
 				gameCamera->SetCamPos(cx, posY);
+				gameHUD->Update(cx + 5, posY + 20, player->GetHealth(), player->GetgunDam());
 			}
 
 		}
@@ -1444,6 +1515,7 @@ void PlayScene::Update(DWORD dt)
 				//DebugOut(L"toa do cam x %f \n ", cx);
 				//DebugOut(L"toa do cam y %f \n ", posY);
 				gameCamera->SetCamPos(cx, posY);
+				gameHUD->Update(cx + 5, posY + 20, player->GetHealth(), player->GetgunDam());
 			}
 		}
 		else
@@ -1458,8 +1530,10 @@ void PlayScene::Update(DWORD dt)
 			PlayerGotGateV2();
 			if (directMoveCam == 1 || directMoveCam == 2)
 			{
+				checkCamMove = true;
 				if (playerV2->direction > 0)
 				{
+					DebugOut(L"phai");
 					if (posX < nCamXGo)
 						posX += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1470,6 +1544,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->direction < 0)
 				{
+					DebugOut(L"trai");
 					if (posX > nCamXBack)
 						posX -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1480,6 +1555,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY < 0)
 				{
+					DebugOut(L"xuong");
 					if (posY > nCamYGo)
 						posY -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1490,6 +1566,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY > 0)
 				{
+					DebugOut(L"len");
 					if (posY < nCamYBack)
 						posY += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1498,16 +1575,20 @@ void PlayScene::Update(DWORD dt)
 						directMoveCam = 0;
 					}
 				}
+				checkCamMove = true;
 			}
+			else
+				checkCamMove = false;
 			//DebugOut(L"cam oldX, %f \n", oldPosX);
 			//DebugOut(L"cam X, %f \n", posX);
 			gameCamera->SetCamPos(posX, posY);
+			gameHUD->Update(posX, posY, playerV2->GetHealth(), playerV2->GetgunDam());
 		}
 
-		if (typeSophia == JASON)
-			gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
-		if (typeSophia == MINI_SOPHIA)
-			gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
+		//if (typeSophia == JASON)
+		//	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+		//if (typeSophia == MINI_SOPHIA)
+		//	gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
 		//if (typeSophia == BIG_SOPHIA)
 		//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
@@ -1663,9 +1744,9 @@ void PlayScene::Render()
 			listBullets[i]->Render();
 		for (int i = 0; i < listEnemies.size(); i++)
 			listEnemies[i]->Render();
-		gameHUD->Render(player);
 		for (int i = 0; i < listGateImage.size(); i++)
 			listGateImage[i]->Render();
+		gameHUD->Render();
 	}
 }
 

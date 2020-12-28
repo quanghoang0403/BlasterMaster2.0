@@ -131,7 +131,7 @@ void PlayerV2::SetInjured(int dame)
 {
 	if (isImmortaling)
 		return;
-	//health -= dame;
+	health -= dame;
 	gunDam -= dame;
 
 	StartUntouchable();

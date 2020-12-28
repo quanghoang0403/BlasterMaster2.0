@@ -28,6 +28,6 @@ public:
 	~HUD();
 
 	void Update(float x, float y, int currentPlayerHealth, int currentGunHealth);
-	void Render(Player* playerInfo);
+	void Render();
 };
 

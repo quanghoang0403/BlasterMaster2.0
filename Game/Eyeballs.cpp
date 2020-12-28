@@ -70,6 +70,8 @@ D3DXVECTOR2 Eyeballs::CreatePosFollowTarget(D3DXVECTOR2 focus, D3DXVECTOR2 pos)
 
 void Eyeballs::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 #pragma region Xử lý bullet

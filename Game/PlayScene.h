@@ -55,7 +55,7 @@ private:
 	Grid* grid;
 public:
 
-
+	bool checkCamMove = false; //kiem tra luot cap, fix bug qua cong map 2
 	int typeScene = 1;
 	float oldPosX;
 	float oldPosY;

@@ -1571,9 +1571,8 @@ void PlayScene::Update(DWORD dt)
 				if (listEnemies[i]->IsCollidingObject(player) || listEnemies[i]->IsCollidingObject(playerV2))
 					listEnemies[i]->CheckColisionEnemy = 1;
 			}
-			if (listEnemies[i]->health == 0 && listEnemies[i]->isSpawnItem == false)
+			if (listEnemies[i]->health < 1 && listEnemies[i]->isSpawnItem == false)
 			{
-
 				if (listEnemies[i]->isLavar == false)
 				{
 					PowerUp* powerUp;
@@ -1582,13 +1581,13 @@ void PlayScene::Update(DWORD dt)
 					listEnemies[i]->GetPosition(x, y);
 					int random = rand() % 6;
 					DebugOut(L"%d \n", random);
-					if (random <= 2)
+					if (random <= 3)
 					{
 						PowerUp* powerUp = new PowerUp(x, y);
 						//powerUp->Render();
 						listItems.push_back(powerUp);
 					}
-					else if (random == 3)
+					else if (random == 4)
 					{
 						GunUp* gunUp = new GunUp(x, y);
 						//gunUp->Render();

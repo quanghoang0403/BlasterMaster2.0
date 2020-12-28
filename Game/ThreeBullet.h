@@ -1,6 +1,6 @@
 #pragma once
 #include "Bullet.h"
-#include "MainJasonBullet.h"
+#include "ThreeBulletDetail.h"
 #include <math.h>
 #define ANIMATION_SET_THREE_BULLET		5	
 
@@ -13,9 +13,9 @@
 class ThreeBullet : public Bullet
 {
 public:
-	MainJasonBullet* bullet_top;
-	MainJasonBullet* bullet_mid;
-	MainJasonBullet* bullet_bot;
+	ThreeBulletDetail* bullet_top;
+	ThreeBulletDetail* bullet_mid;
+	ThreeBulletDetail* bullet_bot;
 	ThreeBullet();
 	~ThreeBullet();
 	//void Fire(int direc, int isTargetTop, float x, float y) { x = x; y = y; };
@@ -23,6 +23,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);
 	void Render();
 	void FireThreeBullet(int direction, float posX, float posY);
+	void OffBoundingBox(int n);
 };
 
 

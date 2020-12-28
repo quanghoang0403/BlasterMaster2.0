@@ -163,6 +163,9 @@
     <ClCompile Include="GateImage.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="ThreeBulletDetail.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -326,6 +329,9 @@
     </ClInclude>
     <ClInclude Include="GateImage.h">
       <Filter>Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreeBulletDetail.h">
+      <Filter>Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

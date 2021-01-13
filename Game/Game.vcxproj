@@ -130,6 +130,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletCannons.h" />
     <ClInclude Include="BulletEnemy.h" />
+    <ClInclude Include="BulletEnemyV2.h" />
     <ClInclude Include="BulletEyeballs.h" />
     <ClInclude Include="BulletFloaters.h" />
     <ClInclude Include="BulletMines.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletCannons.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
+    <ClCompile Include="BulletEnemyV2.cpp" />
     <ClCompile Include="BulletEyeballs.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />
     <ClCompile Include="BulletMines.cpp" />

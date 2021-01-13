@@ -49,9 +49,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
+	ChooseMap(STAGE_1);
 
 }
 
@@ -471,6 +471,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_Q:
 		playScene->typeSophia = BIG_SOPHIA;
 		playerV2->SetPosition(30, 60);
+		break;
+	case DIK_B:
+		player->Attack();
 		break;
 	case DIK_Z:
 		if (typeSophia == JASON)

@@ -1,9 +1,8 @@
 
 #pragma once
 #include "BulletEnemy.h"
-#include "Player.h"
+//#include "Player.h"
 #include "Brick.h"
-#include "Player.h"
 #include "Timer.h"
 #include <ctime>
 

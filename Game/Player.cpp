@@ -126,6 +126,13 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
+	///*for (int i = 0; i < bullet.size(); i++)
+	//{
+	//	bullet.at(i)->Update(dt, coObjects);
+	//	if (bullet.at(i)->IsFinish())
+	//		bullet.erase(bullet.begin() + i);
+	//}*/
 #pragma endregion
 }
 
@@ -145,6 +152,11 @@ void Player::SetInjured(int dame)
 
 void Player::Render()
 {
+	/*for (int i = 0; i < bullet.size(); i++)
+	{
+		bullet.at(i)->Render();
+		DebugOut(L"Render");
+	}*/
 	if (isDoneDeath)
 		return;
 	RenderBoundingBox();
@@ -309,6 +321,7 @@ void Player::Render()
 		}
 	}
 
+
 }
 
 void Player::SetState(int state)
@@ -380,5 +393,11 @@ void Player::Reset()
 	SetState(SOPHIA_STATE_IDLE);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
+}
+
+void Player::Attack()
+{
+	//bullet.push_back(new BulletSkulls(x + 20, y - 20, 0.05));
+	//isDamaged = 1;
 }
 

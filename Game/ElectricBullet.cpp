@@ -18,6 +18,7 @@ void ElectricBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	if (isDone == true)
 	{
 		alpha = 0;
+		return;
 	}
 	else
 	{

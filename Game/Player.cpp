@@ -1,9 +1,9 @@
 ﻿#include <algorithm>
 #include <assert.h>
 #include "debug.h"
-
 #include "Player.h"
 #include "Game.h"
+#include "Sound.h"
 
 Player::Player(float x, float y) : Entity()
 {
@@ -127,12 +127,12 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, vector<LPGAMEENTI
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	///*for (int i = 0; i < bullet.size(); i++)
-	//{
-	//	bullet.at(i)->Update(dt, coObjects);
-	//	if (bullet.at(i)->IsFinish())
-	//		bullet.erase(bullet.begin() + i);
-	//}*/
+	/*for (int i = 0; i < bullet.size(); i++)
+	{
+		bullet.at(i)->Update(dt, coObjects);
+		if (bullet.at(i)->IsFinish())
+			bullet.erase(bullet.begin() + i);
+	}*/
 #pragma endregion
 }
 
@@ -140,6 +140,7 @@ void Player::SetInjured(int dame)
 {
 	if (isImmortaling)
 		return;
+	sound->Play(GSOUND::S_HEALTH, false);
 	health -= dame;
 	gunDam -= dame;
 
@@ -148,11 +149,9 @@ void Player::SetInjured(int dame)
 	isImmortaling = true;
 }
 
-
-
 void Player::Render()
-{
-	/*for (int i = 0; i < bullet.size(); i++)
+{/*
+	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();
 		DebugOut(L"Render");
@@ -266,7 +265,7 @@ void Player::Render()
 			return;
 		}
 	}
-	else
+	else 
 	{
 		if (isJumping == false)
 		{
@@ -320,8 +319,6 @@ void Player::Render()
 			return;
 		}
 	}
-
-
 }
 
 void Player::SetState(int state)
@@ -344,6 +341,8 @@ void Player::SetState(int state)
 			return;
 		else
 		{
+			sound->Stop(GSOUND::S_JUMP);
+			sound->Play(GSOUND::S_JUMP, false);
 			isJumpHandle = false;
 			isJumping = true;
 			vy = -SOPHIA_JUMP_SPEED_Y;
@@ -395,9 +394,11 @@ void Player::Reset()
 	SetSpeed(0, 0);
 }
 
+
 void Player::Attack()
 {
-	//bullet.push_back(new BulletSkulls(x + 20, y - 20, 0.05));
-	//isDamaged = 1;
+	sound->Reset(GSOUND::S_BULLET_SOPHIA);
+	sound->Play(GSOUND::S_BULLET_SOPHIA, false);
+	//bullet.push_back(new BulletSkulls(x + 20, y - 20, 0.1*direction));
 }
 

@@ -63,7 +63,7 @@
 #define ANIMATION_SET_ITEM_GUNUP			130
 #define ANIMATION_SET_BRICK					20
 #define ANIMATION_SET_GATE					26
-
+#define sound Sound::GetInstance()
 //Nen define thanh nhieu lop type
 //Vd Zombie thuoc EntityType, EnemyType
 enum EnemyType

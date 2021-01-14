@@ -77,7 +77,7 @@
 
 class Player : public Entity
 {
-	//vector<BulletSkulls*> bullet;
+	vector<BulletSkulls*> bullet;
 	static Player* instance;
 	int alpha;
 	int level;

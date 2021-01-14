@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-
+#include "Sound.h"
 #define DISTANCE_TO_GUN_WIDTH   9
 #define DISTANCE_TO_GUN_HEIGHT  2
 #define DISTANCE_TO_BANG		4
@@ -36,6 +36,8 @@ public:
 		int isGunFlip, 
 		float posX, 
 		float posY) { 
+		sound->Reset(GSOUND::S_BULLET_SOPHIA);
+		sound->Play(GSOUND::S_BULLET_SOPHIA, false);
 		typeBullet = type; 
 		direction = direct; 
 		isTargetTop = isGunFlip; 

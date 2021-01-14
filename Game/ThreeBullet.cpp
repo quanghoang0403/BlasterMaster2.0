@@ -49,6 +49,8 @@ void ThreeBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void ThreeBullet::FireThreeBullet(int direction, float posX, float posY)
 {
+	sound->Reset(GSOUND::S_BULLET_SOPHIA);
+	sound->Play(GSOUND::S_BULLET_SOPHIA, false);
 	timeDelayed = 0;
 	isDone = false;
 	bullet_top->isThreeBullet = 1;

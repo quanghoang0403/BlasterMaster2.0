@@ -3,6 +3,7 @@
 #include "Stair.h"
 #include "GateV2.h"
 #include "GateImage.h"
+#include "Sound.h"
 
 #define MINI_SOPHIA	0
 #define JASON		1
@@ -49,9 +50,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 1;
+	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(STAGE_1*10);
 
 }
 
@@ -312,6 +313,7 @@ void PlayScene::PlayerTouchEnemy()
 			if (supBullet->IsCollidingObject(listEnemies[i]))
 			{
 				listEnemies[i]->AddHealth(-1);
+				supBullet->isDone = true;
 				//DebugOut(L"mau quai %d \n", listEnemies[i]->health);
 			}
 		}
@@ -350,6 +352,7 @@ void PlayScene::PlayerCollideItem()
 					else
 						player->SetHealth(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				case EntityType::GUNUP:
@@ -359,6 +362,7 @@ void PlayScene::PlayerCollideItem()
 					else
 						player->SetgunDam(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				default:
@@ -368,6 +372,7 @@ void PlayScene::PlayerCollideItem()
 
 			if (playerV2->IsCollidingObject(listItems[i]))
 			{
+
 				switch (listItems[i]->GetType())
 				{
 				case EntityType::POWERUP:
@@ -377,6 +382,7 @@ void PlayScene::PlayerCollideItem()
 					else
 						playerV2->SetHealth(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				case EntityType::GUNUP:
@@ -386,6 +392,7 @@ void PlayScene::PlayerCollideItem()
 					else
 						playerV2->SetgunDam(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				default:
@@ -473,7 +480,10 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playerV2->SetPosition(30, 60);
 		break;
 	case DIK_B:
-		player->Attack();
+		if (typeSophia == JASON)
+		{
+			player->Attack();
+		}
 		break;
 	case DIK_Z:
 		if (typeSophia == JASON)
@@ -506,6 +516,8 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
+					sound->Reset(GSOUND::S_BULLET_SOPHIA);
+					sound->Play(GSOUND::S_BULLET_SOPHIA, false);
 					if (playScene->listBigBullets[i]->damage < 4)
 						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
 					else
@@ -520,11 +532,19 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		if (typeSophia == JASON)
+		{
+			supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		}
 		break;
 	case DIK_C:
-		if (supBulletThree->isDone)
-			supBulletThree->FireThreeBullet(direction, x, y);
+		if (typeSophia == JASON)
+		{
+			if (supBulletThree->isDone == true)
+			{
+				supBulletThree->FireThreeBullet(direction, x, y);
+			}
+		}
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)
@@ -1711,6 +1731,7 @@ void PlayScene::Render()
 {
 	if (typeScene == INTRO)
 	{
+		sound->Play(GSOUND::S_INTRO, true);
 		introScene->SetType(0);
 		introScene->Render();
 		if (introScene->animationSet->at(0)->GetFrame() >= 120)
@@ -1720,9 +1741,12 @@ void PlayScene::Render()
 	{
 		introScene->SetType(1);
 		introScene->Render();
+		sound->Play(GSOUND::S_ENDSCENE23, true);
 	}
 	else
 	{
+		sound->Stop(GSOUND::S_INTRO);
+		sound->Play(GSOUND::S_MAP, true);
 		LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
 		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
 		for (int i = 0; i < listObjects.size(); i++)

@@ -1,5 +1,6 @@
 ﻿#include "BigSophiaBullet.h"
 #include "math.h"
+#include "Sound.h"
 #define PI 3.14159265
 
 BigSophiaBullet::BigSophiaBullet()
@@ -143,11 +144,13 @@ void BigSophiaBullet::Render()
 		}
 		else if (isCollisionEnemies == 1)
 		{
+
 			isDone = true;
 			timeDelayed = 0;;
 		}
 		else if (isCollisionBrick == 1)
 		{
+			sound->Play(GSOUND::S_BULLET_EXPLODE, false);
 			ani = BULLET_JASON_BANG_ANI;
 			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)

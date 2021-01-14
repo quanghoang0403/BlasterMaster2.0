@@ -31,9 +31,6 @@
     <ClCompile Include="HealthBar.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     <ClCompile Include="Mines.cpp">
       <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
-    <ClCompile Include="Eyeballs.cpp">
-      <Filter>Object\Enemy\OverWorld</Filter>
-    </ClCompile>
     <ClCompile Include="BulletEnemy.cpp">
       <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
@@ -106,13 +100,7 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="BrickBreaker.cpp">
-      <Filter>Object\Obstacle</Filter>
-    </ClCompile>
     <ClCompile Include="Gate.cpp">
-      <Filter>Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="GateV2.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="LavaBrick.cpp">
@@ -120,9 +108,6 @@
     </ClCompile>
     <ClCompile Include="Stair.cpp">
       <Filter>Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="MiniSophia.cpp">
       <Filter>Object\Player</Filter>
@@ -134,19 +119,19 @@
       <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="IntroScene.cpp">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Main</Filter>
@@ -168,6 +153,27 @@
     </ClCompile>
     <ClCompile Include="BulletEnemyV2.cpp">
       <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GateV2.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Eyeballs.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="DSutil.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Framework\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,16 +310,16 @@
       <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Teleporters.h">
       <Filter>Object\Enemy\OverWorld</Filter>
@@ -325,7 +331,7 @@
       <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
     <ClInclude Include="IntroScene.h">
-      <Filter>Object\Player\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="GateImage.h">
       <Filter>Object\Obstacle</Filter>
@@ -338,6 +344,12 @@
     </ClInclude>
     <ClInclude Include="BulletEnemyV2.h">
       <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DSutil.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Framework\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -352,9 +364,6 @@
     </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{cd5caf9f-5808-4302-9407-337ac7c05dce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Render">
-      <UniqueIdentifier>{fff75cfc-1286-4989-93ad-ace79aa235d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{84a1cf75-317d-4582-bbca-791d8e7627a0}</UniqueIdentifier>
@@ -380,7 +389,13 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{8c0828c3-a962-419e-8918-32a638762c61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Player\Scene">
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{b2cc1644-29ea-4fe2-86b1-c2327c90fde0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Render">
+      <UniqueIdentifier>{fff75cfc-1286-4989-93ad-ace79aa235d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
       <UniqueIdentifier>{61a037e9-9073-4907-aabb-ffd85c64b3d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

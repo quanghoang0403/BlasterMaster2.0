@@ -1,4 +1,5 @@
 ﻿#include "ThreeBulletDetail.h"
+#include "Sound.h"
 
 
 ThreeBulletDetail::ThreeBulletDetail()
@@ -73,10 +74,17 @@ void ThreeBulletDetail::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects
 		{
 			if (colliable_objects->at(i)->GetType() == EntityType::ENEMY)
 			{
+
 				if (this->IsCollidingObject(colliable_objects->at(i)))
 				{
 					colliable_objects->at(i)->AddHealth(-damage);
+					if (isCollisionEnemies != 1)
+					{
+						sound->Reset(GSOUND::S_BULLET_EXPLODE);
+						sound->Play(GSOUND::S_BULLET_EXPLODE, false);
+					}
 					isCollisionEnemies = 1;
+					
 					vx = 0;
 					vy = 0;
 				}

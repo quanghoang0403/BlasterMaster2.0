@@ -40,7 +40,7 @@ void BulletSkulls::Render()
 
 void BulletSkulls::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	//vy += BULLET_GRAVYTY_VY;
+	vy += BULLET_GRAVYTY_VY;
 	if (vx > 0)
 	{
 		vx -= BULLET_FRICTION_VX;

@@ -521,7 +521,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					if (playScene->listBigBullets[i]->damage < 4)
 						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 5);
 					//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
 				//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
 				//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);

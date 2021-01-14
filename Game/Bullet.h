@@ -62,6 +62,12 @@ public:
 		startX = posX + DISTANCE_TO_GUN_WIDTH; 
 		startY = posY + DISTANCE_TO_GUN_HEIGHT;
 		totalTime = 0;
+		oldX = posX;
+		oldY = posY;
+		if (directionY != 0)
+			vx = 0.4;
+		else
+			vy = 0.4;
 	}
 	void ResetDelay() { timeDelayed = 0; }
 	bool GetIsDone() { return isDone; }

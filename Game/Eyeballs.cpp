@@ -243,7 +243,7 @@ void Eyeballs::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			{
 				vx = -5 * vx;
 			}
-			DebugOut(L"\nvy:   %f", vy);
+			//DebugOut(L"\nvy:   %f", vy);
 
 		}
 #pragma endregion

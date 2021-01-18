@@ -148,6 +148,14 @@
     <ClCompile Include="GateImage.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHand.cpp">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBoss.cpp">
+      <Filter>Object\Enemy\Boss</Filter>
     <ClCompile Include="ThreeBulletDetail.cpp">
       <Filter>Bullet</Filter>
     </ClCompile>
@@ -261,9 +269,6 @@
     <ClInclude Include="Orbs.h">
       <Filter>Object\Enemy\Area2</Filter>
     </ClInclude>
-    <ClInclude Include="Skulls.h">
-      <Filter>Object\Enemy\Area2</Filter>
-    </ClInclude>
     <ClInclude Include="BulletEnemy.h">
       <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClInclude>
@@ -336,6 +341,17 @@
     <ClInclude Include="GateImage.h">
       <Filter>Object\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHand.h">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBoss.h">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Skulls.h">
+      <Filter>Object\Enemy\Boss</Filter>
     <ClInclude Include="ThreeBulletDetail.h">
       <Filter>Bullet</Filter>
     </ClInclude>
@@ -389,6 +405,8 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{8c0828c3-a962-419e-8918-32a638762c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Enemy\Boss">
+      <UniqueIdentifier>{cf742c42-7e38-4bdd-b4ad-dcf06f8e64bf}</UniqueIdentifier>
     <Filter Include="Framework\Sound">
       <UniqueIdentifier>{b2cc1644-29ea-4fe2-86b1-c2327c90fde0}</UniqueIdentifier>
     </Filter>

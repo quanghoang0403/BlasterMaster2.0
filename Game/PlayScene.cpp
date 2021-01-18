@@ -519,7 +519,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 					sound->Reset(GSOUND::S_BULLET_SOPHIA);
 					sound->Play(GSOUND::S_BULLET_SOPHIA, false);
 					if (playerV2->GetgunDam()<4)
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x , y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x , y , playerV2->GetgunDam());
 						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
 					else
 						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());

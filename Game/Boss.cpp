@@ -76,9 +76,9 @@ void Boss::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 	coEvents.clear();
 	bricks.clear();
-	/*for (UINT i = 0; i < coObjects->size(); i++)
+	for (UINT i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == EntityType::BRICK)
-			bricks.push_back(coObjects->at(i));*/
+			bricks.push_back(coObjects->at(i));
 
 	// turn off collision when die 
 	if (state != BOSS_STATE_DIE)

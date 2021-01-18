@@ -132,6 +132,7 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 					vx = 0;
 					vy = 0;
 				}
+
 			}
 		}
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

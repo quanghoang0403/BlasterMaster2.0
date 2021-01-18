@@ -1236,7 +1236,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Boss !\n");
 		break;
 	}

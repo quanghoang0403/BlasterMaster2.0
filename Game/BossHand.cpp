@@ -186,35 +186,36 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 110);
 				vx = Speed.x;
-				vy = RenderVy * 4;
+				vy = RenderVy * 2;
 			}
 			else if (_yHand >= _yTarget + 88 && _xHand < _xTarget + 90)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget + 150, _yTarget);
 				vy = Speed.y;
-				vx = RenderVx * 4;
+				vx = RenderVx * 2;
 
 			}
 			else if (_xHand >= _xTarget + 80 && _yHand >= _yTarget + 50)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget + 130, _yTarget - 65);
 				vx = Speed.x;
-				vy = RenderVy * 6;
+				vy = RenderVy * 3;
 				//flag = 0;
 
 			}
 			else if (_yHand < _yTarget - 55 && _xHand > _xTarget)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 10);
-				vx = RenderVx * 6;
-				vy = RenderVy * 6;
+				vx = RenderVx * 3;
+				vy = RenderVy * 3;
 
 			}
 			else if (_xHand < _xTarget)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget + 120, _yTarget + 120);
-				vx = RenderVx * 6;
-				vy = RenderVy * 6;
+				vx = RenderVx * 3;
+				vy = RenderVy * 3;
+
 			}
 		}
 		

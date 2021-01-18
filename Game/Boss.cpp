@@ -33,8 +33,12 @@ Boss::Boss(float x, float y, LPGAMEENTITY t)
 	{
 		ListHand.push_back(new BossHand(ListHand.at(i-1)->GetPos().left, ListHand.at(i-1)->GetPos().top, 1, -1));
 	}
-	  
+
 	ListHand.push_back(new BossHand(x + BOSS_BBOX_WIDTH - 18, y, 2, 1));
+	for (int i = 6; i < 10; i++)
+	{
+		ListHand.push_back(new BossHand(ListHand.at(i - 1)->GetPos().left, ListHand.at(i - 1)->GetPos().top, 1, -1));
+	}
 
 }
 
@@ -109,6 +113,11 @@ void Boss::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	}
 
 	ListHand.at(5)->Update(dt, coObjects, PosBoss, Speed, Speed, GetBBox());
+
+	for (int i = 6; i < 10; i++)
+	{
+		ListHand.at(i)->Update(dt, coObjects, ListHand.at(i - 1)->GetPos(), ListHand.at(i - 1)->GetSpeed(), Speed, GetBBox());
+	}
 	
 }
 

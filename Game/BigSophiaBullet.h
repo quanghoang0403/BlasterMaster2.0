@@ -2,7 +2,7 @@
 #include "Bullet.h"
 #include <math.h>
 
-#define BULLET_SPEED								0.25f
+#define BULLET_SPEED								0.2f
 #define SPEED_SUPER_BULLET							0.625f
 #define DEGREE_PER_DT								60
 #define BIG_SOPHIA_BULLET_BBOX_WIDTH				8

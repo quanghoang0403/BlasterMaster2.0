@@ -518,13 +518,14 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 				{
 					sound->Reset(GSOUND::S_BULLET_SOPHIA);
 					sound->Play(GSOUND::S_BULLET_SOPHIA, false);
-					if (playScene->listBigBullets[i]->damage < 4)
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+					if (playerV2->GetgunDam()<4)
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x , y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
+						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 5);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
 					//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-				//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
-				//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
+					//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
+					//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
 					break;
 				}
 			}
@@ -1405,6 +1406,75 @@ Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreate
 	return new PowerUp(x, y);
 }
 
+void PlayScene::DarkenTheScreen()
+{
+	Game* game = Game::GetInstance();
+	LPDIRECT3DTEXTURE9 darken = CTextures::GetInstance()->Get(-200);
+	LPDIRECT3DTEXTURE9 warning = CTextures::GetInstance()->Get(-201);
+	RECT rect;
+
+	float l = gameCamera->GetCamx();
+	float t = gameCamera->GetCamy();
+
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = SCREEN_WIDTH;
+	rect.bottom = SCREEN_HEIGHT;
+	if (isWarning)
+	{
+		sound->Stop(GSOUND::S_MAP);
+		sound->Play(GSOUND::S_WARNING, true);
+		if (isDark)
+		{
+			DebugOut(L"isDark");
+			colorSubtrahend += 56;
+			alpha = floor(alpha + colorSubtrahend);
+		}
+		if (isLight)
+		{
+			colorSubtrahend += 56;
+			alpha = floor(alpha - colorSubtrahend);
+		}
+		if (alpha > 55)
+		{
+			isLight = true;
+			isDark = false;
+			colorSubtrahend = 0;
+			counting++;
+			if (counting > 90)
+			{
+				alpha = 0;
+				isWarning = false;
+				isBoss = true;
+				sound->Stop(GSOUND::S_WARNING);
+				sound->Reset(GSOUND::S_MAP);
+				sound->Play(GSOUND::S_MAP, true);
+			}
+		}
+		if (alpha < 0)
+		{
+			alpha = 0;
+			isLight = false;
+			isDark = true;
+			colorSubtrahend = 0;
+			counting++;
+		}
+		game->OldDraw(l, t, warning, rect.left, rect.top, rect.right, rect.bottom, alpha);
+		DebugOut(L"Render %f \n", alpha);
+	}
+	else if (isBoss)
+	{
+		if (alpha < 255)
+		{
+			colorSubtrahend += 7;
+			alpha = floor(alpha + colorSubtrahend);
+		}
+		else
+			alpha = 255;
+		game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
+	}
+}
+
 void PlayScene::Update(DWORD dt)
 {
 #pragma region Camera
@@ -1556,7 +1626,7 @@ void PlayScene::Update(DWORD dt)
 				checkCamMove = true;
 				if (playerV2->direction > 0)
 				{
-					DebugOut(L"phai");
+					//DebugOut(L"phai");
 					if (posX < nCamXGo)
 						posX += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1567,7 +1637,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->direction < 0)
 				{
-					DebugOut(L"trai");
+					//DebugOut(L"trai");
 					if (posX > nCamXBack)
 						posX -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1578,7 +1648,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY < 0)
 				{
-					DebugOut(L"xuong");
+					//DebugOut(L"xuong");
 					if (posY > nCamYGo)
 						posY -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1589,7 +1659,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY > 0)
 				{
-					DebugOut(L"len");
+					//DebugOut(L"len");
 					if (posY < nCamYBack)
 						posY += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1745,10 +1815,14 @@ void PlayScene::Render()
 	}
 	else
 	{
-		sound->Stop(GSOUND::S_INTRO);
-		sound->Play(GSOUND::S_MAP, true);
+		if (isWarning == false)
+		{
+			sound->Stop(GSOUND::S_INTRO);
+			sound->Play(GSOUND::S_MAP, true);
+		}
 		LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
 		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
+		DarkenTheScreen();
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Render();
 		for (int i = 0; i < listItems.size(); i++)
@@ -1771,8 +1845,11 @@ void PlayScene::Render()
 			listBullets[i]->Render();
 		for (int i = 0; i < listEnemies.size(); i++)
 			listEnemies[i]->Render();
-		for (int i = 0; i < listGateImage.size(); i++)
-			listGateImage[i]->Render();
+		if (isWarning == false && isBoss == false)
+		{
+			for (int i = 0; i < listGateImage.size(); i++)
+				listGateImage[i]->Render();
+		}
 		gameHUD->Render();
 	}
 }

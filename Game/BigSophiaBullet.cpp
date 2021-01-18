@@ -27,35 +27,7 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	{
 		timeDelayed += dt;
 		Entity::Update(dt);
-		if (damage > 3)
-		{
-			if (direction != 0)
-			{
-				/*vx = BULLET_SPEED * direction;
-				vy = SPEED_SUPER_BULLET * sin((PI * totalTime) / 180);*/
-				vx = BULLET_SPEED * direction;
-				if ((y + dy - oldY) > 30)
-					vy = -0.4;
-				else if ((oldY - y - dy) > 25)
-					vy = 0.4;
-				//DebugOut(L"y-oldy %f  ", (abs(y + dy - oldY)));
-				//DebugOut(L"vy  %f \n", vy);
-			}
-			if (directionY != 0)
-			{
-				/*vy = BULLET_SPEED * directionY;
-				vx = SPEED_SUPER_BULLET * sin((PI * totalTime) / 180);*/
-				vy = BULLET_SPEED * directionY;
-				if ((x + dx - oldX) > 30)
-					vx = -0.4;
-				else if ((oldX - x - dx) > 25)
-					vx = 0.4;
-				//DebugOut(L"x-oldy %f \n", (abs(x + dx - oldX)));
-				//DebugOut(L"vy  %f \n", vx);
-				//DebugOut(L"total Time %f", sin(totalTime));
-			}
-		}
-		else
+		if (damage <= 3)
 		{
 			if (direction != 0)
 			{
@@ -68,6 +40,50 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				vx = 0;
 			}
 		}
+		else if (damage > 3 && damage <=5)
+		{
+			if (direction != 0)
+			{
+				vx = BULLET_SPEED * direction;
+				if ((y + dy - oldY) > 30)
+					vy = -0.6;
+				else if ((oldY - y - dy) > 25)
+					vy = 0.6;
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED * directionY;
+				if ((x + dx - oldX) > 30)
+					vx = -0.6;
+				else if ((oldX - x - dx) > 25)
+					vx = 0.6;
+			}
+		}
+		else if (damage > 5)
+		{
+			if (direction != 0)
+			{
+				vx = BULLET_SPEED * direction;
+				if ((y + dy - oldY) > 30)
+					vy = -0.6;
+				else if ((oldY - y - dy) > 25)
+					vy = 0.6;
+				//DebugOut(L"y-oldy %f  ", (abs(y + dy - oldY)));
+				//DebugOut(L"vy  %f \n", vy);
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED * directionY;
+				if ((x + dx - oldX) > 30)
+					vx = -0.6;
+				else if ((oldX - x - dx) > 25)
+					vx = 0.6;
+				//DebugOut(L"x-oldy %f \n", (abs(x + dx - oldX)));
+				//DebugOut(L"vy  %f \n", vx);
+				//DebugOut(L"total Time %f", sin(totalTime));
+			}
+		}
+		
 
 #pragma region Xử lý va chạm
 		vector<LPCOLLISIONEVENT> coEvents;

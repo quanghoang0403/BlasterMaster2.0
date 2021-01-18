@@ -71,6 +71,14 @@ public:
 	bool tempNeed;
 	bool isTouchStair;
 	DWORD timeResetCam;
+
+	bool isWarning = false;//den hoi chuyen lai thanh false
+	bool isBoss = false;
+	bool isDark = true; //den hoi chuyen lai thanh false
+	bool isLight = false; 
+	float colorSubtrahend = 0; // muc do tang dan do sang
+	float alpha = 0; // do sang man hinh warning
+	int counting = 0;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 
@@ -146,6 +154,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	void GetObjectFromGrid();
+	void DarkenTheScreen();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

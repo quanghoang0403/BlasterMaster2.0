@@ -25,6 +25,8 @@
 25	Resources/Scene//Intro/End.png	255	0	255
 50	Resources/HealthBar.png	255	255	255
 60	Resources/item2.png		255	255	0
+-200	Resources/squarebox.png	255	255	0
+-201	Resources/yellow.png		255	255	0
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 ##============ BIG  SOPHIA ===================

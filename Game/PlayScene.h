@@ -56,7 +56,7 @@ private:
 	Grid* grid;
 public:
 
-
+	bool checkCamMove = false; //kiem tra luot cap, fix bug qua cong map 2
 	int typeScene = 1;
 	float oldPosX;
 	float oldPosY;
@@ -72,6 +72,14 @@ public:
 	bool tempNeed;
 	bool isTouchStair;
 	DWORD timeResetCam;
+
+	bool isWarning = false;//den hoi chuyen lai thanh false
+	bool isBoss = false;
+	bool isDark = true; //den hoi chuyen lai thanh false
+	bool isLight = false; 
+	float colorSubtrahend = 0; // muc do tang dan do sang
+	float alpha = 0; // do sang man hinh warning
+	int counting = 0;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 
@@ -99,6 +107,7 @@ protected:
 	vector<LPGAMEENTITY> listStairs;
 	vector<LPGAMEENTITY> listObjects;
 	vector<LPGAMEENTITY> listEnemies;
+	vector<LPGAMEENTITY> listEnemiesForBullet;
 	vector<LPGAMEENTITY> totalObjectsIntoGrid;
 	vector<LPGAMEENTITY> listObjectLoad;
 	vector<LPBULLET> listBullets;
@@ -146,6 +155,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	void GetObjectFromGrid();
+	void DarkenTheScreen();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

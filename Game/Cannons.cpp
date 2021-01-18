@@ -9,10 +9,8 @@ void Cannons::GetBoundingBox(float& left, float& top, float& right, float& botto
 		right = x + CANNONS_BBOX_WIDTH;
 		bottom = y + CANNONS_BBOX_HEIGHT;
 	}
+
 }
-
-
-
 
 
 Cannons::Cannons(float x, float y, LPGAMEENTITY t)
@@ -33,6 +31,8 @@ Cannons::Cannons(float x, float y, LPGAMEENTITY t)
 
 void Cannons::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 	Activation();

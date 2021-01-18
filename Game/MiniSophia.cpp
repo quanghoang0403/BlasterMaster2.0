@@ -4,6 +4,7 @@
 
 #include "MiniSophia.h"
 #include "Game.h"
+#include "Sound.h"
 
 MiniSophia::MiniSophia(float x, float y) : Entity()
 {
@@ -108,6 +109,7 @@ void MiniSophia::SetInjured(int dame)
 {
 	if (isImmortaling)
 		return;
+	sound->Play(GSOUND::S_HEALTH, false);
 	health -= dame;
 	gunDam -= dame;
 
@@ -215,6 +217,8 @@ void MiniSophia::SetState(int state)
 			return;
 		else
 		{
+			sound->Stop(GSOUND::S_JUMP);
+			sound->Play(GSOUND::S_JUMP, false);
 			isJumpHandle = false;
 			isJumping = true;
 			vy = -SOPHIA_MINI_JUMP_SPEED_Y;

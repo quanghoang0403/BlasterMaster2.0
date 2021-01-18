@@ -11,6 +11,7 @@ Centipede::Centipede(float x, float y, LPGAMEENTITY t)
 	this->target = t;
 	health = CENTIPEDE_MAXHEALTH;
 	isActive = false;
+	alpha = 255;
 }
 
 void Centipede::GetBoundingBox(float& left, float& top, float& right, float& bottom)

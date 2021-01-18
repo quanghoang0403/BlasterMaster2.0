@@ -11,9 +11,9 @@ ThreeBullet::ThreeBullet()
 	damage = 2;
 	timeDelayed = 0;
 	timeDelayMax = THREE_BULLET_DELAY;
-	bullet_top = new MainJasonBullet();
-	bullet_mid = new MainJasonBullet();
-	bullet_bot = new MainJasonBullet();
+	bullet_top = new ThreeBulletDetail();
+	bullet_mid = new ThreeBulletDetail();
+	bullet_bot = new ThreeBulletDetail();
 	damage = 2;
 }
 
@@ -36,12 +36,21 @@ void ThreeBullet::Render()
 	bullet_bot->Render();
 }
 
+void ThreeBullet::OffBoundingBox(int n)
+{
+	bullet_top->SetBBARGB(n);
+	bullet_mid->SetBBARGB(n);
+	bullet_bot->SetBBARGB(n);
+}
+
 void ThreeBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 }
 
 void ThreeBullet::FireThreeBullet(int direction, float posX, float posY)
 {
+	sound->Reset(GSOUND::S_BULLET_SOPHIA);
+	sound->Play(GSOUND::S_BULLET_SOPHIA, false);
 	timeDelayed = 0;
 	isDone = false;
 	bullet_top->isThreeBullet = 1;

@@ -9,6 +9,13 @@ void Teleporters::GetBoundingBox(float& left, float& top, float& right, float& b
 		right = x + TELEPORTERS_BBOX_WIDTH;
 		bottom = y + TELEPORTERS_BBOX_HEIGHT;
 	}
+	else
+	{
+		left = 0;
+		top =0;
+		right = 0;
+		bottom = 0;
+	}
 }
 
 Teleporters::Teleporters(float x, float y, LPGAMEENTITY t)
@@ -28,7 +35,8 @@ Teleporters::Teleporters(float x, float y, LPGAMEENTITY t)
 
 void Teleporters::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-
+	if (health <= 0)
+		return;
 	Entity::Update(dt);
 
 	Activation();

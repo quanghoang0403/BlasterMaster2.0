@@ -31,9 +31,6 @@
     <ClCompile Include="HealthBar.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     <ClCompile Include="Mines.cpp">
       <Filter>Object\Enemy\Area2</Filter>
     </ClCompile>
-    <ClCompile Include="Eyeballs.cpp">
-      <Filter>Object\Enemy\OverWorld</Filter>
-    </ClCompile>
     <ClCompile Include="BulletEnemy.cpp">
       <Filter>Object\Enemy\BulletEnemy</Filter>
     </ClCompile>
@@ -106,13 +100,7 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="BrickBreaker.cpp">
-      <Filter>Object\Obstacle</Filter>
-    </ClCompile>
     <ClCompile Include="Gate.cpp">
-      <Filter>Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="GateV2.cpp">
       <Filter>Object\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="LavaBrick.cpp">
@@ -120,9 +108,6 @@
     </ClCompile>
     <ClCompile Include="Stair.cpp">
       <Filter>Object\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="MiniSophia.cpp">
       <Filter>Object\Player</Filter>
@@ -171,6 +156,32 @@
     </ClCompile>
     <ClCompile Include="BulletBoss.cpp">
       <Filter>Object\Enemy\Boss</Filter>
+    <ClCompile Include="ThreeBulletDetail.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEnemyV2.cpp">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GateV2.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Eyeballs.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBreaker.cpp">
+      <Filter>Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="DSutil.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Framework\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,9 +287,6 @@
     <ClInclude Include="Eyeballs.h">
       <Filter>Object\Enemy\OverWorld</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Object\Obstacle</Filter>
     </ClInclude>
@@ -344,6 +352,20 @@
     </ClInclude>
     <ClInclude Include="Skulls.h">
       <Filter>Object\Enemy\Boss</Filter>
+    <ClInclude Include="ThreeBulletDetail.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Enemy\OverWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEnemyV2.h">
+      <Filter>Object\Enemy\BulletEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DSutil.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Framework\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,17 +375,11 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{523ce63b-b960-4dec-a8b7-abb1bf7d6cd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{61a037e9-9073-4907-aabb-ffd85c64b3d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main">
       <UniqueIdentifier>{bc6e9f5c-2748-4859-9adf-c8aa341394cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{cd5caf9f-5808-4302-9407-337ac7c05dce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Render">
-      <UniqueIdentifier>{fff75cfc-1286-4989-93ad-ace79aa235d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{84a1cf75-317d-4582-bbca-791d8e7627a0}</UniqueIdentifier>
@@ -391,6 +407,14 @@
     </Filter>
     <Filter Include="Object\Enemy\Boss">
       <UniqueIdentifier>{cf742c42-7e38-4bdd-b4ad-dcf06f8e64bf}</UniqueIdentifier>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{b2cc1644-29ea-4fe2-86b1-c2327c90fde0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Render">
+      <UniqueIdentifier>{fff75cfc-1286-4989-93ad-ace79aa235d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{61a037e9-9073-4907-aabb-ffd85c64b3d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

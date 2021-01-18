@@ -1,5 +1,6 @@
 ﻿#include "BigSophiaBullet.h"
 #include "math.h"
+#include "Sound.h"
 #define PI 3.14159265
 
 BigSophiaBullet::BigSophiaBullet()
@@ -9,7 +10,7 @@ BigSophiaBullet::BigSophiaBullet()
 	isCollisionBrick = 0;
 	isCollisionEnemies = 0;
 	isDone = true;
-	damage =2;
+	damage = 5;
 	timeDelayed = 0;
 	timeDelayMax = BULLET_DELAY;
 }
@@ -19,27 +20,14 @@ BigSophiaBullet::~BigSophiaBullet() {}
 void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 {
 	//DebugOut(L"toa do y %f \n", y);
-	totalTime += DEGREE_PER_DT;
+	totalTime += 20;
 	if (isDone == true)
 		alpha = 0;
 	else
 	{
 		timeDelayed += dt;
 		Entity::Update(dt);
-		if (damage > 3)
-		{
-			if (direction != 0)
-			{
-				vx = BULLET_SPEED * direction;
-				vy = SPEED_SUPER_BULLET * sin((PI * totalTime) / 180);
-			}
-			if (directionY != 0)
-			{
-				vy = BULLET_SPEED * directionY;
-				vx = SPEED_SUPER_BULLET * sin((PI * totalTime) / 180);
-			}
-		}
-		else
+		if (damage <= 3)
 		{
 			if (direction != 0)
 			{
@@ -52,6 +40,50 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				vx = 0;
 			}
 		}
+		else if (damage > 3 && damage <=5)
+		{
+			if (direction != 0)
+			{
+				vx = BULLET_SPEED * direction;
+				if ((y + dy - oldY) > 30)
+					vy = -0.6;
+				else if ((oldY - y - dy) > 25)
+					vy = 0.6;
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED * directionY;
+				if ((x + dx - oldX) > 30)
+					vx = -0.6;
+				else if ((oldX - x - dx) > 25)
+					vx = 0.6;
+			}
+		}
+		else if (damage > 5)
+		{
+			if (direction != 0)
+			{
+				vx = BULLET_SPEED * direction;
+				if ((y + dy - oldY) > 30)
+					vy = -0.6;
+				else if ((oldY - y - dy) > 25)
+					vy = 0.6;
+				//DebugOut(L"y-oldy %f  ", (abs(y + dy - oldY)));
+				//DebugOut(L"vy  %f \n", vy);
+			}
+			if (directionY != 0)
+			{
+				vy = BULLET_SPEED * directionY;
+				if ((x + dx - oldX) > 30)
+					vx = -0.6;
+				else if ((oldX - x - dx) > 25)
+					vx = 0.6;
+				//DebugOut(L"x-oldy %f \n", (abs(x + dx - oldX)));
+				//DebugOut(L"vy  %f \n", vx);
+				//DebugOut(L"total Time %f", sin(totalTime));
+			}
+		}
+		
 
 #pragma region Xử lý va chạm
 		vector<LPCOLLISIONEVENT> coEvents;
@@ -79,6 +111,8 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (e->obj->GetType() == EntityType::BRICK)
 				{
+					sound->Reset(GSOUND::S_BULLET_EXPLODE);
+					sound->Play(GSOUND::S_BULLET_EXPLODE, false);
 					isCollisionBrick = 1;
 					x += min_tx * dx + nx * 0.4f;
 					y += min_ty * dy + ny * 0.4f;
@@ -87,6 +121,10 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				}
 				if (e->obj->GetType() == EntityType::ENEMY)
 				{
+					sound->Reset(GSOUND::S_BULLET_EXPLODE);
+					sound->Play(GSOUND::S_BULLET_EXPLODE, false);
+					if (e->obj->isLavar == true)
+						return;
 					e->obj->AddHealth(-damage);
 					isCollisionEnemies = 1;
 					x += min_tx * dx + nx * 0.4f;
@@ -141,11 +179,13 @@ void BigSophiaBullet::Render()
 		}
 		else if (isCollisionEnemies == 1)
 		{
+
 			isDone = true;
 			timeDelayed = 0;;
 		}
 		else if (isCollisionBrick == 1)
 		{
+			
 			ani = BULLET_JASON_BANG_ANI;
 			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)

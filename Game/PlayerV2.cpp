@@ -6,6 +6,7 @@
 #include "Game.h"
 
 #include "Gate.h"
+#include "Sound.h"
 
 PlayerV2::PlayerV2(float x, float y) : Entity()
 {
@@ -131,7 +132,8 @@ void PlayerV2::SetInjured(int dame)
 {
 	if (isImmortaling)
 		return;
-	//health -= dame;
+	sound->Play(GSOUND::S_HEALTH, false);
+	health -= dame;
 	gunDam -= dame;
 
 	StartUntouchable();

@@ -38,9 +38,5 @@ public:
 	virtual float GetDistance(D3DXVECTOR2 pos, D3DXVECTOR2 target);
 	virtual D3DXVECTOR2 CreatePosFollowTarget(D3DXVECTOR2 focus, D3DXVECTOR2 pos);
 
-	
-	
-
-
 };
 

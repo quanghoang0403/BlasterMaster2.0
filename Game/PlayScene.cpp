@@ -3,6 +3,7 @@
 #include "Stair.h"
 #include "GateV2.h"
 #include "GateImage.h"
+#include "Sound.h"
 
 #define MINI_SOPHIA	0
 #define JASON		1
@@ -26,7 +27,6 @@
 #define OBJECT_TYPE_EYEBALLS			100
 #define OBJECT_TYPE_TELEPORTERS			101
 #define OBJECT_TYPE_CANNONS				102
-#define OBJECT_TYPE_GATE 				103
 #define OBJECT_TYPE_GATE_IMAGE			104
 #define OBJECT_TYPE_BOSS				120
 
@@ -53,7 +53,7 @@ PlayScene::PlayScene() : Scene()
 	keyHandler = new PlayScenceKeyHandler(this);
 	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1 * 10);
+	ChooseMap(STAGE_1*10);
 
 }
 
@@ -309,23 +309,27 @@ void PlayScene::PlayerTouchEnemy()
 
 		if (typeSophia == JASON)
 		{
-			if (player->IsCollidingObject(listEnemies[i]))
-				//player->SetInjured(1);
+			if (player->IsCollidingObject(listEnemies[i])==true && listEnemies[i]->health>0)
+				player->SetInjured(1);
 			if (supBullet->IsCollidingObject(listEnemies[i]))
 			{
 				listEnemies[i]->AddHealth(-1);
+				supBullet->isDone = true;
 				//DebugOut(L"mau quai %d \n", listEnemies[i]->health);
 			}
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
-			//if (sophia->IsCollidingObject(listEnemies[i]))
-				//sophia->SetInjured(1);
+			if (sophia->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
+			{
+				sophia->SetInjured(0);
+				player->SetInjured(1);
+			}
 		}
 		else if (typeSophia == BIG_SOPHIA)
 		{
-			//if (playerV2->IsCollidingObject(listEnemies[i]))
-				//playerV2->SetInjured(1);
+			if (playerV2->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
+				playerV2->SetInjured(1);
 		}
 	}
 
@@ -349,6 +353,7 @@ void PlayScene::PlayerCollideItem()
 					else
 						player->SetHealth(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				case EntityType::GUNUP:
@@ -358,6 +363,37 @@ void PlayScene::PlayerCollideItem()
 					else
 						player->SetgunDam(MAX_HEALTH);
 					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
+					break;
+				}
+				default:
+					break;
+				}
+			}
+
+			if (playerV2->IsCollidingObject(listItems[i]))
+			{
+
+				switch (listItems[i]->GetType())
+				{
+				case EntityType::POWERUP:
+				{
+					if (playerV2->GetHealth() + POWER_HP_RESTORE <= MAX_HEALTH)
+						playerV2->AddHealth(POWER_HP_RESTORE);
+					else
+						playerV2->SetHealth(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
+					break;
+				}
+				case EntityType::GUNUP:
+				{
+					if (playerV2->GetgunDam() + GUN_HP_RESTORE <= MAX_HEALTH)
+						playerV2->AddgunDam(GUN_HP_RESTORE);
+					else
+						playerV2->SetgunDam(MAX_HEALTH);
+					listItems[i]->SetIsDone(true);
+					sound->Play(GSOUND::S_ITEM, false);
 					break;
 				}
 				default:
@@ -444,6 +480,12 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playScene->typeSophia = BIG_SOPHIA;
 		playerV2->SetPosition(30, 60);
 		break;
+	case DIK_B:
+		if (typeSophia == JASON)
+		{
+			player->Attack();
+		}
+		break;
 	case DIK_Z:
 		if (typeSophia == JASON)
 		{
@@ -475,13 +517,16 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			{
 				if (playScene->listBigBullets[i]->isDone == true)
 				{
-					if (playScene->listBigBullets[i]->damage < 4)
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+					sound->Reset(GSOUND::S_BULLET_SOPHIA);
+					sound->Play(GSOUND::S_BULLET_SOPHIA, false);
+					if (playerV2->GetgunDam()<4)
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x , y , playerV2->GetgunDam());
+						//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE + 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
 					else
-						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, 2);
+						playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE / 2 + directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, playerV2->GetgunDam());
 					//playScene->listBigBullets[i]->BigSophiaFire(direction, directionY, x + 2 * direction * DEFLECT_X_BIGSOPHIA_TO_FIRE, y + DEFLECT_Y_BIGSOPHIA_TO_FIRE /2+ 2 * directionY * DEFLECT_Y_BIGSOPHIA_TO_FIRE, dame);
-				//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
-				//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
+					//DebugOut(L"toa do x %f \n", playScene->listBigBullets[i]->x);
+					//DebugOut(L"toa do y %f \n", playScene->listBigBullets[i]->x);
 					break;
 				}
 			}
@@ -489,11 +534,19 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		if (typeSophia == JASON)
+		{
+			supBullet->Fire(1, direction, isTargetTop, x, y + 17);
+		}
 		break;
 	case DIK_C:
-		if (supBulletThree->isDone)
-			supBulletThree->FireThreeBullet(direction, x, y);
+		if (typeSophia == JASON)
+		{
+			if (supBulletThree->isDone == true)
+			{
+				supBulletThree->FireThreeBullet(direction, x, y);
+			}
+		}
 		break;
 	case DIK_U:
 		if (typeSophia == MINI_SOPHIA)
@@ -671,55 +724,96 @@ void PlayScenceKeyHandler::KeyState(BYTE* states)
 			}
 		}
 	}
-	if (!playerV2->isAutoRun)
+	else if (typeSophia == JASON)
 	{
-#pragma endregion
-		if (player->GetState() == SOPHIA_STATE_DIE) return;
-
 		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_WALKING_RIGHT);
-			else
-			{
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
-			}
+			player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+
 		}
 		else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_WALKING_LEFT);
-			else
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
-		}
-		else if (Game::GetInstance()->IsKeyDown(DIK_UP))
-		{
-			if (typeSophia == BIG_SOPHIA)
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
-		}
-		else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
-		{
-			if (typeSophia == BIG_SOPHIA)
-				playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+			player->SetState(SOPHIA_STATE_WALKING_LEFT);
+
 		}
 		else
-		{
-			if (typeSophia == JASON)
-				player->SetState(SOPHIA_STATE_IDLE);
-			else
-				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
-		}
+			player->SetState(SOPHIA_STATE_IDLE);
 
 		if (Game::GetInstance()->IsKeyDown(DIK_SPACE))
 		{
-			if (typeSophia == JASON)
-				player->SetPressSpace(true);
+			player->SetPressSpace(true);
 		}
 
 		if (Game::GetInstance()->IsKeyDown(DIK_UP))
 		{
-			if (typeSophia == JASON)
-				player->SetPressUp(true);
+			player->SetPressUp(true);
+		}
+	}
+	else
+	{
+		if (playerV2->isAutoRun== false && playScene->checkCamMove == false)
+		{
+#pragma endregion
+			if (player->GetState() == SOPHIA_STATE_DIE) return;
+
+			/*if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_WALKING_RIGHT);
+				else
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+				}
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_WALKING_LEFT);
+				else
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_UP))
+			{
+				if (typeSophia == BIG_SOPHIA)
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+			}
+			else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+			{
+				if (typeSophia == BIG_SOPHIA)
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+			}
+			else
+			{
+				if (typeSophia == JASON)
+					player->SetState(SOPHIA_STATE_IDLE);
+				else
+					playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
+			}*/
+			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT) || Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_UP) || Game::GetInstance()->IsKeyDown(DIK_DOWN))
+			{
+				if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_RIGHT);
+
+				}
+				else if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_LEFT);
+				}
+
+				if (Game::GetInstance()->IsKeyDown(DIK_UP))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_TOP);
+				}
+				else if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+				{
+					playerV2->SetState(SOPHIA_BIG_STATE_WALKING_BOT);
+				}
+			}
+			else
+			{
+				playerV2->SetState(SOPHIA_BIG_STATE_IDLE);
+			}
 		}
 	}
 }
@@ -875,6 +969,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		//obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		//totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -890,7 +985,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		float camX = atoi(tokens[9].c_str());
 		int camY = atoi(tokens[10].c_str());
 		obj = new Gate(x, y, switchId, playerPosX, playerPosY, playerState, isResetCamera, typePlayer, camX, camY);
-		//listGates.push_back(obj);
+		listGates.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
 		DebugOut(L"[test] add gate %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
@@ -925,6 +1020,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Golem %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -950,6 +1046,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add centipede %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -962,6 +1059,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add domes %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -975,6 +1073,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add floaters %d !\n", (int)(x / (SCREEN_WIDTH / 2)));
 		break;
 	}
@@ -988,6 +1087,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Insect %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
@@ -1012,6 +1112,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		//listEnemies.push_back(obj);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Breaker Brick %d !\n", (int)(x / (SCREEN_WIDTH / 2)));;
 		break;
 	}
@@ -1024,6 +1125,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Orbs !\n");
 		break;
 	}
@@ -1036,6 +1138,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Skulls !\n");
 		break;
 	}
@@ -1046,6 +1149,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add OrbEz !\n");
 		break;
 	}
@@ -1056,7 +1160,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Mines !\n");
 		break;
 	}
@@ -1067,6 +1171,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set1 = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set1);
 		totalObjectsIntoGrid.push_back(obj);
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Eyeballs !\n");
 		//obj = new Eyeballs(x, y, playerV2, 100); //100 FOLLOW, 200 RANDOM, 300 CLIMBTOP
 		//obj->SetPosition(x, y);
@@ -1101,7 +1206,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Teleporters !\n");
 		break;
 	}
@@ -1112,7 +1217,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		totalObjectsIntoGrid.push_back(obj);
-
+		listEnemiesForBullet.push_back(obj);
 		DebugOut(L"[test] add Cannons !\n");
 		break;
 	}
@@ -1121,6 +1226,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj = new GateImage(atoi(tokens[3].c_str()));
 		obj->SetPosition(x, y);
 		listGateImage.push_back(obj);
+		DebugOut(L"[test] add Gate image !\n");
 		break;
 	}
 	case OBJECT_TYPE_BOSS:
@@ -1312,6 +1418,75 @@ Item* PlayScene::DropItem(EntityType createrType, float x, float y, int idCreate
 	return new PowerUp(x, y);
 }
 
+void PlayScene::DarkenTheScreen()
+{
+	Game* game = Game::GetInstance();
+	LPDIRECT3DTEXTURE9 darken = CTextures::GetInstance()->Get(-200);
+	LPDIRECT3DTEXTURE9 warning = CTextures::GetInstance()->Get(-201);
+	RECT rect;
+
+	float l = gameCamera->GetCamx();
+	float t = gameCamera->GetCamy();
+
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = SCREEN_WIDTH;
+	rect.bottom = SCREEN_HEIGHT;
+	if (isWarning)
+	{
+		sound->Stop(GSOUND::S_MAP);
+		sound->Play(GSOUND::S_WARNING, true);
+		if (isDark)
+		{
+			DebugOut(L"isDark");
+			colorSubtrahend += 56;
+			alpha = floor(alpha + colorSubtrahend);
+		}
+		if (isLight)
+		{
+			colorSubtrahend += 56;
+			alpha = floor(alpha - colorSubtrahend);
+		}
+		if (alpha > 55)
+		{
+			isLight = true;
+			isDark = false;
+			colorSubtrahend = 0;
+			counting++;
+			if (counting > 90)
+			{
+				alpha = 0;
+				isWarning = false;
+				isBoss = true;
+				sound->Stop(GSOUND::S_WARNING);
+				sound->Reset(GSOUND::S_MAP);
+				sound->Play(GSOUND::S_MAP, true);
+			}
+		}
+		if (alpha < 0)
+		{
+			alpha = 0;
+			isLight = false;
+			isDark = true;
+			colorSubtrahend = 0;
+			counting++;
+		}
+		game->OldDraw(l, t, warning, rect.left, rect.top, rect.right, rect.bottom, alpha);
+		DebugOut(L"Render %f \n", alpha);
+	}
+	else if (isBoss)
+	{
+		if (alpha < 255)
+		{
+			colorSubtrahend += 7;
+			alpha = floor(alpha + colorSubtrahend);
+		}
+		else
+			alpha = 255;
+		game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
+	}
+}
+
 void PlayScene::Update(DWORD dt)
 {
 #pragma region Camera
@@ -1382,6 +1557,7 @@ void PlayScene::Update(DWORD dt)
 					}
 				}
 				gameCamera->SetCamPos(cx, posY);
+				gameHUD->Update(cx + 5, posY + 20, player->GetHealth(), player->GetgunDam());
 			}
 
 		}
@@ -1444,6 +1620,7 @@ void PlayScene::Update(DWORD dt)
 				//DebugOut(L"toa do cam x %f \n ", cx);
 				//DebugOut(L"toa do cam y %f \n ", posY);
 				gameCamera->SetCamPos(cx, posY);
+				gameHUD->Update(cx + 5, posY + 20, player->GetHealth(), player->GetgunDam());
 			}
 		}
 		else
@@ -1458,8 +1635,10 @@ void PlayScene::Update(DWORD dt)
 			PlayerGotGateV2();
 			if (directMoveCam == 1 || directMoveCam == 2)
 			{
+				checkCamMove = true;
 				if (playerV2->direction > 0)
 				{
+					//DebugOut(L"phai");
 					if (posX < nCamXGo)
 						posX += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1470,6 +1649,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->direction < 0)
 				{
+					//DebugOut(L"trai");
 					if (posX > nCamXBack)
 						posX -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1480,6 +1660,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY < 0)
 				{
+					//DebugOut(L"xuong");
 					if (posY > nCamYGo)
 						posY -= SPEED_CAM_WORLD2 * dt;
 					else
@@ -1490,6 +1671,7 @@ void PlayScene::Update(DWORD dt)
 				}
 				else if (playerV2->directionY > 0)
 				{
+					//DebugOut(L"len");
 					if (posY < nCamYBack)
 						posY += SPEED_CAM_WORLD2 * dt;
 					else
@@ -1498,16 +1680,20 @@ void PlayScene::Update(DWORD dt)
 						directMoveCam = 0;
 					}
 				}
+				checkCamMove = true;
 			}
+			else
+				checkCamMove = false;
 			//DebugOut(L"cam oldX, %f \n", oldPosX);
 			//DebugOut(L"cam X, %f \n", posX);
 			gameCamera->SetCamPos(posX, posY);
+			gameHUD->Update(posX, posY, playerV2->GetHealth(), playerV2->GetgunDam());
 		}
 
-		if (typeSophia == JASON)
-			gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
-		if (typeSophia == MINI_SOPHIA)
-			gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
+		//if (typeSophia == JASON)
+		//	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
+		//if (typeSophia == MINI_SOPHIA)
+		//	gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
 		//if (typeSophia == BIG_SOPHIA)
 		//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
@@ -1545,7 +1731,7 @@ void PlayScene::Update(DWORD dt)
 		for (int i = 0; i < listStairs.size(); i++)
 			listStairs[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listBigBullets.size(); i++)
-			listBigBullets[i]->Update(dt, &coObjects);
+			listBigBullets[i]->Update(dt, &listEnemiesForBullet);
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Update(dt, &listObjects);
 		for (int i = 0; i < listItems.size(); i++)
@@ -1571,7 +1757,31 @@ void PlayScene::Update(DWORD dt)
 				if (listEnemies[i]->IsCollidingObject(player) || listEnemies[i]->IsCollidingObject(playerV2))
 					listEnemies[i]->CheckColisionEnemy = 1;
 			}
-
+			if (listEnemies[i]->health < 1 && listEnemies[i]->isSpawnItem == false)
+			{
+				if (listEnemies[i]->isLavar == false)
+				{
+					PowerUp* powerUp;
+					GunUp* gunUp;
+					float x, y;
+					listEnemies[i]->GetPosition(x, y);
+					int random = rand() % 6;
+					DebugOut(L"%d \n", random);
+					if (random <= 3)
+					{
+						PowerUp* powerUp = new PowerUp(x, y);
+						//powerUp->Render();
+						listItems.push_back(powerUp);
+					}
+					else if (random == 4)
+					{
+						GunUp* gunUp = new GunUp(x, y);
+						//gunUp->Render();
+						listItems.push_back(gunUp);
+					}
+					listEnemies[i]->isSpawnItem = true;
+				}
+			}
 			listEnemies[i]->Update(dt, &listObjects);
 		}
 
@@ -1603,6 +1813,7 @@ void PlayScene::Render()
 {
 	if (typeScene == INTRO)
 	{
+		sound->Play(GSOUND::S_INTRO, true);
 		introScene->SetType(0);
 		introScene->Render();
 		if (introScene->animationSet->at(0)->GetFrame() >= 120)
@@ -1612,11 +1823,18 @@ void PlayScene::Render()
 	{
 		introScene->SetType(1);
 		introScene->Render();
+		sound->Play(GSOUND::S_ENDSCENE23, true);
 	}
 	else
 	{
+		if (isWarning == false)
+		{
+			sound->Stop(GSOUND::S_INTRO);
+			sound->Play(GSOUND::S_MAP, true);
+		}
 		LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
 		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
+		DarkenTheScreen();
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Render();
 		for (int i = 0; i < listItems.size(); i++)
@@ -1639,9 +1857,12 @@ void PlayScene::Render()
 			listBullets[i]->Render();
 		for (int i = 0; i < listEnemies.size(); i++)
 			listEnemies[i]->Render();
-		gameHUD->Render(player);
-		/*for (int i = 0; i < listGateImage.size(); i++)
-			listGateImage[i]->Render();*/
+		if (isWarning == false && isBoss == false)
+		{
+			for (int i = 0; i < listGateImage.size(); i++)
+				listGateImage[i]->Render();
+		}
+		gameHUD->Render();
 	}
 }
 

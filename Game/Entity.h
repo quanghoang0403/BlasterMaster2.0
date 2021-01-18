@@ -53,7 +53,8 @@ public:
 	float vx;
 	float vy;
 	int health;
-
+	bool isSpawnItem = false;
+	bool isLavar = false;
 	bool CheckBulletEnemy;
 	bool CheckColisionEnemy;
 

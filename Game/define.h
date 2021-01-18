@@ -60,10 +60,10 @@
 #define ANIMATION_SET_PLAYER				1
 #define ANIMATION_SET_PLAYERHP				11
 #define ANIMATION_SET_ITEM_POWERUP			12
-#define ANIMATION_SET_ITEM_GUNUP			13
+#define ANIMATION_SET_ITEM_GUNUP			130
 #define ANIMATION_SET_BRICK					20
 #define ANIMATION_SET_GATE					26
-
+#define sound Sound::GetInstance()
 //Nen define thanh nhieu lop type
 //Vd Zombie thuoc EntityType, EnemyType
 enum EnemyType
@@ -81,8 +81,8 @@ enum EnemyType
 	EYEBALLS = 11,
 	TELEPORTERS = 12,
 	CANNONS = 13,
-	BOSS = 14
-
+	BOSS = 14,
+	LAVAR =15
 
 };
 

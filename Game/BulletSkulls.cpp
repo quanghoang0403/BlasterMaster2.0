@@ -18,7 +18,6 @@ void BulletSkulls::Render()
 {
 	if (_isFinish)
 	{
-		
 		aniBullet = CAnimations::GetInstance()->Get(BULLET_SKULLS_ANI_BANG);
 		RenderBoundingBox();
 		aniBullet->OldRender(x, y);
@@ -56,7 +55,8 @@ void BulletSkulls::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	{
 		_isFinish = 1;
 	}
-
+	/*x += dx;
+	y += dy;*/
 #pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

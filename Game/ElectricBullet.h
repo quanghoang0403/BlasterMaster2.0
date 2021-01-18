@@ -14,7 +14,7 @@ class ElectricBullet : public Bullet
 public:
 	ElectricBullet();
 	~ElectricBullet();
-
+	bool isCountBack = true;
 	//void Fire(int direc, int isTargetTop, float x, float y) { x = x; y = y; };
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects = NULL);

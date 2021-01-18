@@ -1,9 +1,8 @@
 #pragma once
-#include "Entity.h"
+//#include "Entity.h"
 #include <map>
 #include "Timer.h"
-
-
+#include "BulletSkulls.h"
 
 #define SOPHIA_WALKING_SPEED_UNIT		0.0040f//0.010f
 #define SOPHIA_WALKING_SPEED			0.1f 
@@ -78,6 +77,7 @@
 
 class Player : public Entity
 {
+	vector<BulletSkulls*> bullet;
 	static Player* instance;
 	int alpha;
 	int level;
@@ -100,6 +100,7 @@ class Player : public Entity
 	bool isOpening;
 
 public:
+
 	bool isDeath;
 	bool isDoneDeath;
 	bool isJumping = false;
@@ -134,7 +135,8 @@ public:
 	void GetInfoForBullet(int& direct, int& isTargetTop, float& playerx, float& playery) { direct = direction; isTargetTop = isGunFlipping; playerx = x; playery = y; }
 	int GetX() { return x; }
 	int GetY() { return y; }
-	
+	void Attack();
+
 	
 		
 	//Bullet* GetPlayerMainBullet() { return mainBullet; }

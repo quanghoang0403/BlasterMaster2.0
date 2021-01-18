@@ -1,4 +1,5 @@
 ﻿#include "MainJasonBullet.h"
+#include "Sound.h"
 
 MainJasonBullet::MainJasonBullet()
 {
@@ -119,6 +120,8 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 				{
 					if (this->IsCollidingObject(colliable_objects->at(i)))
 					{
+						sound->Reset(GSOUND::S_BULLET_EXPLODE);
+						sound->Play(GSOUND::S_BULLET_EXPLODE, false);
 						colliable_objects->at(i)->AddHealth(-damage);
 						isCollisionEnemies = 1;
 						vx = 0;
@@ -144,6 +147,8 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 					LPCOLLISIONEVENT e = coEventsResult[i];
 					if (e->obj->GetType() == EntityType::BRICK)
 					{
+						sound->Reset(GSOUND::S_BULLET_EXPLODE);
+						sound->Play(GSOUND::S_BULLET_EXPLODE, false);
 						isCollisionBrick = 1;
 						x += min_tx * dx + nx * 0.4f;
 						y += min_ty * dy + ny * 0.4f;
@@ -211,6 +216,7 @@ void MainJasonBullet::Render()
 		}
 		else if (isCollisionBrick == 1)
 		{
+
 			ani = BULLET_JASON_BANG_ANI;
 			animationSet->at(ani)->OldRender(x - DISTANCE_TO_BANG, y - DISTANCE_TO_BANG, alpha);
 			if (animationSet->at(ani)->GetFrame() == 3)

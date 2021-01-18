@@ -133,6 +133,7 @@
     <ClInclude Include="BulletBoss.h" />
     <ClInclude Include="BulletCannons.h" />
     <ClInclude Include="BulletEnemy.h" />
+    <ClInclude Include="BulletEnemyV2.h" />
     <ClInclude Include="BulletEyeballs.h" />
     <ClInclude Include="BulletFloaters.h" />
     <ClInclude Include="BulletMines.h" />
@@ -143,12 +144,14 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Domes.h" />
+    <ClInclude Include="DSutil.h" />
     <ClInclude Include="ElectricBullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Eyeballs.h" />
     <ClInclude Include="Floaters.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="GateImage.h" />
     <ClInclude Include="GateV2.h" />
     <ClInclude Include="Golem.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Teleporters.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="ThreeBullet.h" />
+    <ClInclude Include="ThreeBulletDetail.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +196,7 @@
     <ClCompile Include="BulletBoss.cpp" />
     <ClCompile Include="BulletCannons.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
+    <ClCompile Include="BulletEnemyV2.cpp" />
     <ClCompile Include="BulletEyeballs.cpp" />
     <ClCompile Include="BulletFloaters.cpp" />
     <ClCompile Include="BulletMines.cpp" />
@@ -202,12 +207,14 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
     <ClCompile Include="Domes.cpp" />
+    <ClCompile Include="DSutil.cpp" />
     <ClCompile Include="ElectricBullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Eyeballs.cpp" />
     <ClCompile Include="Floaters.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="GateImage.cpp" />
     <ClCompile Include="GateV2.cpp" />
     <ClCompile Include="Golem.cpp" />
@@ -238,6 +245,7 @@
     <ClCompile Include="Teleporters.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="ThreeBullet.cpp" />
+    <ClCompile Include="ThreeBulletDetail.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

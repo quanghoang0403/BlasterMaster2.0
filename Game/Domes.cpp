@@ -647,7 +647,7 @@ void Domes::SetState(int state)
 		break;
 
 	}
-	DebugOut(L"\nstartAttack:  %d", startAttack);
+	//DebugOut(L"\nstartAttack:  %d", startAttack);
 }
 
 void Domes::SetStatenoclock(int state)

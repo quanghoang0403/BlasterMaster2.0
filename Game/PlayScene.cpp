@@ -28,6 +28,7 @@
 #define OBJECT_TYPE_CANNONS				102
 #define OBJECT_TYPE_GATE 				103
 #define OBJECT_TYPE_GATE_IMAGE			104
+#define OBJECT_TYPE_BOSS				120
 
 #define OBJECT_TYPE_LAVA_BRICK			160
 #define OBJECT_TYPE_BREAKER_BRICK		170
@@ -1120,6 +1121,17 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj = new GateImage(atoi(tokens[3].c_str()));
 		obj->SetPosition(x, y);
 		listGateImage.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_BOSS:
+	{
+		obj = new Boss(x, y, playerV2);
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		totalObjectsIntoGrid.push_back(obj);
+
+		DebugOut(L"[test] add Boss !\n");
 		break;
 	}
 	default:

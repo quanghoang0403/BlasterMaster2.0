@@ -19,7 +19,7 @@ Golem::Golem(float x, float y, LPGAMEENTITY t)
 
 void Golem::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	DebugOut(L"vy = %f \n", vy);
+	//DebugOut(L"vy = %f \n", vy);
 	if (health <= 0)
 		return;
 	Entity::Update(dt);

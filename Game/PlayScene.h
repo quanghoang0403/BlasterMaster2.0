@@ -30,6 +30,7 @@
 #include "Eyeballs.h"
 #include "Teleporters.h"
 #include "Cannons.h"
+#include "Boss.h"
 
 #include "LavaBrick.h"
 #include "BrickBreaker.h"

@@ -80,7 +80,8 @@ enum EnemyType
 	MINES = 10,
 	EYEBALLS = 11,
 	TELEPORTERS = 12,
-	CANNONS = 13
+	CANNONS = 13,
+	BOSS = 14
 
 
 };
@@ -166,6 +167,7 @@ enum EntityType
 	MINESS = 203,
 	EYEBALLSS = 204,
 	TELEPORTERSS= 205,
+
 
 
 	//Scene Zone 100-120

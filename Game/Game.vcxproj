@@ -125,9 +125,12 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigSophiaBullet.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossHand.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBreaker.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletBoss.h" />
     <ClInclude Include="BulletCannons.h" />
     <ClInclude Include="BulletEnemy.h" />
     <ClInclude Include="BulletEyeballs.h" />
@@ -181,9 +184,12 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigSophiaBullet.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossHand.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBreaker.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletBoss.cpp" />
     <ClCompile Include="BulletCannons.cpp" />
     <ClCompile Include="BulletEnemy.cpp" />
     <ClCompile Include="BulletEyeballs.cpp" />

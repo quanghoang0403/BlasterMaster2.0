@@ -10,7 +10,7 @@ Player::Player(float x, float y) : Entity()
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYER));
 	untouchable = 0;
 	SetState(SOPHIA_STATE_IDLE);
-
+	tag = PLAYER;
 	start_x = x;
 	start_y = y;
 	this->x = x;

@@ -26,15 +26,17 @@ Boss::Boss(float x, float y, LPGAMEENTITY t)
 	isActive = false;
 	isDamaged = false;
 	isDeath = 0;
+	isDie = 0;
 	health = BOSS_MAXHEALTH;
 	SetState(BOSS_STATE_FLY);
 	ListHand.push_back(new BossHand(x, y, 2, -1));
 	for (int  i = 1; i < 5; i++)
 	{
 		ListHand.push_back(new BossHand(ListHand.at(i-1)->GetPos().left, ListHand.at(i-1)->GetPos().top, 1, -1));
+		
 	}
 
-	ListHand.push_back(new BossHand(x + BOSS_BBOX_WIDTH - 18, y, 2, 1));
+	ListHand.push_back(new BossHand(x + BOSS_BBOX_WIDTH - 18, y-5, 2, 1));
 	for (int i = 6; i < 10; i++)
 	{
 		ListHand.push_back(new BossHand(ListHand.at(i - 1)->GetPos().left, ListHand.at(i - 1)->GetPos().top, 1, -1));
@@ -67,8 +69,35 @@ void Boss::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			TimeDelayX->Reset();
 			TimeDelayX->Start();
 		}
-	
 #pragma endregion
+
+#pragma region Xử lý bullet
+	if (DelayTime->IsTimeUp())
+	{
+		Attack();
+		delayTimeranishot->Reset();
+		delayTimeranishot->Start();
+		//SetState(BOSS_STATE_ATTACK);
+		DelayTime->Reset(randomTimeAttack());
+		DelayTime->Start();
+	}
+	else
+	{
+		//SetState(BOSS_STATE_FLY);
+	}
+	for (int i = 0; i < bullet.size(); i++)
+	{
+		if (target->IsCollidingObject(bullet.at(i)))
+		{
+			CheckBulletEnemy = 1;
+		}
+		bullet.at(i)->Update(dt, coObjects);
+		if (bullet.at(i)->IsFinish())
+			bullet.erase(bullet.begin() + i);
+	}
+
+#pragma endregion
+
 #pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -101,14 +130,25 @@ void Boss::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.004f;
 
+		if (nx!=0)
+		{
+			vx = -vx;
+		}
+		if (ny!=0)
+		{
+			vy = -vy;
+		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 #pragma endregion
 	D3DXVECTOR2 Speed(vx, vy);
 
+
+
 	ListHand.at(0)->Update(dt, coObjects, PosBoss, Speed, Speed, GetBBox());
 	for (int i = 1; i < 5; i++)
 	{
+		
 		ListHand.at(i)->Update(dt, coObjects, ListHand.at(i-1)->GetPos(), ListHand.at(i-1)->GetSpeed(), Speed, GetBBox());
 	}
 
@@ -126,29 +166,53 @@ void Boss::Render()
 	if (isDeath)
 		return;
 	int ani;
-	if (health <= 0)
+	
+	if (isDie && TimeDie->IsTimeUp())
+	{
+		SetState(BOSS_STATE_DIE);
+	}
+
+	if (health < 0 && health >-10)
 	{
 		ani = BOSS_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
-		if (animationSet->at(ani)->GetFrame() == 2)
-			SetState(BOSS_STATE_DIE);
+		animationSet->at(ani)->OldRender(x, y);
+		TimeDie->Start();
+		health -= 1000;
+		
 	}
-	else
+	else if(!TimeDie->IsTimeUp())
 	{
-		if (vx > 0)
-			direction = 1;
-		else
-			direction = -1;
+		ani = BOSS_ANI_DIE;
+		animationSet->at(ani)->OldRender(x, y);
+		isDie = 1;
+	}
+	else if (delayTimeranishot->IsTimeUp() && health > 0)
+	{
 		ani = BOSS_ANI_FLY;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->OldRender(x, y);
+
+	}
+	else if (!delayTimeranishot->IsTimeUp() && health > 0)
+	{
+		ani = BOSS_ANI_ATTACK;
+		animationSet->at(ani)->OldRender(x, y);
+
+	}
+
+	if (!isDie)
+	{
+		for (int i = 0; i < ListHand.size(); i++)
+		{
+			ListHand.at(i)->Render();
+		}
+
+		for (int i = 0; i < bullet.size(); i++)
+		{
+			bullet.at(i)->Render();
+		}
+		
 	}
 	RenderBoundingBox();
-
-	for (int i = 0; i < ListHand.size(); i++)
-	{
-		ListHand.at(i)->Render();
-	}
-	
 }
 
 
@@ -172,7 +236,12 @@ void Boss::SetState(int state)
 		vy = BOSS_SPEED_VY;
 
 	}
-	
+	case BOSS_STATE_ATTACK:
+		DelayTime->Reset(randomTimeAttack());
+		DelayTime->Start();
+
+
+		break;
 	default:
 		break;
 	}
@@ -181,4 +250,19 @@ void Boss::SetState(int state)
 void Boss::Activation()
 {
 
+}
+
+void Boss::Attack()
+{
+	RECT player = target->GetBBox();
+	bullet.push_back(new BulletBoss(x, y, x + BOSS_BBOX_WIDTH, y + BOSS_BBOX_HEIGHT, player.left, player.top, player.right, player.bottom));
+	isDamaged = 1;
+}
+
+int Boss::randomTimeAttack()
+{
+	random_device rm;
+	mt19937 t(rm());
+	uniform_int_distribution<int>	randi(1, BOSS_MAXTIME_ATTACK);
+	return randi(t);
 }

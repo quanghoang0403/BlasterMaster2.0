@@ -114,20 +114,24 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 			flag = 0;
 		}
 		
-		/*if (Speed.x < 0 && _xHand < _xTarget)
+		if (Speed.x < 0 && _xHand < _xTarget)
 		{
 			flag = 0;
 		}
 		else if (Speed.x > 0 && _xHand > _xTarget)
 		{
 			flag = 0;
-		}*/
+		}
 		
 		if (flag == 0)
 		{
-			if (Speed.y > 0 && _yHand > _yTarget)
+			if (Speed.y > 0 && _yHand < _yTarget + HAND_BBOX_HEIGHT_BONES)
 				flag = 1;
-			else if (Speed.y < 0 && _yHand < _yTarget)
+			else if (Speed.y < 0 && _yHand > _yTarget - HAND_BBOX_HEIGHT_BONES)
+				flag = 1;
+			if (Speed.x > 0 && _xHand < _xTarget + HAND_BBOX_WIDTH_BONES)
+				flag = 1;
+			else if (Speed.x < 0 && _xHand > _xTarget - HAND_BBOX_WIDTH_BONES)
 				flag = 1;
 		}
 		DebugOut(L"\nFlag:   %d", flag);
@@ -138,7 +142,7 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 		if (direct == -1)
 		{
 			SetCenterBoundingBox(_xHand, _yHand, x, y, x + HAND_BBOX_WIDTH_CLAW, y + HAND_BBOX_HEIGHT_CLAW);
-			if (y == _target.top+30)
+			if (y == _target.top)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 110);
 				vx = Speed.x;
@@ -175,11 +179,11 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 		else
 		{
 			SetCenterBoundingBox(_xHand, _yHand, x, y, x + HAND_BBOX_WIDTH_CLAW, y + HAND_BBOX_HEIGHT_CLAW);
-			if (y == _target.top+30)
+			if (y == _target.top-5)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 110);
 				vx = Speed.x;
-				vy = RenderVy * 2;
+				vy = RenderVy;
 			}
 			else if (_yHand >= _yTarget + 88 && _xHand < _xTarget + 100)
 			{

@@ -29,14 +29,14 @@ Boss::Boss(float x, float y, LPGAMEENTITY t)
 	isDie = 0;
 	health = BOSS_MAXHEALTH;
 	SetState(BOSS_STATE_FLY);
-	ListHand.push_back(new BossHand(x, y+30, 2, -1));
+	ListHand.push_back(new BossHand(x, y, 2, -1));
 	for (int  i = 1; i < 5; i++)
 	{
 		ListHand.push_back(new BossHand(ListHand.at(i-1)->GetPos().left, ListHand.at(i-1)->GetPos().top, 1, -1));
 		
 	}
 
-	ListHand.push_back(new BossHand(x + BOSS_BBOX_WIDTH - 18, y+30, 2, 1));
+	ListHand.push_back(new BossHand(x + BOSS_BBOX_WIDTH - 18, y-5, 2, 1));
 	for (int i = 6; i < 10; i++)
 	{
 		ListHand.push_back(new BossHand(ListHand.at(i - 1)->GetPos().left, ListHand.at(i - 1)->GetPos().top, 1, -1));

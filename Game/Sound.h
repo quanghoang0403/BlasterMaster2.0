@@ -21,6 +21,7 @@ enum GSOUND {
 	S_BULLET_EXPLODE = 9,
 	S_ITEM = 10,
 	S_HEALTH = 11,
+	S_BOSSDEATH = 12,
 };
 class Sound
 {

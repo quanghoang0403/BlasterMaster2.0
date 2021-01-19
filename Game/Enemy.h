@@ -9,19 +9,19 @@ protected:
 	bool isActive;
 	bool isArmor;
 	bool isBoss;
-	bool isDeath;
 	int alpha;
 	float RenderVx;
 	float RenderVy;
 
 	//int health;
 	LPGAMEENTITY target;
-	EnemyType enemyType;
+	
 
 	D3DXVECTOR2 posEnemy;
 	D3DXVECTOR2 focus;
 
 public:
+	bool isDeath;
 	Enemy();
 	~Enemy();
 	virtual void Render() = 0;

@@ -134,7 +134,7 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 			else if (Speed.x < 0 && _xHand > _xTarget - HAND_BBOX_WIDTH_BONES)
 				flag = 1;
 		}
-		DebugOut(L"\nFlag:   %d", flag);
+		//DebugOut(L"\nFlag:   %d", flag);
 	}
 	//Claw
 	else

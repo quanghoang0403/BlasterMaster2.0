@@ -73,18 +73,21 @@ public:
 	bool isTouchStair;
 	DWORD timeResetCam;
 
-	bool isWarning = false;//den hoi chuyen lai thanh false
+	bool isWarning = true;//den hoi chuyen lai thanh false
 	bool isBoss = false;
 	bool isDark = true; //den hoi chuyen lai thanh false
 	bool isLight = false; 
 	float colorSubtrahend = 0; // muc do tang dan do sang
 	float alpha = 0; // do sang man hinh warning
 	int counting = 0;
+	bool isBossDeath = false;
+	bool isBossSpawn = false;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 
 
 protected:
+	Boss* boss;
 	Player* player;
 	PlayerV2* playerV2;
 	MiniSophia* sophia;
@@ -156,6 +159,7 @@ public:
 	virtual void Unload();
 	void GetObjectFromGrid();
 	void DarkenTheScreen();
+	void DarkenTheScreenToEnd();
 	Item* RandomItem(float x, float y);
 	Item* DropItem(EntityType createrType, float x, float y, int idCreater = 0);
 

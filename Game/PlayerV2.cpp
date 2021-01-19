@@ -32,7 +32,7 @@ PlayerV2* PlayerV2::GetInstance()
 
 void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	//DebugOut(L"x: %f y: %f \n", x, y);
+	DebugOut(L"x: %f y: %f \n", x, y);
 	if (isDoneDeath)
 		return;
 	if (health <= 0)

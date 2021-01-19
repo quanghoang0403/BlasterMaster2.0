@@ -70,6 +70,7 @@ public:
 
 	DWORD dt;
 	EntityType tag;
+	EnemyType enemyType;
 	LPANIMATION_SET animationSet;
 
 public:

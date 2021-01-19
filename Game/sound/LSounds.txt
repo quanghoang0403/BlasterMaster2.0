@@ -1,4 +1,4 @@
-11
+12
 1	sound/intro.wav
 2	sound/thaymap.wav
 3	sound/warning.wav
@@ -10,3 +10,4 @@
 9	sound/13.wav
 10	sound/22.wav
 11	sound/1.wav
+12	sound/35.wav

@@ -29,6 +29,7 @@
 
 class Boss: public Enemy
 {
+public:
 	float tempX, tempY;
 
 	bool isDie;

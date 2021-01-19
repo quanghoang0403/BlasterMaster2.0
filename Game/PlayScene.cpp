@@ -51,9 +51,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 1;
+	typeSophia = 2;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*1);
+	ChooseMap(STAGE_1*10);
 
 }
 
@@ -329,7 +329,8 @@ void PlayScene::PlayerTouchEnemy()
 		else if (typeSophia == BIG_SOPHIA)
 		{
 			if (playerV2->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
-				playerV2->SetInjured(1);
+			{	//playerV2->SetInjured(1);
+			}
 		}
 	}
 
@@ -455,7 +456,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else if (typeSophia == MINI_SOPHIA)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
-	case DIK_A:
+	/*case DIK_A:
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1 * 10);
 		playerV2->SetPosition(131, 1905);
@@ -464,7 +465,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playerV2->isDeath = false;
 		playScene->directMoveCam = -1;
 		playScene->typeSophia = 2;
-		break;
+		break;*/
 
 		/*	playScene->Unload();
 			playScene->ChooseMap(STAGE_1);
@@ -474,11 +475,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 			player->isDeath = false;
 			playScene->typeSophia = JASON;
 			break;*/
-
-
 	case DIK_Q:
-		playScene->typeSophia = BIG_SOPHIA;
-		playerV2->SetPosition(30, 60);
+		//playScene->typeSophia = BIG_SOPHIA;
+		//playerV2->SetPosition(400, 1000);
 		break;
 	case DIK_B:
 		if (typeSophia == JASON)
@@ -1231,12 +1230,12 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BOSS:
 	{
-		obj = new Boss(x, y, playerV2);
-		obj->SetPosition(x, y);
+		boss = new Boss(x, y, playerV2);
+		boss->SetPosition(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-		obj->SetAnimationSet(ani_set);
-		totalObjectsIntoGrid.push_back(obj);
-		listEnemiesForBullet.push_back(obj);
+		boss->SetAnimationSet(ani_set);
+		totalObjectsIntoGrid.push_back(boss);
+		listEnemiesForBullet.push_back(boss);
 		DebugOut(L"[test] add Boss !\n");
 		break;
 	}
@@ -1460,7 +1459,7 @@ void PlayScene::DarkenTheScreen()
 				isBoss = true;
 				sound->Stop(GSOUND::S_WARNING);
 				sound->Reset(GSOUND::S_MAP);
-				sound->Play(GSOUND::S_MAP, true);
+				sound->Play(GSOUND::S_BOSS, true);
 			}
 		}
 		if (alpha < 0)
@@ -1482,9 +1481,50 @@ void PlayScene::DarkenTheScreen()
 			alpha = floor(alpha + colorSubtrahend);
 		}
 		else
+		{
 			alpha = 255;
+			if (!isBossSpawn)
+			{
+				//boss = new Boss(859, 567, playerV2);
+				boss = new Boss(80, 1800, playerV2);
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(120);
+				boss->SetAnimationSet(ani_set);
+				listEnemiesForBullet.push_back(boss);
+				isBossSpawn = true;
+				DebugOut(L"[test] add Boss !\n");
+			}
+		}
 		game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
 	}
+}
+
+void PlayScene::DarkenTheScreenToEnd()
+{
+	Game* game = Game::GetInstance();
+	LPDIRECT3DTEXTURE9 darken = CTextures::GetInstance()->Get(-200);
+	RECT rect;
+
+	float l = gameCamera->GetCamx();
+	float t = gameCamera->GetCamy();
+
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = SCREEN_WIDTH;
+	rect.bottom = SCREEN_HEIGHT;
+	if (alpha < 255)
+	{
+		colorSubtrahend += 0.001;
+		alpha = floor(alpha + colorSubtrahend);
+	}
+	else
+	{
+		alpha = 255;
+		typeScene = -1;
+		isBossDeath = false;
+	}
+	game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
+
 }
 
 void PlayScene::Update(DWORD dt)
@@ -1707,22 +1747,43 @@ void PlayScene::Update(DWORD dt)
 #pragma region Objects Updates
 		vector<LPGAMEENTITY> coObjects;
 		//introScene->Update(dt, &listObjects);
+	
 		if (typeScene == 0)
 		{
 			return;
 		}
+		if (isBossSpawn)
+		{
+			if (boss->health <= 0)
+			{
+				sound->Stop(GSOUND::S_BOSS);
+				sound->Play(GSOUND::S_BOSSDEATH, true);
+			}
+			if (boss->isDeath)
+			{
+				typeScene = -1;
+			}
+		}
 		for (int i = 0; i < listObjects.size(); i++)
 			coObjects.push_back(listObjects[i]);
+		if (isBossSpawn)
+			boss->Update(dt, &listObjects);
 		for (int i = 0; i < listEnemies.size(); i++)
 			coObjects.push_back(listEnemies[i]);
 		if (typeSophia == BIG_SOPHIA)
+		{
 			playerV2->Update(dt, &listObjects);
+			if (playerV2->y < 730)
+				isWarning = true;
+
+		}
 		else
 		{
 			if (typeSophia == MINI_SOPHIA)
 				sophia->Update(dt, &listObjects);
 			else
 				player->Update(dt, &listObjects);
+
 		}
 		supBullet->Update(dt, &listObjects);
 		supBulletThree->Update(dt, &listEnemies);
@@ -1823,6 +1884,7 @@ void PlayScene::Render()
 	{
 		introScene->SetType(1);
 		introScene->Render();
+		sound->Stop(GSOUND::S_BOSSDEATH);
 		sound->Play(GSOUND::S_ENDSCENE23, true);
 	}
 	else
@@ -1832,9 +1894,16 @@ void PlayScene::Render()
 			sound->Stop(GSOUND::S_INTRO);
 			sound->Play(GSOUND::S_MAP, true);
 		}
+		if (isBoss == false)
+		{
+			sound->Stop(GSOUND::S_INTRO);
+			sound->Play(GSOUND::S_MAP, true);
+		}
 		LPDIRECT3DTEXTURE9 maptextures = CTextures::GetInstance()->Get(idStage / STAGE_1 + 10);
 		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
+
 		DarkenTheScreen();
+		
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Render();
 		for (int i = 0; i < listItems.size(); i++)
@@ -1853,6 +1922,8 @@ void PlayScene::Render()
 			sophia->Render();
 		supBullet->Render();
 		supBulletThree->Render();
+		if (isBossSpawn)
+			boss->Render();
 		for (int i = 0; i < listBullets.size(); i++)
 			listBullets[i]->Render();
 		for (int i = 0; i < listEnemies.size(); i++)
@@ -1863,6 +1934,8 @@ void PlayScene::Render()
 				listGateImage[i]->Render();
 		}
 		gameHUD->Render();
+		if (isBossDeath)
+			DarkenTheScreenToEnd();
 	}
 }
 

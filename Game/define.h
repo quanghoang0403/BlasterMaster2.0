@@ -97,6 +97,8 @@ enum EntityType
 
 	//Player Zone 1-10
 	PLAYER = 1,
+	PLAYERV2 = 111111111,
+	BULLETV2 = 22222,
 	MORNINGSTAR = 2,
 	DAGGER = 3,
 	BOOMERANG = 4,
@@ -193,6 +195,7 @@ enum EntityType
 	BULLETEYEBALLS = 121,
 	BULLETCANNONS = 122,
 	GATEIMAGE = 123,
+	BULLETBOSS = 124,
 
 	Null = -1
 };

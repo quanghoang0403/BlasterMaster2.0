@@ -18,7 +18,7 @@
 #define HAND_BBOX_WIDTH_BONES				17
 #define HAND_BBOX_HEIGHT_BONES			17
 #define HAND_BBOX_WIDTH_CLAW				18
-#define HAND_BBOX_HEIGHT_CLAW				17
+#define HAND_BBOX_HEIGHT_CLAW				34
 
 #define STATE_1_DOWN_THANG					100
 #define STATE_2_DOWN_VONG					200
@@ -41,23 +41,10 @@ class BossHand: BulletEnemy
 	int species; //1: Bones, 2:Claw
 	int direct; //-1:left, 1:right
 	float RenderVx, RenderVy;
-	
-	
-	
-	
-	bool isUp;
-	bool isLeft;
-	int _state;
 
-
-	bool BonesLatest;
-
-	int temp;
 
 	D3DXVECTOR2 SpeedTarget;
 	
-	
-
 public:
 	float _vx;
 	float _vy;
@@ -70,14 +57,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D3DXVECTOR2 Speed, D3DXVECTOR2 SpeedBoss, RECT posBoss);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void SetState(int state);
-	void RenderSpeedFollowTarget(float _posLeft, float _posTop,
-		float _posRight,
-		float _posBottom,
-		float _postargetLeft,
-		float _postargetRight,
-		float _postargetTop,
-		float _postargetBottom,
-		float _BULLET_SPEED);
+	
 	void SetCenterBoundingBox(float& x, float& y, float _posLeft, float _posTop, float _posRight, float _posBottom);
 	int GetSpecies();
 	
@@ -87,11 +67,13 @@ public:
 	RECT GetPos();
 	void SetSpeed(float _vx, float _vy);
 	void SetPosition(float _x, float _y);
-	void DelayTime();
-	void SetBonesLatest(bool _isBonesLatest);
+
+
 	D3DXVECTOR2 GetSpeed();
 	float GetVx() { return vx; }
 	float GetVy() { return vy; }
+	float GetX() { return x; }
+	float GetY() { return y; }
 
 };
 

@@ -6,12 +6,7 @@ BulletFloaters::BulletFloaters(float _x, float _y, float _posRight, float _posBo
 	tag = BULLETENEMY = BULLETFLOATERS;
 	
 	isFinish = false;
-	/*posRight = _posRight;
-	posBottom = _posBottom;
-	postargetLeft = _postargetLeft; 
-	postargetTop = _postargetTop; 
-	postargetRight = _postargetRight;
-	postargetBottom = _postargetBottom;*/
+	
 	_isFinish = 0;
 	aniBullet = CAnimations::GetInstance()->Get(BULLET_LOATERS_ANI_FLY);
 	RenderSpeedFollowTarget(_x, _y, _posRight, _posBottom, _postargetLeft, _postargetRight, _postargetTop, _postargetBottom, LOATERS_BULLET_SPEED);

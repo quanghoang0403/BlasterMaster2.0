@@ -30,19 +30,14 @@ BossHand::BossHand(float _x, float _y, int _species, int _direction)
 	if (species == 1)
 	{
 		aniBullet = CAnimations::GetInstance()->Get(HAND_BOSS_ANI_BONES);
-		BonesLatest = 0;
+		
 		flag = 1;
 	}
 	else
 	{
-		isUp = 1;
 		aniBullet = CAnimations::GetInstance()->Get(HAND_BOSS_ANI_CLAW);
-		_state = 1;
-		temp =1;
 	}
-	//TimeChangeDelay->Start();
 	direct = _direction;
-	
 	SetBBARGB(0);
 
 }
@@ -76,31 +71,27 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 		
 		SetCenterBoundingBox(_xHand, _yHand, x, y, x + HAND_BBOX_WIDTH_BONES, y + HAND_BBOX_HEIGHT_BONES);
 		
-		
-		if (GetDistance(D3DXVECTOR2(_xHand, _yHand), D3DXVECTOR2(_xTarget, _yTarget)) >= 18 && flag)
+		if (flag)
 		{
 			
-			vy = Speed.y;
-			
-			if (GetDistance(D3DXVECTOR2(_xHand, _yHand), D3DXVECTOR2(_xTarget, _yTarget)) >= 23 && flag)
+			if (_yHand <= _yTarget - HAND_BBOX_HEIGHT_BONES || _yHand >= _yTarget + HAND_BBOX_HEIGHT_BONES)
 			{
-				vx = Speed.x;
-				DebugOut(L"\nCheck: Trong   ");
-									
+				vy = Speed.y;
+				
 			}
 			else
 			{
-				if (_yHand > _yBoss)
-				{
-					vx = SpeedBoss.x;
-				}
-				else
-				{
-					vx = Speed.x;
-				}
+				vy = SpeedBoss.y;
 			}
+			if (_xHand <= _xTarget - HAND_BBOX_WIDTH_BONES || _xHand >= _xTarget + HAND_BBOX_WIDTH_BONES)
+			{
+				vx = Speed.x;
 			
-				
+			}
+			else
+			{
+				vx = SpeedBoss.x;
+			}
 		}
 		else
 		{
@@ -108,35 +99,38 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 			vy = SpeedBoss.y;
 		
 		}
-				
 
-		if (flag != 2)
-		{
+		//if (vy < 0 && _yHand > _yBoss - 2 && _yHand < _yBoss + 2 && _yHand > _yBoss) // Dừng trục Y
+		//	flag = 0;
+		//else if (_xHand > _xBoss - 2 && _xHand < _xBoss + 2) // Dừng trục X
+		//	flag = 0;
 		
-			if (vy < 0 && _yHand > _yBoss - 2 && _yHand < _yBoss + 2  && _yHand > _yBoss) // Dừng trục Y
-			{
-				flag = 0;
-			}
-			else if ( _xHand > _xBoss - 2 && _xHand < _xBoss + 2) // Dừng trục X
-			{
-				flag = 0;
-			}
-		}
-			
-
-		if (flag == 0 && flag != 2)
+		if (Speed.y < 0 && _yHand < _yTarget)
 		{
-			if (Speed.y < 0 && _yTarget < _yHand-5) // Start lúc thẳng hàng ở center Boss
-				flag = 1;
-			else if (Speed.y > 0 && Speed.x < 0) // Start lúc thẳng cột ở center Boss
-			{
-				flag = 1;
-			}
-			
+			flag = 0;
+		}
+		else if (Speed.y > 0 && _yHand > _yTarget)
+		{
+			flag = 0;
 		}
 		
+		/*if (Speed.x < 0 && _xHand < _xTarget)
+		{
+			flag = 0;
+		}
+		else if (Speed.x > 0 && _xHand > _xTarget)
+		{
+			flag = 0;
+		}*/
 		
-	
+		if (flag == 0)
+		{
+			if (Speed.y > 0 && _yHand > _yTarget)
+				flag = 1;
+			else if (Speed.y < 0 && _yHand < _yTarget)
+				flag = 1;
+		}
+		DebugOut(L"\nFlag:   %d", flag);
 	}
 	//Claw
 	else
@@ -144,58 +138,57 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 		if (direct == -1)
 		{
 			SetCenterBoundingBox(_xHand, _yHand, x, y, x + HAND_BBOX_WIDTH_CLAW, y + HAND_BBOX_HEIGHT_CLAW);
-			if (x == _target.left && y == _target.top)
+			if (y == _target.top+30)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 110);
 				vx = Speed.x;
-				vy = RenderVy * 2;
+				vy = RenderVy;
 			}
-			else if (_yHand >= _yTarget + 88 && _xHand > _xTarget - 100)
+			else if (_yHand >= _yTarget + 88 && _xHand > _xTarget - 90)
 			{
-				RenderSpeedFollowTarget(0.5, _xTarget - 130, _yTarget);
+				RenderSpeedFollowTarget(0.5, _xTarget - 120, _yTarget);
 				vy = Speed.y;
-				vx = RenderVx * 2;
+				vx = RenderVx;
 
 			}
-			else if (_xHand <= _xTarget - 95 && _yHand >= _yTarget - 50)
+			else if (_xHand <= _xTarget - 85 && _yHand >= _yTarget - 50)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget - 65);
 				vx = Speed.x;
-				vy = RenderVy * 3;
-				//flag = 0;
+				vy = RenderVy * 2;
 
 			}
 			else if (_yHand < _yTarget - 55 && _xHand < _xTarget)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 10);
-				vx = RenderVx * 3;
-				vy = RenderVy * 3;
+				vx = RenderVx * 2;
+				vy = RenderVy * 2;
 
 			}
 			else if (_xHand > _xTarget)
 			{
-				RenderSpeedFollowTarget(0.5, _xTarget - 150, _yTarget + 120);
-				vx = RenderVx * 3;
-				vy = RenderVy * 3;
+				RenderSpeedFollowTarget(0.5, _xTarget - 150, _yTarget + 100);
+				vx = RenderVx * 2;
+				vy = RenderVy * 2;
 			}
 		}
 		else
 		{
 			SetCenterBoundingBox(_xHand, _yHand, x, y, x + HAND_BBOX_WIDTH_CLAW, y + HAND_BBOX_HEIGHT_CLAW);
-			if (x == _target.right - 18 && y == _target.top)
+			if (y == _target.top+30)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget, _yTarget + 110);
 				vx = Speed.x;
 				vy = RenderVy * 2;
 			}
-			else if (_yHand >= _yTarget + 88 && _xHand < _xTarget + 90)
+			else if (_yHand >= _yTarget + 88 && _xHand < _xTarget + 100)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget + 150, _yTarget);
 				vy = Speed.y;
 				vx = RenderVx * 2;
 
 			}
-			else if (_xHand >= _xTarget + 80 && _yHand >= _yTarget + 50)
+			else if (_xHand >= _xTarget + 95 && _yHand >= _yTarget + 50)
 			{
 				RenderSpeedFollowTarget(0.5, _xTarget + 130, _yTarget - 65);
 				vx = Speed.x;
@@ -218,11 +211,8 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 
 			}
 		}
-		
-
 	}
 	
-
 #pragma region Xử lý tiền va chạm
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -230,11 +220,6 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 
 	coEvents.clear();
 	bricks.clear();
-	/*for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == EntityType::BRICK)
-			bricks.push_back(coObjects->at(i));*/
-
-			// turn off collision when die 
 	
 	CalcPotentialCollisions(&bricks, coEvents);
 #pragma endregion
@@ -264,28 +249,12 @@ void BossHand::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, RECT _target, D
 void BossHand::SetState(int state)
 {
 	Entity::SetState(state);
-
-
-
 }
 
-void BossHand::RenderSpeedFollowTarget(float _posLeft, float _posTop, float _posRight,
-	float _posBottom, float _postargetLeft, float _postargetRight, float _postargetTop, float _postargetBottom, 
-	float _BULLET_SPEED)
-{
-	
-	SetCenterBoundingBox(x, y, _posLeft, _posTop, _posRight, _posBottom);
-	posBullet = D3DXVECTOR2(x, y);
-	focus = CreatePosFollowTarget(D3DXVECTOR2((_postargetLeft + _postargetRight) / 2, (_postargetTop + _postargetBottom) / 2), posBullet);
-	posBullet = RadialMovement(focus, posBullet, _BULLET_SPEED);
-	RenderVx = posBullet.x / 14;
-	RenderVy = posBullet.y / 14;
-}
 
 void BossHand::SetCenterBoundingBox(float& x, float& y, float _posLeft, float _posTop, float _posRight, float _posBottom)
 {
-	/*if (_posBottom == (this->y + HAND_BBOX_HEIGHT_CLAW))
-		_posBottom = this->y + 17;*/
+
 	x = (_posLeft + _posRight) / 2;
 	y = (_posTop + _posBottom) / 2;
 }
@@ -345,20 +314,8 @@ void BossHand::SetPosition(float _x, float _y)
 	y = _y;
 }
 
-void BossHand::DelayTime()
-{
-	if (TimeDelay->IsTimeUp())
-	{
-		TimeDelay->Reset();
-		TimeDelay->Start();
-	}
 
-}
 
-void BossHand::SetBonesLatest(bool _isBonesLatest)
-{
-	BonesLatest = _isBonesLatest;
-}
 
 D3DXVECTOR2 BossHand::GetSpeed()
 {

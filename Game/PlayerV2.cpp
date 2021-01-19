@@ -13,7 +13,7 @@ PlayerV2::PlayerV2(float x, float y) : Entity()
 	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BIG_SOPHIA));
 	untouchable = 0;
 	SetState(SOPHIA_BIG_STATE_IDLE);
-
+	tag = PLAYERV2;
 	start_x = x;
 	start_y = y;
 	this->x = x;

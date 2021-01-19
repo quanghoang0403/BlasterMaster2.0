@@ -3,7 +3,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BigSophiaBullet.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Animations.cpp">
       <Filter>Framework\Render</Filter>
@@ -15,7 +15,7 @@
       <Filter>Object\Static</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
       <Filter>Object\Enemy\Boss</Filter>
@@ -66,10 +66,10 @@
       <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="ThreeBulletDetail.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="ThreeBullet.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Golem.cpp">
       <Filter>Object\Enemy</Filter>
@@ -150,19 +150,19 @@
       <Filter>Framework\Sound</Filter>
     </ClCompile>
     <ClCompile Include="ElectricBullet.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="MainJasonBullet.cpp">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="MiniSophia.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerV2.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Insect.cpp">
       <Filter>Object\Enemy</Filter>
@@ -173,19 +173,19 @@
     <ClCompile Include="Eyeballs.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PowerUp.cpp">
-      <Filter>Object\Static</Filter>
-    </ClCompile>
     <ClCompile Include="LavaBrick.cpp">
       <Filter>Object\Static</Filter>
     </ClCompile>
     <ClCompile Include="Stair.cpp">
       <Filter>Object\Static</Filter>
     </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigSophiaBullet.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Framework\Render</Filter>
@@ -197,7 +197,7 @@
       <Filter>Object\Static</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Object\Enemy\Boss</Filter>
@@ -248,10 +248,10 @@
       <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="ThreeBulletDetail.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="ThreeBullet.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Golem.h">
       <Filter>Object\Enemy</Filter>
@@ -328,26 +328,23 @@
     <ClInclude Include="Game.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Framework\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Framework\Sound</Filter>
     </ClInclude>
     <ClInclude Include="ElectricBullet.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="MainJasonBullet.h">
-      <Filter>Player\Bullet</Filter>
+      <Filter>Object\Player\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="MiniSophia.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerV2.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Insect.h">
       <Filter>Object\Enemy</Filter>
@@ -358,14 +355,17 @@
     <ClInclude Include="Eyeballs.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="PowerUp.h">
-      <Filter>Object\Static</Filter>
-    </ClInclude>
     <ClInclude Include="LavaBrick.h">
       <Filter>Object\Static</Filter>
     </ClInclude>
     <ClInclude Include="Stair.h">
       <Filter>Object\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -378,17 +378,8 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{373103cf-29bf-4695-a319-f5671e10c2b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player">
-      <UniqueIdentifier>{ae026210-0f89-43fa-aba9-fdf19fac08c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\Bullet">
-      <UniqueIdentifier>{1a693025-a7ea-4de4-834f-4397edbc82ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Render">
       <UniqueIdentifier>{b4124f6c-45d5-4055-845e-bdd2229eb91a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Static">
-      <UniqueIdentifier>{fb89a22f-86e9-4cbd-8337-e68cdab462d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{d66508be-5b98-4648-8fbc-4890016a5036}</UniqueIdentifier>
@@ -404,6 +395,15 @@
     </Filter>
     <Filter Include="Object\Enemy\Boss">
       <UniqueIdentifier>{3e095986-6889-4f91-882f-5c19a43f5244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{ae026210-0f89-43fa-aba9-fdf19fac08c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\Bullet">
+      <UniqueIdentifier>{1a693025-a7ea-4de4-834f-4397edbc82ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Static">
+      <UniqueIdentifier>{fb89a22f-86e9-4cbd-8337-e68cdab462d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

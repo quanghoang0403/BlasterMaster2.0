@@ -51,9 +51,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
+	ChooseMap(STAGE_1*1);
 
 }
 

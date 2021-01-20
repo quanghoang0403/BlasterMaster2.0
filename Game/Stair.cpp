@@ -12,7 +12,7 @@ Stair::Stair(float x, float y)
 
 void Stair::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Stair::GetBoundingBox(float& l, float& t, float& r, float& b)

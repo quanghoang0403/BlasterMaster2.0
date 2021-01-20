@@ -97,10 +97,13 @@ void BulletMines::Render()
 
 void BulletMines::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y;
-	r = x + BULLET_BBOX_WIDTH;
-	b = y + BULLET_BBOX_HEIGHT;
+	if (!_isFinish)
+	{
+		l = x;
+		t = y;
+		r = x + BULLET_BBOX_WIDTH;
+		b = y + BULLET_BBOX_HEIGHT;
+	}
 }
 
 int BulletMines::GetDamage()

@@ -2,7 +2,7 @@
 
 void LavaBrick::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void LavaBrick::Update(DWORD dt, vector<LPGAMEENTITY>* objects)

@@ -51,10 +51,9 @@
 PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
-	typeSophia = 2;
+	typeSophia = 1;
 	LoadBaseObjects();
-	ChooseMap(STAGE_1*10);
-
+	ChooseMap(STAGE_1*7);
 }
 
 void PlayScene::LoadBaseObjects()
@@ -203,6 +202,27 @@ void PlayScene::ChooseMap(int whatMap)
 	else
 		grid->Reset(mapWidth, mapHeight);
 	totalObjectsIntoGrid.clear();
+	if (idStage == STAGE_1 * 10)
+	{
+		if (bigBullet1 == NULL)
+		{
+			bigBullet1 = new BigSophiaBullet();
+			listBigBullets.push_back(bigBullet1);
+			DebugOut(L"[INFO] BigBullet CREATED! \n");
+		}
+		if (bigBullet2 == NULL)
+		{
+			bigBullet2 = new BigSophiaBullet();
+			listBigBullets.push_back(bigBullet2);
+			DebugOut(L"[INFO] BigBullet CREATED! \n");
+		}
+		if (bigBullet3 == NULL)
+		{
+			bigBullet3 = new BigSophiaBullet();
+			listBigBullets.push_back(bigBullet3);
+			DebugOut(L"[INFO] BigBullet CREATED! \n");
+		}
+	}
 	LoadSceneObjects();
 }
 
@@ -225,7 +245,7 @@ void PlayScene::PlayerGotGate()
 				camMap1Y = gate->camPosY;
 				Unload();
 				ChooseMap(tempMap);
-
+				
 				player->SetPosition(tempx, tempy);
 				player->Setvx(0);
 				player->Setvy(0);
@@ -284,7 +304,6 @@ void PlayScene::PlayerGotGateV2()
 {
 	for (UINT i = 0; i < listGates.size(); i++)
 	{
-
 		if (listGates[i]->GetType() == EntityType::GATEV2)
 		{
 			//DebugOut(L"khong va cham %d \n", i);
@@ -306,7 +325,6 @@ void PlayScene::PlayerTouchEnemy()
 {
 	for (UINT i = 0; i < listEnemies.size(); i++)
 	{
-
 		if (typeSophia == JASON)
 		{
 			if (player->IsCollidingObject(listEnemies[i])==true && listEnemies[i]->health>0)
@@ -317,6 +335,10 @@ void PlayScene::PlayerTouchEnemy()
 				supBullet->isDone = true;
 				//DebugOut(L"mau quai %d \n", listEnemies[i]->health);
 			}
+			if (player->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->enemyType == LAVAR)
+			{
+				player->SetInjured(1);
+			}
 		}
 		else if (typeSophia == MINI_SOPHIA)
 		{
@@ -325,16 +347,24 @@ void PlayScene::PlayerTouchEnemy()
 				sophia->SetInjured(0);
 				player->SetInjured(1);
 			}
+			if (sophia->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->enemyType == LAVAR)
+			{
+				sophia->SetInjured(0);
+				player->SetInjured(1);
+			}
 		}
 		else if (typeSophia == BIG_SOPHIA)
 		{
 			if (playerV2->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->health > 0)
-			{	//playerV2->SetInjured(1);
+			{	
+				playerV2->SetInjured(1);
+			}
+			if (playerV2->IsCollidingObject(listEnemies[i]) == true && listEnemies[i]->enemyType == LAVAR)
+			{
+				playerV2->SetInjured(1);
 			}
 		}
 	}
-
-
 }
 
 void PlayScene::PlayerCollideItem()
@@ -374,7 +404,6 @@ void PlayScene::PlayerCollideItem()
 
 			if (playerV2->IsCollidingObject(listItems[i]))
 			{
-
 				switch (listItems[i]->GetType())
 				{
 				case EntityType::POWERUP:
@@ -456,7 +485,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		else if (typeSophia == MINI_SOPHIA)
 			sophia->SetState(SOPHIA_MINI_STATE_JUMP);
 		break;
-	/*case DIK_A:
+	case DIK_A:
 		playScene->Unload();
 		playScene->ChooseMap(STAGE_1 * 10);
 		playerV2->SetPosition(131, 1905);
@@ -465,7 +494,7 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		playerV2->isDeath = false;
 		playScene->directMoveCam = -1;
 		playScene->typeSophia = 2;
-		break;*/
+		break;
 
 		/*	playScene->Unload();
 			playScene->ChooseMap(STAGE_1);
@@ -1431,13 +1460,18 @@ void PlayScene::DarkenTheScreen()
 	rect.top = 0;
 	rect.right = SCREEN_WIDTH;
 	rect.bottom = SCREEN_HEIGHT;
-	if (isWarning)
+	if (typeScene == -1)
+	{
+		game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, 0);
+		DebugOut(L"render alpha =0");
+	}
+	else if (isWarning)
 	{
 		sound->Stop(GSOUND::S_MAP);
 		sound->Play(GSOUND::S_WARNING, true);
 		if (isDark)
 		{
-			DebugOut(L"isDark");
+			//DebugOut(L"isDark");
 			colorSubtrahend += 56;
 			alpha = floor(alpha + colorSubtrahend);
 		}
@@ -1471,7 +1505,7 @@ void PlayScene::DarkenTheScreen()
 			counting++;
 		}
 		game->OldDraw(l, t, warning, rect.left, rect.top, rect.right, rect.bottom, alpha);
-		DebugOut(L"Render %f \n", alpha);
+		//DebugOut(L"Render warning");
 	}
 	else if (isBoss)
 	{
@@ -1485,8 +1519,8 @@ void PlayScene::DarkenTheScreen()
 			alpha = 255;
 			if (!isBossSpawn)
 			{
-				//boss = new Boss(859, 567, playerV2);
-				boss = new Boss(80, 1800, playerV2);
+				boss = new Boss(859, 567, playerV2);
+				//boss = new Boss(80, 1800, playerV2);
 				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 				LPANIMATION_SET ani_set = animation_sets->Get(120);
 				boss->SetAnimationSet(ani_set);
@@ -1496,12 +1530,14 @@ void PlayScene::DarkenTheScreen()
 			}
 		}
 		game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
+		//DebugOut(L"render full black !\n");
 	}
+	
 }
 
 void PlayScene::DarkenTheScreenToEnd()
 {
-	Game* game = Game::GetInstance();
+	/*Game* game = Game::GetInstance();
 	LPDIRECT3DTEXTURE9 darken = CTextures::GetInstance()->Get(-200);
 	RECT rect;
 
@@ -1521,9 +1557,11 @@ void PlayScene::DarkenTheScreenToEnd()
 	{
 		alpha = 255;
 		typeScene = -1;
+		sound->Stop(GSOUND::S_BOSSDEATH);
+		posX = 0;
 		isBossDeath = false;
 	}
-	game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);
+	game->OldDraw(l, t, darken, rect.left, rect.top, rect.right, rect.bottom, alpha);*/
 
 }
 
@@ -1666,76 +1704,72 @@ void PlayScene::Update(DWORD dt)
 		else
 		{
 			//DebugOut(L"xxxxx %d \n", playerV2->direction);
-			if (directMoveCam == -1)
+			if (!isBoss)
 			{
-				posX = 0;
-				posY = POSY_CAM_WORLD2;
-				directMoveCam = 0;
+				if (directMoveCam == -1)
+				{
+					posX = 0;
+					posY = POSY_CAM_WORLD2;
+					directMoveCam = 0;
+				}
+				PlayerGotGateV2();
+				if (directMoveCam == 1 || directMoveCam == 2)
+				{
+					checkCamMove = true;
+					if (playerV2->direction > 0)
+					{
+						//DebugOut(L"phai");
+						if (posX < nCamXGo)
+							posX += SPEED_CAM_WORLD2 * dt;
+						else
+						{
+							posX = nCamXGo + 1;
+							directMoveCam = 0;
+						}
+					}
+					else if (playerV2->direction < 0)
+					{
+						//DebugOut(L"trai");
+						if (posX > nCamXBack)
+							posX -= SPEED_CAM_WORLD2 * dt;
+						else
+						{
+							posX = nCamXBack - 1;
+							directMoveCam = 0;
+						}
+					}
+					else if (playerV2->directionY < 0)
+					{
+						//DebugOut(L"xuong");
+						if (posY > nCamYGo)
+							posY -= SPEED_CAM_WORLD2 * dt;
+						else
+						{
+							posY = nCamYGo - 1;
+							directMoveCam = 0;
+						}
+					}
+					else if (playerV2->directionY > 0)
+					{
+						//DebugOut(L"len");
+						if (posY < nCamYBack)
+							posY += SPEED_CAM_WORLD2 * dt;
+						else
+						{
+							posY = nCamYBack + 1;
+							directMoveCam = 0;
+						}
+					}
+					checkCamMove = true;
+				}
+				else
+					checkCamMove = false;
 			}
-			PlayerGotGateV2();
-			if (directMoveCam == 1 || directMoveCam == 2)
-			{
-				checkCamMove = true;
-				if (playerV2->direction > 0)
-				{
-					//DebugOut(L"phai");
-					if (posX < nCamXGo)
-						posX += SPEED_CAM_WORLD2 * dt;
-					else
-					{
-						posX = nCamXGo + 1;
-						directMoveCam = 0;
-					}
-				}
-				else if (playerV2->direction < 0)
-				{
-					//DebugOut(L"trai");
-					if (posX > nCamXBack)
-						posX -= SPEED_CAM_WORLD2 * dt;
-					else
-					{
-						posX = nCamXBack - 1;
-						directMoveCam = 0;
-					}
-				}
-				else if (playerV2->directionY < 0)
-				{
-					//DebugOut(L"xuong");
-					if (posY > nCamYGo)
-						posY -= SPEED_CAM_WORLD2 * dt;
-					else
-					{
-						posY = nCamYGo - 1;
-						directMoveCam = 0;
-					}
-				}
-				else if (playerV2->directionY > 0)
-				{
-					//DebugOut(L"len");
-					if (posY < nCamYBack)
-						posY += SPEED_CAM_WORLD2 * dt;
-					else
-					{
-						posY = nCamYBack + 1;
-						directMoveCam = 0;
-					}
-				}
-				checkCamMove = true;
-			}
-			else
-				checkCamMove = false;
 			//DebugOut(L"cam oldX, %f \n", oldPosX);
 			//DebugOut(L"cam X, %f \n", posX);
 			gameCamera->SetCamPos(posX, posY);
 			gameHUD->Update(posX, posY, playerV2->GetHealth(), playerV2->GetgunDam());
 		}
-
-		//if (typeSophia == JASON)
-		//	gameHUD->Update(cx, HUD_Y, player->GetHealth(), player->GetgunDam());	//move x follow camera
-		//if (typeSophia == MINI_SOPHIA)
-		//	gameHUD->Update(cx, HUD_Y, sophia->GetHealth(), sophia->GetgunDam());	//move x follow camera
-		//if (typeSophia == BIG_SOPHIA)
-		//	gameHUD->Update(cx, HUD_Y, playerV2->GetHealth(), playerV2->GetgunDam());	//move x follow camera
 #pragma endregion
 		GetObjectFromGrid();
 		if (listItems.size() > 0)
@@ -1761,7 +1795,11 @@ void PlayScene::Update(DWORD dt)
 			}
 			if (boss->isDeath)
 			{
-				typeScene = -1;
+				posX = 0;
+				sound->Stop(GSOUND::S_BOSSDEATH);
+				typeScene = END;
+				alpha = 0;
+				return;
 			}
 		}
 		for (int i = 0; i < listObjects.size(); i++)
@@ -1774,8 +1812,13 @@ void PlayScene::Update(DWORD dt)
 		{
 			playerV2->Update(dt, &listObjects);
 			if (playerV2->y < 730)
-				isWarning = true;
-
+			{
+				if (!isCheckWarning)
+				{
+					isWarning = true;
+					isCheckWarning = true;
+				}
+			}
 		}
 		else
 		{
@@ -1810,7 +1853,6 @@ void PlayScene::Update(DWORD dt)
 					else
 					{
 						player->SetInjured(1);
-						
 					}
 					listEnemies[i]->CheckBulletEnemy = 0;
 					
@@ -1872,22 +1914,7 @@ void PlayScene::Update(DWORD dt)
 
 void PlayScene::Render()
 {
-	if (typeScene == INTRO)
-	{
-		sound->Play(GSOUND::S_INTRO, true);
-		introScene->SetType(0);
-		introScene->Render();
-		if (introScene->animationSet->at(0)->GetFrame() >= 120)
-			typeScene = 1;
-	}
-	else if (typeScene == END)
-	{
-		introScene->SetType(1);
-		introScene->Render();
-		sound->Stop(GSOUND::S_BOSSDEATH);
-		sound->Play(GSOUND::S_ENDSCENE23, true);
-	}
-	else
+	if (typeScene == PLAY)
 	{
 		if (isWarning == false)
 		{
@@ -1903,7 +1930,7 @@ void PlayScene::Render()
 		Game::GetInstance()->OldDraw(0, 0, maptextures, 0, 0, mapWidth, mapHeight);
 
 		DarkenTheScreen();
-		
+
 		for (int i = 0; i < listObjects.size(); i++)
 			listObjects[i]->Render();
 		for (int i = 0; i < listItems.size(); i++)
@@ -1937,5 +1964,23 @@ void PlayScene::Render()
 		if (isBossDeath)
 			DarkenTheScreenToEnd();
 	}
+	else if (typeScene == INTRO)
+	{
+		sound->Play(GSOUND::S_INTRO, true);
+		introScene->SetType(0);
+		introScene->Render();
+		if (introScene->animationSet->at(0)->GetFrame() >= 120)
+			typeScene = 1;
+	}
+	else if (typeScene == END)
+	{
+		//DarkenTheScreen();
+		//DebugOut(L"intro %d \n", typeScene);
+		introScene->SetType(1);
+		introScene->Render();
+		sound->Stop(GSOUND::S_BOSSDEATH);
+		sound->Play(GSOUND::S_ENDSCENE23, true);
+	}
+
 }
 

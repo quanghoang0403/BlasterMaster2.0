@@ -142,7 +142,7 @@ void BigSophiaBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 
 void BigSophiaBullet::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	int ani;
 	if (timeDelayed >= timeDelayMax)
 	{

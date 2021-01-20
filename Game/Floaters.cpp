@@ -168,7 +168,7 @@ void Floaters::Render()
 	{
 	
 		ani = FLOATERS_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x+3, y+2);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(FLOATERS_STATE_DIE);
@@ -191,7 +191,7 @@ void Floaters::Render()
 	{
 		bullet.at(i)->Render();
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 

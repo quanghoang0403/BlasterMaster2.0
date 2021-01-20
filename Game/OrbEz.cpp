@@ -102,7 +102,7 @@ void OrbEz::Render()
 	if (health <= 0)
 	{
 		ani = ORBEZ_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x+3, y+3);
 		if (animationSet->at(ani)->GetFrame() == 3)
 		{
 			SetState(ORBEZ_STATE_DIE);
@@ -148,7 +148,7 @@ void OrbEz::Render()
 		ani = ORBEZ_ANI_FLY_RIGHT;
 		animationSet->at(ani)->Render(direction,x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void OrbEz::SetState(int state)

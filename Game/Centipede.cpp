@@ -155,7 +155,7 @@ void Centipede::Render()
 	if (health <= 0)
 	{
 		ani = CENTIPEDE_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+2, y);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(CENTIPEDE_STATE_DIE);
@@ -173,7 +173,7 @@ void Centipede::Render()
 		}
 		//DebugOut(L"[xxxxxx] direction: %s\n", direction);
 		animationSet->at(ani)->Render(direction, x, y, alpha);
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 }
 

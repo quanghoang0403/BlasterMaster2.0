@@ -32,7 +32,7 @@ PlayerV2* PlayerV2::GetInstance()
 
 void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	DebugOut(L"x: %f y: %f \n", x, y);
+	//DebugOut(L"x: %f y: %f \n", x, y);
 	if (isDoneDeath)
 		return;
 	if (health <= 0)
@@ -120,8 +120,8 @@ void PlayerV2::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						vx = 0;
 				}
 			}
-			if (e->obj->GetType() == EntityType::ENEMY)
-				SetInjured(1);
+			/*if (e->obj->GetType() == EntityType::ENEMY)
+				SetInjured(1);*/
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -133,8 +133,10 @@ void PlayerV2::SetInjured(int dame)
 	if (isImmortaling)
 		return;
 	sound->Play(GSOUND::S_HEALTH, false);
-	health -= dame;
-	gunDam -= dame;
+	if (health >1)
+		health -= dame;
+	if (gunDam > 1)
+		gunDam -= dame;
 
 	StartUntouchable();
 	immortalTimer->Start();
@@ -145,7 +147,7 @@ void PlayerV2::Render()
 {
 	if (isDoneDeath)
 		return;
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 #pragma region Khai báo biến
 	int ani = -1;
@@ -186,7 +188,7 @@ void PlayerV2::Render()
 				ani = SOPHIA_ANI_BIG_WALKING_TOP;
 		}
 		animationSet->at(ani)->OldRender(x, y, alpha);
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 }
 

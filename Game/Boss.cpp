@@ -172,7 +172,7 @@ void Boss::Render()
 		SetState(BOSS_STATE_DIE);
 	}
 
-	if (health < 0 && health >-10)
+	if (health <= 0 && health >-10)
 	{
 		ani = BOSS_ANI_DIE;
 		animationSet->at(ani)->OldRender(x, y);
@@ -212,7 +212,7 @@ void Boss::Render()
 		}
 		
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 

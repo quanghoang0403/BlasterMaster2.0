@@ -176,7 +176,7 @@ void MainJasonBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 
 void MainJasonBullet::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	int ani;
 	if (timeDelayed >= timeDelayMax)
 	{

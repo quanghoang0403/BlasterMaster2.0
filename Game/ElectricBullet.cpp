@@ -83,7 +83,7 @@ void ElectricBullet::Render()
 			//timeDelayed = 0;
 			isCountBack = false;
 		}
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 }
 

@@ -2,10 +2,13 @@
 
 void BulletEyeballs::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + BULLET_BBOX_WIDTH;
-	bottom = y + BULLET_BBOX_HEIGHT;
+	if (!_isFinish)
+	{
+		left = x;
+		top = y;
+		right = x + BULLET_BBOX_WIDTH;
+		bottom = y + BULLET_BBOX_HEIGHT;
+	}
 }
 
 BulletEyeballs::BulletEyeballs(float _x, float _y, float _posRight, float _posBottom, float _postargetLeft, float _postargetTop, float _postargetRight, float _postargetBottom)

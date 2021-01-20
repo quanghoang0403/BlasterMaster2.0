@@ -101,7 +101,7 @@ void Teleporters::Render()
 	if (health <= 0)
 	{
 		ani = TELEPORTERS_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+7, y+8);
 		if (animationSet->at(ani)->GetFrame() == 2)
 			SetState(TELEPORTERS_STATE_DIE);
 	}
@@ -122,7 +122,7 @@ void Teleporters::Render()
 		
 		animationSet->at(ani)->Render(direction, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();

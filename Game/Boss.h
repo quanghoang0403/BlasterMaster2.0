@@ -37,7 +37,7 @@ public:
 	Timer* TimeDelayX = new Timer(300);
 	Timer* TimeDelayY = new Timer(300);
 
-	Timer* TimeDie = new Timer(5000);
+	Timer* TimeDie = new Timer(4000);
 
 	Timer* DelayTime =new Timer(randomTimeAttack());
 	Timer* delayTimeranishot = new Timer(BOSS_TIME_DELAYANI);

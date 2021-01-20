@@ -141,9 +141,10 @@ void Player::SetInjured(int dame)
 	if (isImmortaling)
 		return;
 	sound->Play(GSOUND::S_HEALTH, false);
-	health -= dame;
-	gunDam -= dame;
-
+	if (health > 1)
+		health -= dame;
+	if (gunDam > 1)
+		gunDam -= dame;
 	StartUntouchable();
 	immortalTimer->Start();
 	isImmortaling = true;
@@ -158,7 +159,7 @@ void Player::Render()
 	}*/
 	if (isDoneDeath)
 		return;
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 #pragma region Khai báo biến
 	int ani = -1;

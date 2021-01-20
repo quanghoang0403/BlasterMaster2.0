@@ -71,7 +71,7 @@ void Item::Render()
 		return;
 
 	animationSet->at(0)->Render(direction, x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Item::GetBoundingBox(float& left, float& top, float& right, float& bottom)

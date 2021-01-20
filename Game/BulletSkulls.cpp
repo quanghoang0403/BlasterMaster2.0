@@ -34,7 +34,7 @@ void BulletSkulls::Render()
 	}
 	
 	//aniBullet->OldRender(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 }
 
@@ -115,10 +115,13 @@ void BulletSkulls::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 void BulletSkulls::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + BULLET_BBOX_WIDTH;
-	bottom = y + BULLET_BBOX_HEIGHT;
+	if (!_isFinish)
+	{
+		left = x;
+		top = y;
+		right = x + BULLET_BBOX_WIDTH;
+		bottom = y + BULLET_BBOX_HEIGHT;
+	}
 }
 
 int BulletSkulls::GetDamage()

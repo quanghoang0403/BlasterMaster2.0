@@ -96,7 +96,7 @@ void Cannons::Render()
 	if (health <= 0)
 	{
 		ani = CANNONS_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+7, y+7);
 		if (animationSet->at(ani)->GetFrame() == 2)
 			SetState(CANNONS_STATE_DIE);
 	}
@@ -106,7 +106,6 @@ void Cannons::Render()
 			ani = CANNONS_ANI_ATTACK_HORIZONTAL;
 		else
 			ani = CANNONS_ANI_ATTACK_VERTICAL;
-		
 		animationSet->at(ani)->Render(direction, x, y);
 	}
 	else if (!isAttack)
@@ -114,7 +113,7 @@ void Cannons::Render()
 		ani = CANNONS_ANI_NORMAL;
 		animationSet->at(ani)->Render(direction, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();

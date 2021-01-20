@@ -102,7 +102,7 @@ void Skulls::Render()
 	if (health <= 0)
 	{
 		ani = SKULLS_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x+3, y+4);
 	
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(SKULLS_STATE_DIE);
@@ -121,7 +121,7 @@ void Skulls::Render()
 		bullet.at(i)->Render();
 
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 

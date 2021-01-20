@@ -26,7 +26,7 @@
 
 #define TELEPORTERS_SITEACTIVE_PLAYER					100
 
-#define EYEBALLS_MAXHEALTH								2
+#define EYEBALLS_MAXHEALTH								1
 
 class Teleporters : public Enemy
 {

@@ -2,10 +2,13 @@
 
 void BulletCannons::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = x + BULLET_BBOX_WIDTH;
-	bottom = y + BULLET_BBOX_HEIGHT;
+	if (!_isFinish)
+	{
+		left = x;
+		top = y;
+		right = x + BULLET_BBOX_WIDTH;
+		bottom = y + BULLET_BBOX_HEIGHT;
+	}
 }
 
 BulletCannons::BulletCannons(float _posLeft, float _posTop, float _posRight, float _posBottom,int _direct, int _lr)
@@ -19,8 +22,6 @@ BulletCannons::BulletCannons(float _posLeft, float _posTop, float _posRight, flo
 	///aniBullet = CAnimations::GetInstance()->Get(BULLET_CANNONS_ANI_FLY);
 
 }
-
-
 
 void BulletCannons::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {

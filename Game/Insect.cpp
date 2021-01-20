@@ -126,7 +126,7 @@ void Insect::Render()
 	if (health <= 0)
 	{
 		ani = INSECT_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+3, y+3);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(INSECT_STATE_DIE);
@@ -140,7 +140,7 @@ void Insect::Render()
 		ani = INSECT_ANI_FLY;
 		animationSet->at(ani)->Render(direction, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 

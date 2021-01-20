@@ -46,7 +46,7 @@ void BossHand::Render()
 {
 
 	aniBullet->Render(direct, x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	
 }
 

@@ -202,7 +202,7 @@ void Golem::Render()
 	if (health <= 0)
 	{
 		ani = GOLEM_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+2, y+3);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(GOLEM_STATE_DIE);
@@ -216,7 +216,7 @@ void Golem::Render()
 		ani = GOLEM_ANI_WALKING;
 		animationSet->at(ani)->Render(direction, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Golem::SetState(int state)

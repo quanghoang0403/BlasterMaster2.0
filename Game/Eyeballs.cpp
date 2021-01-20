@@ -265,7 +265,7 @@ void Eyeballs::Render()
 	if (health <= 0)
 	{
 		ani = EYEBALLS_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+2, y+1);
 		if (animationSet->at(ani)->GetFrame() == 2)
 			SetState(EYEBALLS_STATE_DIE);
 	}
@@ -284,7 +284,7 @@ void Eyeballs::Render()
 		ani = EYEBALLS_ANI_FLY;
 		animationSet->at(ani)->Render(direction, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();

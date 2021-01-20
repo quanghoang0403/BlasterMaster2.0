@@ -122,7 +122,7 @@ void MiniSophia::Render()
 {
 	if (isDoneDeath)
 		return;
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 #pragma region Khai báo biến
 	int ani = -1;

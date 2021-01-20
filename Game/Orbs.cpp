@@ -114,7 +114,7 @@ void Orbs::Render()
 	if (health <=0)
 	{
 		ani = ORBS_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x+3, y+3);
 		if (animationSet->at(ani)->GetFrame() == 3)
 		{
 			SetState(ORBS_STATE_DIE);
@@ -126,7 +126,7 @@ void Orbs::Render()
 		ani = ORBS_ANI_ATTACK;
 		animationSet->at(ani)->OldRender(x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 

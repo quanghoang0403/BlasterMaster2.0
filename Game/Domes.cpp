@@ -99,7 +99,7 @@ void Domes::Render()
 	if (health <= 0)
 	{
 		ani = DOMES_ANI_DIE;
-		animationSet->at(ani)->Render(direction, x, y);
+		animationSet->at(ani)->Render(direction, x+3, y+3);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			SetState(DOMES_STATE_DIE);
@@ -188,7 +188,7 @@ void Domes::Render()
 		default:
 			break;
 		}
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 }
 

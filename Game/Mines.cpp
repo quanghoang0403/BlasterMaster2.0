@@ -129,21 +129,21 @@ void Mines::Render()
 	if (health <= 0 && health >= -10)
 	{
 		ani = MINES_ANI_DIE;
-		animationSet->at(ani)->OldRender(x, y);
+		animationSet->at(ani)->OldRender(x+2, y+1);
 		//DebugOut(L"dsadasdasd %d ", animationSet->at(ani)->GetFrame());
 		if (animationSet->at(ani)->GetFrame() == 3)
 			health = -1000;
 	}
 	else if (health == -1000)
 	{
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 	else
 	{
 		ani = MINES_ANI_READY;
 		animationSet->at(ani)->OldRender(x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	for (int i = 0; i < bullet.size(); i++)
 	{
 		bullet.at(i)->Render();

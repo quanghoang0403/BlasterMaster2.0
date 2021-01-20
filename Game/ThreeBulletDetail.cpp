@@ -166,7 +166,7 @@ void ThreeBulletDetail::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects
 
 void ThreeBulletDetail::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	int ani;
 	if (timeDelayed >= timeDelayMax)
 	{

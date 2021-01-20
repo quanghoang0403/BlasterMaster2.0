@@ -73,7 +73,7 @@ public:
 	bool isTouchStair;
 	DWORD timeResetCam;
 
-	bool isWarning = true;//den hoi chuyen lai thanh false
+	bool isWarning = false;//den hoi chuyen lai thanh false
 	bool isBoss = false;
 	bool isDark = true; //den hoi chuyen lai thanh false
 	bool isLight = false; 
@@ -82,6 +82,7 @@ public:
 	int counting = 0;
 	bool isBossDeath = false;
 	bool isBossSpawn = false;
+	bool isCheckWarning = false;
 	//void SetIsMiniSophia() { type = 0; }
 	//bool isMiniSophia
 

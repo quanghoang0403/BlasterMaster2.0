@@ -18,7 +18,7 @@ void BrickBreaker::Render()
 		ani = 0;
 		animationSet->at(ani)->Render(1, x, y);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void BrickBreaker::Update(DWORD dt, vector<LPGAMEENTITY>* objects)

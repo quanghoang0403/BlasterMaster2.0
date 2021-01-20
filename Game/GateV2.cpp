@@ -17,7 +17,7 @@ GateV2::~GateV2() {}
 
 void GateV2::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 	//if (gateSwitchSceneId == 2 || gateSwitchSceneId == 4)	//Gate tai stage 1 3 khong ve~
 	//	return;
